@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:padding="20dp">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/custom_edittext"
+            android:drawableRight="@drawable/ic_search_24"
+            android:paddingEnd="10dp"
+            android:hint="search"
+            />
+    </LinearLayout>
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+
+   </GridLayout>
+</LinearLayout>
