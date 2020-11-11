@@ -10,5 +10,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.thu_ngan_screen);
+        setContentView(R.layout.add_nhan_vien);
     }
 }
