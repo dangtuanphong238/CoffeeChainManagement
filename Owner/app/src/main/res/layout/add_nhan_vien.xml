@@ -26,7 +26,7 @@
     <EditText
         android:padding="5dp"
         android:textAlignment="viewEnd"
-        android:text="Nguyễn Hoàng Long"
+        android:text="Nguyễn Hoàn   g Long"
         android:id="@+id/edtTenNhanVien"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
