@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">Owner</string>
+    <string name="themmonan">Thêm Món Ăn</string>
+    <string name="tenmonan">Tên món ăn :</string>
+    <string name="phanloai">Phân Loại :</string>
+    <string name="gia">Giá :</string>
+    <string name="chonanh">Chọn Ảnh :</string>
+    <string name="capnhat">Cập Nhật</string>
+    <string name="xoa">Xóa</string>
+    <string name="qlMonAn">Quản Lý Món Ăn</string>
+    <string name="danhsach">Danh Sách Món Ăn :</string>
+    <string name="themmon">Thêm Món</string>
+    <string name="themnhanvien">Thêm Nhân Viên</string>
+    <string name="tennhanvien">Tên Nhân Viên :</string>
+    <string name="chucvu">Chức Vụ :</string>
+    <string name="tendangnhap">Tên Đăng Nhập :</string>
+    <string name="matkhau">Mật Khẩu :</string>
+    <string name="sodienthoai">Số Điện Thoại :</string>
+    <string name="soCMND">Số CMND :</string>
+    <string name="lamtheoca">Làm Theo Ca : </string>
+    <string name="themhanghoa">Thêm Hàng Hóa</string>
+    <string name="tenhanghoa">"Tên hàng hóa : "</string>
+    <string name="soluong">Số lượng :</string>
 </resources>
