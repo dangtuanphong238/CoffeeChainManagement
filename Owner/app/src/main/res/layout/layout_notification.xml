@@ -69,7 +69,7 @@
                 android:layout_below="@+id/linearListReceiver"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="r"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/background_button_corner_white"
                 android:text="Send" />
         </RelativeLayout>
