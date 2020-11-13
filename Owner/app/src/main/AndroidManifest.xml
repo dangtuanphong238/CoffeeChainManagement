@@ -10,17 +10,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 <<<<<<< HEAD
-        <activity
-            android:name=".MainActivity">
-=======
-        <activity android:name=".MealManage"></activity>
         <activity android:name=".RoomManage" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".AreaManageActivity">
+=======
+        <activity
+            android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".MealManage"/>
+        <activity android:name=".RoomManage" />
         <activity android:name=".AreaManage">
->>>>>>> 352aa3cc2c774428c79192cd65880a57d377771c
+
+        </activity>
+        <activity android:name=".LoginScreen"/>
+        <activity android:name=".SplashScreen">
+>>>>>>> 1dba6ae8b910e1eede60387dced3cebb4a1eccdd
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
