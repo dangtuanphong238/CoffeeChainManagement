@@ -9,12 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginScreen"></activity>
+        <activity android:name=".layout_tongdoanhthu"></activity>
+        <activity android:name=".LoginScreen" />
         <activity android:name=".layout_notification" />
-        <activity android:name=".layout_drawermenu_founder" />
         <activity android:name=".Screen_Account_creation" />
         <activity android:name=".ScreenAccountManager" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".layout_drawermenu_founder">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

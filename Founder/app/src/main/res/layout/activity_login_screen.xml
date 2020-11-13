@@ -49,6 +49,7 @@
             android:id="@+id/btnLogin"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:padding="10dp"
             android:layout_gravity="center"
             android:text="Login"
             android:textAllCaps="false"
