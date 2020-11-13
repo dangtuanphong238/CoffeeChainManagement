@@ -10,13 +10,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.example.owner.Database.ListPhanLoai;
 import com.example.owner.R;
 
 import java.util.ArrayList;
 
-public class CountryAdapter extends ArrayAdapter<ListPhanLoai> {
-    public CountryAdapter(Context context, ArrayList<ListPhanLoai> countryList) {
+public class CountryAdapter extends ArrayAdapter<ListSpinner> {
+    public CountryAdapter(Context context, ArrayList<ListSpinner> countryList) {
         super(context, 0, countryList);
     }
     @NonNull
@@ -36,7 +35,7 @@ public class CountryAdapter extends ArrayAdapter<ListPhanLoai> {
         }
         ImageView imageViewFlag = convertView.findViewById(R.id.image_view_flag);
         TextView textViewName = convertView.findViewById(R.id.text_view_name);
-        ListPhanLoai currentItem = getItem(position);
+        ListSpinner currentItem = getItem(position);
         if (currentItem != null) {
             imageViewFlag.setImageResource(currentItem.getFlagImage());
             textViewName.setText(currentItem.getCountryName());
