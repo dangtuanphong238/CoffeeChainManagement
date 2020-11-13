@@ -68,7 +68,6 @@
                 android:layout_below="@+id/linearListReceiver"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/ic_baseline_notifications_24"
                 android:text="Send" />
 
         </RelativeLayout>

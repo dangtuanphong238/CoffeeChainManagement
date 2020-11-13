@@ -11,4 +11,4 @@ public class WareHouseManageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ware_house_manage);
     }
-}
+ }
