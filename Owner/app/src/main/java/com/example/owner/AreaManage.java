@@ -11,7 +11,7 @@ public class AreaManage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_area_manage);
+        setContentView(R.layout.thanh_toan_screen);
         anhXa();
         setOnClick();
     }
