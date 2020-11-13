@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:background="#FE9B53"
     android:padding="10dp"
-
     >
 
     <LinearLayout
@@ -195,12 +194,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:padding="20px"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:background="@drawable/custom_button"
                 android:text="Cập Nhật " />
 
             <Button
                 android:layout_marginHorizontal="5dp"
-
+                android:padding="20px"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

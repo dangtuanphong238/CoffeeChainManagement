@@ -9,10 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 
 public class layout_drawermenu_founder extends AppCompatActivity {
-    public final static String KEY_Layoutdrawermenufounder = layout_drawermenu_founder.class.getSimpleName().trim();
+    public final static String KEY_ScreenTongdoanhthu = layout_tongdoanhthu.class.getSimpleName().trim();
     public final static String KEY_screenaccountcreation = Screen_Account_creation.class.getSimpleName().trim();
-    public final static String KEY_notification = layout_notification.class.getSimpleName().trim();
-    public final static String KEY_ScreenLogin = LoginScreen.class.getSimpleName().trim();
+    public final static String KEY_notification = LoginScreen.class.getSimpleName().trim(); //button 2
     DrawerLayout drawerLayout;
 
     @Override
@@ -36,7 +35,6 @@ public class layout_drawermenu_founder extends AppCompatActivity {
         }
     }
 
-
     public void transformScreen(DrawerLayout drawerLayout, Intent intent, String KEY_Activity) {
         if (this.getLocalClassName().equals(KEY_Activity)) {
             closeDrawer(drawerLayout);
@@ -50,25 +48,27 @@ public class layout_drawermenu_founder extends AppCompatActivity {
     }
 
     public void onClickdrawermenufounder(View view) {
-        Intent intent = new Intent(this, layout_drawermenu_founder.class);
-        transformScreen(drawerLayout, intent, KEY_Layoutdrawermenufounder);
+        Intent intent = new Intent(this, layout_tongdoanhthu.class);
+        transformScreen(drawerLayout, intent, KEY_ScreenTongdoanhthu);
     }
-
-    public void onClickScreenaccountCreation(View view) {
+    public void onClickLogoutScreen(View view) {
+        Intent intent = new Intent(this, LoginScreen.class);
+        transformScreen(drawerLayout, intent, KEY_notification);
+    }
+     public void onClickScreenaccountCreation(View view) {
         Intent intent = new Intent(this, Screen_Account_creation.class);
         transformScreen(drawerLayout, intent, KEY_screenaccountcreation);
     }
-
-    public void onClickStaffManager(View view) {
+    public void onClickScreenNotification(View view) {
         Intent intent = new Intent(this, layout_notification.class);
+        transformScreen(drawerLayout, intent, KEY_screenaccountcreation);
+    }
+    /* doi phong lam xong
+    public void onClickStaffManager(View view) {
+        Intent intent = new Intent(this, LoginScreen.class);
         transformScreen(drawerLayout, intent, KEY_notification);
     }
-
-    public void onClickLoginScreen(View view) {
-        Intent intent = new Intent(this, LoginScreen.class);
-        transformScreen(drawerLayout, intent, KEY_ScreenLogin);
-    }
-
+ */
     //TODO: Moi nguoi coppy code chen vao dung chuc nang cua minh theo mau co san
     public void onClickNotification(View view) {
     }

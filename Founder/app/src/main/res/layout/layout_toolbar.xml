@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
-
     <ImageButton
         android:onClick="onClickMenu"
         android:id="@+id/btnMenu"
@@ -12,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:layout_margin="10dp"
-        android:background="@drawable/ic_baseline_menu_24" />
+        android:background="@drawable/ic_menu" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -24,4 +23,5 @@
         android:text="Chức Năng"
         android:textColor="#000"
         android:textSize="40sp" />
+
 </LinearLayout>

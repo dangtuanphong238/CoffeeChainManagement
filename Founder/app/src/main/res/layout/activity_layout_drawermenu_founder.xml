@@ -8,8 +8,6 @@
     android:orientation="vertical"
     tools:context=".layout_drawermenu_founder">
 
-
-    =======
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -17,8 +15,22 @@
         android:gravity="center"
         android:orientation="horizontal">
 
+        <ImageButton
+            android:id="@+id/btnMnu"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_menu" />
 
-
+        <TextView
+            android:gravity="left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="4"
+            android:textColor="#000"
+            android:textSize="40sp" />
     </LinearLayout>
     >>>>>>> 1dba6ae8b910e1eede60387dced3cebb4a1eccdd
 
@@ -28,14 +40,19 @@
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="1dp"
+            android:gravity="center"
             android:layout_weight="1">
             <include layout="@layout/layout_toolbar"/>
         </LinearLayout>
-
+        <LinearLayout
+            android:background="#EA9547"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8">
+            <include layout="@layout/layout_main_area_manage" />
+        </LinearLayout>
     </LinearLayout>
-
-
 
     <RelativeLayout
         android:layout_gravity="start"
@@ -43,6 +60,7 @@
         android:layout_height="match_parent">
         <include layout="@layout/layout_drawer_menu"/>
     </RelativeLayout>
+
 
 
 
