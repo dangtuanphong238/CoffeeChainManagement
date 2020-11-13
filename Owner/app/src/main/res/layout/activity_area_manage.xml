@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_weight="4"
-            android:text="Quản lý khu vực"
+            android:text="Quản l  ý khu vực"
             android:textColor="#000"
             android:textSize="40sp" />
     </LinearLayout>

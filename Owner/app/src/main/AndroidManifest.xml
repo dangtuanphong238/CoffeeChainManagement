@@ -9,18 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
         <activity
-            android:name=".MainActivity">
-=======
-        <activity android:name=".MealManage"></activity>
+            android:name=".MainActivity"/>
+        <activity android:name=".MealManage"/>
         <activity android:name=".RoomManage" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".AreaManage">
->>>>>>> 352aa3cc2c774428c79192cd65880a57d377771c
+        <activity android:name=".AreaManage"/>
+        <activity android:name=".AddMonActivity"/>
+        <activity android:name=".AddNhanVienActivity"/>
+        <activity android:name=".addHangHoaActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

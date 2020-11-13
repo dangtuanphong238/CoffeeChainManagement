@@ -11,4 +11,4 @@ public class AreaManage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_area_manage);
     }
-}
+ }
