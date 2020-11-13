@@ -2,7 +2,10 @@ package com.example.staff;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -23,6 +26,13 @@ ArrayList<String> arrayCourse;
         ArrayAdapter adapter = new ArrayAdapter(
                 ChiTietBan.this, android.R.layout.simple_list_item_1,arrayCourse);
 lvChiTietBan.setAdapter(adapter);
+lvChiTietBan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(ChiTietBan.this,DatMon.class);
+        startActivity(intent);
+    }
+});
     }
     private void anXa(){
         lvChiTietBan = findViewById(R.id.lvChiTietBan);

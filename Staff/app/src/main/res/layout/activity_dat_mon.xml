@@ -91,7 +91,7 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left||center"
+                            android:layout_gravity="left|center"
                             android:layout_weight="1"
                             android:textColor="#000000"
                             android:textSize="15dp"
@@ -113,7 +113,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="1"
-                            android:textSize="20dp"></EditText>
+                            android:textSize="20dp"
+                            android:gravity="center"></EditText>
                         <ImageView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -143,14 +144,14 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left||center"
+                android:layout_gravity="left|center"
                 android:layout_weight="1"
                 android:text="65.000 đ"></TextView>
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center||right"
+                android:layout_gravity="center|right"
                 android:layout_weight="1"
                 android:text="Add"></Button>
         </LinearLayout>
