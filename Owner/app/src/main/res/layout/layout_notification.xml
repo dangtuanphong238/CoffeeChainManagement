@@ -70,6 +70,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+<<<<<<< HEAD
                     android:layout_below="@+id/linearListReceiver"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="20dp"
@@ -79,6 +80,24 @@
                     android:textFontWeight="100" />
             </RelativeLayout>
         </LinearLayout>
+=======
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Chon nguoi nhan"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearListReceiver"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/background_button_corner_white"
+                android:text="Send" />
+        </RelativeLayout>
+>>>>>>> 1dba6ae8b910e1eede60387dced3cebb4a1eccdd
     </LinearLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
