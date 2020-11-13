@@ -8,8 +8,6 @@
     android:orientation="vertical"
     tools:context=".AreaManageActivity">
 
-<<<<<<< HEAD
-=======
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -35,7 +33,6 @@
             android:textColor="#000"
             android:textSize="40sp" />
     </LinearLayout>
->>>>>>> 1dba6ae8b910e1eede60387dced3cebb4a1eccdd
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -44,8 +41,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:gravity="center"
             android:layout_weight="1">
-            <include layout="@layout/layout_toolbar"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <include
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    layout="@layout/layout_toolbar"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="4"
+                    android:gravity="left"
+                    android:text="Quản lý khu vực"
+                    android:textColor="#000"
+                    android:textSize="40sp" />
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:background="#EA9547"
