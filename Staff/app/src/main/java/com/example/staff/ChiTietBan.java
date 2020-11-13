@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class ChiTietBan extends AppCompatActivity {
 ListView lvChiTietBan;
 ArrayList<String> arrayCourse;
+ArrayAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,8 +24,17 @@ ArrayList<String> arrayCourse;
         arrayCourse.add("Bạc xỉu");
         arrayCourse.add("Đen đá");
         arrayCourse.add("Phin đá");
-        ArrayAdapter adapter = new ArrayAdapter(
-                ChiTietBan.this, android.R.layout.simple_list_item_1,arrayCourse);
+        arrayCourse.add("Bạc xỉu");
+        arrayCourse.add("Đen đá");
+        arrayCourse.add("Phin đá");
+        arrayCourse.add("Bạc xỉu");
+        arrayCourse.add("Đen đá");
+        arrayCourse.add("Phin đá");
+        arrayCourse.add("Bạc xỉu");
+        arrayCourse.add("Đen đá");
+        arrayCourse.add("Phin đá");
+
+        ArrayAdapter adapter = new ArrayAdapter(ChiTietBan.this, android.R.layout.simple_list_item_1,arrayCourse);
 lvChiTietBan.setAdapter(adapter);
 lvChiTietBan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
     @Override
