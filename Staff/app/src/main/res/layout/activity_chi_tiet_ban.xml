@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,6 +9,7 @@
     android:orientation="vertical"
     android:padding="20dp"
     tools:context=".ChiTietBan">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +21,8 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="Bàn 1"
-            android:textSize="30dp"></TextView>
+            android:textSize="30dp" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -32,27 +35,30 @@
         <EditText
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
             android:layout_weight="3"
             android:background="@drawable/custom_edittext"
             android:drawableEnd="@drawable/ic_search_24"
             android:gravity="right"
-            android:paddingHorizontal="10dp"
-            android:layout_marginEnd="10dp"
-            ></EditText>
+            android:paddingHorizontal="10dp" />
 
         <Spinner
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:background="@drawable/custom_edittext"
-            ></Spinner>
+            android:background="@drawable/custom_edittext" />
+
     </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5"
         android:orientation="vertical">
+
+
 
         <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
@@ -64,23 +70,30 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tất cả" />
+                android:text="Tất cả">
+            </com.google.android.material.tabs.TabItem>
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Coffee" />
+                android:text="Coffee">
+            </com.google.android.material.tabs.TabItem>
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nước ngọt" />
-        </com.google.android.material.tabs.TabLayout>
 
-        <ListView
-            android:id="@+id/lvChiTietBan"
+        </com.google.android.material.tabs.TabLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcChitiet"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="6"></ListView>
+            android:layout_weight="6"
+            tools:listitem="@layout/item_view"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+
+
     </LinearLayout>
+
 </LinearLayout>
