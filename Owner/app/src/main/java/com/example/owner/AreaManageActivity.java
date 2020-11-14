@@ -8,6 +8,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 //TODO: Nhung dieu can lam khi coppy drawer menu
 //Nhung diem can chu y khi lay drawer menu
@@ -32,12 +34,50 @@ public class AreaManageActivity extends AppCompatActivity {
     public final static String KEY_AddProductActivity = "InfoOfStoreActivity";
 
     DrawerLayout drawerLayout;
+    ImageButton btnRoom1, btnRoom2, btnRoom3, btnRoom4;
+
+    private void init(){
+        drawerLayout = findViewById(R.id.drawerMenu);
+        btnRoom1 = findViewById(R.id.btnRoom1);
+        btnRoom2 = findViewById(R.id.btnRoom2);
+        btnRoom3 = findViewById(R.id.btnRoom3);
+        btnRoom4 = findViewById(R.id.btnRoom4);
+        btnRoom1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToRoomScreen(RoomScreen.class);
+            }
+        });
+        btnRoom2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToRoomScreen(RoomScreen.class);
+            }
+        });
+        btnRoom3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToRoomScreen(RoomScreen.class);
+            }
+        });
+        btnRoom4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToRoomScreen(RoomScreen.class);
+            }
+        });
+    }
+
+    public void goToRoomScreen(Class<?> ad){
+        Intent intent = new Intent(AreaManageActivity.this,ad);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_area_manage);
-        drawerLayout = findViewById(R.id.drawerMenu);
+        init();
     }
 
     public void onClickMenu(View view) {

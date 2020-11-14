@@ -59,7 +59,6 @@ public class StaffManageActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line,listOffice );
         spnOffice.setAdapter(adapter);
     }
-        btnMnu = findViewById(R.id.btnMnu);
 
     public void onClickMenu(View view) {
         openDrawer(drawerLayout);

@@ -19,6 +19,7 @@
             android:orientation="vertical">
 
             <ImageButton
+                android:id="@+id/btnRoom1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_area" />
@@ -40,6 +41,7 @@
             android:orientation="vertical">
 
             <ImageButton
+                android:id="@+id/btnRoom2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_area" />
@@ -70,6 +72,7 @@
             android:orientation="vertical">
 
             <ImageButton
+                android:id="@+id/btnRoom3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_area" />
@@ -91,6 +94,7 @@
             android:orientation="vertical">
 
             <ImageButton
+                android:id="@+id/btnRoom4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_area" />

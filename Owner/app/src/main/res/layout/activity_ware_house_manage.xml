@@ -23,8 +23,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_margin="5dp"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <include
@@ -71,7 +71,7 @@
                         android:layout_weight="1"
                         android:text="Danh sách:"
                         android:textColor="#000"
-                        android:textSize="25sp" />
+                        android:textSize="20sp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -109,12 +109,7 @@
                             android:gravity="center"
                             android:text="Tên Hàng Hóa"
                             android:textColor="#000"
-                            android:textSize="25sp" />
-
-                        <LinearLayout
-                            android:layout_width="2dp"
-                            android:layout_height="match_parent"
-                            android:background="#000" />
+                            android:textSize="20sp" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -123,7 +118,7 @@
                             android:gravity="center"
                             android:text="Số Lượng"
                             android:textColor="#000"
-                            android:textSize="25sp" />
+                            android:textSize="20sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -144,28 +139,47 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <Button
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@drawable/button_warehouse_add"
-                        android:text="Thêm Món" />
+                        android:gravity="center">
 
-                    <Button
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/button_warehouse_remove"
-                        android:text="Xóa" />
+                        <Button
+                            android:paddingLeft="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/button_warehouse_add"
+                            android:text="Thêm" />
+                    </LinearLayout>
 
-                    <Button
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@drawable/button_warehouse_update"
-                        android:gravity="center"
-                        android:paddingLeft="20dp"
-                        android:text="Cập nhật" />
+                        android:gravity="center">
+
+                        <Button
+                            android:paddingLeft="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/button_warehouse_remove"
+                            android:text="Xóa " />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <Button
+                            android:paddingLeft="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/button_warehouse_update"
+                            android:text="Cập nhật" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
