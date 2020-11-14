@@ -1,14 +1,14 @@
-package com.example.owner;
+package com.example.founder;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class RoomManage extends AppCompatActivity {
+public class layout_tongdoanhthu extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_room_manage);
+        setContentView(R.layout.activity_layout_tongdoanhthu);
     }
 }

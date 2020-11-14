@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FE9B53"
+    android:padding="10dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtCMF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="COFFEE MY FRIEND THU DUC"
+            android:textColorLink="#090909"
+            android:textSize="26dp"></TextView>
+
+        <TextView
+            android:id="@+id/txtQLTK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Quan Ly Tai Khoan"
+            android:textSize="20dp"></TextView>
+
+        <TextView
+            android:id="@+id/txtTenCuaHang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Tên cửa hàng:"
+            android:textColor="#767B97"
+            android:textSize="20dp"></TextView>
+
+        <EditText
+            android:id="@+id/edtTencuahang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:background="@drawable/custom_edittext"
+            android:hint="Coffee My Friend Thu Duc"></EditText>
+
+        <TextView
+            android:id="@+id/txtTendangnhap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Tên đăng nhập:"
+            android:textColor="#767B97"
+            android:textSize="20dp"></TextView>
+
+        <EditText
+            android:id="@+id/edtTendangnhap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_edittext"
+            android:hint="nhom4.cdptdd2@gmail.com"
+            android:paddingRight="20px"></EditText>
+
+        <TextView
+            android:id="@+id/txtMatkhau"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Mật Khẩu:"
+            android:textColor="#767B97"
+            android:textSize="20dp"></TextView>
+
+        <EditText
+            android:id="@+id/edtMatkhau"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="123456789"
+            android:background="@drawable/custom_edittext"
+            android:paddingRight="20px"></EditText>
+
+        <TextView
+            android:id="@+id/txtSdt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Số điện thoại:"
+            android:textColor="#767B97"
+            android:textSize="20dp"></TextView>
+
+        <EditText
+            android:id="@+id/edtSdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="0909888844"
+            android:background="@drawable/custom_edittext"
+            android:paddingRight="20px"></EditText>
+
+        <TextView
+            android:id="@+id/txtCMND"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="CMND:"
+            android:textColor="#767B97"
+            android:textSize="20dp"></TextView>
+
+        <EditText
+            android:id="@+id/edtCMND"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="272817333"
+            android:background="@drawable/custom_edittext"
+            android:paddingRight="20px"></EditText>
+
+        <TextView
+            android:id="@+id/txtTrangthai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Trạng Thái:"
+            android:textColor="#767B97"
+            android:textSize="20dp"></TextView>
+
+        <Spinner
+            android:id="@+id/spTrangthai"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button"
+            android:padding="15dp"
+            android:layout_marginHorizontal="10dp">
+        </Spinner>
+
+        <TextView
+            android:id="@+id/txtHoaHong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Hoa Hồng:"
+            android:textColor="#767B97"
+            android:textSize="20dp"></TextView>
+
+        <EditText
+            android:id="@+id/edtHoahong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="5%"
+            android:background="@drawable/custom_edittext"
+            android:paddingRight="20px"></EditText>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rdDadongphi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:checked="true"
+                    android:text="Đã đóng phí" />
+
+                <RadioButton
+                    android:layout_marginHorizontal="5dp"
+                    android:id="@+id/rdChuadongphi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chưa đóng phí" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_marginHorizontal="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="20px"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/custom_button"
+                android:text="Cập Nhật " />
+
+            <Button
+                android:layout_marginHorizontal="5dp"
+                android:padding="20px"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/custom_button"
+                android:text="Gửi Thông Báo" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
