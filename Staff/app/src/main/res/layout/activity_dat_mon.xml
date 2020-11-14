@@ -27,7 +27,9 @@
         android:layout_height="0dp"
         android:layout_weight="5"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:background="#C4C4C4"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,6 +75,7 @@
                         android:layout_weight="1"
                         android:gravity="right">
                         <ImageView
+                            android:id="@+id/imgExit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/highlight_off"
@@ -91,7 +94,7 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left||center"
+                            android:layout_gravity="left|center"
                             android:layout_weight="1"
                             android:textColor="#000000"
                             android:textSize="15dp"
@@ -113,7 +116,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="1"
-                            android:textSize="20dp"></EditText>
+                            android:textSize="20dp"
+                            android:gravity="center"></EditText>
                         <ImageView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -143,14 +147,14 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left||center"
+                android:layout_gravity="left|center"
                 android:layout_weight="1"
                 android:text="65.000 đ"></TextView>
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center||right"
+                android:layout_gravity="center|right"
                 android:layout_weight="1"
                 android:text="Add"></Button>
         </LinearLayout>

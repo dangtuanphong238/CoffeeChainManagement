@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="0.5">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -34,13 +34,16 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
                 <ImageView
                     android:id="@+id/imgPhongLanh"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="4"
-                    android:src="@drawable/maylanh"></ImageView>
+                    android:src="@drawable/ic_phong_lanhj"
+                    android:background="@drawable/custom_btn_khu_vuc"
+                    android:padding="10dp"></ImageView>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -54,12 +57,15 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="4"
-                    android:src="@drawable/phonghop"></ImageView>
+                    android:padding="10dp"
+                    android:src="@drawable/ic_phong_hop"
+                    android:background="@drawable/custom_btn_khu_vuc"></ImageView>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -79,12 +85,15 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="4"
-                    android:src="@drawable/vip"></ImageView>
+                    android:src="@drawable/ic_phong_vip"
+                    android:background="@drawable/custom_btn_khu_vuc"
+                    ></ImageView>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -97,12 +106,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="4"
-                    android:src="@drawable/binhthuong"></ImageView>
+                    android:src="@drawable/binhthuong"
+                    android:background="@drawable/custom_btn_khu_vuc"></ImageView>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
