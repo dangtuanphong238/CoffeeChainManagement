@@ -1,9 +1,9 @@
-package com.example.owner.Database;
+package com.example.owner.Model;
 
-public class ListPhanLoai {
+public class ListSpinner {
     private String mCountryName;
     private int mFlagImage;
-    public ListPhanLoai(String countryName, int flagImage) {
+    public ListSpinner(String countryName, int flagImage) {
         mCountryName = countryName;
         mFlagImage = flagImage;
     }
