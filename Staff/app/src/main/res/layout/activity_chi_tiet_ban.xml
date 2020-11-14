@@ -61,6 +61,7 @@
 
 
         <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tablayout_id"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -85,13 +86,19 @@
                 android:text="Nước ngọt" />
 
         </com.google.android.material.tabs.TabLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcChitiet"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPage_id"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="6"
-            tools:listitem="@layout/item_view"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+            app:layout_behavior = "@string/appbar_scrolling_view_behavior"></androidx.viewpager.widget.ViewPager>
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/rcChitiet"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_weight="6"-->
+<!--            tools:listitem="@layout/item_view"-->
+<!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>-->
 
 
     </LinearLayout>
