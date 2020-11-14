@@ -11,8 +11,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.owner.Database.ListPhanLoai;
 import com.example.owner.Model.CountryAdapter;
+import com.example.owner.Model.ListSpinner;
 
 import java.util.ArrayList;
 
@@ -22,7 +22,7 @@ public class AddMonActivity extends AppCompatActivity {
     ImageButton addThuVien,addMayAnh;
     Spinner spPhanLoai;
     Button btnCapNhat, btnXoa;
-    private ArrayList<ListPhanLoai> mCountryList;
+    private ArrayList<ListSpinner> mCountryList;
     private CountryAdapter mAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +76,8 @@ public class AddMonActivity extends AppCompatActivity {
     }
     private void initList() {
         mCountryList = new ArrayList<>();
-        mCountryList.add(new ListPhanLoai("Cà phê", R.drawable.capheicon));
-        mCountryList.add(new ListPhanLoai("Trà Sữa", R.drawable.trasuaicon));
-        mCountryList.add(new ListPhanLoai("Bánh Ngọt", R.drawable.banhicon));
+        mCountryList.add(new ListSpinner("Cà phê", R.drawable.capheicon));
+        mCountryList.add(new ListSpinner("Trà Sữa", R.drawable.trasuaicon));
+        mCountryList.add(new ListSpinner("Bánh Ngọt", R.drawable.banhicon));
     }
 }

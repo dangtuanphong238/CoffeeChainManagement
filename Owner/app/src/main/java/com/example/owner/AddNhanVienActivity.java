@@ -7,10 +7,16 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.owner.Database.ListPhanLoai;
 import com.example.owner.Model.CountryAdapter;
+import com.example.owner.Model.ListSpinner;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -18,8 +24,8 @@ public class AddNhanVienActivity extends AppCompatActivity {
     EditText txtTenNhanVien, txtTenDangNhap,txtMatKhau,txtSDT,txtCMND;
     Button btnThemNhanVien;
     Spinner spChucVu,spCaLam;
-    private ArrayList<ListPhanLoai> mCountryList;
-    private ArrayList<ListPhanLoai> CaLamList;
+    private ArrayList<ListSpinner> mCountryList;
+    private ArrayList<ListSpinner> CaLamList;
     private CountryAdapter mAdapter;
     private CountryAdapter mAdapterCaLam;
     @Override
@@ -45,7 +51,6 @@ public class AddNhanVienActivity extends AppCompatActivity {
             }
         });
     }
-
     private void setControl() {
     txtTenNhanVien = findViewById(R.id.edtTenNhanVien);
     txtTenDangNhap = findViewById(R.id.edtTenDangNhap);
@@ -58,14 +63,14 @@ public class AddNhanVienActivity extends AppCompatActivity {
     }
     private void initList() {
         mCountryList = new ArrayList<>();
-        mCountryList.add(new ListPhanLoai("Quản Lý", R.drawable.quanlyicon));
-        mCountryList.add(new ListPhanLoai("Nhân Viên Phục Vụ", R.drawable.odericon));
-        mCountryList.add(new ListPhanLoai("Nhân Viên Kho", R.drawable.khoicon));
+        mCountryList.add(new ListSpinner("Quản Lý", R.drawable.quanlyicon));
+        mCountryList.add(new ListSpinner("Nhân Viên Phục Vụ", R.drawable.odericon));
+        mCountryList.add(new ListSpinner("Nhân Viên Kho", R.drawable.khoicon));
     }
     private void inintCaLam() {
         CaLamList = new ArrayList<>();
-        CaLamList.add(new ListPhanLoai("Sáng", R.drawable.quanlyicon));
-        CaLamList.add(new ListPhanLoai("Chiều", R.drawable.odericon));
-        CaLamList.add(new ListPhanLoai("Tối", R.drawable.khoicon));
+        CaLamList.add(new ListSpinner("Sáng", R.drawable.quanlyicon));
+        CaLamList.add(new ListSpinner("Chiều", R.drawable.odericon));
+        CaLamList.add(new ListSpinner("Tối", R.drawable.khoicon));
     }
 }
