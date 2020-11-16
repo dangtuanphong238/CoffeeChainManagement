@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -18,12 +19,14 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ImageButton imgMnu;
+    private TextView txtTenChucNang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         anhXa();
+        txtTenChucNang.setText("Chức Năng");
         openMenu();
 
         //call function onClickItem
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.activity_main_drawer);
         navigationView = findViewById(R.id.navDrawerMenu);
         imgMnu = findViewById(R.id.btnMnu);
+        txtTenChucNang = findViewById(R.id.idtoolbar);
     }
 
     public void openMenu() {
