@@ -2,56 +2,24 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawerMenu"
+    android:id="@+id/activity_main_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".StaffManageActivity">
-
+    tools:context=".Activity.StaffManageActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <include
-                    layout="@layout/layout_toolbar"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tvTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:gravity="left"
-                    android:text="Quản lý kho"
-                    android:textColor="#000"
-                    android:textSize="40sp" />
-            </LinearLayout>
-
-        </LinearLayout>
+        <include layout="@layout/toolbar" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="8"
-            android:background="#EA9547">
-            //Noi Dung Phan WareHomeManageActivity
+            android:background="#FE9B58">
+            <!--            //Noi Dung Phan WareHomeManageActivity-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -146,10 +114,10 @@
                         android:gravity="center">
 
                         <Button
-                            android:paddingLeft="20dp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@drawable/button_warehouse_add"
+                            android:paddingLeft="20dp"
                             android:text="Thêm" />
                     </LinearLayout>
 
@@ -160,10 +128,10 @@
                         android:gravity="center">
 
                         <Button
-                            android:paddingLeft="20dp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@drawable/button_warehouse_remove"
+                            android:paddingLeft="20dp"
                             android:text="Xóa " />
                     </LinearLayout>
 
@@ -174,10 +142,10 @@
                         android:gravity="center">
 
                         <Button
-                            android:paddingLeft="20dp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@drawable/button_warehouse_update"
+                            android:paddingLeft="20dp"
                             android:text="Cập nhật" />
                     </LinearLayout>
                 </LinearLayout>
@@ -185,11 +153,13 @@
         </LinearLayout>
     </LinearLayout>
 
-    <RelativeLayout
+    <!--    leftmenu-->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navDrawerMenu"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start">
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/main_actions"></com.google.android.material.navigation.NavigationView>
 
-        <include layout="@layout/layout_drawer_menu" />
-    </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

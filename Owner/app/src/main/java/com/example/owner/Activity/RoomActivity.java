@@ -1,13 +1,13 @@
-package com.example.owner;
+package com.example.owner.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class RoomScreen extends AppCompatActivity {
+import com.example.owner.R;
+
+public class RoomActivity extends AppCompatActivity {
     //NOTE: Table status
     //STATUS_0: Blank
     //STATUS_1: Book
@@ -21,6 +21,6 @@ public class RoomScreen extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.room_screen);
+        setContentView(R.layout.activity_room);
     }
 }

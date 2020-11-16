@@ -2,11 +2,10 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawerMenu"
+    android:id="@+id/activity_main_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MealManageActivity">
+    tools:context=".Activity.MealManageActivity">
 
 
     <LinearLayout
@@ -14,43 +13,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <include
-                    layout="@layout/layout_toolbar"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tvTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:gravity="left"
-                    android:text="Quản lý món ăn"
-                    android:textColor="#000"
-                    android:textSize="40sp" />
-            </LinearLayout>
-
-        </LinearLayout>
+        <include layout="@layout/toolbar"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="8"
-            android:background="#EA9547">
-            //Noi Dung Phan MealManageActivity
+            android:background="#FE9B58">
+<!--            //Noi Dung Phan MealManageActivity-->
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -67,7 +37,7 @@
                         android:layout_weight="1"
                         android:textColor="#000"
                         android:text="Danh sách:"
-                        android:textSize="25sp"
+                        android:textSize="20sp"
                         android:layout_height="wrap_content"/>
                     <LinearLayout
                         android:gravity="end"
@@ -102,7 +72,7 @@
                             android:layout_height="wrap_content"
                             android:text="Tên Món Ăn"
                             android:textColor="#000"
-                            android:textSize="25sp"/>
+                            android:textSize="20sp"/>
                         <LinearLayout
                             android:layout_width="2dp"
                             android:layout_height="match_parent"
@@ -114,14 +84,14 @@
                             android:layout_height="wrap_content"
                             android:text="Giá"
                             android:textColor="#000"
-                            android:textSize="25sp"/>
+                            android:textSize="20sp"/>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="8">
-                    //Add recyclerview in this
+<!--                    //Add recyclerview in this-->
 
 
                     </LinearLayout>
@@ -143,11 +113,15 @@
         </LinearLayout>
     </LinearLayout>
 
-    <RelativeLayout
+    <!--    leftmenu-->
+    <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start">
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:id="@+id/navDrawerMenu"
+        app:menu="@menu/main_actions"
+        >
+    </com.google.android.material.navigation.NavigationView>
 
-        <include layout="@layout/layout_drawer_menu" />
-    </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>
