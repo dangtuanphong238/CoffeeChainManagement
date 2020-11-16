@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/itemQLKV"
+        android:title="Quản lý khu vực"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/itemQLMon"
+        android:title="Quản lý món"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/itemQLNV"
+        android:title="Quản lý nhân viên"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/itemQLKho"
+        android:title="Quản lý kho"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/itemThongBao"
+        android:title="Thông báo"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/itemThuNgan"
+        android:title="Thu Ngân"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/itemDoanhThu"
+        android:title="Doanh Thu"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/itemInfoStore"
+        android:title="Thông tin cửa hàng"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/itemThemMon"
+        android:title="Thêm món"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/itemThemNV"
+        android:title="Thêm nhân viên"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/itemSPKho"
+        android:title="Sản phẩm kho"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/itemLogOut"
+        android:title="Log Out"
+        app:showAsAction="never"/>
+</menu>
