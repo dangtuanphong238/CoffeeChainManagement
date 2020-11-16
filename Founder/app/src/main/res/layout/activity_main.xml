@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#FE9B53"
     android:layout_height="match_parent"
     android:id="@+id/activity_main_drawer"
     tools:context=".MainActivity">
@@ -12,15 +13,6 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
         <include layout="@layout/toolbar"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Chức Năng"
-            android:gravity="center"
-            android:textSize="40dp"></TextView>
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
     <!--    leftmenu-->
     <com.google.android.material.navigation.NavigationView
