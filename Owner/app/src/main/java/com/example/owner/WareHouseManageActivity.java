@@ -77,6 +77,7 @@ public class WareHouseManageActivity extends AppCompatActivity {
 
     //TODO: Moi nguoi coppy code chen vao dung chuc nang cua minh theo mau co san
     public void onClickNotification(View view) {
+        transformScreen(drawerLayout,NotificationScreen.class, KEY_NotificationManageActivity);
     }
 
     public void onClickCashier(View view) {
