@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "323390211337",
+    "firebase_url": "https://quanlychuoicoffee.firebaseio.com",
+    "project_id": "quanlychuoicoffee",
+    "storage_bucket": "quanlychuoicoffee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323390211337:android:fca422110b149839bdbfd8",
+        "android_client_info": {
+          "package_name": "com.example.owner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "323390211337-fuf56o61fdtpalr97cdusrsu2nq8fktn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZtSmSkP2ZXZEGAGNCABYEZ3oGWdCNP0Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323390211337-fuf56o61fdtpalr97cdusrsu2nq8fktn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323390211337:android:4d13ae752240fc07bdbfd8",
+        "android_client_info": {
+          "package_name": "com.example.staff"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "323390211337-sb77rvv1oucn3t24lbcm0gg1i3tseqke.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.staff",
+            "certificate_hash": "90fe712048ac2eb33a52adc1070ce548629591a5"
+          }
+        },
+        {
+          "client_id": "323390211337-fuf56o61fdtpalr97cdusrsu2nq8fktn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZtSmSkP2ZXZEGAGNCABYEZ3oGWdCNP0Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323390211337-fuf56o61fdtpalr97cdusrsu2nq8fktn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

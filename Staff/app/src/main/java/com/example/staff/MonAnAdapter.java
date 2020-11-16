@@ -57,4 +57,5 @@ public class MonAnAdapter extends RecyclerView.Adapter<MonAnAdapter.ViewHolder> 
             txtGiaMonAn = itemView.findViewById(R.id.txtGiaMonAn);
         }
     }
+
 }

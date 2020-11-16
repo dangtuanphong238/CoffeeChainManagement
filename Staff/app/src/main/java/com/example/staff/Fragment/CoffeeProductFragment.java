@@ -24,31 +24,31 @@ public class CoffeeProductFragment extends Fragment {
     RecyclerView coffeerecyclerView;
     ArrayList<MonAn> listMonAn;
     MonAnAdapter monAnAdapter;
+
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = null;
-        view = inflater.inflate(R.layout.fragment_coffee_product,container,false);
+        view = inflater.inflate(R.layout.fragment_coffee_product, container, false);
         coffeerecyclerView = view.findViewById(R.id.coffeeRecycleView);
-        coffeerecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        coffeerecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         listMonAn = new ArrayList<>();
-        listMonAn.add(new MonAn("Cafe Sữa",200000,R.drawable.cfsua));
-        listMonAn.add(new MonAn("Bạc xỉu",150000,R.drawable.bacxiu));
-        listMonAn.add(new MonAn("Bạc xỉu",150000,R.drawable.bacxiu));
-        listMonAn.add(new MonAn("Bạc xỉu",150000,R.drawable.bacxiu));
-        monAnAdapter = new MonAnAdapter(getContext(),listMonAn);
+        listMonAn.add(new MonAn("Cafe Sữa", 200000, R.drawable.cfsua));
+        listMonAn.add(new MonAn("Bạc xỉu", 150000, R.drawable.bacxiu));
+        monAnAdapter = new MonAnAdapter(getContext(), listMonAn);
         coffeerecyclerView.setAdapter(monAnAdapter);
         // Inflate the layout for this fragment
         coffeerecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                Intent intent = new Intent(getActivity(),DatMon.class);
+                startActivity(intent);
                 return false;
             }
 
             @Override
             public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                Intent intent = new Intent(getActivity(), DatMon.class);
-                startActivity(intent);
+
             }
 
             @Override
@@ -60,6 +60,6 @@ public class CoffeeProductFragment extends Fragment {
 
         return view;
 
-        }
+    }
 
 }
