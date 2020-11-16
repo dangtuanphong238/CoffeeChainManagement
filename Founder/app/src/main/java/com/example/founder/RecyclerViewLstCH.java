@@ -20,15 +20,15 @@ public class RecyclerViewLstCH extends AppCompatActivity {
         initRecyclerView();
     }
     private void initList(){
-        arrayDSCH.add("abc");
-        arrayDSCH.add("abc");
-        arrayDSCH.add("abc");
-        arrayDSCH.add("abc");
-        arrayDSCH.add("abc");
-        arrayDSCH.add("abc");
-        arrayDSCH.add("abc");
-        arrayDSCH.add("abc");
-        arrayDSCH.add("abc");
+        arrayDSCH.add("Store One");
+        arrayDSCH.add("Store Two");
+        arrayDSCH.add("Store Three");
+        arrayDSCH.add("Store Four");
+        arrayDSCH.add("Store Five");
+        arrayDSCH.add("Store Six");
+        arrayDSCH.add("Store Seven");
+        arrayDSCH.add("Store Egiht");
+        arrayDSCH.add("Store Nine");
     }
     private void initRecyclerView(){
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);

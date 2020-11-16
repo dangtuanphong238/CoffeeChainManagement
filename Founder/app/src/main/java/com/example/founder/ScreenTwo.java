@@ -1,67 +1,68 @@
 package com.example.founder;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class ScreenTwo extends AppCompatActivity {
     private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle drawerToggle;
     private NavigationView navigationView;
     private ImageButton imgMnu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_screen_two);
+
         anhXa();
         openMenu();
-
         //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.itemHome:
-                        recreate();
+                        Public_func.clickItemMenu(ScreenTwo.this, MainActivity.class);
                         return true;
                     case R.id.it1:
-                        Public_func.clickItemMenu(MainActivity.this, layout_tongdoanhthu.class);
+                        Public_func.clickItemMenu(ScreenTwo.this, ScreenOne.class);
                         return true;
                     case R.id.it2:
-                        Public_func.clickItemMenu(MainActivity.this, RecyclerViewLstCH.class);
-                        return true;
-                    case R.id.item3:
-                        Public_func.clickItemMenu(MainActivity.this, Screen_Account_creation.class);
-                        return true;
-                    case R.id.item4:
-                        Public_func.clickItemMenu(MainActivity.this, layout_notification.class);
+                        recreate();
                         return true;
                     case R.id.itemLogOut:
-                        Public_func.clickLogout(MainActivity.this, LoginScreen.class);
+                        Public_func.clickLogout(ScreenTwo.this, LoginScreen.class);
                         return true;
                 }
                 return true;
             }
         });
+
     }
-
-
-    private void anhXa() {
+    private void anhXa(){
         drawerLayout = findViewById(R.id.activity_main_drawer);
         navigationView = findViewById(R.id.navDrawerMenu);
         imgMnu = findViewById(R.id.btnMnu);
     }
-
     public void openMenu() {
         imgMnu.setOnClickListener(new View.OnClickListener() {
             @Override
