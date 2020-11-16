@@ -19,17 +19,18 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_area" />
+                android:id="@+id/btnRoom1"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/ic_phong_lanh" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Phong Lanh"
+                android:text="Phòng lạnh"
                 android:textColor="#000"
-                android:textSize="25sp" />
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -40,17 +41,18 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_area" />
+                android:id="@+id/btnRoom2"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/ic_phong_hop" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Phong Lanh"
+                android:text="Phòng họp"
                 android:textColor="#000"
-                android:textSize="25sp" />
+                android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -70,17 +72,18 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_area" />
+                android:id="@+id/btnRoom3"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/ic_phong_vip" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Phong Lanh"
+                android:text="Phòng VIP"
                 android:textColor="#000"
-                android:textSize="25sp" />
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -91,17 +94,18 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_area" />
+                android:id="@+id/btnRoom4"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/ic_phong_thuong" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Phong Lanh"
+                android:text="Phòng thường"
                 android:textColor="#000"
-                android:textSize="25sp" />
+                android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

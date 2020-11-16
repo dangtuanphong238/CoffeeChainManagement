@@ -7,47 +7,55 @@
     android:background="#EA9547"
     android:orientation="vertical"
     >
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+        <include layout="@layout/toolbar" />
+        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="Tong Doanh Thu"
+                    android:textColor="#000"
+                    android:textSize="40sp" />
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:padding="10dp"
-                android:background="@drawable/ic_baseline_menu_24" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="4"
-                android:gravity="left"
-                android:text="Tong Doanh Thu"
-                android:textColor="#000"
-                android:textSize="40sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4">
-        <ListView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            ></ListView>
+            android:layout_height="0dp"
+            android:layout_weight="4">
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                ></ListView>
 
-    </LinearLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/toolbar"/>
+    <!--    leftmenu-->
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:id="@+id/navDrawerMenu"
+        app:menu="@menu/main_actions"
+        >
+    </com.google.android.material.navigation.NavigationView>
 
 </LinearLayout>
