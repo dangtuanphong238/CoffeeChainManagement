@@ -72,10 +72,14 @@
 
 package com.example.owner.Activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,14 +91,34 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.owner.Global.Public_func;
 import com.example.owner.R;
+import com.example.owner.User.Owner;
+import com.example.owner.User.Staff;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class AddNhanVienActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
+    private Button btnThemNV;
+    private EditText edtTenNV,edtTenDangNhap, edtMatKhau, edtSDT, edtSoCMND;
+    private Spinner spnChucVu, spnLamTheoCa;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
 
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String OWNERID = "ownerID";
+    private String sOwnerID;
+    private ArrayList lstStaff = new ArrayList();
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +126,8 @@ public class AddNhanVienActivity extends AppCompatActivity {
         anhXa();
         txtTitleActivity.setText("Thêm Nhân Viên");
         openMenu();
+        getOwnerIDFromLocalStorage();
+        getSizeListStaff(); //getSizeList
 
         //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -155,12 +181,78 @@ public class AddNhanVienActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        setOnClick();
     }
+
+    private void setOnClick(){
+        btnThemNV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                getSizeListStaff(); //getSizeList
+
+                String tenNV = edtTenNV.getText().toString();
+                String tenDangNhap = edtTenDangNhap.getText().toString();
+                String matKhau = edtMatKhau.getText().toString();
+                String sdt = edtSDT.getText().toString();
+                String soCMND = edtSoCMND.getText().toString();
+        //        String caLam = ;
+        //        String chucVu = ;
+
+                final Staff staff = new Staff("Staff" + lstStaff.size(),tenDangNhap,matKhau,tenNV,sdt,soCMND);
+
+                firebaseDatabase = FirebaseDatabase.getInstance();
+                databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID);
+                databaseReference.child("QuanLyNhanVien").child("Staff"+lstStaff.size()).setValue(staff).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(AddNhanVienActivity.this, "Thêm nhân viên thành công", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(AddNhanVienActivity.this, "Thêm nhân viên thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
+    }
+
+    private void getSizeListStaff() //hàm này để lấy size của list nhânvieen để tự động sinh id theo list.size()
+    {
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID);
+        databaseReference.child("QuanLyNhanVien").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                lstStaff.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Staff staff1 = dataSnapshot.getValue(Staff.class);
+                    lstStaff.add(staff1);
+                    System.out.println("lstStaff " + lstStaff.size());
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private void anhXa() {
         drawerLayout = findViewById(R.id.activity_main_drawer);
         navigationView = findViewById(R.id.navDrawerMenu);
         btnMnu = findViewById(R.id.btnMnu);
         txtTitleActivity = findViewById(R.id.txtTitle);
+        btnThemNV = findViewById(R.id.btnThemNhanVien);
+        edtTenNV = findViewById(R.id.edtTenNhanVien);
+        edtTenDangNhap = findViewById(R.id.edtTenDangNhap);
+        edtMatKhau = findViewById(R.id.edtMatKhau);
+        edtSDT = findViewById(R.id.edtSoDienThoai);
+        edtSoCMND = findViewById(R.id.edtSoCMND);
+        spnChucVu = findViewById(R.id.spChucVu);
+        spnLamTheoCa = findViewById(R.id.spCaLam);
     }
     public void openMenu() {
         btnMnu.setOnClickListener(new View.OnClickListener() {
@@ -175,5 +267,12 @@ public class AddNhanVienActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        System.out.println(sharedPreferences.getString(OWNERID,"null"));
+        sOwnerID = sharedPreferences.getString(OWNERID,"null");
     }
 }

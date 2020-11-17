@@ -55,6 +55,7 @@
                     android:layout_height="wrap_content"
                     android:text="Tên cửa hàng:"/>
                 <EditText
+                    android:id="@+id/edtTenCH"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"/>
@@ -69,6 +70,7 @@
                     android:layout_height="wrap_content"
                     android:text="Địa chỉ:"/>
                 <EditText
+                    android:id="@+id/edtDiaChi"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"/>
@@ -83,6 +85,7 @@
                     android:layout_height="wrap_content"
                     android:text="Số giấy phép kinh doanh:"/>
                 <EditText
+                    android:id="@+id/edtSoGiayPhep"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"/>
@@ -97,11 +100,13 @@
                     android:layout_height="wrap_content"
                     android:text="Số điện thoại:"/>
                 <EditText
+                    android:id="@+id/edtSDT"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/custom_edittext"/>
             </LinearLayout>
             <Button
+                android:id="@+id/btnLuuThongTin"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
