@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.owner.R;
@@ -27,8 +28,10 @@ public class LoginActivity extends AppCompatActivity {
     private ArrayList<Owner> lstOwners = new ArrayList<>();
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+    private ImageButton btnEye;
     public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String TEXT = "text";
+    public static final String OWNERID = "ownerID";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                 for (Owner owner : lstOwners) {
                     if (owner.user.equals(edtUser.getText().toString()) && owner.pass.equals(edtPass.getText().toString())) {
                         isSuccess = true;
-                        saveDataToLocalStorage(owner.id);
+                        saveOwnerIDToLocalStorage(owner.id);
                         Intent intent = new Intent(LoginActivity.this, AreaManageActivity.class);
                         startActivity(intent);
                         finish();
@@ -75,12 +78,19 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+//        btnEye.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
     }
 
-    private void saveDataToLocalStorage(String ownerKey){
+    private void saveOwnerIDToLocalStorage(String ownerKey){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(TEXT,ownerKey);
+        editor.putString(OWNERID,ownerKey);
         editor.apply();
     }
 
@@ -90,5 +100,6 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         edtUser = findViewById(R.id.edtUser);
         edtPass = findViewById(R.id.edtPass);
+        btnEye = findViewById(R.id.btnEye);
     }
 }
