@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +27,8 @@ public class LoginActivity extends AppCompatActivity {
     private ArrayList<Owner> lstOwners = new ArrayList<>();
     private FirebaseDatabase database;
     private DatabaseReference myRef;
-
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String TEXT = "text";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                     Owner owner = dataSnapshot.getValue(Owner.class);
                     lstOwners.add(owner);
                     System.out.println(dataSnapshot.getKey());
+
                 }
             }
 
@@ -61,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                 for (Owner owner : lstOwners) {
                     if (owner.user.equals(edtUser.getText().toString()) && owner.pass.equals(edtPass.getText().toString())) {
                         isSuccess = true;
+                        saveDataToLocalStorage(owner.id);
                         Intent intent = new Intent(LoginActivity.this, AreaManageActivity.class);
                         startActivity(intent);
                         finish();
@@ -72,6 +76,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void saveDataToLocalStorage(String ownerKey){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(TEXT,ownerKey);
+        editor.apply();
+    }
+
+
 
     private void anhXa() {
         btnLogin = findViewById(R.id.btnLogin);
