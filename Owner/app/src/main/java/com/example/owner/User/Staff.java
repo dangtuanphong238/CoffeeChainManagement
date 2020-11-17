@@ -1,16 +1,17 @@
 package com.example.owner.User;
 
-public class User {
+public class Staff {
+
+    public String id;
     public String user;
     public String pass;
-    public String id;
 
-    public User(String user, String pass, String id) {
+    public Staff(String id, String user, String pass) {
+        this.id = id;
         this.user = user;
         this.pass = pass;
-        this.id = id;
     }
 
-    public User() {
+    public Staff() {
     }
 }
