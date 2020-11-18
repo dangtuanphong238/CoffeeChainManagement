@@ -1,5 +1,6 @@
 package com.example.owner.Activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -64,7 +65,6 @@ public class AddHangHoaActivity extends AppCompatActivity {
 
     private void getSpinner() {
         initList();
-        getData();
         mAdapter = new CountryAdapter(this,mCountryList);
            spinnerPL.setAdapter(mAdapter);
         spinnerPL.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -73,7 +73,7 @@ public class AddHangHoaActivity extends AppCompatActivity {
             {
                 ListSpinner clickedItem = (ListSpinner) adapterView.getItemAtPosition(potision);
                 clickedCountryName = clickedItem.getCountryName();
-                Toast.makeText(AddHangHoaActivity.this, clickedCountryName, Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddHangHoaActivity.this, "Bạn chọn " + clickedCountryName, Toast.LENGTH_SHORT).show();
 
             }
 
@@ -100,14 +100,18 @@ public class AddHangHoaActivity extends AppCompatActivity {
         buttonThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getData();
                 HangHoa hangHoa = new HangHoa(tenHangHoa,soLuong);
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = firebaseDatabase.getReference();
-                databaseReference.child("OwnerManager").child("QuanLyKho").child(sOwnerID).child(clickedCountryName)
+                databaseReference.child("OwnerManager").child(sOwnerID).child("QuanLyKho").child(clickedCountryName)
                         .child(tenHangHoa).setValue(hangHoa).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(AddHangHoaActivity.this, "Thêm Thành Công!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(AddHangHoaActivity.this,WareHouseManageActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
