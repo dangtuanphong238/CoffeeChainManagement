@@ -158,6 +158,7 @@
 
 package com.example.owner.Activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -234,6 +235,10 @@ public class AreaManageActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemLogOut:
+                        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.apply();
                         Public_func.clickLogout(AreaManageActivity.this, LoginActivity.class);
                         return true;
                 }
