@@ -1,10 +1,15 @@
 package com.example.owner.Activity;
 
+import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -18,6 +23,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -37,10 +44,12 @@ import com.squareup.picasso.Picasso;
 public class InfoStoreActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private ImageButton btnMnu, imgChoose;
+    private ImageButton btnMnu, btnChoose, btnCapture;
     private TextView txtTitleActivity;
     private Button btnLuuThongTin;
     private EditText edtTenCH, edtDiaChi, edtSoGiayPhep, edtSDT;
+    private ProgressDialog dialog;
+
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private Uri mImageUri;
@@ -71,16 +80,16 @@ public class InfoStoreActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(InfoStoreActivity.this, MealManageActivity.class);
                         return true;
                     case R.id.itemQLNV:
-                        Public_func.clickLogout(InfoStoreActivity.this, StaffManageActivity.class);
+                        Public_func.clickItemMenu(InfoStoreActivity.this, StaffManageActivity.class);
                         return true;
                     case R.id.itemQLKho:
-                        Public_func.clickLogout(InfoStoreActivity.this, WareHouseManageActivity.class);
+                        Public_func.clickItemMenu(InfoStoreActivity.this, WareHouseManageActivity.class);
                         return true;
                     case R.id.itemThongBao:
-                        Public_func.clickLogout(InfoStoreActivity.this, NotificationActivity.class);
+                        Public_func.clickItemMenu(InfoStoreActivity.this, NotificationActivity.class);
                         return true;
                     case R.id.itemThuNgan:
-                        Public_func.clickLogout(InfoStoreActivity.this, ThuNganActivity.class);
+                        Public_func.clickItemMenu(InfoStoreActivity.this, ThuNganActivity.class);
                         return true;
 
                     case R.id.itemDoanhThu:
@@ -93,15 +102,15 @@ public class InfoStoreActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemThemMon:
-                        Public_func.clickLogout(InfoStoreActivity.this, AddMonActivity.class);
+                        Public_func.clickItemMenu(InfoStoreActivity.this, AddMonActivity.class);
                         return true;
 
                     case R.id.itemThemNV:
-                        Public_func.clickLogout(InfoStoreActivity.this, AddNhanVienActivity.class);
+                        Public_func.clickItemMenu(InfoStoreActivity.this, AddNhanVienActivity.class);
                         return true;
 
                     case R.id.itemSPKho:
-                        Public_func.clickLogout(InfoStoreActivity.this, AddHangHoaActivity.class);
+                        Public_func.clickItemMenu(InfoStoreActivity.this, AddHangHoaActivity.class);
                         return true;
 
                     case R.id.itemLogOut:
@@ -115,8 +124,18 @@ public class InfoStoreActivity extends AppCompatActivity {
                 return true;
             }
         });
+//        askForPermission();
         setOnClick();
     }
+
+//    private void askForPermission(){
+//        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+//        {
+//            ActivityCompat.requestPermissions(this, new String[]{
+//                    Manifest.permission.CAMERA
+//            },100);
+//        }
+//    }
 
     private void setOnClick() {
         btnLuuThongTin.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +151,10 @@ public class InfoStoreActivity extends AppCompatActivity {
 
                 if(mImageUri != null && !tenCH.isEmpty() && !diaChi.isEmpty() && !giayPhep.isEmpty() && !sdt.isEmpty())
                 {
+                    dialog = new ProgressDialog(InfoStoreActivity.this);
+                    dialog.setMessage("Upload in progress");
+                    dialog.show();
+                                                                            //System.currentTimeMillis() : nếu muốn tự render name image
                     StorageReference fileReference = storageReference.child(sOwnerID + "." + getFileExtension(mImageUri));
                     fileReference.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -139,6 +162,7 @@ public class InfoStoreActivity extends AppCompatActivity {
                             Store store = new Store(taskSnapshot.getUploadSessionUri().toString(), tenCH,diaChi,giayPhep,sdt);
                             databaseReference.child("ThongTinCuaHang").setValue(store);
                             Toast.makeText(InfoStoreActivity.this, "Cập nhật thông tin cửa hàng thành công!", Toast.LENGTH_SHORT).show();
+                            dialog.cancel();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -154,10 +178,16 @@ public class InfoStoreActivity extends AppCompatActivity {
 
             }
         });
-        imgChoose.setOnClickListener(new View.OnClickListener() {
+        btnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openFileChoose();
+            }
+        });
+        btnCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                capturePicture();
             }
         });
     }
@@ -212,6 +242,11 @@ public class InfoStoreActivity extends AppCompatActivity {
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
+    private void capturePicture(){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent,100);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -220,6 +255,11 @@ public class InfoStoreActivity extends AppCompatActivity {
             mImageUri = data.getData();
             Picasso.with(this).load(mImageUri).into(imgCuaHang);
 
+        }
+        if(requestCode == 100 && resultCode == RESULT_OK){
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+//            Picasso.with(this).load(String.valueOf(bitmap)).into(imgCuaHang);
+            imgCuaHang.setImageBitmap(bitmap);
         }
     }
 
@@ -241,7 +281,8 @@ public class InfoStoreActivity extends AppCompatActivity {
         edtSDT = findViewById(R.id.edtSDT);
         edtSoGiayPhep = findViewById(R.id.edtSoGiayPhep);
         imgCuaHang = findViewById(R.id.imgCuaHang);
-        imgChoose = findViewById(R.id.imgChoose);
+        btnChoose = findViewById(R.id.btnChoose);
+        btnCapture = findViewById(R.id.btnCapture);
     }
 
     public void openMenu() {

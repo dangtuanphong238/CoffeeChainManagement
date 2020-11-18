@@ -157,10 +157,10 @@ public class WareHouseManageActivity extends AppCompatActivity {
                         recreate();
                         return true;
                     case R.id.itemThongBao:
-                        Public_func.clickLogout(WareHouseManageActivity.this, NotificationActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, NotificationActivity.class);
                         return true;
                     case R.id.itemThuNgan:
-                        Public_func.clickLogout(WareHouseManageActivity.this, ThuNganActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, ThuNganActivity.class);
                         return true;
 
                     case R.id.itemDoanhThu:
@@ -169,19 +169,19 @@ public class WareHouseManageActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemInfoStore:
-                        Public_func.clickLogout(WareHouseManageActivity.this, InfoStoreActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, InfoStoreActivity.class);
                         return true;
 
                     case R.id.itemThemMon:
-                        Public_func.clickLogout(WareHouseManageActivity.this, AddMonActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, AddMonActivity.class);
                         return true;
 
                     case R.id.itemThemNV:
-                        Public_func.clickLogout(WareHouseManageActivity.this, AddNhanVienActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, AddNhanVienActivity.class);
                         return true;
 
                     case R.id.itemSPKho:
-                        Public_func.clickLogout(WareHouseManageActivity.this, AddHangHoaActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, AddHangHoaActivity.class);
                         return true;
 
                     case R.id.itemLogOut:

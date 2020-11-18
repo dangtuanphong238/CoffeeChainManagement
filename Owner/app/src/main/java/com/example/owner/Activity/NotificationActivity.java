@@ -43,16 +43,16 @@ public class NotificationActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(NotificationActivity.this, MealManageActivity.class);
                         return true;
                     case R.id.itemQLNV:
-                        Public_func.clickLogout(NotificationActivity.this, StaffManageActivity.class);
+                        Public_func.clickItemMenu(NotificationActivity.this, StaffManageActivity.class);
                         return true;
                     case R.id.itemQLKho:
-                        Public_func.clickLogout(NotificationActivity.this, WareHouseManageActivity.class);
+                        Public_func.clickItemMenu(NotificationActivity.this, WareHouseManageActivity.class);
                         return true;
                     case R.id.itemThongBao:
                         recreate();
                         return true;
                     case R.id.itemThuNgan:
-                        Public_func.clickLogout(NotificationActivity.this, ThuNganActivity.class);
+                        Public_func.clickItemMenu(NotificationActivity.this, ThuNganActivity.class);
                         return true;
 
                     case R.id.itemDoanhThu:
@@ -61,19 +61,19 @@ public class NotificationActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemInfoStore:
-                        Public_func.clickLogout(NotificationActivity.this, InfoStoreActivity.class);
+                        Public_func.clickItemMenu(NotificationActivity.this, InfoStoreActivity.class);
                         return true;
 
                     case R.id.itemThemMon:
-                        Public_func.clickLogout(NotificationActivity.this, AddMonActivity.class);
+                        Public_func.clickItemMenu(NotificationActivity.this, AddMonActivity.class);
                         return true;
 
                     case R.id.itemThemNV:
-                        Public_func.clickLogout(NotificationActivity.this, AddNhanVienActivity.class);
+                        Public_func.clickItemMenu(NotificationActivity.this, AddNhanVienActivity.class);
                         return true;
 
                     case R.id.itemSPKho:
-                        Public_func.clickLogout(NotificationActivity.this, AddHangHoaActivity.class);
+                        Public_func.clickItemMenu(NotificationActivity.this, AddHangHoaActivity.class);
                         return true;
 
                     case R.id.itemLogOut:

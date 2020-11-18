@@ -121,7 +121,7 @@ public class AddMonActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.itemQLKV:
-                        Public_func.clickLogout(AddMonActivity.this, AreaManageActivity.class);
+                        Public_func.clickItemMenu(AddMonActivity.this, AreaManageActivity.class);
                         return true;
                     case R.id.itemQLMon:
                         Public_func.clickItemMenu(AddMonActivity.this, MealManageActivity.class);
@@ -130,13 +130,13 @@ public class AddMonActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(AddMonActivity.this, StaffManageActivity.class);
                         return true;
                     case R.id.itemQLKho:
-                        Public_func.clickLogout(AddMonActivity.this, WareHouseManageActivity.class);
+                        Public_func.clickItemMenu(AddMonActivity.this, WareHouseManageActivity.class);
                         return true;
                     case R.id.itemThongBao:
-                        Public_func.clickLogout(AddMonActivity.this, NotificationActivity.class);
+                        Public_func.clickItemMenu(AddMonActivity.this, NotificationActivity.class);
                         return true;
                     case R.id.itemThuNgan:
-                        Public_func.clickLogout(AddMonActivity.this, ThuNganActivity.class);
+                        Public_func.clickItemMenu(AddMonActivity.this, ThuNganActivity.class);
                         return true;
 
                     case R.id.itemDoanhThu:
@@ -145,7 +145,7 @@ public class AddMonActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemInfoStore:
-                        Public_func.clickLogout(AddMonActivity.this, InfoStoreActivity.class);
+                        Public_func.clickItemMenu(AddMonActivity.this, InfoStoreActivity.class);
                         return true;
 
                     case R.id.itemThemMon:
@@ -153,11 +153,11 @@ public class AddMonActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemThemNV:
-                        Public_func.clickLogout(AddMonActivity.this, AddNhanVienActivity.class);
+                        Public_func.clickItemMenu(AddMonActivity.this, AddNhanVienActivity.class);
                         return true;
 
                     case R.id.itemSPKho:
-                        Public_func.clickLogout(AddMonActivity.this, AddHangHoaActivity.class);
+                        Public_func.clickItemMenu(AddMonActivity.this, AddHangHoaActivity.class);
                         return true;
 
                     case R.id.itemLogOut:
