@@ -15,19 +15,7 @@ public class Store {
         this.sdt = sdt;
     }
 
-    public Store(String tencuahang, String diachi, String giayphepkinhdoanh, String sdt) {
-        this.tencuahang = tencuahang;
-        this.diachi = diachi;
-        this.giayphepkinhdoanh = giayphepkinhdoanh;
-        this.sdt = sdt;
-    }
-
     public Store() {
-    }
-
-    public Store(String imgUrl, String tencuahang) {
-        this.imgUrl = imgUrl;
-        this.tencuahang = tencuahang;
     }
 
     public String getImgUrl() {
