@@ -55,11 +55,11 @@
 
             <ImageButton
                 android:id="@+id/btnEye"
-                android:background="@drawable/custom_edittext"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="9dp"
                 android:layout_gravity="center|right"
+                android:layout_weight="1"
+                android:background="@drawable/custom_edittext"
                 android:src="@drawable/ic_eye_24" />
         </LinearLayout>
         <Button
