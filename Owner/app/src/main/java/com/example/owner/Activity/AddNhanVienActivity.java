@@ -189,8 +189,6 @@ public class AddNhanVienActivity extends AppCompatActivity {
         btnThemNV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                getSizeListStaff(); //getSizeList
-
                 String tenNV = edtTenNV.getText().toString();
                 String tenDangNhap = edtTenDangNhap.getText().toString();
                 String matKhau = edtMatKhau.getText().toString();
