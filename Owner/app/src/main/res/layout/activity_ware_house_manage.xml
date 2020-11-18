@@ -73,11 +73,11 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
+                            android:layout_weight="1"
                             android:gravity="center"
                             android:text="Tên Hàng Hóa"
                             android:textColor="#000"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -86,14 +86,26 @@
                             android:gravity="center"
                             android:text="Số Lượng"
                             android:textColor="#000"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
+                        <TextView
+                             android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Chức Năng"
+                            android:textColor="#000"
+                            android:textSize="18sp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="8">
-                        //Add RecyclerView in this
+                    <ListView
+                        android:id="@+id/lvDSSPKho"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </ListView>
 
 
                     </LinearLayout>
@@ -101,19 +113,24 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="66dp"
+                    android:layout_gravity="right"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center">
+                        android:layout_gravity="right"
+                        android:gravity="right">
 
                         <Button
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:id="@+id/themhanghoa"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@drawable/button_warehouse_add"
@@ -125,29 +142,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center">
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/button_warehouse_remove"
-                            android:paddingLeft="20dp"
-                            android:text="Xóa " />
-                    </LinearLayout>
+                        android:gravity="center" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center">
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/button_warehouse_update"
-                            android:paddingLeft="20dp"
-                            android:text="Cập nhật" />
-                    </LinearLayout>
+                        android:gravity="center" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
