@@ -1,37 +1,29 @@
 package com.example.staff;
 
 public class MonAn {
-    private String txtTenMonAn;
-    private double txtGiaMonAn;
-    private int imgAnhMonAn;
-
-    public MonAn(String txtTenMonAn, double txtGiaMonAn, int imgAnhMonAn) {
-        this.txtTenMonAn = txtTenMonAn;
-        this.txtGiaMonAn = txtGiaMonAn;
-        this.imgAnhMonAn = imgAnhMonAn;
+    private String ten;
+    private double gia;
+    public MonAn(){}
+    public MonAn(String ten, double gia) {
+        this.ten = ten;
+        this.gia = gia;
     }
 
-    public String getTxtTenMonAn() {
-        return txtTenMonAn;
+    public String getTen() {
+        return ten;
     }
 
-    public double getTxtGiaMonAn() {
-        return txtGiaMonAn;
+    public void setTen(String ten) {
+        this.ten = ten;
     }
 
-    public int getImgAnhMonAn() {
-        return imgAnhMonAn;
+    public double getGia() {
+        return gia;
     }
 
-    public void setTxtTenMonAn(String txtTenMonAn) {
-        this.txtTenMonAn = txtTenMonAn;
+    public void setGia(double gia) {
+        this.gia = gia;
     }
+//private int imgAnhMonAn;
 
-    public void setTxtGiaMonAn(double txtGiaMonAn) {
-        this.txtGiaMonAn = txtGiaMonAn;
-    }
-
-    public void setImgAnhMonAn(int imgAnhMonAn) {
-        this.imgAnhMonAn = imgAnhMonAn;
-    }
 }

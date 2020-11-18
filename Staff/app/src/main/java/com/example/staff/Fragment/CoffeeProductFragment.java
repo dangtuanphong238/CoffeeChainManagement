@@ -2,16 +2,15 @@ package com.example.staff.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.staff.DatMon;
 import com.example.staff.MonAn;
@@ -33,9 +32,9 @@ public class CoffeeProductFragment extends Fragment {
         coffeerecyclerView = view.findViewById(R.id.coffeeRecycleView);
         coffeerecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         listMonAn = new ArrayList<>();
-        listMonAn.add(new MonAn("Cafe Sữa", 200000, R.drawable.cfsua));
-        listMonAn.add(new MonAn("Bạc xỉu", 150000, R.drawable.bacxiu));
-        monAnAdapter = new MonAnAdapter(getContext(), listMonAn);
+        listMonAn.add(new MonAn("Cafe Sữa", 200000));
+        listMonAn.add(new MonAn("Bạc xỉu", 150000));
+        monAnAdapter = new MonAnAdapter(listMonAn);
         coffeerecyclerView.setAdapter(monAnAdapter);
         // Inflate the layout for this fragment
         coffeerecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
