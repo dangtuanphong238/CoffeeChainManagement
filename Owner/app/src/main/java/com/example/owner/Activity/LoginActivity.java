@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         anhXa();
-
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference().child("FounderManager").child("OwnerAccount");
         myRef.addValueEventListener(new ValueEventListener() {
@@ -56,6 +56,17 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+        if (sharedPreferences.contains("username") && sharedPreferences.contains("password"))
+        {
+            edtUser.setText(sharedPreferences.getString("username",""));
+            edtPass.setText(sharedPreferences.getString("password",""));
+            Owner owner = new Owner();
+            owner.setUser(edtUser.getText().toString());
+            Intent intent = new Intent(LoginActivity.this, AreaManageActivity.class);
+            startActivity(intent);
+            Toast.makeText(this, "Đăng nhập thành công !", Toast.LENGTH_SHORT).show();
+        }
         setOnClick();
     }
 
@@ -68,6 +79,11 @@ public class LoginActivity extends AppCompatActivity {
                     if (owner.user.equals(edtUser.getText().toString()) && owner.pass.equals(edtPass.getText().toString())) {
                         isSuccess = true;
                         saveOwnerIDToLocalStorage(owner.id);
+                        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("username",edtUser.getText().toString());
+                        editor.putString("password",edtPass.getText().toString());
+                        editor.commit();
                         Intent intent = new Intent(LoginActivity.this, AreaManageActivity.class);
                         startActivity(intent);
                         finish();
@@ -79,13 +95,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-//        btnEye.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-    }
+       //  btnEye.setOnClickListener(new View.OnClickListener() {
+        // @Override
+        //  public void onClick(View v) {
+         // edtPass.setTransformationMethod(new PasswordTransformationMethod());
+        //   }
+      //  });
+     }
 
     private void saveOwnerIDToLocalStorage(String ownerKey){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);

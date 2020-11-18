@@ -93,6 +93,10 @@ public class InfoStoreActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemLogOut:
+                        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.apply();
                         Public_func.clickLogout(InfoStoreActivity.this, LoginActivity.class);
                         return true;
                 }
