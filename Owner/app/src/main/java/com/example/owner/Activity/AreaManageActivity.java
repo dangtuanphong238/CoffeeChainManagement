@@ -158,8 +158,10 @@
 
 package com.example.owner.Activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -171,16 +173,42 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.owner.Global.Public_func;
+import com.example.owner.Interface.RecyclerviewClick;
+import com.example.owner.Model.AreaModel;
+import com.example.owner.Model.ListAreaAdapter;
 import com.example.owner.R;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class AreaManageActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class AreaManageActivity extends AppCompatActivity implements RecyclerviewClick {
+    public static final String KEY_GET_LAYOUT = "KEY_GET_LAYOUT";
+    public static final String KEY_ROOM = "PHONG";
+//    public static final String KEY_ROOM_2="PHONG_VIP";
+//    public static final String KEY_ROOM_3="PHONG_HOP";
+//    public static final String KEY_ROOM_4="PHONG_KIN";
+//    public static final String KEY_ROOM_5="ORTHER";
+
+    String TAG = "TAG_" + "AreaManageActivity: ";
+    private ArrayList<AreaModel> listArea = new ArrayList<>();
+    private ListAreaAdapter listAreaAdapter;
+
+    private RecyclerView rvOverViewArea;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -235,7 +263,7 @@ public class AreaManageActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemLogOut:
-                        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
@@ -245,13 +273,57 @@ public class AreaManageActivity extends AppCompatActivity {
                 return true;
             }
         });
+
     }
+
+    public void getDataAndShowAreaView() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
+        String ownerID = pref.getString(LoginActivity.OWNERID, null);
+        String url = "OwnerManager/" + ownerID + "/QuanLyKhuVuc";
+        final DatabaseReference myRef = database.getReference(url);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                listArea.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    AreaModel area = dataSnapshot.getValue(AreaModel.class);
+                    listArea.add(area);
+                }
+
+                listAreaAdapter = new ListAreaAdapter(AreaManageActivity.this, listArea, AreaManageActivity.this);
+                listAreaAdapter.notifyDataSetChanged();
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(AreaManageActivity.this, 2);
+                rvOverViewArea.setLayoutManager(gridLayoutManager);
+                rvOverViewArea.setAdapter(listAreaAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getDataAndShowAreaView();
+
+    }
+
     private void anhXa() {
+        rvOverViewArea = findViewById(R.id.rvOverViewArea);
         drawerLayout = findViewById(R.id.activity_main_drawer);
         navigationView = findViewById(R.id.navDrawerMenu);
         btnMnu = findViewById(R.id.btnMnu);
         txtTitleActivity = findViewById(R.id.txtTitle);
     }
+
     public void openMenu() {
         btnMnu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -266,4 +338,20 @@ public class AreaManageActivity extends AppCompatActivity {
         super.onRestart();
         drawerLayout.closeDrawer(GravityCompat.START);
     }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(this, RoomActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(KEY_ROOM,position);
+        bundle.putString(KEY_GET_LAYOUT,"GET");
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
+
+    }
 }
+

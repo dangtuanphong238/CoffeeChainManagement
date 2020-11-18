@@ -112,10 +112,12 @@
 //}
 package com.example.owner.Activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -135,6 +137,7 @@ public class MealManageActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
+    private Button btnAddMeal;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -199,12 +202,21 @@ public class MealManageActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        btnAddMeal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MealManageActivity.this,AddMonActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     private void anhXa() {
         drawerLayout = findViewById(R.id.activity_main_drawer);
         navigationView = findViewById(R.id.navDrawerMenu);
         btnMnu = findViewById(R.id.btnMnu);
         txtTitleActivity = findViewById(R.id.txtTitle);
+        btnAddMeal = findViewById(R.id.btnAddMeal);
     }
     public void openMenu() {
         btnMnu.setOnClickListener(new View.OnClickListener() {
