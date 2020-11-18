@@ -1,4 +1,4 @@
-package com.example.owner.User;
+package com.example.owner.Models;
 
 public class Staff {
 

@@ -20,8 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.owner.Global.Public_func;
 import com.example.owner.R;
-import com.example.owner.User.Owner;
-import com.example.owner.User.Staff;
+import com.example.owner.Models.Staff;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
