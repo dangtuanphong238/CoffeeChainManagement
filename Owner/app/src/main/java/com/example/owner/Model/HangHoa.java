@@ -48,4 +48,12 @@ public class HangHoa implements Serializable {
     public void setSoluong(String soluong) {
         this.soluong = soluong;
     }
+
+    @Override
+    public String toString() {
+        return "HangHoa{" +
+                "tenhanghoa='" + tenhanghoa + '\'' +
+                ", soluong='" + soluong + '\'' +
+                '}';
+    }
 }
