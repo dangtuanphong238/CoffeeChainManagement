@@ -26,7 +26,7 @@
             android:textSize="24dp"></TextView>
 
         <TextView
-            android:id="@+id/txtTenCuaHang"
+            android:id="@+id/txtTencuahang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="left"
@@ -120,7 +120,9 @@
             android:textSize="20dp"></TextView>
 
         <Spinner
-            android:layout_width="wrap_content"
+            android:background="@drawable/custom_button"
+            android:id="@+id/spTrangthai"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:spinnerMode="dialog" />
 
@@ -156,6 +158,7 @@
                     android:id="@+id/rdDadongphi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="Đã đóng phí" />
 
                 <RadioButton
@@ -180,6 +183,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="20px"
+                android:id="@+id/btnTaomoi"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:background="@drawable/custom_button"
