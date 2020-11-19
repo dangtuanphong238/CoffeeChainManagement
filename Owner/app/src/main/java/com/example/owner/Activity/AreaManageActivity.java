@@ -204,13 +204,13 @@ public class AreaManageActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(AreaManageActivity.this, StaffManageActivity.class);
                         return true;
                     case R.id.itemQLKho:
-                        Public_func.clickLogout(AreaManageActivity.this, WareHouseManageActivity.class);
+                        Public_func.clickItemMenu(AreaManageActivity.this, WareHouseManageActivity.class);
                         return true;
                     case R.id.itemThongBao:
-                        Public_func.clickLogout(AreaManageActivity.this, NotificationActivity.class);
+                        Public_func.clickItemMenu(AreaManageActivity.this, NotificationActivity.class);
                         return true;
                     case R.id.itemThuNgan:
-                        Public_func.clickLogout(AreaManageActivity.this, ThuNganActivity.class);
+                        Public_func.clickItemMenu(AreaManageActivity.this, ThuNganActivity.class);
                         return true;
 
                     case R.id.itemDoanhThu:
@@ -219,19 +219,19 @@ public class AreaManageActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemInfoStore:
-                        Public_func.clickLogout(AreaManageActivity.this, InfoStoreActivity.class);
+                        Public_func.clickItemMenu(AreaManageActivity.this, InfoStoreActivity.class);
                         return true;
 
                     case R.id.itemThemMon:
-                        Public_func.clickLogout(AreaManageActivity.this, AddMonActivity.class);
+                        Public_func.clickItemMenu(AreaManageActivity.this, AddMonActivity.class);
                         return true;
 
                     case R.id.itemThemNV:
-                        Public_func.clickLogout(AreaManageActivity.this, AddNhanVienActivity.class);
+                        Public_func.clickItemMenu(AreaManageActivity.this, AddNhanVienActivity.class);
                         return true;
 
                     case R.id.itemSPKho:
-                        Public_func.clickLogout(AreaManageActivity.this, AddHangHoaActivity.class);
+                        Public_func.clickItemMenu(AreaManageActivity.this, AddHangHoaActivity.class);
                         return true;
 
                     case R.id.itemLogOut:

@@ -158,13 +158,13 @@ public class MealManageActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(MealManageActivity.this, StaffManageActivity.class);
                         return true;
                     case R.id.itemQLKho:
-                        Public_func.clickLogout(MealManageActivity.this, WareHouseManageActivity.class);
+                        Public_func.clickItemMenu(MealManageActivity.this, WareHouseManageActivity.class);
                         return true;
                     case R.id.itemThongBao:
-                        Public_func.clickLogout(MealManageActivity.this, NotificationActivity.class);
+                        Public_func.clickItemMenu(MealManageActivity.this, NotificationActivity.class);
                         return true;
                     case R.id.itemThuNgan:
-                        Public_func.clickLogout(MealManageActivity.this, ThuNganActivity.class);
+                        Public_func.clickItemMenu(MealManageActivity.this, ThuNganActivity.class);
                         return true;
 
                     case R.id.itemDoanhThu:
@@ -173,19 +173,19 @@ public class MealManageActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemInfoStore:
-                        Public_func.clickLogout(MealManageActivity.this, InfoStoreActivity.class);
+                        Public_func.clickItemMenu(MealManageActivity.this, InfoStoreActivity.class);
                         return true;
 
                     case R.id.itemThemMon:
-                        Public_func.clickLogout(MealManageActivity.this, AddMonActivity.class);
+                        Public_func.clickItemMenu(MealManageActivity.this, AddMonActivity.class);
                         return true;
 
                     case R.id.itemThemNV:
-                        Public_func.clickLogout(MealManageActivity.this, AddNhanVienActivity.class);
+                        Public_func.clickItemMenu(MealManageActivity.this, AddNhanVienActivity.class);
                         return true;
 
                     case R.id.itemSPKho:
-                        Public_func.clickLogout(MealManageActivity.this, AddHangHoaActivity.class);
+                        Public_func.clickItemMenu(MealManageActivity.this, AddHangHoaActivity.class);
                         return true;
 
                     case R.id.itemLogOut:

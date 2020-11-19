@@ -180,6 +180,7 @@ public class WareHouseManageActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -188,7 +189,6 @@ public class WareHouseManageActivity extends AppCompatActivity {
         hangHoaAdapter = new HangHoaAdapter(this,R.layout.custom_danh_sach_sp_kho,danhSachHH);
         listViewKho.setAdapter(hangHoaAdapter);
     }
-
 
     private void GetData() {
         initList();
@@ -202,8 +202,8 @@ public class WareHouseManageActivity extends AppCompatActivity {
                 Toast.makeText(WareHouseManageActivity.this, "Bạn chọn " + clickedCountryName ,
                         Toast.LENGTH_SHORT).show();
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
-                 myRef.child(sOwnerID).child("QuanLyKho").child(clickedItem.getCountryName()).addValueEventListener(new ValueEventListener() {
+                DatabaseReference myRef = firebaseDatabase.getReference();
+                myRef.child(sOwnerID).child("QuanLyKho").child(clickedCountryName).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists())
@@ -212,10 +212,11 @@ public class WareHouseManageActivity extends AppCompatActivity {
                             hangHoaAdapter.clear();
                             for (DataSnapshot data : dataSnapshot.getChildren())
                             {
-                                HangHoa dataValue = data.getValue(HangHoa.class);
-                                dataValue.setId(data.getKey());
-                                hangHoaAdapter.addAll(dataValue);
-                                hangHoaAdapter.notifyDataSetChanged();
+                                HangHoa danhSachHH = data.getValue(HangHoa.class);
+                                String a = danhSachHH.soluong;
+                                Toast.makeText(WareHouseManageActivity.this, a, Toast.LENGTH_SHORT).show();
+                                danhSachHH.setId(data.getKey());
+                                hangHoaAdapter.add(danhSachHH);
                             }
                         }
                     }
@@ -254,10 +255,10 @@ public class WareHouseManageActivity extends AppCompatActivity {
                         recreate();
                         return true;
                     case R.id.itemThongBao:
-                        Public_func.clickLogout(WareHouseManageActivity.this, NotificationActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, NotificationActivity.class);
                         return true;
                     case R.id.itemThuNgan:
-                        Public_func.clickLogout(WareHouseManageActivity.this, ThuNganActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, ThuNganActivity.class);
                         return true;
 
                     case R.id.itemDoanhThu:
@@ -266,19 +267,19 @@ public class WareHouseManageActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemInfoStore:
-                        Public_func.clickLogout(WareHouseManageActivity.this, InfoStoreActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, InfoStoreActivity.class);
                         return true;
 
                     case R.id.itemThemMon:
-                        Public_func.clickLogout(WareHouseManageActivity.this, AddMonActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, AddMonActivity.class);
                         return true;
 
                     case R.id.itemThemNV:
-                        Public_func.clickLogout(WareHouseManageActivity.this, AddNhanVienActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, AddNhanVienActivity.class);
                         return true;
 
                     case R.id.itemSPKho:
-                        Public_func.clickLogout(WareHouseManageActivity.this, AddHangHoaActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, AddHangHoaActivity.class);
                         return true;
 
                     case R.id.itemLogOut:

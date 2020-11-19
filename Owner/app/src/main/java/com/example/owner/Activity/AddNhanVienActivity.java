@@ -20,8 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.owner.Global.Public_func;
 import com.example.owner.R;
-import com.example.owner.User.Owner;
-import com.example.owner.User.Staff;
+import com.example.owner.Models.Staff;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
@@ -64,7 +63,7 @@ public class AddNhanVienActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.itemQLKV:
-                        Public_func.clickLogout(AddNhanVienActivity.this, AreaManageActivity.class);
+                        Public_func.clickItemMenu(AddNhanVienActivity.this, AreaManageActivity.class);
                         return true;
                     case R.id.itemQLMon:
                         Public_func.clickItemMenu(AddNhanVienActivity.this, MealManageActivity.class);
@@ -73,13 +72,13 @@ public class AddNhanVienActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(AddNhanVienActivity.this, StaffManageActivity.class);
                         return true;
                     case R.id.itemQLKho:
-                        Public_func.clickLogout(AddNhanVienActivity.this, WareHouseManageActivity.class);
+                        Public_func.clickItemMenu(AddNhanVienActivity.this, WareHouseManageActivity.class);
                         return true;
                     case R.id.itemThongBao:
-                        Public_func.clickLogout(AddNhanVienActivity.this, NotificationActivity.class);
+                        Public_func.clickItemMenu(AddNhanVienActivity.this, NotificationActivity.class);
                         return true;
                     case R.id.itemThuNgan:
-                        Public_func.clickLogout(AddNhanVienActivity.this, ThuNganActivity.class);
+                        Public_func.clickItemMenu(AddNhanVienActivity.this, ThuNganActivity.class);
                         return true;
 
                     case R.id.itemDoanhThu:
@@ -88,11 +87,11 @@ public class AddNhanVienActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemInfoStore:
-                        Public_func.clickLogout(AddNhanVienActivity.this, InfoStoreActivity.class);
+                        Public_func.clickItemMenu(AddNhanVienActivity.this, InfoStoreActivity.class);
                         return true;
 
                     case R.id.itemThemMon:
-                        Public_func.clickLogout(AddNhanVienActivity.this, AddMonActivity.class);
+                        Public_func.clickItemMenu(AddNhanVienActivity.this, AddMonActivity.class);
                         return true;
 
                     case R.id.itemThemNV:
@@ -100,7 +99,7 @@ public class AddNhanVienActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemSPKho:
-                        Public_func.clickLogout(AddNhanVienActivity.this, AddHangHoaActivity.class);
+                        Public_func.clickItemMenu(AddNhanVienActivity.this, AddHangHoaActivity.class);
                         return true;
 
                     case R.id.itemLogOut:
@@ -122,8 +121,6 @@ public class AddNhanVienActivity extends AppCompatActivity {
         btnThemNV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                getSizeListStaff(); //getSizeList
-
                 String tenNV = edtTenNV.getText().toString();
                 String tenDangNhap = edtTenDangNhap.getText().toString();
                 String matKhau = edtMatKhau.getText().toString();

@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +13,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.owner.R;
-import com.example.owner.User.Owner;
+import com.example.owner.Models.Owner;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,10 +43,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Owner owner = dataSnapshot.getValue(Owner.class);
-                    lstOwners.add(owner);
-                    System.out.println(dataSnapshot.getKey());
-
+                    if(dataSnapshot.exists()){
+                        Owner owner = dataSnapshot.getValue(Owner.class);
+                        lstOwners.add(owner);
+                        System.out.println(dataSnapshot.getKey());
+                    }
                 }
             }
 
