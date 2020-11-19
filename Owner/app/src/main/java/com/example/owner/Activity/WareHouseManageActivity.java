@@ -144,6 +144,8 @@ import java.util.ArrayList;
 public class WareHouseManageActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
+    public static final String SHARED_PREF = "sharedPref";
+    public static final String SPINNERID = "spinnerID";
     private String sOwnerID;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -189,7 +191,6 @@ public class WareHouseManageActivity extends AppCompatActivity {
         hangHoaAdapter = new HangHoaAdapter(this,R.layout.custom_danh_sach_sp_kho,danhSachHH);
         listViewKho.setAdapter(hangHoaAdapter);
     }
-
     private void GetData() {
         initList();
         mAdapter = new CountryAdapter(this, mCountryList);
@@ -201,8 +202,9 @@ public class WareHouseManageActivity extends AppCompatActivity {
                 clickedCountryName = clickedItem.getCountryName();
                 Toast.makeText(WareHouseManageActivity.this, "Bạn chọn " + clickedCountryName ,
                         Toast.LENGTH_SHORT).show();
+                saveOwnerIDToLocalStorage(clickedItem.getCountryName());
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = firebaseDatabase.getReference();
+                DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
                 myRef.child(sOwnerID).child("QuanLyKho").child(clickedCountryName).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -213,10 +215,9 @@ public class WareHouseManageActivity extends AppCompatActivity {
                             for (DataSnapshot data : dataSnapshot.getChildren())
                             {
                                 HangHoa danhSachHH = data.getValue(HangHoa.class);
-                                String a = danhSachHH.soluong;
-                                Toast.makeText(WareHouseManageActivity.this, a, Toast.LENGTH_SHORT).show();
                                 danhSachHH.setId(data.getKey());
                                 hangHoaAdapter.add(danhSachHH);
+                                hangHoaAdapter.notifyDataSetChanged();
                             }
                         }
                     }
@@ -328,5 +329,11 @@ public class WareHouseManageActivity extends AppCompatActivity {
         mCountryList.add(new ListSpinner("Nguyên Liệu", R.drawable.nguyenlieuicon));
         mCountryList.add(new ListSpinner( "Nước Giải Khát", R.drawable.trasuaicon));
         mCountryList.add(new ListSpinner("Bánh Ngọt", R.drawable.banhicon));
+    }
+    private void saveOwnerIDToLocalStorage(String ownerKey){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SPINNERID,ownerKey);
+        editor.apply();
     }
 }

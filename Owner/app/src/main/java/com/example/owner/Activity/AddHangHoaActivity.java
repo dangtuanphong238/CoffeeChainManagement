@@ -34,12 +34,12 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 
 public class AddHangHoaActivity extends AppCompatActivity {
+    private Spinner spinnerPL;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
     private EditText txtTenHangHoa, txtsoluong;
-    private Spinner spinnerPL;
     private Button buttonThem;
     private ArrayList<ListSpinner> mCountryList;
      private CountryAdapter mAdapter;

@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.owner.Activity.AddHangHoaActivity;
+import com.example.owner.Activity.UpdateHangHoaKho;
 import com.example.owner.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -64,43 +65,10 @@ public class HangHoaAdapter extends ArrayAdapter<HangHoa> {
                         {
                             //nho sua intent
                             Toast.makeText(getContext(), "Bạn chọn sửa " + hangHoa.getTenhanghoa(), Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(activity, AddHangHoaActivity.class);
+                            Intent intent = new Intent(activity, UpdateHangHoaKho.class);
+                            Log.d("hhh", hangHoa.getId());
                             intent.putExtra("HANGHOA", hangHoa);
                             activity.startActivity(intent);
-                        }
-                        if (menuItem.getItemId() == R.id.item_xoa_hoc_vien)
-                        {
-                            try
-                            {
-                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-                                alertDialogBuilder.setTitle("Thông Báo");
-                                alertDialogBuilder
-                                        .setMessage("Bạn có muốn xóa không!")
-                                        .setCancelable(false)
-                                        .setPositiveButton("Yes",
-                                                new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int id) {
-                                                        if (hangHoa.getId() == null)
-                                                        {
-                                                            Toast.makeText(getContext(), "Xóa Thất Bại!", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                        else {
-                                                            //them code xoa
-                                                        }
-                                                    }
-                                                })
-                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                dialog.cancel();
-                                            }
-                                        });
-                                AlertDialog alertDialog = alertDialogBuilder.create();
-                                alertDialog.show();
-                            }
-                            catch (Exception ex)
-                            {
-                                Toast.makeText(getContext(), "Không có món hàng này!", Toast.LENGTH_SHORT).show();
-                            }
                         }
                         return false;
                     }

@@ -7,6 +7,7 @@ public class HangHoa implements Serializable {
     public String tenhanghoa;
     public String soluong;
 
+
     public HangHoa(String id, String tenhanghoa, String soluong) {
         this.id = id;
         this.tenhanghoa = tenhanghoa;
