@@ -25,7 +25,6 @@
         </TextView>
         <EditText
             android:padding="5dp"
-            android:textAlignment="viewEnd"
             android:text="Nguyễn Hoàng Long"
             android:id="@+id/edtTenNhanVien"
             android:layout_width="match_parent"
@@ -63,7 +62,6 @@
         </TextView>
         <EditText
             android:padding="5dp"
-            android:textAlignment="viewEnd"
             android:text="nguyenhoanglong"
             android:id="@+id/edtTenDangNhap"
             android:layout_width="match_parent"
@@ -81,7 +79,6 @@
             android:textColor="@color/colorPrimary">
         </TextView>
         <EditText
-            android:textAlignment="viewEnd"
             android:text="abc"
             android:id="@+id/edtMatKhau"
             android:layout_width="match_parent"
@@ -101,7 +98,6 @@
             android:textColor="@color/colorPrimary">
         </TextView>
         <EditText
-            android:textAlignment="viewEnd"
             android:text="0377519594"
             android:id="@+id/edtSoDienThoai"
             android:layout_width="match_parent"
@@ -120,7 +116,6 @@
             android:textColor="@color/colorPrimary">
         </TextView>
         <EditText
-            android:textAlignment="viewEnd"
             android:text="123456789"
             android:id="@+id/edtSoCMND"
             android:layout_width="match_parent"

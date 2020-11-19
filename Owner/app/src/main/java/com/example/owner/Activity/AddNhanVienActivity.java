@@ -38,7 +38,7 @@ public class AddNhanVienActivity extends AppCompatActivity {
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
     private Button btnThemNV;
-    private EditText edtTenNV,edtTenDangNhap, edtMatKhau, edtSDT, edtSoCMND;
+    private EditText edtTenNV, edtTenDangNhap, edtMatKhau, edtSDT, edtSoCMND;
     private Spinner spnChucVu, spnLamTheoCa;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
@@ -46,7 +46,9 @@ public class AddNhanVienActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
     private String sOwnerID;
-    private ArrayList lstStaff = new ArrayList();
+    //    private ArrayList lstStaff = new ArrayList();
+    private ArrayList<Staff> lstStaff = new ArrayList<>();
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,7 +105,7 @@ public class AddNhanVienActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemLogOut:
-                        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
@@ -117,7 +119,7 @@ public class AddNhanVienActivity extends AppCompatActivity {
         setOnClick();
     }
 
-    private void setOnClick(){
+    private void setOnClick() {
         btnThemNV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,25 +128,37 @@ public class AddNhanVienActivity extends AppCompatActivity {
                 String matKhau = edtMatKhau.getText().toString();
                 String sdt = edtSDT.getText().toString();
                 String soCMND = edtSoCMND.getText().toString();
-        //        String caLam = ;
-        //        String chucVu = ;
-
-                final Staff staff = new Staff("Staff" + lstStaff.size(),tenDangNhap,matKhau,tenNV,sdt,soCMND);
-
-                firebaseDatabase = FirebaseDatabase.getInstance();
-                databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID);
-                databaseReference.child("QuanLyNhanVien").child("Staff"+lstStaff.size()).setValue(staff).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(AddNhanVienActivity.this, "Thêm nhân viên thành công", Toast.LENGTH_SHORT).show();
+                boolean isExist = false;
+                //        String caLam = ;
+                //        String chucVu = ;
+                for (Staff staff : lstStaff) {
+                    System.out.println("abc" + staff.user + "," + tenDangNhap);
+                    if (staff.user.equals(tenDangNhap) && staff.cmnd.equals(soCMND)) {
+                        Toast.makeText(AddNhanVienActivity.this, "Tên đăng nhập đã tồn tại!", Toast.LENGTH_SHORT).show();
+                        isExist = true;
+                        System.out.println("is Exist " + isExist);
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AddNhanVienActivity.this, "Thêm nhân viên thất bại", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                }
+                System.out.println("is Exist1 " + isExist);
 
+                if (isExist == false) {
+                    System.out.println("ADD");
+                    final Staff staff1 = new Staff("Staff" + lstStaff.size(), tenDangNhap, matKhau, tenNV, sdt, soCMND);
+
+                    firebaseDatabase = FirebaseDatabase.getInstance();
+                    databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID);
+                    databaseReference.child("QuanLyNhanVien").child("Staff" + lstStaff.size()).setValue(staff1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(AddNhanVienActivity.this, "Thêm nhân viên thành công", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(AddNhanVienActivity.this, "Thêm nhân viên thất bại", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
     }
@@ -163,6 +177,7 @@ public class AddNhanVienActivity extends AppCompatActivity {
                     System.out.println("lstStaff " + lstStaff.size());
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -184,6 +199,7 @@ public class AddNhanVienActivity extends AppCompatActivity {
         spnChucVu = findViewById(R.id.spChucVu);
         spnLamTheoCa = findViewById(R.id.spCaLam);
     }
+
     public void openMenu() {
         btnMnu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,8 +217,8 @@ public class AddNhanVienActivity extends AppCompatActivity {
 
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        System.out.println(sharedPreferences.getString(OWNERID,"null"));
-        sOwnerID = sharedPreferences.getString(OWNERID,"null");
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        System.out.println(sharedPreferences.getString(OWNERID, "null"));
+        sOwnerID = sharedPreferences.getString(OWNERID, "null");
     }
 }

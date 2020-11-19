@@ -180,7 +180,6 @@ public class WareHouseManageActivity extends AppCompatActivity {
             }
         });
     }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -189,6 +188,7 @@ public class WareHouseManageActivity extends AppCompatActivity {
         hangHoaAdapter = new HangHoaAdapter(this,R.layout.custom_danh_sach_sp_kho,danhSachHH);
         listViewKho.setAdapter(hangHoaAdapter);
     }
+
 
     private void GetData() {
         initList();
@@ -202,8 +202,8 @@ public class WareHouseManageActivity extends AppCompatActivity {
                 Toast.makeText(WareHouseManageActivity.this, "Bạn chọn " + clickedCountryName ,
                         Toast.LENGTH_SHORT).show();
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = firebaseDatabase.getReference();
-                myRef.child(sOwnerID).child("QuanLyKho").child(clickedCountryName).addValueEventListener(new ValueEventListener() {
+                DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
+                 myRef.child(sOwnerID).child("QuanLyKho").child(clickedItem.getCountryName()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists())
@@ -212,11 +212,10 @@ public class WareHouseManageActivity extends AppCompatActivity {
                             hangHoaAdapter.clear();
                             for (DataSnapshot data : dataSnapshot.getChildren())
                             {
-                                HangHoa danhSachHH = data.getValue(HangHoa.class);
-                                String a = danhSachHH.soluong;
-                                Toast.makeText(WareHouseManageActivity.this, a, Toast.LENGTH_SHORT).show();
-                                danhSachHH.setId(data.getKey());
-                                hangHoaAdapter.add(danhSachHH);
+                                HangHoa dataValue = data.getValue(HangHoa.class);
+                                dataValue.setId(data.getKey());
+                                hangHoaAdapter.addAll(dataValue);
+                                hangHoaAdapter.notifyDataSetChanged();
                             }
                         }
                     }
