@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,9 +26,8 @@ import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-
-public class AllProductFragment extends Fragment {
-    RecyclerView allrecyclerView;
+public class TraSuaProductFragment extends Fragment {
+    RecyclerView traSuaRecycleView;
     ArrayList<MonAn> listMonAn;
     MonAnAdapter monAnAdapter;
     DatabaseReference databaseReference;
@@ -41,14 +39,14 @@ public class AllProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         getOwnerIDFromLocalStorage();
-        Toast.makeText(getContext(), sOwnerID, Toast.LENGTH_SHORT).show();
-        View view = null;
-        view = inflater.inflate(R.layout.fragment_all_product, container, false);
-        allrecyclerView = view.findViewById(R.id.allRecycleView);
+        View view;
+        view = inflater.inflate(R.layout.fragment_tra_sua_product, container, false);
+         traSuaRecycleView= view.findViewById(R.id.traSuaRecycleView);
         listMonAn = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference().child("OwnerManager").child(sOwnerID).child("QuanLyMonAn").child("BanhNgot");
+        databaseReference = database.getReference().child("OwnerManager").child("Owner1").child("QuanLyMonAn").child("TraSua");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -58,7 +56,7 @@ public class AllProductFragment extends Fragment {
                         listMonAn.add(monAn);
                     }
                     monAnAdapter = new MonAnAdapter(listMonAn);
-                    allrecyclerView.setAdapter(monAnAdapter);
+                    traSuaRecycleView.setAdapter(monAnAdapter);
                 }
             }
 
@@ -67,7 +65,7 @@ public class AllProductFragment extends Fragment {
 
             }
         });
-        allrecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+        traSuaRecycleView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
                 Intent intent = new Intent(getActivity(), DatMon.class);
@@ -87,7 +85,6 @@ public class AllProductFragment extends Fragment {
         });
         return view;
     }
-
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);

@@ -1,6 +1,7 @@
 package com.example.staff;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,10 @@ public class LoginScreen extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef,myRef2;
     private String maCh;
+    private Owner owner;
+    private String sOwnerID;
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String OWNERID = "ownerID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +51,15 @@ public class LoginScreen extends AppCompatActivity {
     }
 
     public void setOnClick(){
+        Toast.makeText(this, sOwnerID, Toast.LENGTH_SHORT).show();
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean isSuccess = false;
                 for(String owner:lstOwnerList){
                     if(owner.equals(idcafe.getEditText().getText().toString())){
-                        maCh = owner;
+                        maCh = idcafe.getEditText().getText().toString();
+                        saveOwnerIDToLocalStorage(maCh);
                         database = FirebaseDatabase.getInstance();
                         myRef = database.getReference().child("OwnerManager").child(maCh).child("QuanLyNhanVien");
                         myRef.addValueEventListener(new ValueEventListener() {
@@ -88,40 +95,6 @@ public class LoginScreen extends AppCompatActivity {
             }
         });
     }
-//    public void setOnClick() {
-//        btnLogin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                boolean isSuccess = false;
-//                for(String owner:lstOwnerList){
-//                    if(owner.equals(idcafe.getEditText().getText().toString())){
-//                        maCh = owner;
-//                        getListStaff();
-//                        if(owner.equals(idcafe.getEditText().getText().toString())) {
-//                        for (User user : lstUsers) {
-//                            if (user.user.equals(username.getEditText().getText().toString()) && user.pass.equals(password.getEditText().getText().toString())) {
-//                                isSuccess = true;
-//                                username.setError(null);
-//                                username.setErrorEnabled(false);
-//                                Intent intent = new Intent(LoginScreen.this, KhuVuc.class);
-//                                startActivity(intent);
-//                                finish();
-//                            }
-//                            Toast.makeText(LoginScreen.this, "Id ok", Toast.LENGTH_SHORT).show();
-//                        }
-//                        }
-//                        Toast.makeText(LoginScreen.this, "Id fail", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//
-//                if (isSuccess == false) {
-//                    Toast.makeText(LoginScreen.this, "Username or password is incorrect!", Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//
-//        });
-//    }
     private void getListOwner(){
         database = FirebaseDatabase.getInstance();
         myRef2 = database.getReference().child("OwnerManager");
@@ -139,5 +112,12 @@ public class LoginScreen extends AppCompatActivity {
 
             }
         });
+    }
+    
+    private void saveOwnerIDToLocalStorage(String ownerKey){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(OWNERID,ownerKey);
+        editor.apply();
     }
 }

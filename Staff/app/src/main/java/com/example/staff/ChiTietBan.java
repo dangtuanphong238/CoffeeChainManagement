@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.staff.Fragment.AllProductFragment;
 import com.example.staff.Fragment.CoffeeProductFragment;
+import com.example.staff.Fragment.TraSuaProductFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DatabaseReference;
 
@@ -35,6 +36,7 @@ public class ChiTietBan extends AppCompatActivity {
 
         viewPageAdapter.addFragment(new AllProductFragment(),"Bánh ngọt");
         viewPageAdapter.addFragment(new CoffeeProductFragment(),"Coffee");
+        viewPageAdapter.addFragment(new TraSuaProductFragment(),"Trà Sữa");
         viewPager.setAdapter(viewPageAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
