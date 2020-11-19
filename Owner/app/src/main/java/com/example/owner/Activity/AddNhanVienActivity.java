@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -29,6 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -46,14 +48,14 @@ public class AddNhanVienActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
     private String sOwnerID;
-    //    private ArrayList lstStaff = new ArrayList();
     private ArrayList<Staff> lstStaff = new ArrayList<>();
-
+    private ArrayList lstChucVu,lstCaLam;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_nhan_vien);
         anhXa();
+        initSpinner();
         txtTitleActivity.setText("Thêm Nhân Viên");
         openMenu();
         getOwnerIDFromLocalStorage();
@@ -119,6 +121,13 @@ public class AddNhanVienActivity extends AppCompatActivity {
         setOnClick();
     }
 
+    private void initSpinner()
+    {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources().getStringArray(R.array.lstCaLam));
+        adapter.setDropDownViewResource(R.layout.cus_spinner_dropdown);
+        spnLamTheoCa.setAdapter(adapter);
+    }
+
     private void setOnClick() {
         btnThemNV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,11 +141,9 @@ public class AddNhanVienActivity extends AppCompatActivity {
                 //        String caLam = ;
                 //        String chucVu = ;
                 for (Staff staff : lstStaff) {
-                    System.out.println("abc" + staff.user + "," + tenDangNhap);
-                    if (staff.user.equals(tenDangNhap) && staff.cmnd.equals(soCMND)) {
-                        Toast.makeText(AddNhanVienActivity.this, "Tên đăng nhập đã tồn tại!", Toast.LENGTH_SHORT).show();
+                    if (staff.user.equals(tenDangNhap)) {
+                        Toast.makeText(AddNhanVienActivity.this, "Tài khoản đã tồn tại!", Toast.LENGTH_SHORT).show();
                         isExist = true;
-                        System.out.println("is Exist " + isExist);
                     }
                 }
                 System.out.println("is Exist1 " + isExist);

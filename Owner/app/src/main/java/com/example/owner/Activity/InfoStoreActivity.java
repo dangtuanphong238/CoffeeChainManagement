@@ -77,8 +77,7 @@ public class InfoStoreActivity extends AppCompatActivity {
         txtTitleActivity.setText("Thông tin cửa hàng");
         openMenu();
         getOwnerIDFromLocalStorage();
-
-//        getDatabase();
+        getDatabase();
         //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -135,7 +134,6 @@ public class InfoStoreActivity extends AppCompatActivity {
                 return true;
             }
         });
-//        askForPermission();
         setOnClick();
     }
 
@@ -148,26 +146,31 @@ public class InfoStoreActivity extends AppCompatActivity {
 //        }
 //    }
 
-//    private void getDatabase() {
-//        firebaseDatabase = FirebaseDatabase.getInstance();
-//        databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID).child("ThongTinCuaHang");
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Store store = snapshot.getValue(Store.class);
-//                lstStore.add(store);
-////                if(store.getTencuahang() != null)
-////                {
-////                    System.out.println("lstStore " + store.getTencuahang());
-////                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(InfoStoreActivity.this, "Chưa có thông tin về cửa hàng!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+    private void getDatabase() {
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID).child("ThongTinCuaHang");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    Store store = snapshot.getValue(Store.class);
+                    lstStore.add(store);
+                    edtTenCH.setText(store.getTencuahang());
+                    edtDiaChi.setText(store.getDiachi());
+                    edtSoGiayPhep.setText(store.getGiayphepkinhdoanh());
+                    edtSDT.setText(store.getSdt());
+                    Picasso.with(InfoStoreActivity.this).load(store.getImgUrl()).into(imgCuaHang);
+                }else {
+                    Toast.makeText(InfoStoreActivity.this, "Vui lòng cập nhật thông tin", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(InfoStoreActivity.this, "Chưa có thông tin về cửa hàng!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void setOnClick() {
         btnLuuThongTin.setOnClickListener(new View.OnClickListener() {
