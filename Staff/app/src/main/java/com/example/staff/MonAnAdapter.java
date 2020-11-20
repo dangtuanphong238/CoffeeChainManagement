@@ -10,16 +10,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class MonAnAdapter extends RecyclerView.Adapter<MonAnAdapter.ViewHolder> {
     Context context;
-    ArrayList<MonAn> listMonAn;
-    public MonAnAdapter(Context context, ArrayList<MonAn> listMonAn) {
+    List<MonAn> listMonAn;
+    public MonAnAdapter(ArrayList<MonAn> listMonAn) {
         this.context = context;
         this.listMonAn = listMonAn;
     }
@@ -33,11 +32,11 @@ public class MonAnAdapter extends RecyclerView.Adapter<MonAnAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         MonAn monAn = listMonAn.get(position);
-        holder.txtTenMonAn.setText(monAn.getTxtTenMonAn());
+        holder.txtTenMonAn.setText(monAn.getTen());
         Locale locale = new Locale("vn", "VN");
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
-        holder.txtGiaMonAn.setText(currencyFormatter.format(monAn.getTxtGiaMonAn()));
-        holder.imgAnhMonAn.setImageResource(monAn.getImgAnhMonAn());
+        holder.txtGiaMonAn.setText(currencyFormatter.format(monAn.getGia()));
+        //holder.imgAnhMonAn.setImageResource(monAn.getImgAnhMonAn());
     }
 
     @Override
@@ -51,7 +50,6 @@ public class MonAnAdapter extends RecyclerView.Adapter<MonAnAdapter.ViewHolder> 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             imgAnhMonAn = itemView.findViewById(R.id.imgAnhMonAn);
             txtTenMonAn = itemView.findViewById(R.id.txtTenMonAn);
             txtGiaMonAn = itemView.findViewById(R.id.txtGiaMonAn);

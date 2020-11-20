@@ -26,8 +26,8 @@ import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class CoffeeProductFragment extends Fragment {
-    RecyclerView coffeerecyclerView;
+public class TraSuaProductFragment extends Fragment {
+    RecyclerView traSuaRecycleView;
     ArrayList<MonAn> listMonAn;
     MonAnAdapter monAnAdapter;
     DatabaseReference databaseReference;
@@ -35,15 +35,18 @@ public class CoffeeProductFragment extends Fragment {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
     private String sOwnerID;
+
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         getOwnerIDFromLocalStorage();
-        View view = null;
-        view = inflater.inflate(R.layout.fragment_coffee_product, container, false);
-        coffeerecyclerView = view.findViewById(R.id.coffeeRecycleView);
+        View view;
+        view = inflater.inflate(R.layout.fragment_tra_sua_product, container, false);
+         traSuaRecycleView= view.findViewById(R.id.traSuaRecycleView);
         listMonAn = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference().child("OwnerManager").child("Owner1").child("QuanLyMonAn").child("TraSua");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -53,7 +56,7 @@ public class CoffeeProductFragment extends Fragment {
                         listMonAn.add(monAn);
                     }
                     monAnAdapter = new MonAnAdapter(listMonAn);
-                    coffeerecyclerView.setAdapter(monAnAdapter);
+                    traSuaRecycleView.setAdapter(monAnAdapter);
                 }
             }
 
@@ -62,7 +65,7 @@ public class CoffeeProductFragment extends Fragment {
 
             }
         });
-        coffeerecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+        traSuaRecycleView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
                 Intent intent = new Intent(getActivity(), DatMon.class);
@@ -80,10 +83,7 @@ public class CoffeeProductFragment extends Fragment {
 
             }
         });
-
-
         return view;
-
     }
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
@@ -91,5 +91,4 @@ public class CoffeeProductFragment extends Fragment {
         System.out.println(sharedPreferences.getString(OWNERID,"null"));
         sOwnerID = sharedPreferences.getString(OWNERID,"null");
     }
-
 }
