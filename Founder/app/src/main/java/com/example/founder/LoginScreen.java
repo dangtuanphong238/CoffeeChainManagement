@@ -67,13 +67,12 @@ public class LoginScreen extends AppCompatActivity {
                             }
                             if (taikhoan.equals(username) && matkhau.equals(password))
                             {
+                                Toast.makeText(LoginScreen.this, "Dang Nhap Thanh Cong", Toast.LENGTH_SHORT).show();
                                 SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("taikhoan",taikhoan);
                                 editor.putString("password",matkhau);
                                 editor.commit();
-
-                                Toast.makeText(LoginScreen.this, "Dang Nhap Thanh Cong", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginScreen.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
