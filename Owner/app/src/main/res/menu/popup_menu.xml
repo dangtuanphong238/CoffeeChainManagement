@@ -5,8 +5,4 @@
         android:id="@+id/item_sua_thong_tin"
         android:icon="@android:drawable/ic_menu_edit"
         android:title="@string/sua" />
-    <item
-        android:id="@+id/item_xoa_hoc_vien"
-        android:icon="@android:drawable/ic_delete"
-        android:title="@string/xoa" />
 </menu>

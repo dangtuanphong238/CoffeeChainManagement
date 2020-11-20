@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -20,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.owner.Activity.AddHangHoaActivity;
+import com.example.owner.Activity.UpdateHangHoaKho;
 import com.example.owner.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -30,17 +30,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import static android.content.Context.MODE_PRIVATE;
-
 public class HangHoaAdapter extends ArrayAdapter<HangHoa> {
     @NonNull
     Activity activity;
     private int resource;
     @NonNull
     List<HangHoa> objects;
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String OWNERID = "ownerID";
-    private String sOwnerID;
 
     public HangHoaAdapter(@NonNull Activity activity, int resource, @NonNull List<HangHoa> objects) {
         super(activity, resource, objects);
@@ -48,7 +43,6 @@ public class HangHoaAdapter extends ArrayAdapter<HangHoa> {
         this.resource = resource;
         this.objects = objects;
     }
-
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -57,58 +51,30 @@ public class HangHoaAdapter extends ArrayAdapter<HangHoa> {
         TextView txtTenHangHoa = view.findViewById(R.id.tvtenhanghoa);
         TextView txtSoLuong = view.findViewById(R.id.tvSoLuong);
         ImageView imageView = view.findViewById(R.id.imagemenu);
-        final HangHoa hangHoa = this.objects.get(position);
+       final HangHoa hangHoa = this.objects.get(position);
         txtTenHangHoa.setText(hangHoa.getTenhanghoa());
         txtSoLuong.setText(hangHoa.getSoluong());
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(activity, view);
+                PopupMenu popupMenu = new PopupMenu(activity,view);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
-                        if (menuItem.getItemId() == R.id.item_sua_thong_tin) {
+                        if (menuItem.getItemId() == R.id.item_sua_thong_tin)
+                        {
                             //nho sua intent
                             Toast.makeText(getContext(), "Bạn chọn sửa " + hangHoa.getTenhanghoa(), Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(activity, AddHangHoaActivity.class);
+                            Intent intent = new Intent(activity, UpdateHangHoaKho.class);
+                            Log.d("hhh", hangHoa.getId());
                             intent.putExtra("HANGHOA", hangHoa);
                             activity.startActivity(intent);
-                        }
-                        if (menuItem.getItemId() == R.id.item_xoa_hoc_vien) {
-                            try {
-                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-                                alertDialogBuilder.setTitle("Thông Báo");
-                                alertDialogBuilder
-                                        .setMessage("Bạn có muốn xóa không!")
-                                        .setCancelable(false)
-                                        .setPositiveButton("Yes",
-                                                new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int id) {
-                                                        if (hangHoa.getId() == null) {
-                                                            Toast.makeText(getContext(), "Xóa Thất Bại!", Toast.LENGTH_SHORT).show();
-                                                        } else {
-
-                                                            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                                                            DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
-                                                        }
-                                                    }
-                                                })
-                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                dialog.cancel();
-                                            }
-                                        });
-                                AlertDialog alertDialog = alertDialogBuilder.create();
-                                alertDialog.show();
-                            } catch (Exception ex) {
-                                Toast.makeText(getContext(), "Không có món hàng này!", Toast.LENGTH_SHORT).show();
-                            }
                         }
                         return false;
                     }
                 });
                 //show icon
-                try {
+                try{
                     Field field = popupMenu.getClass().getDeclaredField("mPopup");
                     field.setAccessible(true);
                     Object popUpMenuHelper = field.get(popupMenu);
@@ -116,15 +82,15 @@ public class HangHoaAdapter extends ArrayAdapter<HangHoa> {
                     Method method = cls.getDeclaredMethod("setForceShowIcon", new Class[]{boolean.class});
                     method.setAccessible(true);
                     method.invoke(popUpMenuHelper, new Object[]{true});
-                    popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
-                } catch (Exception ex) {
-                    Log.d("MYTAG", "onclick :" + ex.toString());
+                    popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
+                }
+                catch (Exception ex)
+                {
+                    Log.d("MYTAG","onclick :" + ex.toString());
                 }
                 popupMenu.show();
             }
         });
         return view;
-
     }
-
 }
