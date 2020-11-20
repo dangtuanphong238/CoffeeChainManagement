@@ -21,7 +21,8 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="Bàn 1"
-            android:textSize="30dp" />
+            android:textSize="30dp"
+            android:id="@+id/txtTenBan"/>
 
     </LinearLayout>
 
