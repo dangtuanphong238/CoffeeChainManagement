@@ -10,14 +10,17 @@ public class Staff implements Serializable {
     public String tennv;
     public String sdt;
     public String cmnd;
-
-    public Staff(String id, String user, String pass, String tennv, String sdt, String cmnd) {
+    public String chucvu;
+    public String calam;
+    public Staff(String id, String user, String pass, String tennv, String sdt, String cmnd, String chucvu, String calam) {
         this.id = id;
         this.user = user;
         this.pass = pass;
         this.tennv = tennv;
         this.sdt = sdt;
         this.cmnd = cmnd;
+        this.chucvu = chucvu;
+        this.calam = calam;
     }
 
     public Staff() {
@@ -69,5 +72,21 @@ public class Staff implements Serializable {
 
     public void setCmnd(String cmnd) {
         this.cmnd = cmnd;
+    }
+
+    public String getChucvu() {
+        return chucvu;
+    }
+
+    public void setChucvu(String chucvu) {
+        this.chucvu = chucvu;
+    }
+
+    public String getCalam() {
+        return calam;
+    }
+
+    public void setCalam(String calam) {
+        this.calam = calam;
     }
 }

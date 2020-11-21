@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.owner.Activity.UpdateHangHoaKho;
+import com.example.owner.Activity.UpdateStaff;
 import com.example.owner.Model.HangHoa;
 import com.example.owner.Models.Staff;
 import com.example.owner.R;
@@ -60,9 +61,9 @@ public class NhanVienAdapter extends ArrayAdapter<Staff> {
                         {
                             //nho sua intent
                             Toast.makeText(getContext(), "Bạn chọn sửa " + staff.getTennv(), Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(activity, UpdateHangHoaKho.class);
+                            Intent intent = new Intent(activity, UpdateStaff.class);
                             Log.d("hhh", staff.getId());
-                            intent.putExtra("HANGHOA", staff);
+                            intent.putExtra("NHANVIEN", staff);
                             activity.startActivity(intent);
                         }
                         return false;
