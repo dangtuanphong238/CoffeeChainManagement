@@ -32,9 +32,7 @@ public class layout_notification extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.itemHome:
-                        Public_func.clickItemMenu(layout_notification.this, MainActivity.class);
-                        return true;
+
                     case R.id.it1:
                         Public_func.clickItemMenu(layout_notification.this, layout_tongdoanhthu.class);
                         return true;

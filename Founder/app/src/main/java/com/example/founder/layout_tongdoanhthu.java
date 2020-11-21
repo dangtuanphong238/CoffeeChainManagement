@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,9 +34,7 @@ public class layout_tongdoanhthu extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.itemHome:
-                        Public_func.clickItemMenu(layout_tongdoanhthu.this, MainActivity.class);
-                        return true;
+
                     case R.id.it1:
                         recreate();
                         return true;
@@ -49,7 +48,11 @@ public class layout_tongdoanhthu extends AppCompatActivity {
                         Public_func.clickItemMenu(layout_tongdoanhthu.this, layout_notification.class);
                         return true;
                     case R.id.itemLogOut:
-                        Public_func.clickLogout(layout_tongdoanhthu.this, LoginScreen.class);
+                    SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();
+                    editor.apply();
+                    Public_func.clickLogout(layout_tongdoanhthu.this, LoginScreen.class);
                         return true;
                 }
                 return true;

@@ -34,9 +34,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.itemHome:
-                        recreate();
-                        return true;
+
                     case R.id.it1:
                         Public_func.clickItemMenu(MainActivity.this, layout_tongdoanhthu.class);
                         return true;
