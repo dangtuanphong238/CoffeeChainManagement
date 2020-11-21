@@ -140,6 +140,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -150,8 +151,12 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.owner.Global.Public_func;
+import com.example.owner.Model.HangHoa;
+import com.example.owner.Models.Staff;
 import com.example.owner.R;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
 
 public class StaffManageActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -159,6 +164,8 @@ public class StaffManageActivity extends AppCompatActivity {
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
     private Button btnThemNV;
+    private ListView lvNhanVien;
+    private ArrayList<Staff> arrStaff;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

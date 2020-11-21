@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -50,6 +51,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -75,6 +77,8 @@ public class InfoStoreActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
     private String sOwnerID;
+    private Bitmap bitmap;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,23 +172,23 @@ public class InfoStoreActivity extends AppCompatActivity {
                 }
             });
             //getImage
-//            StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
-//            mStorageRef.child("OwnerManager/Owner0/ThongTinCuaHang/Owner0.jpg");
-//            final File localFile = File.createTempFile("images","jpg");
-//            mStorageRef.getFile(localFile)
-//                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-//                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-//                            imgCuaHang.setImageBitmap(bitmap);
-//                        }
-//                    }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception e) {
-//                    Toast.makeText(InfoStoreActivity.this, "Chưa cập nhật ảnh", Toast.LENGTH_SHORT).show();
-//                    System.out.println("ex " + e.getMessage());
-//                }
-//            });
+            StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlychuoicoffee.appspot.com/OwnerManager/Owner0/ThongTinCuaHang/" + sOwnerID);
+            System.out.println("MstoreR " + mStorageRef.toString());
+            final File localFile = File.createTempFile("images","jpg");
+            mStorageRef.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                            imgCuaHang.setImageBitmap(bitmap);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(InfoStoreActivity.this, "Chưa cập nhật ảnh", Toast.LENGTH_SHORT).show();
+                    System.out.println("ex " + e.getMessage());
+                }
+            });
         }catch (Exception ex)
         {
             ex.getMessage();
@@ -192,6 +196,42 @@ public class InfoStoreActivity extends AppCompatActivity {
     }
 
     private void setOnClick() {
+//        btnLuuThongTin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final String tenCH = edtTenCH.getText().toString();
+//                final String diaChi = edtDiaChi.getText().toString();
+//                final String giayPhep = edtSoGiayPhep.getText().toString();
+//                final String sdt = edtSDT.getText().toString();
+//                firebaseDatabase = FirebaseDatabase.getInstance();
+//                databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID);
+//
+//                if (mImageUri != null && !tenCH.isEmpty() && !diaChi.isEmpty() && !giayPhep.isEmpty() && !sdt.isEmpty()) {
+//                    storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(sOwnerID).child("ThongTinCuaHang").child(sOwnerID + "." + getFileExtension(mImageUri));
+//                    dialog = new ProgressDialog(InfoStoreActivity.this);
+//                    dialog.setMessage("Upload in progress");
+//                    dialog.show();
+//                    storageReference.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                            Store store = new Store(tenCH, diaChi, giayPhep, sdt);
+//                            databaseReference.child("ThongTinCuaHang").setValue(store);
+//                            Toast.makeText(InfoStoreActivity.this, "Cập nhật thông tin cửa hàng thành công!", Toast.LENGTH_SHORT).show();
+//                            dialog.cancel();
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Toast.makeText(InfoStoreActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            System.out.println(e.getMessage().toString());
+//                        }
+//                    });
+//
+//                } else {
+//                    Toast.makeText(InfoStoreActivity.this, "Vui lòng nhập đủ các trường!", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
         btnLuuThongTin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,15 +242,19 @@ public class InfoStoreActivity extends AppCompatActivity {
                 firebaseDatabase = FirebaseDatabase.getInstance();
                 databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID);
 
-                if (mImageUri != null && !tenCH.isEmpty() && !diaChi.isEmpty() && !giayPhep.isEmpty() && !sdt.isEmpty()) {
-                    storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(sOwnerID).child("ThongTinCuaHang").child(sOwnerID + "." + getFileExtension(mImageUri));
+                if (bitmap != null && !tenCH.isEmpty() && !diaChi.isEmpty() && !giayPhep.isEmpty() && !sdt.isEmpty()) {
                     dialog = new ProgressDialog(InfoStoreActivity.this);
                     dialog.setMessage("Upload in progress");
                     dialog.show();
-                    storageReference.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(sOwnerID).child("ThongTinCuaHang").child(sOwnerID);
+                    //Chuyen duoi file
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] data = baos.toByteArray();
+
+                    storageReference.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            Store store = new Store(taskSnapshot.getUploadSessionUri() + "",tenCH, diaChi, giayPhep, sdt);
                             Store store = new Store(tenCH, diaChi, giayPhep, sdt);
                             databaseReference.child("ThongTinCuaHang").setValue(store);
                             Toast.makeText(InfoStoreActivity.this, "Cập nhật thông tin cửa hàng thành công!", Toast.LENGTH_SHORT).show();
@@ -227,7 +271,6 @@ public class InfoStoreActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(InfoStoreActivity.this, "Vui lòng nhập đủ các trường!", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
         btnChoose.setOnClickListener(new View.OnClickListener() {
@@ -268,11 +311,15 @@ public class InfoStoreActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             mImageUri = data.getData();
-            Picasso.with(this).load(mImageUri).into(imgCuaHang);
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),mImageUri);
+                imgCuaHang.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         if (requestCode == 100 && resultCode == RESULT_OK) { //Phần này camera chưa đẩy lên storage đc
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-//            Picasso.with(this).load(String.valueOf(bitmap)).into(imgCuaHang);
+            bitmap = (Bitmap) data.getExtras().get("data");
             imgCuaHang.setImageBitmap(bitmap);
         }
     }
