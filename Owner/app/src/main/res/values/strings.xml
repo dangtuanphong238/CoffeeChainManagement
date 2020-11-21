@@ -24,10 +24,15 @@
     <string name="sua">Sửa</string>
     <string name="capnhathanghoa">Cập Nhật</string>
     <string name="xoahanghoa">Xóa Hàng</string>
-     
+
     <string-array name="lstCaLam">
         <item>Sáng</item>
         <item>Chiều</item>
         <item>Tối</item>
+    </string-array>
+    <string-array name="lstChucvu">
+        <item>Quản Lý</item>
+        <item>Thu Ngân</item>
+        <item>Phục Vụ</item>
     </string-array>
 </resources>

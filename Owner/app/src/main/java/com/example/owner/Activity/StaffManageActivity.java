@@ -133,11 +133,16 @@
 
 package com.example.owner.Activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -148,14 +153,36 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.owner.Global.Public_func;
+import com.example.owner.Model.CountryAdapter;
+import com.example.owner.Model.HangHoa;
+import com.example.owner.Model.HangHoaAdapter;
+import com.example.owner.Model.ListSpinner;
+import com.example.owner.Models.Staff;
+import com.example.owner.NhanVienAdapter.NhanVienAdapter;
 import com.example.owner.R;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class StaffManageActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
+    private Button btnThemNV;
+    private ListView lvNhanVien;
+    private ArrayList<Staff> arrStaff;
+    private NhanVienAdapter nhanVienAdapter;
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String OWNERID = "ownerID";
+    private String sOwnerID;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,7 +190,7 @@ public class StaffManageActivity extends AppCompatActivity {
         anhXa();
         txtTitleActivity.setText("Quản lý nhân viên");
         openMenu();
-
+        getOwnerIDFromLocalStorage();
         //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -220,12 +247,111 @@ public class StaffManageActivity extends AppCompatActivity {
                 return true;
             }
         });
+        setOnClick();
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        arrStaff = new ArrayList<>();
+        GetData();
+        nhanVienAdapter = new NhanVienAdapter(this,R.layout.custom_listview_quanly_nhanvien,arrStaff);
+        lvNhanVien.setAdapter(nhanVienAdapter);
+    }
+
+    private void GetData() {
+//        initList();
+//        mAdapter = new CountryAdapter(this, mCountryList);
+//        spSort.setAdapter(mAdapter);
+//        spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                ListSpinner clickedItem = (ListSpinner) adapterView.getItemAtPosition(i);
+//                clickedCountryName = clickedItem.getCountryName();
+//                Toast.makeText(WareHouseManageActivity.this, "Bạn chọn " + clickedCountryName ,
+//                        Toast.LENGTH_SHORT).show();
+//                saveOwnerIDToLocalStorage(clickedItem.getCountryName());
+//                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+//                DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
+//                myRef.child(sOwnerID).child("QuanLyKho").child(clickedCountryName).addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        if (dataSnapshot.exists())
+//                        {
+//                            //xoa du lieu tren listview
+//                            hangHoaAdapter.clear();
+//                            for (DataSnapshot data : dataSnapshot.getChildren())
+//                            {
+//                                HangHoa danhSachHH = data.getValue(HangHoa.class);
+//                                danhSachHH.setId(data.getKey());
+//                                hangHoaAdapter.add(danhSachHH);
+//                                hangHoaAdapter.notifyDataSetChanged();
+//                            }
+//                        }
+//                    }
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//                        Toast.makeText(WareHouseManageActivity.this, "Load Data Failed!", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
+        myRef.child(sOwnerID).child("QuanLyNhanVien").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists())
+                {
+                    //xoa du lieu tren listview
+                    nhanVienAdapter.clear();
+                    for (DataSnapshot data : dataSnapshot.getChildren())
+                    {
+                        Staff arrStaff = data.getValue(Staff.class);
+                        arrStaff.setId(data.getKey());
+                        nhanVienAdapter.add(arrStaff);
+                        nhanVienAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(StaffManageActivity.this, "Load Data Failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        System.out.println(sharedPreferences.getString(OWNERID,"null"));
+        sOwnerID = sharedPreferences.getString(OWNERID,"null");
+    }
+
+    private void setOnClick()
+    {
+        btnThemNV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StaffManageActivity.this, AddNhanVienActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
     private void anhXa() {
+        lvNhanVien = findViewById(R.id.lvNhanVien);
         drawerLayout = findViewById(R.id.activity_main_drawer);
         navigationView = findViewById(R.id.navDrawerMenu);
         btnMnu = findViewById(R.id.btnMnu);
         txtTitleActivity = findViewById(R.id.txtTitle);
+        btnThemNV = findViewById(R.id.btnThemNV);
     }
     public void openMenu() {
         btnMnu.setOnClickListener(new View.OnClickListener() {
