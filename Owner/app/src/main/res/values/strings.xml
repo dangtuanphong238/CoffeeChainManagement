@@ -21,4 +21,9 @@
     <string name="themhanghoa">Thêm Hàng Hóa</string>
     <string name="tenhanghoa">"Tên hàng hóa : "</string>
     <string name="soluong">Số lượng :</string>
+    <string-array name="spinner_category">
+        <item>Bánh Ngọt</item>
+        <item>Cafe</item>
+        <item>Trà Sữa</item>
+    </string-array>
 </resources>

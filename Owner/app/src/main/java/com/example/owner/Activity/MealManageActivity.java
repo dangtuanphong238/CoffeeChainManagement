@@ -115,10 +115,14 @@ package com.example.owner.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -127,12 +131,36 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.owner.Global.Public_func;
+import com.example.owner.Interface.RecyclerviewClick;
+import com.example.owner.Interface.SendData;
+import com.example.owner.Model.ListAreaAdapter;
+import com.example.owner.Model.ListMealAdapter;
+import com.example.owner.Model.MealModel;
 import com.example.owner.R;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class MealManageActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class MealManageActivity extends AppCompatActivity implements RecyclerviewClick, SendData {
+    public static final String KEY_UPDATE = "UPDATE_ITEM";
+
+    String TAG = "MealManageActivity_TAG: ";
+    ArrayList<MealModel> list = new ArrayList<>();
+    ListMealAdapter adapter;
+    MealModel itemUpdate;
+
+    private Spinner spnCategory;
+    private RecyclerView rvListMeal;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ImageButton btnMnu;
@@ -203,6 +231,8 @@ public class MealManageActivity extends AppCompatActivity {
             }
         });
 
+        setDataForSpinnerCategory();
+        getDataForListMeal();
         btnAddMeal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,14 +240,21 @@ public class MealManageActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
     }
+
     private void anhXa() {
+        rvListMeal = findViewById(R.id.rvListMeal);
         drawerLayout = findViewById(R.id.activity_main_drawer);
         navigationView = findViewById(R.id.navDrawerMenu);
         btnMnu = findViewById(R.id.btnMnu);
         txtTitleActivity = findViewById(R.id.txtTitle);
         btnAddMeal = findViewById(R.id.btnAddMeal);
+        spnCategory = findViewById(R.id.spnCategory);
     }
+
     public void openMenu() {
         btnMnu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,9 +264,82 @@ public class MealManageActivity extends AppCompatActivity {
         });
     }
 
+    public void setDataForSpinnerCategory() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner_category, R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        spnCategory.setAdapter(adapter);
+    }
+
     @Override
     protected void onRestart() {
         super.onRestart();
         drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(this,AddMonActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_UPDATE,"UPDATE");
+        bundle.putString("meal_name",itemUpdate.getMeal_name());
+        bundle.putString("meal_id",itemUpdate.getMeal_id());
+        bundle.putString("meal_image",itemUpdate.getMeal_image());
+        bundle.putString("meal_category",itemUpdate.getMeal_category());
+        bundle.putString("meal_price",itemUpdate.getMeal_price());
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
+        spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    public void getDataForListMeal(){
+        SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
+        String ownerID = pref.getString(LoginActivity.OWNERID, null);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/QuanLyMonAn");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                list.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue()+"",
+                                snapshot.child("meal_id").getValue()+"",
+                                snapshot.child("meal_price").getValue()+"",
+                                snapshot.child("meal_name").getValue()+"",
+                                snapshot.child("meal_image").getValue()+"");
+                        list.add(mealModel);
+                }
+                adapter = new ListMealAdapter(MealManageActivity.this, list, MealManageActivity.this,MealManageActivity.this);
+                adapter.notifyDataSetChanged();
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                rvListMeal.setLayoutManager(linearLayoutManager);
+                rvListMeal.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+    @Override
+    public void sendData(MealModel object) {
+        this.itemUpdate = object;
     }
 }

@@ -178,6 +178,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.owner.Global.Public_func;
+import com.example.owner.Global.VNCharacterUtils;
 import com.example.owner.Interface.RecyclerviewClick;
 import com.example.owner.Model.AreaModel;
 import com.example.owner.Model.ListAreaAdapter;
