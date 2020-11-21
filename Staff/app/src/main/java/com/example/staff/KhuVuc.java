@@ -1,27 +1,38 @@
 package com.example.staff;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.staff.Fragment.KhuVucAdapter;
 
 public class KhuVuc extends AppCompatActivity {
     ImageView imgPhongLanh;
+    GridView gridView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_khu_vuc);
-        anXa();
-        imgPhongLanh.setOnClickListener(new View.OnClickListener() {
+gridView = findViewById(R.id.gridviewKhuVuc);
+final String[] values = { "Phòng Lạnh","Phòng Họp","Phòng VIP","Phòng Bình Thường"};
+final int[] images = {R.drawable.ic_phong_lanhj,R.drawable.ic_phong_hop,R.drawable.ic_phong_vip,R.drawable.binhthuong};
+
+        KhuVucAdapter khuVucAdapter =new KhuVucAdapter(this,values,images);
+        gridView.setAdapter(khuVucAdapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(KhuVuc.this,PhongLanh.class));
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(KhuVuc.this,PhongLanh.class);
+intent.putExtra("values",values[position]);
+startActivity(intent);
             }
         });
     }
-    private void anXa(){
-        imgPhongLanh = findViewById(R.id.imgPhongLanh);
-    }
+
 }

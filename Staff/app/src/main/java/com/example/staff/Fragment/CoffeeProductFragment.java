@@ -44,6 +44,7 @@ public class CoffeeProductFragment extends Fragment {
         coffeerecyclerView = view.findViewById(R.id.coffeeRecycleView);
         listMonAn = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference().child("OwnerManager").child(sOwnerID).child("QuanLyMonAn").child("CaPhe");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
