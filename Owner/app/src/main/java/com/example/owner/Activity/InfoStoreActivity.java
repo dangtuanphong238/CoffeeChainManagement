@@ -1,12 +1,14 @@
 package com.example.owner.Activity;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -35,16 +37,21 @@ import com.example.owner.Models.Store;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class InfoStoreActivity extends AppCompatActivity {
@@ -68,7 +75,6 @@ public class InfoStoreActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
     private String sOwnerID;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,39 +143,52 @@ public class InfoStoreActivity extends AppCompatActivity {
         setOnClick();
     }
 
-//    private void askForPermission(){
-//        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-//        {
-//            ActivityCompat.requestPermissions(this, new String[]{
-//                    Manifest.permission.CAMERA
-//            },100);
-//        }
-//    }
-
     private void getDatabase() {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID).child("ThongTinCuaHang");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    Store store = snapshot.getValue(Store.class);
-                    lstStore.add(store);
-                    edtTenCH.setText(store.getTencuahang());
-                    edtDiaChi.setText(store.getDiachi());
-                    edtSoGiayPhep.setText(store.getGiayphepkinhdoanh());
-                    edtSDT.setText(store.getSdt());
-                    Picasso.with(InfoStoreActivity.this).load(store.getImgUrl()).into(imgCuaHang);
-                }else {
-                    Toast.makeText(InfoStoreActivity.this, "Vui lòng cập nhật thông tin", Toast.LENGTH_SHORT).show();
+        try{
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists()){
+                        Store store = snapshot.getValue(Store.class);
+                        lstStore.add(store);
+                        edtTenCH.setText(store.getTencuahang());
+                        edtDiaChi.setText(store.getDiachi());
+                        edtSoGiayPhep.setText(store.getGiayphepkinhdoanh());
+                        edtSDT.setText(store.getSdt());
+                    }else {
+                        Toast.makeText(InfoStoreActivity.this, "Vui lòng cập nhật thông tin", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(InfoStoreActivity.this, "Chưa có thông tin về cửa hàng!", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(InfoStoreActivity.this, "Chưa có thông tin về cửa hàng!", Toast.LENGTH_SHORT).show();
+                }
+            });
+            //getImage
+//            StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
+//            mStorageRef.child("OwnerManager/Owner0/ThongTinCuaHang/Owner0.jpg");
+//            final File localFile = File.createTempFile("images","jpg");
+//            mStorageRef.getFile(localFile)
+//                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+//                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+//                            imgCuaHang.setImageBitmap(bitmap);
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    Toast.makeText(InfoStoreActivity.this, "Chưa cập nhật ảnh", Toast.LENGTH_SHORT).show();
+//                    System.out.println("ex " + e.getMessage());
+//                }
+//            });
+        }catch (Exception ex)
+        {
+            ex.getMessage();
+        }
     }
 
     private void setOnClick() {
@@ -182,18 +201,17 @@ public class InfoStoreActivity extends AppCompatActivity {
                 final String sdt = edtSDT.getText().toString();
                 firebaseDatabase = FirebaseDatabase.getInstance();
                 databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID);
-                storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(sOwnerID).child("ThongTinCuaHang");
 
                 if (mImageUri != null && !tenCH.isEmpty() && !diaChi.isEmpty() && !giayPhep.isEmpty() && !sdt.isEmpty()) {
+                    storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(sOwnerID).child("ThongTinCuaHang").child(sOwnerID + "." + getFileExtension(mImageUri));
                     dialog = new ProgressDialog(InfoStoreActivity.this);
                     dialog.setMessage("Upload in progress");
                     dialog.show();
-                    //System.currentTimeMillis() : nếu muốn tự render name image
-                    StorageReference fileReference = storageReference.child(sOwnerID + "." + getFileExtension(mImageUri));
-                    fileReference.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    storageReference.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Store store = new Store(taskSnapshot.getUploadSessionUri().toString(), tenCH, diaChi, giayPhep, sdt);
+//                            Store store = new Store(taskSnapshot.getUploadSessionUri() + "",tenCH, diaChi, giayPhep, sdt);
+                            Store store = new Store(tenCH, diaChi, giayPhep, sdt);
                             databaseReference.child("ThongTinCuaHang").setValue(store);
                             Toast.makeText(InfoStoreActivity.this, "Cập nhật thông tin cửa hàng thành công!", Toast.LENGTH_SHORT).show();
                             dialog.cancel();
@@ -205,6 +223,7 @@ public class InfoStoreActivity extends AppCompatActivity {
                             System.out.println(e.getMessage().toString());
                         }
                     });
+
                 } else {
                     Toast.makeText(InfoStoreActivity.this, "Vui lòng nhập đủ các trường!", Toast.LENGTH_SHORT).show();
                 }
@@ -250,7 +269,6 @@ public class InfoStoreActivity extends AppCompatActivity {
                 && data != null && data.getData() != null) {
             mImageUri = data.getData();
             Picasso.with(this).load(mImageUri).into(imgCuaHang);
-
         }
         if (requestCode == 100 && resultCode == RESULT_OK) { //Phần này camera chưa đẩy lên storage đc
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
