@@ -166,6 +166,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
     private Button btnAddMeal;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -220,7 +221,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                         return true;
 
                     case R.id.itemLogOut:
-                        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
@@ -233,16 +234,32 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
 
         setDataForSpinnerCategory();
         getDataForListMeal();
-        btnAddMeal.setOnClickListener(new View.OnClickListener() {
+
+        spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MealManageActivity.this,AddMonActivity.class);
-                startActivity(intent);
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String key = spnCategory.getSelectedItem().toString();
+                if (key.equals("Tất cả")){
+                    getDataForListMeal();
+                }else{
+                    filterCategory(key);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
-
-
+        btnAddMeal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MealManageActivity.this, AddMonActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void anhXa() {
@@ -265,7 +282,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
     }
 
     public void setDataForSpinnerCategory() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner_category, R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner_category_manager, R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         spnCategory.setAdapter(adapter);
     }
@@ -278,34 +295,24 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
 
     @Override
     public void onItemClick(int position) {
-        Intent intent = new Intent(this,AddMonActivity.class);
+        Intent intent = new Intent(this, AddMonActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString(KEY_UPDATE,"UPDATE");
-        bundle.putString("meal_name",itemUpdate.getMeal_name());
-        bundle.putString("meal_id",itemUpdate.getMeal_id());
-        bundle.putString("meal_image",itemUpdate.getMeal_image());
-        bundle.putString("meal_category",itemUpdate.getMeal_category());
-        bundle.putString("meal_price",itemUpdate.getMeal_price());
+        bundle.putString(KEY_UPDATE, "UPDATE");
+        bundle.putString("meal_name", itemUpdate.getMeal_name());
+        bundle.putString("meal_id", itemUpdate.getMeal_id());
+        bundle.putString("meal_image", itemUpdate.getMeal_image());
+        bundle.putString("meal_category", itemUpdate.getMeal_category());
+        bundle.putString("meal_price", itemUpdate.getMeal_price());
         intent.putExtras(bundle);
         startActivity(intent);
     }
 
     @Override
     public void onItemLongClick(int position) {
-        spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
 
-    public void getDataForListMeal(){
+    public void getDataForListMeal() {
         SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
         String ownerID = pref.getString(LoginActivity.OWNERID, null);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -314,15 +321,15 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                        MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue()+"",
-                                snapshot.child("meal_id").getValue()+"",
-                                snapshot.child("meal_price").getValue()+"",
-                                snapshot.child("meal_name").getValue()+"",
-                                snapshot.child("meal_image").getValue()+"");
-                        list.add(mealModel);
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
+                            snapshot.child("meal_id").getValue() + "",
+                            snapshot.child("meal_price").getValue() + "",
+                            snapshot.child("meal_name").getValue() + "",
+                            snapshot.child("meal_image").getValue() + "");
+                    list.add(mealModel);
                 }
-                adapter = new ListMealAdapter(MealManageActivity.this, list, MealManageActivity.this,MealManageActivity.this);
+                adapter = new ListMealAdapter(MealManageActivity.this, list, MealManageActivity.this, MealManageActivity.this);
                 adapter.notifyDataSetChanged();
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -336,6 +343,43 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+    }
+
+    public void filterCategory(final String key) {
+
+        SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
+        String ownerID = pref.getString(LoginActivity.OWNERID, null);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/QuanLyMonAn");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                list.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
+                            snapshot.child("meal_id").getValue() + "",
+                            snapshot.child("meal_price").getValue() + "",
+                            snapshot.child("meal_name").getValue() + "",
+                            snapshot.child("meal_image").getValue() + "");
+                    if (mealModel.getMeal_category().equals(key)){
+                        list.add(mealModel);
+                    }
+                }
+                adapter = new ListMealAdapter(MealManageActivity.this, list, MealManageActivity.this, MealManageActivity.this);
+                adapter.notifyDataSetChanged();
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                rvListMeal.setLayoutManager(linearLayoutManager);
+                rvListMeal.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
     }
 
     @Override
