@@ -143,6 +143,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -151,12 +152,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.owner.Global.Public_func;
 import com.example.owner.Model.CountryAdapter;
 import com.example.owner.Model.HangHoa;
 import com.example.owner.Model.HangHoaAdapter;
+import com.example.owner.Model.ListMealAdapter;
 import com.example.owner.Model.ListSpinner;
+import com.example.owner.Model.MealModel;
 import com.example.owner.Models.Staff;
 import com.example.owner.NhanVienAdapter.NhanVienAdapter;
 import com.example.owner.R;
@@ -181,7 +185,7 @@ public class StaffManageActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
     private String sOwnerID;
-
+    private Spinner spnOffice;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -248,16 +252,6 @@ public class StaffManageActivity extends AppCompatActivity {
             }
         });
         setOnClick();
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        arrStaff = new ArrayList<>();
-        GetData();
-        nhanVienAdapter = new NhanVienAdapter(this,R.layout.custom_listview_quanly_nhanvien,arrStaff);
-        lvNhanVien.setAdapter(nhanVienAdapter);
     }
 
     private void GetData() {
@@ -327,13 +321,6 @@ public class StaffManageActivity extends AppCompatActivity {
         });
     }
 
-    public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
-    {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        System.out.println(sharedPreferences.getString(OWNERID,"null"));
-        sOwnerID = sharedPreferences.getString(OWNERID,"null");
-    }
-
     private void setOnClick()
     {
         btnThemNV.setOnClickListener(new View.OnClickListener() {
@@ -344,6 +331,66 @@ public class StaffManageActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        spnOffice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String key = spnOffice.getSelectedItem().toString();
+                if(key.equals("Tất cả")){
+                    GetData();
+                    nhanVienAdapter = new NhanVienAdapter(StaffManageActivity.this,
+                            R.layout.custom_listview_quanly_nhanvien,arrStaff);
+                    lvNhanVien.setAdapter(nhanVienAdapter);
+                }else {
+                    filterCategory(key);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    public void filterCategory(final String key) {
+        try {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("/OwnerManager/" + sOwnerID + "/QuanLyNhanVien");
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    arrStaff.clear();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Staff staff = new Staff(snapshot.child("id").getValue() + "",
+                                snapshot.child("user").getValue() + "",
+                                snapshot.child("pass").getValue() + "",
+                                snapshot.child("tennv").getValue() + "",
+                                snapshot.child("sdt").getValue() + "" ,
+                                snapshot.child("cmnd").getValue() + "",
+                                snapshot.child("chucvu").getValue() + "",
+                                snapshot.child("calam").getValue() + ""
+                        );
+                        if (staff.getChucvu().equals(key)){
+                            arrStaff.add(staff);
+                        }
+                    }
+                    nhanVienAdapter = new NhanVienAdapter(StaffManageActivity.this,
+                            R.layout.custom_listview_quanly_nhanvien,arrStaff);
+                    lvNhanVien.setAdapter(nhanVienAdapter);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+//                Log.w(TAG, "Failed to read value.", error.toException());
+                }
+            });
+        }catch (Exception ex)
+        {
+            ex.getMessage();
+        }
+
     }
     private void anhXa() {
         lvNhanVien = findViewById(R.id.lvNhanVien);
@@ -352,7 +399,9 @@ public class StaffManageActivity extends AppCompatActivity {
         btnMnu = findViewById(R.id.btnMnu);
         txtTitleActivity = findViewById(R.id.txtTitle);
         btnThemNV = findViewById(R.id.btnThemNV);
+        spnOffice = findViewById(R.id.spnOffice);
     }
+
     public void openMenu() {
         btnMnu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -360,6 +409,22 @@ public class StaffManageActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+    }
+
+    public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        System.out.println(sharedPreferences.getString(OWNERID,"null"));
+        sOwnerID = sharedPreferences.getString(OWNERID,"null");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        arrStaff = new ArrayList<>();
+        GetData();
+        nhanVienAdapter = new NhanVienAdapter(this,R.layout.custom_listview_quanly_nhanvien,arrStaff);
+        lvNhanVien.setAdapter(nhanVienAdapter);
     }
 
     @Override
