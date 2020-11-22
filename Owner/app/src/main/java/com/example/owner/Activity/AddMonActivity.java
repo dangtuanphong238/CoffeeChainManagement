@@ -455,7 +455,7 @@ public class AddMonActivity extends AppCompatActivity {
             try {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 imgPictureMeal.setBackground(null);
-                imgPictureMeal.setRotation(360f);
+                imgPictureMeal.setRotation(90f);
                 imgPictureMeal.setImageBitmap(bitmap);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -489,7 +489,13 @@ public class AddMonActivity extends AppCompatActivity {
                     path.child("meal_image").setValue(meal_id+".png");
                     pushImageInStorage(meal_id+".png");
                 } else {
-                    meal_id= "Meal" + (snapshot.getChildrenCount() + 1);
+                    String id = "";
+                    for (DataSnapshot data:snapshot.getChildren()){
+                        System.out.println("TEST"+data.toString());
+                         id = data.getKey();
+                    }
+                    id = id.replace("Meal","");
+                    meal_id= "Meal"+(Integer.parseInt(id)+1);
                     DatabaseReference path = myRef.child(meal_id);
                     path.child("meal_id").setValue(meal_id);
                     path.child("meal_name").setValue(meal_name);

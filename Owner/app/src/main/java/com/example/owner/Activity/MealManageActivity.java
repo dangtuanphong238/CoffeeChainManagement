@@ -316,7 +316,8 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
         SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
         String ownerID = pref.getString(LoginActivity.OWNERID, null);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/QuanLyMonAn");
+        final String path = "/OwnerManager/" + ownerID + "/QuanLyMonAn";
+        DatabaseReference myRef = database.getReference(path);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -329,7 +330,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                             snapshot.child("meal_image").getValue() + "");
                     list.add(mealModel);
                 }
-                adapter = new ListMealAdapter(MealManageActivity.this, list, MealManageActivity.this, MealManageActivity.this);
+                adapter = new ListMealAdapter(MealManageActivity.this, list, MealManageActivity.this, MealManageActivity.this, path);
                 adapter.notifyDataSetChanged();
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -350,7 +351,8 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
         SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
         String ownerID = pref.getString(LoginActivity.OWNERID, null);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/QuanLyMonAn");
+        final String path = "/OwnerManager/" + ownerID + "/QuanLyMonAn";
+        DatabaseReference myRef = database.getReference(path);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -365,7 +367,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                         list.add(mealModel);
                     }
                 }
-                adapter = new ListMealAdapter(MealManageActivity.this, list, MealManageActivity.this, MealManageActivity.this);
+                adapter = new ListMealAdapter(MealManageActivity.this, list, MealManageActivity.this, MealManageActivity.this, path);
                 adapter.notifyDataSetChanged();
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

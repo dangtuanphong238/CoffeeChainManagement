@@ -1,11 +1,19 @@
 package com.example.owner.Activity;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -120,11 +128,36 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
 
     @Override
     public void onItemClick(int position) {
-
+        ViewDialog viewDialog = new ViewDialog();
+        viewDialog.showDialog(this);
+        Toast.makeText(this,""+position,Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onItemLongClick(int position) {
 
+    }
+
+    public class ViewDialog {
+
+        public void showDialog(Activity activity){
+            final Dialog dialog = new Dialog(activity);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setCancelable(false);
+            dialog.setContentView(R.layout.dialog_infor_table);
+
+            RecyclerView recyclerView = dialog.findViewById(R.id.rvMealUsed);
+            TextView tvTableName = dialog.findViewById(R.id.tvTableName);
+            ImageButton btnCancel = dialog.findViewById(R.id.btnCancel);
+
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+
+        }
     }
 }
