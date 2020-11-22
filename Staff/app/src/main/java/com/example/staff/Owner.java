@@ -1,10 +1,12 @@
 package com.example.staff;
 
 public class Owner {
-    public String key;
+    public String id;
 
     public Owner(String id) {
-        this.key = key;
+        this.id = id;
     }
-    public Owner(){}
+
+    public Owner() {
+    }
 }

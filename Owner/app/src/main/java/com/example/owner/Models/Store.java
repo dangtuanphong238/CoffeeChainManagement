@@ -25,11 +25,6 @@ public class Store {
     public Store() {
     }
 
-    public Store(String imgUrl, String tencuahang) {
-        this.imgUrl = imgUrl;
-        this.tencuahang = tencuahang;
-    }
-
     public String getImgUrl() {
         return imgUrl;
     }

@@ -5,25 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/activity_main_drawer"
-    android:background="#EA9547"
+    android:background="#FE9B58"
     tools:context=".layout_tongdoanhthu"
     android:orientation="vertical">
 
     <!--    content-->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".MainActivity">
+        android:layout_height="match_parent"
+        >
         <include layout="@layout/toolbar"/>
-
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="405dp"
+            android:layout_height="wrap_content"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp"
             tools:ignore="MissingConstraints"></ListView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"

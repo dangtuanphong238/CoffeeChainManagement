@@ -45,6 +45,7 @@
                         android:layout_weight="2"
                         android:layout_height="wrap_content">
                         <Spinner
+                            android:entries="@array/lstChucvu"
                             android:id="@+id/spnOffice"
                             android:layout_width="150dp"
                             android:layout_height="50dp"
@@ -63,16 +64,16 @@
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:gravity="bottom"
+                        android:gravity="center"
                         android:layout_weight="1">
                         <TextView
                             android:gravity="center"
                             android:layout_width="0dp"
-                            android:layout_weight="2"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:text="Tên Nhân Viên"
                             android:textColor="#000"
-                            android:textSize="20sp"/>
+                            android:textSize="16sp"/>
                         <LinearLayout
                             android:layout_width="2dp"
                             android:layout_height="match_parent"
@@ -84,7 +85,19 @@
                             android:layout_height="wrap_content"
                             android:text="Chức vụ"
                             android:textColor="#000"
-                            android:textSize="20sp"/>
+                            android:textSize="16sp"/>
+                        <LinearLayout
+                            android:layout_width="2dp"
+                            android:layout_height="match_parent"
+                            android:background="#000"/>
+                        <TextView
+                            android:gravity="center"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Chức Năng"
+                            android:textColor="#000"
+                            android:textSize="16sp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -92,6 +105,11 @@
                         android:layout_height="0dp"
                         android:layout_weight="8">
 <!--                        //Add RecyclerView in this-->
+                        <ListView
+                            android:id="@+id/lvNhanVien"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                        </ListView>
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
@@ -101,6 +119,7 @@
                     android:gravity="end"
                     android:layout_weight="1">
                         <Button
+                            android:id="@+id/btnThemNV"
                             android:layout_marginRight="20dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

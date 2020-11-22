@@ -42,11 +42,14 @@ public class LoginActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                lstOwners.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Owner owner = dataSnapshot.getValue(Owner.class);
-                    lstOwners.add(owner);
-                    System.out.println(dataSnapshot.getKey());
-
+                    if(dataSnapshot.exists()){
+                        Owner owner = dataSnapshot.getValue(Owner.class);
+                        lstOwners.add(owner);
+//                        System.out.println(dataSnapshot.getKey());
+                        System.out.println("lst ownerABC" + owner.user);
+                    }
                 }
             }
 
