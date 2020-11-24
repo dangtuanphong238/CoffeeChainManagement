@@ -112,6 +112,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -130,6 +131,7 @@ import com.example.owner.Model.CountryAdapter;
 import com.example.owner.Model.HangHoa;
 import com.example.owner.Model.HangHoaAdapter;
 import com.example.owner.Model.ListSpinner;
+import com.example.owner.NhanVienAdapter.NhanVienAdapter;
 import com.example.owner.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -155,8 +157,6 @@ public class WareHouseManageActivity extends AppCompatActivity {
     private ListView listViewKho;
     private ArrayList<HangHoa> danhSachHH;
     private HangHoaAdapter hangHoaAdapter;
-    private ArrayList<ListSpinner> mCountryList;
-    private CountryAdapter mAdapter;
     private String clickedCountryName;
     private Spinner spSort;
     private Button btnThem;
@@ -182,7 +182,6 @@ public class WareHouseManageActivity extends AppCompatActivity {
             }
         });
     }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -192,32 +191,30 @@ public class WareHouseManageActivity extends AppCompatActivity {
         listViewKho.setAdapter(hangHoaAdapter);
     }
     private void GetData() {
-        initList();
-        mAdapter = new CountryAdapter(this, mCountryList);
-        spSort.setAdapter(mAdapter);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources().getStringArray(R.array.lstQuanLyMon));
+        adapter.setDropDownViewResource(R.layout.cus_spinner_dropdown);
+        spSort.setAdapter(adapter);
         spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                ListSpinner clickedItem = (ListSpinner) adapterView.getItemAtPosition(i);
-                clickedCountryName = clickedItem.getCountryName();
+                clickedCountryName = spSort.getSelectedItem().toString();;
                 Toast.makeText(WareHouseManageActivity.this, "Bạn chọn " + clickedCountryName ,
                         Toast.LENGTH_SHORT).show();
-                saveOwnerIDToLocalStorage(clickedItem.getCountryName());
+                saveOwnerIDToLocalStorage(clickedCountryName);
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
                 myRef.child(sOwnerID).child("QuanLyKho").child(clickedCountryName).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        hangHoaAdapter.clear();
                         if (dataSnapshot.exists())
                         {
                             //xoa du lieu tren listview
-                            hangHoaAdapter.clear();
                             for (DataSnapshot data : dataSnapshot.getChildren())
                             {
                                 HangHoa danhSachHH = data.getValue(HangHoa.class);
                                 danhSachHH.setId(data.getKey());
                                 hangHoaAdapter.add(danhSachHH);
-                                hangHoaAdapter.notifyDataSetChanged();
                             }
                         }
                     }
@@ -323,12 +320,6 @@ public class WareHouseManageActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         System.out.println(sharedPreferences.getString(OWNERID,"null"));
         sOwnerID = sharedPreferences.getString(OWNERID,"null");
-    }
-    private void initList() {
-        mCountryList = new ArrayList<>();
-        mCountryList.add(new ListSpinner("Nguyên Liệu", R.drawable.nguyenlieuicon));
-        mCountryList.add(new ListSpinner( "Nước Giải Khát", R.drawable.trasuaicon));
-        mCountryList.add(new ListSpinner("Bánh Ngọt", R.drawable.banhicon));
     }
     private void saveOwnerIDToLocalStorage(String ownerKey){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);

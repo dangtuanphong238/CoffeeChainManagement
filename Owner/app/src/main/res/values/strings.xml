@@ -46,4 +46,10 @@
         <item>Quản Lý</item>
         <item>Thu Ngân</item>
         <item>Phục Vụ</item>
-    </string-array></resources>
+    </string-array>
+    <string-array name="lstQuanLyMon">
+        <item>Nguyên Liệu</item>
+        <item>Trà Sữa</item>
+        <item>Bánh Ngọt</item>
+    </string-array>
+</resources>

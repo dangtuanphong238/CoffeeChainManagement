@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,7 +23,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.owner.Global.Public_func;
 import com.example.owner.Model.CountryAdapter;
 import com.example.owner.Model.HangHoa;
+import com.example.owner.Model.HangHoaAdapter;
 import com.example.owner.Model.ListSpinner;
+import com.example.owner.NhanVienAdapter.NhanVienAdapter;
 import com.example.owner.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,14 +44,12 @@ public class AddHangHoaActivity extends AppCompatActivity {
     private TextView txtTitleActivity;
     private EditText txtTenHangHoa, txtsoluong;
     private Button buttonThem;
-    private ArrayList<ListSpinner> mCountryList;
-     private CountryAdapter mAdapter;
-     private String clickedCountryName;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
     private String sOwnerID;
     private String tenHangHoa;
     private String soLuong;
+    private String getValueSpinner;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,26 +60,22 @@ public class AddHangHoaActivity extends AppCompatActivity {
         openMenu();
         //call function onClickItem
         getMenu();
-        getSpinner();
+        initSpinner();
         setEvent();
     }
-
-    private void getSpinner() {
-        initList();
-        mAdapter = new CountryAdapter(this,mCountryList);
-           spinnerPL.setAdapter(mAdapter);
+    private void initSpinner()
+    {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources().getStringArray(R.array.lstQuanLyMon));
+        adapter.setDropDownViewResource(R.layout.cus_spinner_dropdown);
+        spinnerPL.setAdapter(adapter);
         spinnerPL.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int potision, long l)
-            {
-                ListSpinner clickedItem = (ListSpinner) adapterView.getItemAtPosition(potision);
-                clickedCountryName = clickedItem.getCountryName();
-                Toast.makeText(AddHangHoaActivity.this, "Bạn chọn " + clickedCountryName, Toast.LENGTH_SHORT).show();
-
+            public void onItemSelected(AdapterView<?> adapterView, View view, int potision, long l) {
+              getValueSpinner = spinnerPL.getSelectedItem().toString();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
     }
@@ -104,7 +101,7 @@ public class AddHangHoaActivity extends AppCompatActivity {
                 HangHoa hangHoa = new HangHoa(tenHangHoa,soLuong);
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = firebaseDatabase.getReference();
-                databaseReference.child("OwnerManager").child(sOwnerID).child("QuanLyKho").child(clickedCountryName)
+                databaseReference.child("OwnerManager").child(sOwnerID).child("QuanLyKho").child(getValueSpinner)
                         .child(tenHangHoa).setValue(hangHoa).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -122,12 +119,7 @@ public class AddHangHoaActivity extends AppCompatActivity {
             }
         });
     }
-    private void initList() {
-     mCountryList = new ArrayList<>();
-       mCountryList.add(new ListSpinner("Nguyên Liệu", R.drawable.nguyenlieuicon));
-       mCountryList.add(new ListSpinner( "Nước Giải Khát", R.drawable.trasuaicon));
-      mCountryList.add(new ListSpinner("Bánh Ngọt", R.drawable.banhicon));
-   }
+
 
     private void getMenu()
     {
@@ -189,7 +181,7 @@ public class AddHangHoaActivity extends AppCompatActivity {
     }
     private void anhXa() {
         buttonThem = findViewById(R.id.btnThemHangHoa);
-        spinnerPL = findViewById(R.id.spinnerPL);
+        spinnerPL = findViewById(R.id.SpinnerPL);
         txtTenHangHoa = findViewById(R.id.edtTenHangHoa);
         txtsoluong = findViewById(R.id.edtSoLuong);
         drawerLayout = findViewById(R.id.activity_main_drawer);
