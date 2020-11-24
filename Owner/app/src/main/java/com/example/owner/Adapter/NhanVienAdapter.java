@@ -1,4 +1,4 @@
-package com.example.owner.NhanVienAdapter;
+package com.example.owner.Adapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,9 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.owner.Activity.UpdateHangHoaKho;
 import com.example.owner.Activity.UpdateStaff;
-import com.example.owner.Model.HangHoa;
 import com.example.owner.Models.Staff;
 import com.example.owner.R;
 
