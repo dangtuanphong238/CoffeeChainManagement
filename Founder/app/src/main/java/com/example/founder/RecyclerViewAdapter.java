@@ -1,58 +1,58 @@
 package com.example.founder;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.example.founder.model.InforStore;
+
+import java.util.List;
 
 // File này phong làm
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-    private ArrayList<String> arrayDSCH = new ArrayList<>();
-    private Context mContext;
-    public RecyclerViewAdapter(Context context,ArrayList<String> arrDSCH)
-    {
-        arrayDSCH = arrDSCH;
-        mContext = context;
+public class RecyclerViewAdapter extends RecyclerView.Adapter {
+    List<InforStore> inforStores;
 
+
+
+    public RecyclerViewAdapter(List<InforStore> inforStores) {
+        this.inforStores = inforStores;
     }
 
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtTenCH, txtTrangThai, txtHoaHong, txtNote;
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            txtTenCH = itemView.findViewById(R.id.txtTenCH);
-            txtTrangThai = itemView.findViewById(R.id.txtTrangThai);
-            txtHoaHong = itemView.findViewById(R.id.txtHoaHong);
-            txtNote = itemView.findViewById(R.id.txtNote);
-        }
-    }
-
-    // 3 Hàm này tự sinh khi extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder
     @NonNull
     @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
-        return new ViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemlayout_recyclerview,parent,false);
+        ViewHolderClass viewHolderClass = new ViewHolderClass(view);
+
+        return viewHolderClass;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
-        holder.txtNote.setText(arrayDSCH.get(position));
-        holder.txtTenCH.setText(arrayDSCH.get(position));
-        holder.txtTrangThai.setText(arrayDSCH.get(position));
-        holder.txtHoaHong.setText(arrayDSCH.get(position));
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        ViewHolderClass viewHolderClass=(ViewHolderClass)holder;
+        InforStore inforStore = inforStores.get(position);
+        viewHolderClass.diachi.setText(inforStore.getDiachi());
+        viewHolderClass.giayphepkinhdoanh.setText(inforStore.getGiayphepkinhdoanh());
+        viewHolderClass.sdt.setText(inforStore.getSdt());
+        viewHolderClass.tencuahang.setText(inforStore.getTencuahang());
     }
 
     @Override
     public int getItemCount() {
-        return arrayDSCH.size();
+        return inforStores.size();
+    }
+    public class ViewHolderClass extends RecyclerView.ViewHolder{
+        TextView diachi,giayphepkinhdoanh,sdt,tencuahang;
+        public ViewHolderClass(@NonNull View itemView) {
+            super(itemView);
+            diachi = itemView.findViewById(R.id.diachi);
+            giayphepkinhdoanh = itemView.findViewById(R.id.giayphepkinhdoanh);
+            sdt = itemView.findViewById(R.id.sdt);
+            tencuahang = itemView.findViewById(R.id.tencuahang);
+        }
     }
 }
