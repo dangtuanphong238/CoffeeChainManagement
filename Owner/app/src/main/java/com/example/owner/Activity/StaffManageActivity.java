@@ -152,9 +152,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.owner.Adapter.NhanVienAdapter;
 import com.example.owner.Global.Public_func;
 import com.example.owner.Models.Staff;
-import com.example.owner.Adapter.NhanVienAdapter;
 import com.example.owner.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -162,7 +162,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 
 public class StaffManageActivity extends AppCompatActivity {
@@ -173,12 +172,11 @@ public class StaffManageActivity extends AppCompatActivity {
     private Button btnThemNV;
     private ListView lvNhanVien;
     private ArrayList<Staff> arrStaff;
-    private NhanVienAdapter nhanVienAdapter;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
     private String sOwnerID;
     private Spinner spnOffice;
-
+    private NhanVienAdapter nhanVienAdapter;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

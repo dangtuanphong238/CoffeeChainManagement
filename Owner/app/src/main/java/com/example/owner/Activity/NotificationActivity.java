@@ -60,6 +60,9 @@ public class NotificationActivity extends AppCompatActivity{
         openMenu();
         arrMessage = new ArrayList<>();
         displayMessages(arrMessage);
+        messageAdapter = new MessageAdapter(arrMessage);
+        recyclerView.setAdapter(messageAdapter);
+        messageAdapter.notifyDataSetChanged();
         //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -205,9 +208,7 @@ public class NotificationActivity extends AppCompatActivity{
                         System.out.println("message " + message);
                     }
                     System.out.println("size " + arrMessage.size());
-                    messageAdapter = new MessageAdapter(arrMessage);
-                    recyclerView.setAdapter(messageAdapter);
-                    messageAdapter.notifyDataSetChanged();
+
                 }
             }
 
