@@ -74,6 +74,7 @@ public class InfoStoreActivity extends AppCompatActivity {
     private ImageView imgCuaHang;
     private StorageReference storageReference;
     public static final int PICK_IMAGE_REQUEST = 1;
+
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
     private String sOwnerID;

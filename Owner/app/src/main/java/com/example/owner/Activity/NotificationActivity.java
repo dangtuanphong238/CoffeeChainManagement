@@ -33,7 +33,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class NotificationActivity extends AppCompatActivity{
     private DrawerLayout drawerLayout;
@@ -51,6 +55,11 @@ public class NotificationActivity extends AppCompatActivity{
     private MessageAdapter messageAdapter;
     private Message message;
     private ArrayList<Message> arrMessage;
+
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String OWNERID = "ownerID";
+    private String sOwnerID;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,11 +67,10 @@ public class NotificationActivity extends AppCompatActivity{
         anhXa();
         txtTitleActivity.setText("Thông báo");
         openMenu();
+        getOwnerIDFromLocalStorage();
         arrMessage = new ArrayList<>();
         displayMessages(arrMessage);
-        messageAdapter = new MessageAdapter(arrMessage);
-        recyclerView.setAdapter(messageAdapter);
-        messageAdapter.notifyDataSetChanged();
+
         //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -119,6 +127,7 @@ public class NotificationActivity extends AppCompatActivity{
                 return true;
             }
         });
+
         setOnClick();
     }
     private void anhXa() {
@@ -152,7 +161,7 @@ public class NotificationActivity extends AppCompatActivity{
         arrMessage = new ArrayList<>();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
-        databaseReference.child("Message").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("OwnerManager").child(sOwnerID).child("Message").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 message = snapshot.getValue(Message.class);
@@ -170,13 +179,24 @@ public class NotificationActivity extends AppCompatActivity{
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Message message = new Message("url2","test0","text2","11:10");
+                String messageText = edtInputMessage.getText().toString();
+                String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+
+                Message message = new Message(sOwnerID , messageText,currentDate + " " + currentTime);
                 firebaseDatabase = FirebaseDatabase.getInstance();
                 databaseReference = firebaseDatabase.getReference();
-                databaseReference.child("Message").push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
+                databaseReference.child("OwnerManager").child(sOwnerID).child("Message").push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        System.out.println("success Message");
+                        edtInputMessage.setText(null);
+                        recyclerView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Call smooth scroll
+                                recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
+                            }
+                        });
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -188,27 +208,45 @@ public class NotificationActivity extends AppCompatActivity{
         });
     }
 
+    public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        System.out.println(sharedPreferences.getString(OWNERID, "null"));
+        sOwnerID = sharedPreferences.getString(OWNERID, "null");
+    }
+
     private void displayMessages(final ArrayList<Message> arrMessage)
     {
         recyclerView.setLayoutManager(new LinearLayoutManager(NotificationActivity.this));
         recyclerView.setHasFixedSize(true);
+//        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference("Message");
+        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference();
 
-        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference("Message");
-        dbReference.addValueEventListener(new ValueEventListener() {
+        dbReference.child("OwnerManager").child(sOwnerID).child("Message").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
+                if (snapshot.exists()) {
+                    arrMessage.clear();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                         String messageText = dataSnapshot.child("messageText").getValue().toString();
                         String messageTime = dataSnapshot.child("messageTime").getValue().toString();
                         String userID = dataSnapshot.child("userID").getValue().toString();
-                        Message message = new Message("http:url",userID,messageText,messageTime);
+                        Message message = new Message(userID, messageText, messageTime);
                         arrMessage.add(message);
-                        System.out.println("message " + message);
+                        System.out.println("message " + message.getMessageText());
                     }
+//                    messageAdapter = new MessageAdapter(arrMessage, sOwnerID, "Owner01");
+                    messageAdapter = new MessageAdapter(arrMessage);
+                    recyclerView.setAdapter(messageAdapter);
+                    messageAdapter.notifyDataSetChanged();
                     System.out.println("size " + arrMessage.size());
-
+//                    for (int i = 0; i < arrMessage.size(); i++)
+//                    {
+//                        messageAdapter = new MessageAdapter(arrMessage, sOwnerID, arrMessage.get(i).getUserID());
+//                        recyclerView.setAdapter(messageAdapter);
+//                        messageAdapter.notifyDataSetChanged();
+//                    }
                 }
             }
 

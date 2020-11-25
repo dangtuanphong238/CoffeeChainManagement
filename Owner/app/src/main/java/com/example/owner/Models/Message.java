@@ -1,27 +1,17 @@
 package com.example.owner.Models;
 
 public class Message {
-    public String imgUser;
     public String userID;
     public String messageText;
     public String messageTime;
 
-    public Message( String imgUser, String messageUser, String messageText, String messageTime) {
-        this.imgUser = imgUser;
+    public Message( String messageUser, String messageText, String messageTime) {
         this.userID = messageUser;
         this.messageText = messageText;
         this.messageTime = messageTime;
     }
 
     public Message() {
-    }
-
-    public String getImgUser() {
-        return imgUser;
-    }
-
-    public void setImgUser(String imgUser) {
-        this.imgUser = imgUser;
     }
 
     public String getMessageText() {
