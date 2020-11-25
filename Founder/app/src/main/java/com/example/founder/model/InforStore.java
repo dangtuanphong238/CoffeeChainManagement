@@ -5,6 +5,15 @@ public class InforStore {
     public String giayphepkinhdoanh;
     public String sdt;
     public String tencuahang;
+    public String trangthai;
+
+    public InforStore(String diachi, String giayphepkinhdoanh, String sdt, String tencuahang, String trangthai) {
+        this.diachi = diachi;
+        this.giayphepkinhdoanh = giayphepkinhdoanh;
+        this.sdt = sdt;
+        this.tencuahang = tencuahang;
+        this.trangthai = trangthai;
+    }
 
     public InforStore() {
     }
@@ -41,10 +50,11 @@ public class InforStore {
         this.tencuahang = tencuahang;
     }
 
-    public InforStore(String diachi, String giayphepkinhdoanh, String sdt, String tencuahang) {
-        this.diachi = diachi;
-        this.giayphepkinhdoanh = giayphepkinhdoanh;
-        this.sdt = sdt;
-        this.tencuahang = tencuahang;
+    public String getTrangthai() {
+        return trangthai;
+    }
+
+    public void setTrangthai(String trangthai) {
+        this.trangthai = trangthai;
     }
 }

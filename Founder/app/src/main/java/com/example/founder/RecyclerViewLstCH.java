@@ -41,65 +41,52 @@ public class RecyclerViewLstCH extends AppCompatActivity {
     RecyclerViewAdapter recyclerViewAdapter;
     DatabaseReference databaseReference;
     List<InforStore> inforStores;
-    private String keyID;
     private ArrayList <InforStore> lstInforStore = new ArrayList<>();
+
+    //Phong lam
+    private ArrayList<InforStore> lstStore = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recyclerview_liststore);
         anhXa();
         recyclerView = findViewById(R.id.recyclerViewLstCH);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this ));
-        inforStores = new ArrayList<>();
-        recyclerViewAdapter = new RecyclerViewAdapter(lstInforStore);
-        recyclerView.setAdapter(recyclerViewAdapter);
-
-/*
-        FirebaseRecyclerOptions<InforStore> options = new FirebaseRecyclerOptions.Builder<InforStore>()
-                .setQuery(FirebaseDatabase.getInstance().getReference().child("OwnerManager").child("ThongTinCuaHang")
-                        , InforStore.class)
-                        .build();
- */
-        databaseReference = FirebaseDatabase.getInstance().getReference("OwnerManager");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists())
-                {
-                    for (DataSnapshot snap : snapshot.getChildren())
-                    {
-                        keyID = snap.getKey();
-                        Log.d("TAG",keyID);
-                        databaseReference = FirebaseDatabase.getInstance().getReference("OwnerManager").child(keyID);
-                        databaseReference.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snap) {
-                                if (snap.exists())
-                                {
-                                    for (DataSnapshot dataSnapshot : snap.getChildren())
-                                    {
-                                        InforStore inforStore = dataSnapshot.getValue(InforStore.class);
-                                        Toast.makeText(RecyclerViewLstCH.this, inforStore.getDiachi(), Toast.LENGTH_SHORT).show();
-                                        lstInforStore.add(inforStore);
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setHasFixedSize(true);
+//        inforStores = new ArrayList<>();
+///*
+//        FirebaseRecyclerOptions<InforStore> options = new FirebaseRecyclerOptions.Builder<InforStore>()
+//                .setQuery(FirebaseDatabase.getInstance().getReference().child("OwnerManager").child("ThongTinCuaHang")
+//                        , InforStore.class)
+//                        .build();
+// */
+//        databaseReference = FirebaseDatabase.getInstance().getReference("FounderManager").child("ThongTinCuaHang");
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snap) {
+//                if (snap.exists()) {
+//                    for (DataSnapshot dataSnapshot : snap.getChildren()) {
+//                        InforStore inforStore = dataSnapshot.getValue(InforStore.class);
+//                        String tencuahang = inforStore.getTencuahang();
+//                        String diachi = inforStore.getDiachi();
+//                        String giayphep = inforStore.getGiayphepkinhdoanh();
+//                        String sdt = inforStore.getSdt();
+//                        InforStore inforStore1 = new InforStore(diachi,giayphep,sdt,tencuahang);
+//                        lstInforStore.add(inforStore1);
+//                        Toast.makeText(RecyclerViewLstCH.this, tencuahang , Toast.LENGTH_SHORT).show();
+//                        recyclerViewAdapter = new RecyclerViewAdapter(lstInforStore);
+//                        recyclerView.setAdapter(recyclerViewAdapter);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+        getData(lstStore);
         txtstorelist.setText("List Store");
         openMenu();
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -161,6 +148,40 @@ public class RecyclerViewLstCH extends AppCompatActivity {
             }
         });
     }
+
+   public void getData(final ArrayList<InforStore> lstStore)
+   {
+       recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+       recyclerView.setHasFixedSize(true);
+       databaseReference = FirebaseDatabase.getInstance().getReference("FounderManager").child("ThongTinCuaHang");
+       databaseReference.addValueEventListener(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot snap) {
+               if (snap.exists()) {
+                   lstStore.clear();
+                   for (DataSnapshot dataSnapshot : snap.getChildren()) {
+//                       InforStore inforStore = dataSnapshot.getValue(InforStore.class);
+                       String tencuahang = dataSnapshot.child("tencuahang").getValue().toString();
+                       String diachi = dataSnapshot.child("diachi").getValue().toString();
+                       String giayphep = dataSnapshot.child("giayphepkinhdoanh").getValue().toString();
+                       String sdt = dataSnapshot.child("sdt").getValue().toString();
+                       String trangthai = dataSnapshot.child("trangthai").getValue().toString();
+                       InforStore inforStore1 = new InforStore(diachi,giayphep,sdt,tencuahang,trangthai);
+                       lstStore.add(inforStore1);
+                   }
+                   recyclerViewAdapter = new RecyclerViewAdapter(lstStore);
+                   recyclerView.setAdapter(recyclerViewAdapter);
+                   recyclerViewAdapter.notifyDataSetChanged();
+               }
+           }
+
+           @Override
+           public void onCancelled(@NonNull DatabaseError error) {
+
+           }
+       });
+
+   }
 
     private void anhXa() {
         drawerLayout = findViewById(R.id.activity_main_drawer);
