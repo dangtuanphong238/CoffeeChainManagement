@@ -25,7 +25,7 @@ import com.example.owner.Model.CountryAdapter;
 import com.example.owner.Model.HangHoa;
 import com.example.owner.Model.HangHoaAdapter;
 import com.example.owner.Model.ListSpinner;
-import com.example.owner.NhanVienAdapter.NhanVienAdapter;
+import com.example.owner.Adapter.NhanVienAdapter;
 import com.example.owner.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
