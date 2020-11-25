@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.owner.Adapter.MessageAdapter;
@@ -57,7 +58,8 @@ public class NotificationActivity extends AppCompatActivity{
         anhXa();
         txtTitleActivity.setText("Thông báo");
         openMenu();
-
+        arrMessage = new ArrayList<>();
+        displayMessages(arrMessage);
         //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -165,7 +167,7 @@ public class NotificationActivity extends AppCompatActivity{
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Message message = new Message("url2","user2","text2","11:10");
+                Message message = new Message("url2","test0","text2","11:10");
                 firebaseDatabase = FirebaseDatabase.getInstance();
                 databaseReference = firebaseDatabase.getReference();
                 databaseReference.child("Message").push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -179,6 +181,39 @@ public class NotificationActivity extends AppCompatActivity{
                         System.out.println("Failed_message");
                     }
                 });
+            }
+        });
+    }
+
+    private void displayMessages(final ArrayList<Message> arrMessage)
+    {
+        recyclerView.setLayoutManager(new LinearLayoutManager(NotificationActivity.this));
+        recyclerView.setHasFixedSize(true);
+
+        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference("Message");
+        dbReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                        String messageText = dataSnapshot.child("messageText").getValue().toString();
+                        String messageTime = dataSnapshot.child("messageTime").getValue().toString();
+                        String userID = dataSnapshot.child("userID").getValue().toString();
+                        Message message = new Message("http:url",userID,messageText,messageTime);
+                        arrMessage.add(message);
+                        System.out.println("message " + message);
+                    }
+                    System.out.println("size " + arrMessage.size());
+                    messageAdapter = new MessageAdapter(arrMessage);
+                    recyclerView.setAdapter(messageAdapter);
+                    messageAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
