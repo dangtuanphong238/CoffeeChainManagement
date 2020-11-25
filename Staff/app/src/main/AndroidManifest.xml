@@ -12,7 +12,7 @@
 
         <activity android:name=".DatMon"></activity>
         <activity android:name=".ChiTietBan" />
-        <activity android:name=".PhongLanh" />
+        <activity android:name=".Phong" />
         <activity android:name=".KhuVuc" />
         <activity android:name=".LoginScreen" />
         <activity android:name=".SplashScreen">

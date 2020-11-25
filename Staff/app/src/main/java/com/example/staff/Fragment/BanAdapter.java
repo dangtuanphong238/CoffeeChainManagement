@@ -10,15 +10,17 @@ import android.widget.TextView;
 
 import com.example.staff.R;
 
+import java.util.ArrayList;
+
 public class BanAdapter extends BaseAdapter {
 
     Context context;
-    private final String[] values;
+    private final ArrayList<String> values;
     private final int[] image;
     View view;
     LayoutInflater layoutInflater;
 
-    public BanAdapter(Context context, String[] values, int[] image) {
+    public BanAdapter(Context context, ArrayList<String> values, int[] image) {
         this.context = context;
         this.values = values;
         this.image = image;
@@ -26,7 +28,7 @@ public class BanAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return values.length ;
+        return values.size() ;
     }
 
     @Override
@@ -36,7 +38,7 @@ public class BanAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -48,7 +50,7 @@ public class BanAdapter extends BaseAdapter {
             view = layoutInflater.inflate(R.layout.item_ban,null);
             ImageView imageView = view.findViewById(R.id.imgView);
             TextView txtBan =  view.findViewById(R.id.txtTenBan);
-            txtBan.setText(values[position]);
+            txtBan.setText(values.get(position));
             imageView.setImageResource(image[position]);
         }
 
