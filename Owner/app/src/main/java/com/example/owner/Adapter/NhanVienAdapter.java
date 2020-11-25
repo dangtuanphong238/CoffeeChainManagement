@@ -16,14 +16,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.owner.Activity.AddHangHoaActivity;
 import com.example.owner.Activity.UpdateHangHoaKho;
 import com.example.owner.Activity.UpdateStaff;
 import com.example.owner.Model.HangHoa;
+import com.example.owner.Model.ListSpinner;
 import com.example.owner.Models.Staff;
 import com.example.owner.R;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NhanVienAdapter extends ArrayAdapter<Staff> {
