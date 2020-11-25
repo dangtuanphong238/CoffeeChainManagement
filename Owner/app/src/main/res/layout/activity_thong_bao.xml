@@ -15,14 +15,35 @@
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="0dp"
-           android:layout_weight="1">
+           android:layout_weight="4">
 
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/recyclerViewChat"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent" />
        </LinearLayout>
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="0dp"
-           android:layout_weight="3">
-
+           android:layout_weight="1"
+           android:gravity="center"
+           android:orientation="horizontal"
+           android:paddingHorizontal="5dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/custom_edittext"
+                android:layout_weight="1"
+                android:paddingHorizontal="10dp"
+                android:id="@+id/edtInputMessage"
+                />
+           <com.google.android.material.floatingactionbutton.FloatingActionButton
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+                android:src="@drawable/ic_send_48"
+               android:layout_marginStart="5dp"
+               android:id="@+id/btnSend"
+               />
        </LinearLayout>
    </LinearLayout>
     <!--    leftmenu-->
