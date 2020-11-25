@@ -150,7 +150,7 @@ public class AddNhanVienActivity extends AppCompatActivity {
 
                 if (isExist == false) {
                     System.out.println("ADD");
-                    final Staff staff1 = new Staff("Staff" + lstStaff.size(), tenDangNhap, matKhau, tenNV, sdt, soCMND);
+                    final Staff staff1 = new Staff("Staff" + lstStaff.size(), tenDangNhap, matKhau, tenNV, sdt, soCMND, "quản lý", "sáng");
 
                     firebaseDatabase = FirebaseDatabase.getInstance();
                     databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID);

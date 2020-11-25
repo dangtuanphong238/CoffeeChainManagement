@@ -1,6 +1,7 @@
 package com.example.staff;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +32,9 @@ public class ChiTietBan extends AppCompatActivity {
         setContentView(R.layout.activity_chi_tiet_ban);
         TabLayout tabLayout = findViewById(R.id.tablayout_id);
         ViewPager viewPager = findViewById(R.id.viewPage_id);
+        TextView txtTenBan = findViewById(R.id.txtTenBan);
+
+        txtTenBan.setText(getIntent().getStringExtra("values"));
 
         ViewPageAdapter viewPageAdapter = new ViewPageAdapter(getSupportFragmentManager());
 
