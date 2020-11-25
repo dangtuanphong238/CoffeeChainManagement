@@ -32,7 +32,7 @@
         <item>Cafe</item>
         <item>Trà Sữa</item>
     </string-array>
-<string name="sua">Sửa</string>
+    <string name="sua">Sửa</string>
     <string name="capnhathanghoa">Cập Nhật</string>
     <string name="xoahanghoa">Xóa Hàng</string>
 
