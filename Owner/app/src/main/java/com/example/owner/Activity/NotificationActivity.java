@@ -154,27 +154,6 @@ public class NotificationActivity extends AppCompatActivity{
         drawerLayout.closeDrawer(GravityCompat.START);
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        arrMessage = new ArrayList<>();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
-        databaseReference.child("OwnerManager").child(sOwnerID).child("Message").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                message = snapshot.getValue(Message.class);
-                arrMessage.add(message);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
     private void setOnClick(){
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
