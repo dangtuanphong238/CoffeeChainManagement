@@ -45,6 +45,18 @@ public class LoginScreen extends AppCompatActivity {
         getListOwner();
         Toast.makeText(LoginScreen.this, lstOwnerList.toString(), Toast.LENGTH_SHORT).show();
         setOnClick();
+        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+        if (sharedPreferences.contains("username") && sharedPreferences.contains("password") && sharedPreferences.contains("idkey"))
+        {
+            username.getEditText().setText(sharedPreferences.getString("username",""));
+            password.getEditText().setText(sharedPreferences.getString("password",""));
+            idcafe.getEditText().setText(sharedPreferences.getString("idkey",""));
+            User user = new User();
+            user.setUser(username.getEditText().getText().toString());
+            Intent intent = new Intent(LoginScreen.this, KhuVuc.class);
+            startActivity(intent);
+            Toast.makeText(this, "Đăng nhập thành công !", Toast.LENGTH_SHORT).show();
+        }
     }
     public void getId(){
         idcafe.getEditText().getText().toString();
@@ -82,6 +94,12 @@ public class LoginScreen extends AppCompatActivity {
                                 isSuccess = true;
                                 username.setError(null);
                                 username.setErrorEnabled(false);
+                                SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("username",username.getEditText().getText().toString());
+                                editor.putString("password",password.getEditText().getText().toString());
+                                editor.putString("idkey",idcafe.getEditText().getText().toString());
+                                editor.commit();
                                 Intent intent = new Intent(LoginScreen.this,KhuVuc.class);
                                 startActivity(intent);
                                 finish();

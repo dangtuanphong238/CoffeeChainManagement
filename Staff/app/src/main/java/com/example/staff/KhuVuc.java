@@ -3,14 +3,21 @@ package com.example.staff;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.staff.Fragment.KhuVucAdapter;
+import com.example.staff.Global.Public_func;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,14 +34,42 @@ public class KhuVuc extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
     private String sOwnerID;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private ImageButton btnMnu;
+    private TextView txtTitleActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_khu_vuc);
+        anXa();
+        txtTitleActivity.setText("Khu Vực");
+        openMenu();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.itemthongBao:
+                        Public_func.clickItemMenu(KhuVuc.this, ThongBaoScreen.class);
+                        return true;
+                    case R.id.itemKhuVuc:
+                        recreate();
+                        return true;
+                    case R.id.itemLogOut:
+                        SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.apply();
+                        Public_func.clickLogout(KhuVuc.this, LoginScreen.class);
+                        return true;
+                }
+                return true;
+            }
+        });
         getOwnerIDFromLocalStorage();
         getListKhuVuc();
-        gridView = findViewById(R.id.gridviewKhuVuc);
+
 
     }
 
@@ -99,6 +134,26 @@ public class KhuVuc extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         System.out.println(sharedPreferences.getString(OWNERID, "null"));
         sOwnerID = sharedPreferences.getString(OWNERID, "null");
+    }
+    public void anXa(){
+        drawerLayout = findViewById(R.id.activity_main_drawer);
+        navigationView = findViewById(R.id.navDrawerMenu);
+        btnMnu = findViewById(R.id.btnMnu);
+        txtTitleActivity = findViewById(R.id.txtTitle);
+        gridView = findViewById(R.id.gridviewKhuVuc);
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        drawerLayout.closeDrawer(GravityCompat.START);
+    }
+    public void openMenu() {
+        btnMnu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
     }
 
 }
