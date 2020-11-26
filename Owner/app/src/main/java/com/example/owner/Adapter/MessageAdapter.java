@@ -62,6 +62,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         return listData.size();
     }
 
+
+    @Override
+    public int getItemViewType(int position) {
+
+        return super.getItemViewType(position);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView txtUsername,txtMessage,txtDatetime;
         private ImageView imgUser;
