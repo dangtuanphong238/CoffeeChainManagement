@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/itemKhuVuc"
+        android:title="Khu Vực"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/itemthongBao"
+        android:title="Thông Báo"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/itemLogOut"
+        android:title="LogOut"
+        app:showAsAction="never" />
+
+</menu>

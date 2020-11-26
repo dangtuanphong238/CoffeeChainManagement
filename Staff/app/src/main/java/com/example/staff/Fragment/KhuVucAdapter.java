@@ -10,13 +10,15 @@ import android.widget.TextView;
 
 import com.example.staff.R;
 
+import java.util.ArrayList;
+
 public class KhuVucAdapter extends BaseAdapter {
     Context context;
-    private final String[] values;
+    private final ArrayList<String> values;
     private final int[] image;
     View view;
     LayoutInflater layoutInflater;
-    public KhuVucAdapter(Context context, String[] values, int[] image) {
+    public KhuVucAdapter(Context context, ArrayList<String> values, int[] image) {
         this.context = context;
         this.values = values;
         this.image = image;
@@ -25,7 +27,7 @@ public class KhuVucAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return values.length;
+        return values.size();
     }
 
     @Override
@@ -35,7 +37,7 @@ public class KhuVucAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -46,7 +48,7 @@ public class KhuVucAdapter extends BaseAdapter {
             view = layoutInflater.inflate(R.layout.item_khuvuc,null);
             ImageView imageView = view.findViewById(R.id.imgKhuVuc);
             TextView txtBan =  view.findViewById(R.id.txtTenKhuVUc);
-            txtBan.setText(values[position]);
+            txtBan.setText(values.get(position));
             imageView.setImageResource(image[position]);
         }
         return view;
