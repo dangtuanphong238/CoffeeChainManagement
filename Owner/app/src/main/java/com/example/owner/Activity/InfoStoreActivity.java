@@ -150,7 +150,7 @@ public class InfoStoreActivity extends AppCompatActivity {
 
     private void getDatabase() {
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID).child("ThongTinCuaHang");
+        databaseReference = firebaseDatabase.getReference().child("FounderManager").child("ThongTinCuaHang").child(sOwnerID);
         try{
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -180,7 +180,7 @@ public class InfoStoreActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                            bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
                             imgCuaHang.setImageBitmap(bitmap);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -241,7 +241,7 @@ public class InfoStoreActivity extends AppCompatActivity {
                 final String giayPhep = edtSoGiayPhep.getText().toString();
                 final String sdt = edtSDT.getText().toString();
                 firebaseDatabase = FirebaseDatabase.getInstance();
-                databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID);
+                databaseReference = firebaseDatabase.getReference().child("FounderManager").child("ThongTinCuaHang").child(sOwnerID);
 
                 if (bitmap != null && !tenCH.isEmpty() && !diaChi.isEmpty() && !giayPhep.isEmpty() && !sdt.isEmpty()) {
                     dialog = new ProgressDialog(InfoStoreActivity.this);
@@ -256,8 +256,8 @@ public class InfoStoreActivity extends AppCompatActivity {
                     storageReference.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Store store = new Store(tenCH, diaChi, giayPhep, sdt);
-                            databaseReference.child("ThongTinCuaHang").setValue(store);
+                            Store store = new Store(tenCH, diaChi, giayPhep, sdt, sOwnerID, "");
+                            databaseReference.setValue(store);
                             Toast.makeText(InfoStoreActivity.this, "Cập nhật thông tin cửa hàng thành công!", Toast.LENGTH_SHORT).show();
                             dialog.cancel();
                         }

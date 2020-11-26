@@ -159,30 +159,33 @@ public class NotificationActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 String messageText = edtInputMessage.getText().toString();
-                String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-                String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+                if(!messageText.isEmpty())
+                {
+                    String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                    String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
-                Message message = new Message(sOwnerID , messageText,currentDate + " " + currentTime);
-                firebaseDatabase = FirebaseDatabase.getInstance();
-                databaseReference = firebaseDatabase.getReference();
-                databaseReference.child("OwnerManager").child(sOwnerID).child("Message").push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        edtInputMessage.setText(null);
-                        recyclerView.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                // Call smooth scroll
-                                recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
-                            }
-                        });
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        System.out.println("Failed_message");
-                    }
-                });
+                    Message message = new Message(sOwnerID , messageText,currentDate + " " + currentTime);
+                    firebaseDatabase = FirebaseDatabase.getInstance();
+                    databaseReference = firebaseDatabase.getReference();
+                    databaseReference.child("OwnerManager").child(sOwnerID).child("Message").push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            edtInputMessage.setText(null);
+                            recyclerView.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // Call smooth scroll
+                                    recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            System.out.println("Failed_message");
+                        }
+                    });
+                }
             }
         });
     }
@@ -218,6 +221,13 @@ public class NotificationActivity extends AppCompatActivity{
 //                    messageAdapter = new MessageAdapter(arrMessage, sOwnerID, "Owner01");
                     messageAdapter = new MessageAdapter(arrMessage);
                     recyclerView.setAdapter(messageAdapter);
+                    recyclerView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Call smooth scroll
+                            recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
+                        }
+                    });
                     messageAdapter.notifyDataSetChanged();
                     System.out.println("size " + arrMessage.size());
 //                    for (int i = 0; i < arrMessage.size(); i++)
