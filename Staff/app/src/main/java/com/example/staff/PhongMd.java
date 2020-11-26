@@ -1,28 +1,28 @@
 package com.example.staff;
 
 public class PhongMd {
-    private String ten;
-    private String soban;
+    private String name;
+    private String tables;
 
     public PhongMd(String ten, String soban) {
-        this.ten = ten;
-        this.soban = soban;
+        this.name = ten;
+        this.tables = soban;
     }
 
     public String getTen() {
-        return ten;
+        return name;
     }
 
     public void setTen(String ten) {
-        this.ten = ten;
+        this.name = ten;
     }
 
     public String getSoban() {
-        return soban;
+        return tables;
     }
 
     public void setSoban(String soban) {
-        this.soban = soban;
+        this.tables = soban;
     }
 
     public PhongMd() {

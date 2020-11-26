@@ -77,13 +77,13 @@ public class Phong extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String ten = dataSnapshot.child("ten").getValue().toString();
-                System.out.println("ten" + ten);
-                txtTenPhong.setText(ten);
+                String name = dataSnapshot.child("name").getValue().toString();
+                System.out.println("name" + name);
+                txtTenPhong.setText(name);
 //                String soban = dataSnapshot.child("soban").getValue().toString();
-                Integer soban = Integer.valueOf(dataSnapshot.child("soban").getValue().toString());
-                System.out.println("soban" + soban);
-                for(int i = 0; i < soban; i++){
+                Integer tables = Integer.valueOf(dataSnapshot.child("tables").getValue().toString());
+                System.out.println("soban" + tables);
+                for(int i = 0; i < tables; i++){
                     lstPhong.add("Ban"+ i);
                     renderBan();
                 }
