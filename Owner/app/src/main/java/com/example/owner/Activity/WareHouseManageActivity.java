@@ -111,7 +111,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -122,23 +127,114 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.owner.Global.Public_func;
+import com.example.owner.Model.CountryAdapter;
+import com.example.owner.Model.HangHoa;
+import com.example.owner.Model.HangHoaAdapter;
+import com.example.owner.Model.ListSpinner;
+import com.example.owner.Adapter.NhanVienAdapter;
 import com.example.owner.R;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 
 public class WareHouseManageActivity extends AppCompatActivity {
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String OWNERID = "ownerID";
+    public static final String SHARED_PREF = "sharedPref";
+    public static final String SPINNERID = "spinnerID";
+    private String sOwnerID;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
+    //spineer android
+    private ListView listViewKho;
+    private ArrayList<HangHoa> danhSachHH;
+    private HangHoaAdapter hangHoaAdapter;
+    private String clickedCountryName;
+    private Spinner spSort;
+    private Button btnThem;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ware_house_manage);
         anhXa();
         txtTitleActivity.setText("Quản lý kho");
+        getOwnerIDFromLocalStorage();
         openMenu();
+        getMenu();
+        setEnvent();
+    }
 
+    private void setEnvent() {
+        btnThem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent  = new Intent(WareHouseManageActivity.this,AddHangHoaActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        danhSachHH = new ArrayList<>();
+        GetData();
+        hangHoaAdapter = new HangHoaAdapter(this,R.layout.custom_danh_sach_sp_kho,danhSachHH);
+        listViewKho.setAdapter(hangHoaAdapter);
+    }
+    private void GetData() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources().getStringArray(R.array.lstQuanLyMon));
+        adapter.setDropDownViewResource(R.layout.cus_spinner_dropdown);
+        spSort.setAdapter(adapter);
+        spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                clickedCountryName = spSort.getSelectedItem().toString();;
+                Toast.makeText(WareHouseManageActivity.this, "Bạn chọn " + clickedCountryName ,
+                        Toast.LENGTH_SHORT).show();
+                saveOwnerIDToLocalStorage(clickedCountryName);
+                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
+                myRef.child(sOwnerID).child("QuanLyKho").child(clickedCountryName).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        hangHoaAdapter.clear();
+                        if (dataSnapshot.exists())
+                        {
+                            //xoa du lieu tren listview
+                            for (DataSnapshot data : dataSnapshot.getChildren())
+                            {
+                                HangHoa danhSachHH = data.getValue(HangHoa.class);
+                                danhSachHH.setId(data.getKey());
+                                hangHoaAdapter.add(danhSachHH);
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(WareHouseManageActivity.this, "Load Data Failed!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+    }
+
+    public void getMenu()
+    {
         //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -157,10 +253,10 @@ public class WareHouseManageActivity extends AppCompatActivity {
                         recreate();
                         return true;
                     case R.id.itemThongBao:
-                        Public_func.clickLogout(WareHouseManageActivity.this, NotificationActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, NotificationActivity.class);
                         return true;
                     case R.id.itemThuNgan:
-                        Public_func.clickLogout(WareHouseManageActivity.this, ThuNganActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, ThuNganActivity.class);
                         return true;
 
                     case R.id.itemDoanhThu:
@@ -169,19 +265,19 @@ public class WareHouseManageActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemInfoStore:
-                        Public_func.clickLogout(WareHouseManageActivity.this, InfoStoreActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, InfoStoreActivity.class);
                         return true;
 
                     case R.id.itemThemMon:
-                        Public_func.clickLogout(WareHouseManageActivity.this, AddMonActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, AddMonActivity.class);
                         return true;
 
                     case R.id.itemThemNV:
-                        Public_func.clickLogout(WareHouseManageActivity.this, AddNhanVienActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, AddNhanVienActivity.class);
                         return true;
 
                     case R.id.itemSPKho:
-                        Public_func.clickLogout(WareHouseManageActivity.this, AddHangHoaActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, AddHangHoaActivity.class);
                         return true;
 
                     case R.id.itemLogOut:
@@ -197,6 +293,9 @@ public class WareHouseManageActivity extends AppCompatActivity {
         });
     }
     private void anhXa() {
+        spSort = findViewById(R.id.spnSort);
+        btnThem = findViewById(R.id.themhanghoa);
+        listViewKho = findViewById(R.id.lvDSSPKho);
         drawerLayout = findViewById(R.id.activity_main_drawer);
         navigationView = findViewById(R.id.navDrawerMenu);
         btnMnu = findViewById(R.id.btnMnu);
@@ -215,5 +314,17 @@ public class WareHouseManageActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         drawerLayout.closeDrawer(GravityCompat.START);
+    }
+    public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        System.out.println(sharedPreferences.getString(OWNERID,"null"));
+        sOwnerID = sharedPreferences.getString(OWNERID,"null");
+    }
+    private void saveOwnerIDToLocalStorage(String ownerKey){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SPINNERID,ownerKey);
+        editor.apply();
     }
 }

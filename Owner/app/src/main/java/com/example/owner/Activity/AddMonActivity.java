@@ -84,13 +84,26 @@
 //}
 package com.example.owner.Activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.RotateDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -99,14 +112,74 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.owner.Global.Public_func;
+import com.example.owner.Global.VNCharacterUtils;
+import com.example.owner.Model.MealModel;
 import com.example.owner.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+@SuppressWarnings("ALL")
 public class AddMonActivity extends AppCompatActivity {
+    private String TAG = "AddMonActivity TAG: ";
+
+    int REQ_TAKE_PHOTO = 1;
+    int REQ_GET_PHOTO = 2;
+
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
+    private ImageButton btnGallery;
+    private ImageButton btnCamera;
+    private ImageView imgPictureMeal;
+    private Button btnAdd;
+    private StorageReference mStorageRef;
+    private TextView edtTenMonAn;
+    private TextView edtGiaMonAn;
+    private Spinner spnPhanLoai;
+    private Button btnUpdate;
+    private Button btnRemove;
+
+    private void anhXa() {
+        drawerLayout = findViewById(R.id.activity_main_drawer);
+        navigationView = findViewById(R.id.navDrawerMenu);
+        btnMnu = findViewById(R.id.btnMnu);
+        txtTitleActivity = findViewById(R.id.txtTitle);
+        btnCamera = findViewById(R.id.btnCamera);
+        btnGallery = findViewById(R.id.btnGallery);
+        imgPictureMeal = findViewById(R.id.imgPictureMeal);
+        btnAdd = findViewById(R.id.btnAdd);
+        edtTenMonAn = findViewById(R.id.edtTenMonAn);
+        edtGiaMonAn = findViewById(R.id.edtGiaMonAn);
+        spnPhanLoai = findViewById(R.id.spnCategory);
+        btnUpdate = findViewById(R.id.btnUpdate);
+        btnRemove = findViewById(R.id.btnRemove);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,14 +187,14 @@ public class AddMonActivity extends AppCompatActivity {
         anhXa();
         txtTitleActivity.setText("Thêm Món");
         openMenu();
-
+        updateActive();
         //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.itemQLKV:
-                        Public_func.clickLogout(AddMonActivity.this, AreaManageActivity.class);
+                        Public_func.clickItemMenu(AddMonActivity.this, AreaManageActivity.class);
                         return true;
                     case R.id.itemQLMon:
                         Public_func.clickItemMenu(AddMonActivity.this, MealManageActivity.class);
@@ -130,13 +203,13 @@ public class AddMonActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(AddMonActivity.this, StaffManageActivity.class);
                         return true;
                     case R.id.itemQLKho:
-                        Public_func.clickLogout(AddMonActivity.this, WareHouseManageActivity.class);
+                        Public_func.clickItemMenu(AddMonActivity.this, WareHouseManageActivity.class);
                         return true;
                     case R.id.itemThongBao:
-                        Public_func.clickLogout(AddMonActivity.this, NotificationActivity.class);
+                        Public_func.clickItemMenu(AddMonActivity.this, NotificationActivity.class);
                         return true;
                     case R.id.itemThuNgan:
-                        Public_func.clickLogout(AddMonActivity.this, ThuNganActivity.class);
+                        Public_func.clickItemMenu(AddMonActivity.this, ThuNganActivity.class);
                         return true;
 
                     case R.id.itemDoanhThu:
@@ -145,7 +218,7 @@ public class AddMonActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemInfoStore:
-                        Public_func.clickLogout(AddMonActivity.this, InfoStoreActivity.class);
+                        Public_func.clickItemMenu(AddMonActivity.this, InfoStoreActivity.class);
                         return true;
 
                     case R.id.itemThemMon:
@@ -153,15 +226,15 @@ public class AddMonActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemThemNV:
-                        Public_func.clickLogout(AddMonActivity.this, AddNhanVienActivity.class);
+                        Public_func.clickItemMenu(AddMonActivity.this, AddNhanVienActivity.class);
                         return true;
 
                     case R.id.itemSPKho:
-                        Public_func.clickLogout(AddMonActivity.this, AddHangHoaActivity.class);
+                        Public_func.clickItemMenu(AddMonActivity.this, AddHangHoaActivity.class);
                         return true;
 
                     case R.id.itemLogOut:
-                        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
@@ -171,13 +244,183 @@ public class AddMonActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        setDataForSpinnerCategory();
+
+        btnGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getImageFromGallery();
+            }
+        });
+
+        btnCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePhoto();
+            }
+        });
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validateDataInput()) {
+                    pushNewMeal();
+                } else {
+                    Toast.makeText(AddMonActivity.this, "Các trường không được bỏ trống", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
-    private void anhXa() {
-        drawerLayout = findViewById(R.id.activity_main_drawer);
-        navigationView = findViewById(R.id.navDrawerMenu);
-        btnMnu = findViewById(R.id.btnMnu);
-        txtTitleActivity = findViewById(R.id.txtTitle);
+
+    public void updateActive() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            btnAdd.setVisibility(View.GONE);
+            btnUpdate.setVisibility(View.VISIBLE);
+            btnRemove.setVisibility(View.VISIBLE);
+            String check = bundle.getString(MealManageActivity.KEY_UPDATE);
+            int item = bundle.getInt("ITEM");
+            String meal_name = bundle.getString("meal_name");
+            final String meal_id = bundle.getString("meal_id");
+            String meal_price = bundle.getString("meal_price");
+            String meal_category = bundle.getString("meal_category");
+            final String meal_image = bundle.getString("meal_image");
+            SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
+            final String ownerID = pref.getString(LoginActivity.OWNERID, null);
+            String path = "OwnerManager/" + ownerID + "/QuanLyMonAn/" + meal_image;
+
+            edtTenMonAn.setText(meal_name);
+            if(meal_category.equals("Trà Sữa")){
+                spnPhanLoai.setSelection(2);
+            }else if (meal_category.equals("Cafe")){
+                spnPhanLoai.setSelection(1);
+            }else{
+                spnPhanLoai.setSelection(0);
+            }
+            edtGiaMonAn.setText(meal_price);
+            setImage(path);
+            btnRemove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    removeItem(meal_id,ownerID);
+                }
+            });
+
+            btnUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO: BUG in this (cập nhật lại ảnh). test kỹ chức năng cập nhật
+                    updateItem(meal_id,ownerID);
+                }
+            });
+
+        } else {
+            btnAdd.setVisibility(View.VISIBLE);
+            btnUpdate.setVisibility(View.GONE);
+            btnRemove.setVisibility(View.GONE);
+        }
     }
+
+    public void updateItem(String key, String ownerID){
+        String path = "OwnerManager/" + ownerID + "/QuanLyMonAn/" + key;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(path);
+        myRef.child("meal_name").setValue(edtTenMonAn.getText().toString().trim());
+        myRef.child("meal_category").setValue(spnPhanLoai.getSelectedItem().toString().trim());
+        myRef.child("meal_price").setValue(edtGiaMonAn.getText().toString().trim());
+        pushImageInStorage(key+".png");
+    }
+
+    public void removeItem(String key, String ownerID){
+        final String path = "OwnerManager/" + ownerID + "/QuanLyMonAn/" + key;
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(path);
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference riversRef = mStorageRef.child(path);
+        riversRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(AddMonActivity.this,"Đã xóa thành công",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AddMonActivity.this,MealManageActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+        myRef.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                StorageReference mStorageRef = FirebaseStorage.getInstance().getReference(path);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(AddMonActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    public void setImage(String path) {
+        try {
+            final File localFile = File.createTempFile("images", "png");
+            mStorageRef = FirebaseStorage.getInstance().getReference();
+            //TODO: return value path image
+            StorageReference riversRef = mStorageRef.child("/"+path);
+            riversRef.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            // Successfully downloaded data to local file
+                            imgPictureMeal.setBackground(null);
+                            Bitmap myBitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                            imgPictureMeal.setImageBitmap(myBitmap);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle failed download
+                    Log.w(TAG, exception.getMessage());
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean validateDataInput() {
+        if (edtTenMonAn.getText().toString().trim().equals("")) {
+            return false;
+        }
+        if (edtGiaMonAn.getText().toString().trim().equals("")) {
+            return false;
+        }
+        if (spnPhanLoai.getSelectedItem() == null) {
+            return false;
+        }
+        return true;
+    }
+
+    public void setDataForSpinnerCategory() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner_category, R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        spnPhanLoai.setAdapter(adapter);
+    }
+
+    public void getImageFromGallery() {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, REQ_GET_PHOTO);
+    }
+
+    public void takePhoto() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, REQ_TAKE_PHOTO);
+    }
+
     public void openMenu() {
         btnMnu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,4 +435,114 @@ public class AddMonActivity extends AppCompatActivity {
         super.onRestart();
         drawerLayout.closeDrawer(GravityCompat.START);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == REQ_GET_PHOTO && data != null) {
+            try {
+                final Uri imageUri = data.getData();
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                imgPictureMeal.setBackground(null);
+                imgPictureMeal.setImageBitmap(selectedImage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(AddMonActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+            }
+
+        } else if (requestCode == REQ_TAKE_PHOTO && resultCode == RESULT_OK && data != null) {
+            try {
+                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                imgPictureMeal.setBackground(null);
+                imgPictureMeal.setRotation(360f);
+                imgPictureMeal.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(AddMonActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+            }
+
+        }
+    }
+
+    String meal_id = "";
+
+    public void pushNewMeal() {
+        SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
+        String ownerID = pref.getString(LoginActivity.OWNERID, null);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/QuanLyMonAn");
+        final String meal_name = edtTenMonAn.getText().toString().trim();
+        final String meal_price = edtGiaMonAn.getText().toString().trim();
+        final String meal_category = spnPhanLoai.getSelectedItem().toString().trim();
+        final String meal_image = "";
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue() == null) {
+                    meal_id = "Meal1";
+                    DatabaseReference path = myRef.child(meal_id);
+                    path.child("meal_id").setValue(meal_id);
+                    path.child("meal_name").setValue(meal_name);
+                    path.child("meal_price").setValue(meal_price);
+                    path.child("meal_category").setValue(meal_category);
+                    path.child("meal_image").setValue(meal_id+".png");
+                    pushImageInStorage(meal_id+".png");
+                } else {
+                    meal_id= "Meal" + (snapshot.getChildrenCount() + 1);
+                    DatabaseReference path = myRef.child(meal_id);
+                    path.child("meal_id").setValue(meal_id);
+                    path.child("meal_name").setValue(meal_name);
+                    path.child("meal_price").setValue(meal_price);
+                    path.child("meal_category").setValue(meal_category);
+                    path.child("meal_image").setValue(meal_id+".png");
+                    pushImageInStorage(meal_id+".png");
+                }
+                Intent intent = new Intent(AddMonActivity.this,MealManageActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, error.getMessage());
+            }
+        });
+    }
+
+    public void pushImageInStorage(String meal_image) {
+        SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
+        String ownerID = pref.getString(LoginActivity.OWNERID, null);
+        String meal_category = spnPhanLoai.getSelectedItem().toString().trim();
+        String meal_name = edtTenMonAn.getText().toString().trim();
+        mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlychuoicoffee.appspot.com/OwnerManager").child(ownerID).child("QuanLyMonAn").child(meal_image);
+        imgPictureMeal.setDrawingCacheEnabled(true);
+        imgPictureMeal.buildDrawingCache();
+        Bitmap bitmap = imgPictureMeal.getDrawingCache();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = mStorageRef.putBytes(data);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                defaultScreen();
+                Toast.makeText(AddMonActivity.this, "Thao tác thành công", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(AddMonActivity.this, "Thao tác thất bại", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void defaultScreen(){
+        edtTenMonAn.setText("");
+        spnPhanLoai.setSelection(0);
+        edtGiaMonAn.setText("");
+        imgPictureMeal.setImageResource(R.drawable.ic_image);
+    }
+
 }

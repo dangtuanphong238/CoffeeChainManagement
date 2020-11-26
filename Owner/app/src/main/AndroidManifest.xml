@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.owner">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,29 +12,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".Activity.OderActivity"></activity>
+        <activity android:name=".Activity.UpdateStaff" />
+        <activity android:name=".Activity.UpdateHangHoaKho" />
         <activity android:name=".Activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".Activity.AreaManageActivity"/>
-        <activity android:name=".Activity.WareHouseManageActivity"/>
-        <activity android:name=".Activity.StaffManageActivity"/>
-        <activity android:name=".Activity.MealManageActivity"/>
-
-        <activity android:name=".Activity.AddMonActivity"/>
-        <activity android:name=".Activity.AddNhanVienActivity"/>
-        <activity android:name=".Activity.AddHangHoaActivity"/>
-
-        <activity android:name=".Activity.InfoStoreActivity"/>
-        <activity android:name=".Activity.NotificationActivity"/>
-        <activity android:name=".Activity.ThuNganActivity"/>
-        <activity android:name=".Activity.LoginActivity"/>
-        <activity android:name=".Activity.RoomActivity"/>
-
+        <activity android:name=".Activity.AreaManageActivity" />
+        <activity android:name=".Activity.WareHouseManageActivity" />
+        <activity android:name=".Activity.StaffManageActivity" />
+        <activity android:name=".Activity.MealManageActivity" />
+        <activity android:name=".Activity.AddMonActivity" />
+        <activity android:name=".Activity.AddNhanVienActivity" />
+        <activity android:name=".Activity.AddHangHoaActivity" />
+        <activity android:name=".Activity.InfoStoreActivity" />
+        <activity android:name=".Activity.NotificationActivity" />
+        <activity android:name=".Activity.ThuNganActivity" />
+        <activity android:name=".Activity.LoginActivity" />
+        <activity android:name=".Activity.RoomActivity" />
     </application>
 
 </manifest>

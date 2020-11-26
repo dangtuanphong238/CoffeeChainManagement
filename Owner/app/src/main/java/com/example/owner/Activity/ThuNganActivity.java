@@ -43,13 +43,13 @@ public class ThuNganActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(ThuNganActivity.this, MealManageActivity.class);
                         return true;
                     case R.id.itemQLNV:
-                        Public_func.clickLogout(ThuNganActivity.this, StaffManageActivity.class);
+                        Public_func.clickItemMenu(ThuNganActivity.this, StaffManageActivity.class);
                         return true;
                     case R.id.itemQLKho:
-                        Public_func.clickLogout(ThuNganActivity.this, WareHouseManageActivity.class);
+                        Public_func.clickItemMenu(ThuNganActivity.this, WareHouseManageActivity.class);
                         return true;
                     case R.id.itemThongBao:
-                        Public_func.clickLogout(ThuNganActivity.this, NotificationActivity.class);
+                        Public_func.clickItemMenu(ThuNganActivity.this, NotificationActivity.class);
                         return true;
                     case R.id.itemThuNgan:
                         recreate();
@@ -61,19 +61,19 @@ public class ThuNganActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemInfoStore:
-                        Public_func.clickLogout(ThuNganActivity.this, InfoStoreActivity.class);
+                        Public_func.clickItemMenu(ThuNganActivity.this, InfoStoreActivity.class);
                         return true;
 
                     case R.id.itemThemMon:
-                        Public_func.clickLogout(ThuNganActivity.this, AddMonActivity.class);
+                        Public_func.clickItemMenu(ThuNganActivity.this, AddMonActivity.class);
                         return true;
 
                     case R.id.itemThemNV:
-                        Public_func.clickLogout(ThuNganActivity.this, AddNhanVienActivity.class);
+                        Public_func.clickItemMenu(ThuNganActivity.this, AddNhanVienActivity.class);
                         return true;
 
                     case R.id.itemSPKho:
-                        Public_func.clickLogout(ThuNganActivity.this, AddHangHoaActivity.class);
+                        Public_func.clickItemMenu(ThuNganActivity.this, AddHangHoaActivity.class);
                         return true;
 
                     case R.id.itemLogOut:

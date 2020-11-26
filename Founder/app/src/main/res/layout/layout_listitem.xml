@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="10dp"
-            android:background="#EA9547">
+            android:background="#FE9B53">
 
             <TextView
                 android:id="@+id/txtTenCH"

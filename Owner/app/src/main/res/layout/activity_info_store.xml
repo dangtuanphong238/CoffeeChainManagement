@@ -11,6 +11,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingHorizontal="10dp"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,17 +31,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <ImageButton
+                        android:id="@+id/btnCapture"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_camera_24"/>
                     <ImageButton
+                        android:id="@+id/btnChoose"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_photo_24"/>
                 </LinearLayout>
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/imgCuaHang"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
                     app:srcCompat="@drawable/noimage"/>
 
             </LinearLayout>
@@ -58,6 +63,7 @@
                     android:id="@+id/edtTenCH"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:paddingHorizontal="10dp"
                     android:background="@drawable/custom_edittext"/>
             </LinearLayout>
             <LinearLayout
@@ -73,7 +79,9 @@
                     android:id="@+id/edtDiaChi"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:background="@drawable/custom_edittext"/>
+                    android:background="@drawable/custom_edittext"
+                    android:paddingHorizontal="10dp"
+                    />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,7 +96,9 @@
                     android:id="@+id/edtSoGiayPhep"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:background="@drawable/custom_edittext"/>
+                    android:background="@drawable/custom_edittext"
+                    android:paddingHorizontal="10dp"
+                    />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -103,7 +113,10 @@
                     android:id="@+id/edtSDT"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:background="@drawable/custom_edittext"/>
+                    android:background="@drawable/custom_edittext"
+                    android:paddingHorizontal="10dp"
+                    android:inputType="phone"
+                    />
             </LinearLayout>
             <Button
                 android:id="@+id/btnLuuThongTin"
