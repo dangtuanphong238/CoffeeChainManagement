@@ -4,6 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="1dp"
+    android:layout_gravity="center"
     android:background="#FE9B58"
     >
     <!--phong lÃ m recylerView-->
@@ -30,6 +31,7 @@
                 android:layout_gravity="center"
                 android:layout_marginVertical="20dp"
                 android:text="Tên Cửa Hàng"
+                android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -112,6 +114,7 @@
                 <TextView
                     android:id="@+id/txtTrangThai"
                     android:layout_width="0dp"
+                    android:textColor="@color/colorPrimaryred"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:text="Đang hoạt động" />

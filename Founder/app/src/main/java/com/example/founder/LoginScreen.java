@@ -1,15 +1,16 @@
 package com.example.founder;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.founder.model.User;
 import com.google.firebase.database.DataSnapshot;
@@ -19,7 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class LoginScreen extends AppCompatActivity {
-    Button btnLogin;
+    Button btnLogin,PasswordVisble;;
     EditText edtTaikhoan,edtPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,25 @@ public class LoginScreen extends AppCompatActivity {
         setContentView(R.layout.activity_login_screen);
         anhXa();
         setOnClick();
+        edtPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(edtPassword.getText().toString().isEmpty()){
+                    edtPassword.setError("Please Enter Pass word");
+                }else{
+                    if(PasswordVisble.getText().toString().equals("Show")){
+                        PasswordVisble.setText("Hide");
+                        edtPassword.setTransformationMethod(null);
+
+                    }else {
+                        PasswordVisble.setText("Show");
+                        edtPassword.setTransformationMethod(new PasswordTransformationMethod());
+
+                    }
+                }
+            }
+        });
         SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
         if (sharedPreferences.contains("taikhoan")&& sharedPreferences.contains("password"))
         {
@@ -34,12 +54,13 @@ public class LoginScreen extends AppCompatActivity {
             edtPassword.setText(sharedPreferences.getString("password",""));
             User user = new User();
             user.setUser(edtTaikhoan.getText().toString());
-            Intent intent = new Intent(LoginScreen.this, MainActivity.class);
+            Intent intent = new Intent(LoginScreen.this, layout_tongdoanhthu.class);
             startActivity(intent);
             finish();
 
         }
     }
+
     private void setOnClick()
     {
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +94,7 @@ public class LoginScreen extends AppCompatActivity {
                                 editor.putString("taikhoan",taikhoan);
                                 editor.putString("password",matkhau);
                                 editor.commit();
-                                Intent intent = new Intent(LoginScreen.this, MainActivity.class);
+                                Intent intent = new Intent(LoginScreen.this, layout_tongdoanhthu.class);
                                 startActivity(intent);
                                 finish();
 
@@ -91,8 +112,10 @@ public class LoginScreen extends AppCompatActivity {
 
             }
         });
+
     }
     private void anhXa(){
+        PasswordVisble=findViewById(R.id.passwordVisible);
         btnLogin = findViewById(R.id.btnLogin);
         edtTaikhoan = findViewById(R.id.edttaikhoan);
         edtPassword = findViewById(R.id.edtpassword);
