@@ -43,6 +43,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="6">
                 <ListView
+                    android:id="@+id/lvStaff"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
             </LinearLayout>

@@ -12,12 +12,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.owner.Adapter.ChatOneToOneAdapter;
 import com.example.owner.Global.Public_func;
+import com.example.owner.Models.Staff;
 import com.example.owner.R;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
 
 public class ChooseChatActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -26,12 +31,22 @@ public class ChooseChatActivity extends AppCompatActivity {
     private TextView txtTitleActivity;
 
     private Button btnChatRoom;
+    private ListView lvStaff;
+    private ArrayList<Staff> arrStaff = new ArrayList<>();;
+    private ChatOneToOneAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_chat);
         anhXa();
         txtTitleActivity.setText("Thông báo");
+
+        arrStaff.add(new Staff("Cam", "Cam đỏ núi", ""));
+        arrStaff.add(new Staff("Chuối", "Chuối vàng biển", ""));
+        arrStaff.add(new Staff("Dưa Hấu", "Dưa hấu sông", ""));
+        adapter = new ChatOneToOneAdapter(this ,R.layout.cus_listview_chat_staff ,arrStaff);
+        lvStaff.setAdapter(adapter);
+
         openMenu();
         //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -109,6 +124,7 @@ public class ChooseChatActivity extends AppCompatActivity {
         btnMnu = findViewById(R.id.btnMnu);
         txtTitleActivity = findViewById(R.id.txtTitle);
         btnChatRoom = findViewById(R.id.btnChatRoom);
+        lvStaff = findViewById(R.id.lvStaff);
     }
 
     public void openMenu() {

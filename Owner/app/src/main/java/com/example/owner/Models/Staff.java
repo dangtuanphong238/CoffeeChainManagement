@@ -12,6 +12,8 @@ public class Staff implements Serializable {
     public String cmnd;
     public String chucvu;
     public String calam;
+
+    public String message; //test
     public Staff(String id, String user, String pass, String tennv, String sdt, String cmnd, String chucvu, String calam) {
         this.id = id;
         this.user = user;
@@ -21,6 +23,12 @@ public class Staff implements Serializable {
         this.cmnd = cmnd;
         this.chucvu = chucvu;
         this.calam = calam;
+    }
+
+    public Staff(String id, String user, String message) {
+        this.id = id;
+        this.user = user;
+        this.message = message;
     }
 
     public Staff() {
