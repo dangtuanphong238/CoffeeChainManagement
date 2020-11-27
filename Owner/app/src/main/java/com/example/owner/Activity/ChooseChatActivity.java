@@ -21,6 +21,11 @@ import com.example.owner.Global.Public_func;
 import com.example.owner.Models.Staff;
 import com.example.owner.R;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -34,18 +39,23 @@ public class ChooseChatActivity extends AppCompatActivity {
     private ListView lvStaff;
     private ArrayList<Staff> arrStaff = new ArrayList<>();;
     private ChatOneToOneAdapter adapter;
+
+    private String sOwnerID;
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String OWNERID = "ownerID";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_chat);
         anhXa();
         txtTitleActivity.setText("Thông báo");
+        getOwnerIDFromLocalStorage();
+        GetData();
+//        arrStaff.add(new Staff("Cam", "Cam đỏ núi"));
+//        arrStaff.add(new Staff("Chuối", "Chuối vàng biển"));
+//        arrStaff.add(new Staff("Dưa Hấu", "Dưa hấu sông"));
 
-        arrStaff.add(new Staff("Cam", "Cam đỏ núi", ""));
-        arrStaff.add(new Staff("Chuối", "Chuối vàng biển", ""));
-        arrStaff.add(new Staff("Dưa Hấu", "Dưa hấu sông", ""));
-        adapter = new ChatOneToOneAdapter(this ,R.layout.cus_listview_chat_staff ,arrStaff);
-        lvStaff.setAdapter(adapter);
 
         openMenu();
         //call function onClickItem
@@ -106,6 +116,79 @@ public class ChooseChatActivity extends AppCompatActivity {
         });
 
         setOnClick();
+    }
+
+    private void GetData() {
+//        initList();
+//        mAdapter = new CountryAdapter(this, mCountryList);
+//        spSort.setAdapter(mAdapter);
+//        spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                ListSpinner clickedItem = (ListSpinner) adapterView.getItemAtPosition(i);
+//                clickedCountryName = clickedItem.getCountryName();
+//                Toast.makeText(WareHouseManageActivity.this, "Bạn chọn " + clickedCountryName ,
+//                        Toast.LENGTH_SHORT).show();
+//                saveOwnerIDToLocalStorage(clickedItem.getCountryName());
+//                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+//                DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
+//                myRef.child(sOwnerID).child("QuanLyKho").child(clickedCountryName).addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        if (dataSnapshot.exists())
+//                        {
+//                            //xoa du lieu tren listview
+//                            hangHoaAdapter.clear();
+//                            for (DataSnapshot data : dataSnapshot.getChildren())
+//                            {
+//                                HangHoa danhSachHH = data.getValue(HangHoa.class);
+//                                danhSachHH.setId(data.getKey());
+//                                hangHoaAdapter.add(danhSachHH);
+//                                hangHoaAdapter.notifyDataSetChanged();
+//                            }
+//                        }
+//                    }
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//                        Toast.makeText(WareHouseManageActivity.this, "Load Data Failed!", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
+        myRef.child(sOwnerID).child("QuanLyNhanVien").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists())
+                {
+                    for (DataSnapshot data : dataSnapshot.getChildren())
+                    {
+                        Staff staff = data.getValue(Staff.class);
+                        arrStaff.add(staff);
+
+                    }
+                    adapter = new ChatOneToOneAdapter(ChooseChatActivity.this ,R.layout.cus_listview_chat_staff ,arrStaff);
+                    lvStaff.setAdapter(adapter);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(ChooseChatActivity.this, "Load Data Failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        System.out.println(sharedPreferences.getString(OWNERID,"null"));
+        sOwnerID = sharedPreferences.getString(OWNERID,"null");
     }
 
     private void setOnClick() {

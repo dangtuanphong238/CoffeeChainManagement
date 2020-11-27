@@ -44,7 +44,7 @@ public class ChatOneToOneAdapter extends BaseAdapter {
     private class ViewHolder
     {
         ImageView imgStaff;
-        TextView txtUserStaff, txtMessageStaff;
+        TextView txtUserStaff;
     }
 
     @Override
@@ -62,7 +62,6 @@ public class ChatOneToOneAdapter extends BaseAdapter {
 
             //anhxa view
             viewHolder.txtUserStaff = (TextView) view.findViewById(R.id.txtUserStaff);
-            viewHolder.txtMessageStaff = (TextView) view.findViewById(R.id.txtMessageStaff);
             viewHolder.imgStaff = (ImageView) view.findViewById(R.id.imgStaff);
 
             //giữ trạng thái ánh xạ
@@ -73,7 +72,6 @@ public class ChatOneToOneAdapter extends BaseAdapter {
         }
         Staff staff = arrStaff.get(i);
         viewHolder.txtUserStaff.setText(staff.getId());
-        viewHolder.txtMessageStaff.setText("Message in this");
         viewHolder.imgStaff.setImageResource(R.drawable.ic_person_24);
 
         //gán animation

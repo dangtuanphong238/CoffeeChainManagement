@@ -25,10 +25,9 @@ public class Staff implements Serializable {
         this.calam = calam;
     }
 
-    public Staff(String id, String user, String message) {
+    public Staff(String id, String user) {
         this.id = id;
         this.user = user;
-        this.message = message;
     }
 
     public Staff() {
