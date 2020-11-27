@@ -1,4 +1,4 @@
-package com.example.staff;
+package com.example.staff.Model;
 
 public class PhongMd {
     private String name;

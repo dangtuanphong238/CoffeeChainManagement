@@ -12,7 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.staff.Fragment.BanAdapter;
+import com.example.staff.Adapter.BanAdapter;
+import com.example.staff.Model.Ban;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class Phong extends AppCompatActivity {
+public class PhongScreen extends AppCompatActivity {
     Button btnBan1;
     GridView gridView;
     Ban ban = new Ban();
@@ -62,8 +63,18 @@ public class Phong extends AppCompatActivity {
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(Phong.this,OderActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(PhongScreen.this,OderActivity.class);
+                    String loaiPhong = lstPhong.get(position).toString();
+                    if (!loaiPhong.isEmpty()) {
+                        Intent intent = new Intent(PhongScreen.this, OderActivity.class);
+//                    intent.putExtra("values", lstKhuVuc.toString());
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("tenban", loaiPhong);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+//                    startActivity(intent);
                 }
             });
         }

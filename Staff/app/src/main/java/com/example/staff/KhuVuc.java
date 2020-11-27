@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.staff.Fragment.KhuVucAdapter;
+import com.example.staff.Adapter.KhuVucAdapter;
 import com.example.staff.Global.Public_func;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -84,7 +84,7 @@ public class KhuVuc extends AppCompatActivity {
                     System.out.println("name " + lstKhuVuc.get(position).toString());
                     String loaiPhong = lstKhuVuc.get(position).toString();
                     if (!loaiPhong.isEmpty()) {
-                        Intent intent = new Intent(KhuVuc.this, Phong.class);
+                        Intent intent = new Intent(KhuVuc.this, PhongScreen.class);
 //                    intent.putExtra("values", lstKhuVuc.toString());
                         Bundle bundle = new Bundle();
                         bundle.putString("values", loaiPhong);

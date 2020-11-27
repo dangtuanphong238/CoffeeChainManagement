@@ -1,10 +1,10 @@
-package com.example.staff;
+package com.example.staff.Model;
 
-public class MonAn {
+public class MonAnModel {
     private String ten;
     private double gia;
-    public MonAn(){}
-    public MonAn(String ten, double gia) {
+    public MonAnModel(){}
+    public MonAnModel(String ten, double gia) {
         this.ten = ten;
         this.gia = gia;
     }

@@ -1,4 +1,4 @@
-package com.example.staff;
+package com.example.staff.Model;
 
 public class KhuVucMD {
     public String soban;

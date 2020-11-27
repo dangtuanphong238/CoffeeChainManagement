@@ -1,4 +1,4 @@
-package com.example.staff.Fragment;
+package com.example.staff.Model;
 
 public class GetMonAn {
     String gia;

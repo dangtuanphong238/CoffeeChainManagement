@@ -3,24 +3,20 @@ package com.example.staff;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.staff.Adapter.ListMealAdapter;
+import com.example.staff.Model.MealModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,6 +32,7 @@ public class OderActivity extends AppCompatActivity {
     public static final String OWNERID = "ownerID";
     private String sOwnerID;
     EditText sreachMon;
+    TextView txtTenBan;
     Spinner spPhanLoaiMon;
     ListView listView;
     ArrayList<MealModel> listMonAn = new ArrayList<>();
@@ -50,6 +47,9 @@ public class OderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_oder);
         getOwnerIDFromLocalStorage();
         AnhXa();
+        Bundle bundle = getIntent().getExtras();
+        String title = bundle.getString("tenban");
+        txtTenBan.setText(title);
         spPhanLoaiMon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -61,6 +61,7 @@ public class OderActivity extends AppCompatActivity {
                 {
                     FillSpinner(keySpinner);
                 }
+
             }
 
             @Override
@@ -69,6 +70,13 @@ public class OderActivity extends AppCompatActivity {
             }
         });
         setEvent();
+    }
+    private void DialogDatMon(){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.activity_dat_mon_dialog);
+        dialog.show();
+        TextView txtTenMon = findViewById(R.id.txtTenMonAn);
+        TextView txtGiaMonAn = findViewById(R.id.txtGiaMonAn);
     }
 
     private void FillSpinner(final String key) {
@@ -142,6 +150,7 @@ public class OderActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(OderActivity.this, "Bạn chọn cái này à!", Toast.LENGTH_SHORT).show();
+                DialogDatMon();
             }
         });
     }
@@ -151,6 +160,7 @@ public class OderActivity extends AppCompatActivity {
         spPhanLoaiMon = findViewById(R.id.spLoaiNuocBill);
         //recyclerViewMon = findViewById(R.id.recyclerViewBill);
         listView = findViewById(R.id.recyclerViewBill);
+        txtTenBan = findViewById(R.id.txtTenBan);
     }
 
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login

@@ -15,7 +15,7 @@
         <activity android:name=".DatMon" />
         <activity android:name=".OderActivity" />
         <activity android:name=".ChiTietBan" />
-        <activity android:name=".Phong" />
+        <activity android:name=".PhongScreen" />
         <activity android:name=".KhuVuc" />
         <activity android:name=".LoginScreen" />
         <activity android:name=".SplashScreen">

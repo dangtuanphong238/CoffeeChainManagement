@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.staff.DatMon;
-import com.example.staff.MonAn;
-import com.example.staff.MonAnAdapter;
+import com.example.staff.Model.MonAnModel;
+import com.example.staff.Adapter.MonAnAdapter;
 import com.example.staff.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +28,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class TraSuaProductFragment extends Fragment {
     RecyclerView traSuaRecycleView;
-    ArrayList<MonAn> listMonAn;
+    ArrayList<MonAnModel> listMonAnModel;
     MonAnAdapter monAnAdapter;
     DatabaseReference databaseReference;
     private FirebaseDatabase database;
@@ -44,7 +44,7 @@ public class TraSuaProductFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_tra_sua_product, container, false);
          traSuaRecycleView= view.findViewById(R.id.traSuaRecycleView);
-        listMonAn = new ArrayList<>();
+        listMonAnModel = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference().child("OwnerManager").child("Owner1").child("QuanLyMonAn").child("TraSua");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -52,10 +52,10 @@ public class TraSuaProductFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        MonAn monAn = snapshot.getValue(MonAn.class);
-                        listMonAn.add(monAn);
+                        MonAnModel monAnModel = snapshot.getValue(MonAnModel.class);
+                        listMonAnModel.add(monAnModel);
                     }
-                    monAnAdapter = new MonAnAdapter(listMonAn);
+                    monAnAdapter = new MonAnAdapter(listMonAnModel);
                     traSuaRecycleView.setAdapter(monAnAdapter);
                 }
             }

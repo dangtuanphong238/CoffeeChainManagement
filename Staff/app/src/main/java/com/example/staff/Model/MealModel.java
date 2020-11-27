@@ -1,4 +1,4 @@
-package com.example.staff;
+package com.example.staff.Model;
 
 import android.graphics.Bitmap;
 

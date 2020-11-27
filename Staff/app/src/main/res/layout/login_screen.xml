@@ -66,34 +66,24 @@
                     />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edtIdCafe"
+            android:layout_weight="1"
+            android:gravity="center">
+            <Spinner
+                android:id="@+id/spIdOwner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:hint="Id Cafe"
-                    android:inputType="textPersonName"
-                    android:drawableStart="@drawable/ic_id_cafe"
-                    android:drawablePadding="12dp"
-                    android:background="@drawable/custom_edittext"
-                    android:layout_marginBottom="20dp"
-                    android:paddingStart="10dp"
-                    >
-                </com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="55dp"
+                android:background="@drawable/custom_spinner"
+                ></Spinner>
         </LinearLayout>
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:gravity="center|top"
             >
             <Button
