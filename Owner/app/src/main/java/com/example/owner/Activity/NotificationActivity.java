@@ -208,7 +208,7 @@ public class NotificationActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         // Call smooth scroll
-                                        recyclerView.smoothScrollToPosition(chatOneToOneAdapter.getCount() - 1);
+                                        recyclerView.smoothScrollToPosition(chatRoomAdapter.getItemCount() - 1);
                                     }
                                 });
                             }
