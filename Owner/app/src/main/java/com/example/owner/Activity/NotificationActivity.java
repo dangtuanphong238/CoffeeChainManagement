@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.owner.Adapter.ChatOneToOneAdapter;
-import com.example.owner.Adapter.MessageAdapter;
+import com.example.owner.Adapter.ChatRoomAdapter;
 import com.example.owner.Global.Public_func;
 import com.example.owner.Models.Message;
 import com.example.owner.R;
@@ -50,7 +50,7 @@ public class NotificationActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
 
-    private MessageAdapter messageAdapter;
+    private ChatRoomAdapter chatRoomAdapter;
     private ChatOneToOneAdapter chatOneToOneAdapter;
     private ArrayList<Message> arrMessage = new ArrayList<>();
 
@@ -65,9 +65,7 @@ public class NotificationActivity extends AppCompatActivity {
         anhXa();
         getOwnerIDFromLocalStorage();
         getChatTypeFromBundle();
-
         openMenu();
-
         //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -171,13 +169,13 @@ public class NotificationActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 edtInputMessage.setText(null);
-//                                recyclerView.post(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        // Call smooth scroll
-//                                        recyclerView.smoothScrollToPosition(chatOneToOneAdapter.getCount() - 1);
-//                                    }
-//                                });
+                                recyclerView.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // Call smooth scroll
+                                        recyclerView.smoothScrollToPosition(chatRoomAdapter.getItemCount() - 1);
+                                    }
+                                });
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -206,13 +204,13 @@ public class NotificationActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 edtInputMessage.setText(null);
-//                                recyclerView.post(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        // Call smooth scroll
-//                                        recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
-//                                    }
-//                                });
+                                recyclerView.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // Call smooth scroll
+                                        recyclerView.smoothScrollToPosition(chatOneToOneAdapter.getCount() - 1);
+                                    }
+                                });
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -264,16 +262,16 @@ public class NotificationActivity extends AppCompatActivity {
                         arrMessage.add(message);
 //                        System.out.println("message " + message.getMessageText());
                     }
-                    messageAdapter = new MessageAdapter(arrMessage, sOwnerID);
-                    recyclerView.setAdapter(messageAdapter);
+                    chatRoomAdapter = new ChatRoomAdapter(arrMessage, sOwnerID);
+                    recyclerView.setAdapter(chatRoomAdapter);
                     recyclerView.post(new Runnable() {
                         @Override
                         public void run() {
                             // Call smooth scroll
-                            recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
+                            recyclerView.smoothScrollToPosition(chatRoomAdapter.getItemCount() - 1);
                         }
                     });
-                    messageAdapter.notifyDataSetChanged();
+                    chatRoomAdapter.notifyDataSetChanged();
                     System.out.println("size " + arrMessage.size());
                 }
             }
@@ -304,16 +302,16 @@ public class NotificationActivity extends AppCompatActivity {
                         arrMessage.add(message);
                         System.out.println("message " + message.getMessageText());
                     }
-                    messageAdapter = new MessageAdapter(arrMessage, sOwnerID);
-                    recyclerView.setAdapter(messageAdapter);
+                    chatRoomAdapter = new ChatRoomAdapter(arrMessage, sOwnerID);
+                    recyclerView.setAdapter(chatRoomAdapter);
                     recyclerView.post(new Runnable() {
                         @Override
                         public void run() {
                             // Call smooth scroll
-                            recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
+                            recyclerView.smoothScrollToPosition(chatRoomAdapter.getItemCount() - 1);
                         }
                     });
-                    messageAdapter.notifyDataSetChanged();
+                    chatRoomAdapter.notifyDataSetChanged();
                     System.out.println("size " + arrMessage.size());
                 }
             }

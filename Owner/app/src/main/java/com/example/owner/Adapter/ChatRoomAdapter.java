@@ -14,16 +14,16 @@ import com.example.owner.R;
 
 import java.util.ArrayList;
 
-public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder>{
+public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ViewHolder>{
 
     private ArrayList<Message> listData;
     private String myID, idFromDB;
     private int pos;
-    public MessageAdapter(ArrayList<Message> listData, String myID) {
+    public ChatRoomAdapter(ArrayList<Message> listData, String myID) {
         this.listData = listData;
         this.myID = myID;
     }
-    public MessageAdapter(ArrayList<Message> listData) {
+    public ChatRoomAdapter(ArrayList<Message> listData) {
         this.listData = listData;
 
     }
