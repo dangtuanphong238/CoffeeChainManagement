@@ -219,7 +219,9 @@ public class NotificationActivity extends AppCompatActivity{
                         System.out.println("message " + message.getMessageText());
                     }
 //                    messageAdapter = new MessageAdapter(arrMessage, sOwnerID, "Owner01");
-                    messageAdapter = new MessageAdapter(arrMessage);
+
+                        messageAdapter = new MessageAdapter(arrMessage,sOwnerID);
+//                    messageAdapter = new MessageAdapter(arrMessage);
                     recyclerView.setAdapter(messageAdapter);
                     recyclerView.post(new Runnable() {
                         @Override

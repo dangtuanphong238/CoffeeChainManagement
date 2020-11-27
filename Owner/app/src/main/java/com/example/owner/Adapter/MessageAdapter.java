@@ -17,19 +17,30 @@ import java.util.ArrayList;
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder>{
 
     private ArrayList<Message> listData;
-//    private String myID, idFromDB;
+    private String myID, idFromDB;
+    private int pos;
+    public MessageAdapter(ArrayList<Message> listData, String myID) {
+        this.listData = listData;
+        this.myID = myID;
+    }
     public MessageAdapter(ArrayList<Message> listData) {
         this.listData = listData;
-//        this.myID = myID;
-//        this.idFromDB = idFromDB;
-    }
 
+    }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.cus_list_chat_room,parent,false);
-        return new ViewHolder(view);
+        View view1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.cus_list_chat_room_right,parent,false);
+        System.out.println("view type " + pos);
+        if(myID.equals(listData.get(pos).getUserID()))
+        {
+            return new ViewHolder(view1);
+
+        }else {
+            return new ViewHolder(view);
+        }
     }
 
 //    @NonNull
@@ -65,7 +76,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public int getItemViewType(int position) {
-
+        pos = position;
         return super.getItemViewType(position);
     }
 
