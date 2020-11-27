@@ -203,7 +203,7 @@ public class StaffManageActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(StaffManageActivity.this, WareHouseManageActivity.class);
                         return true;
                     case R.id.itemThongBao:
-                        Public_func.clickItemMenu(StaffManageActivity.this, NotificationActivity.class);
+                        Public_func.clickItemMenu(StaffManageActivity.this, ChooseChatActivity.class);
                         return true;
                     case R.id.itemThuNgan:
                         Public_func.clickItemMenu(StaffManageActivity.this, ThuNganActivity.class);

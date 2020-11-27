@@ -65,7 +65,7 @@ public class NotificationActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thong_bao);
         anhXa();
-        txtTitleActivity.setText("Thông báo");
+        txtTitleActivity.setText("Room");
         openMenu();
         getOwnerIDFromLocalStorage();
         arrMessage = new ArrayList<>();
@@ -89,7 +89,7 @@ public class NotificationActivity extends AppCompatActivity{
                         Public_func.clickItemMenu(NotificationActivity.this, WareHouseManageActivity.class);
                         return true;
                     case R.id.itemThongBao:
-                        recreate();
+                        Public_func.clickItemMenu(NotificationActivity.this, ChooseChatActivity.class);
                         return true;
                     case R.id.itemThuNgan:
                         Public_func.clickItemMenu(NotificationActivity.this, ThuNganActivity.class);

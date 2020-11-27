@@ -107,7 +107,7 @@ public class InfoStoreActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(InfoStoreActivity.this, WareHouseManageActivity.class);
                         return true;
                     case R.id.itemThongBao:
-                        Public_func.clickItemMenu(InfoStoreActivity.this, NotificationActivity.class);
+                        Public_func.clickItemMenu(InfoStoreActivity.this, ChooseChatActivity.class);
                         return true;
                     case R.id.itemThuNgan:
                         Public_func.clickItemMenu(InfoStoreActivity.this, ThuNganActivity.class);
