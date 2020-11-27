@@ -13,7 +13,6 @@ public class Staff implements Serializable {
     public String chucvu;
     public String calam;
 
-    public String message; //test
     public Staff(String id, String user, String pass, String tennv, String sdt, String cmnd, String chucvu, String calam) {
         this.id = id;
         this.user = user;

@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -52,10 +53,6 @@ public class ChooseChatActivity extends AppCompatActivity {
         txtTitleActivity.setText("Thông báo");
         getOwnerIDFromLocalStorage();
         GetData();
-//        arrStaff.add(new Staff("Cam", "Cam đỏ núi"));
-//        arrStaff.add(new Staff("Chuối", "Chuối vàng biển"));
-//        arrStaff.add(new Staff("Dưa Hấu", "Dưa hấu sông"));
-
 
         openMenu();
         //call function onClickItem
@@ -119,47 +116,6 @@ public class ChooseChatActivity extends AppCompatActivity {
     }
 
     private void GetData() {
-//        initList();
-//        mAdapter = new CountryAdapter(this, mCountryList);
-//        spSort.setAdapter(mAdapter);
-//        spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                ListSpinner clickedItem = (ListSpinner) adapterView.getItemAtPosition(i);
-//                clickedCountryName = clickedItem.getCountryName();
-//                Toast.makeText(WareHouseManageActivity.this, "Bạn chọn " + clickedCountryName ,
-//                        Toast.LENGTH_SHORT).show();
-//                saveOwnerIDToLocalStorage(clickedItem.getCountryName());
-//                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-//                DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
-//                myRef.child(sOwnerID).child("QuanLyKho").child(clickedCountryName).addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        if (dataSnapshot.exists())
-//                        {
-//                            //xoa du lieu tren listview
-//                            hangHoaAdapter.clear();
-//                            for (DataSnapshot data : dataSnapshot.getChildren())
-//                            {
-//                                HangHoa danhSachHH = data.getValue(HangHoa.class);
-//                                danhSachHH.setId(data.getKey());
-//                                hangHoaAdapter.add(danhSachHH);
-//                                hangHoaAdapter.notifyDataSetChanged();
-//                            }
-//                        }
-//                    }
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                        Toast.makeText(WareHouseManageActivity.this, "Load Data Failed!", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
         myRef.child(sOwnerID).child("QuanLyNhanVien").addValueEventListener(new ValueEventListener() {
@@ -196,6 +152,21 @@ public class ChooseChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ChooseChatActivity.this, NotificationActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("chat_type", "room");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        lvStaff.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(ChooseChatActivity.this, NotificationActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("chat_type", "one");
+                bundle.putString("staff_id", arrStaff.get(i).getId());
+                bundle.putString("staff_username", arrStaff.get(i).getTennv());
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

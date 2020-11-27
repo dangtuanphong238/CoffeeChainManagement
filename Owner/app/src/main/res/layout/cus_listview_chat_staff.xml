@@ -27,7 +27,15 @@
             android:layout_weight="2"
             android:gravity="center|start">
             <TextView
-                android:id="@+id/txtUserStaff"
+                android:id="@+id/txtIDStaff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User ID"
+                android:textColor="#000"
+                android:textStyle="normal|bold"
+                />
+            <TextView
+                android:id="@+id/txtUsernameStaff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="username"

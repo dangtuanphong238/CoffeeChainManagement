@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,7 +42,8 @@ public class ChatOneToOneAdapter extends BaseAdapter {
     private class ViewHolder
     {
         ImageView imgStaff;
-        TextView txtUserStaff;
+        TextView txtIDStaff;
+        TextView txtUsernameStaff;
     }
 
     @Override
@@ -61,9 +60,9 @@ public class ChatOneToOneAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
 
             //anhxa view
-            viewHolder.txtUserStaff = (TextView) view.findViewById(R.id.txtUserStaff);
-            viewHolder.imgStaff = (ImageView) view.findViewById(R.id.imgStaff);
-
+            viewHolder.txtIDStaff = view.findViewById(R.id.txtIDStaff);
+            viewHolder.imgStaff = view.findViewById(R.id.imgStaff);
+            viewHolder.txtUsernameStaff = view.findViewById(R.id.txtUsernameStaff);
             //giữ trạng thái ánh xạ
             view.setTag(viewHolder);
         }
@@ -71,8 +70,9 @@ public class ChatOneToOneAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
         Staff staff = arrStaff.get(i);
-        viewHolder.txtUserStaff.setText(staff.getId());
+        viewHolder.txtIDStaff.setText("ID: " + staff.getId());
         viewHolder.imgStaff.setImageResource(R.drawable.ic_person_24);
+        viewHolder.txtUsernameStaff.setText(staff.getTennv());
 
         //gán animation
 //        Animation animation = AnimationUtils.loadAnimation(context,R.anim.anim_scale);

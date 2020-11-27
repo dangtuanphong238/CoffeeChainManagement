@@ -6,7 +6,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.owner.Adapter.ChatOneToOneAdapter;
 import com.example.owner.Adapter.MessageAdapter;
 import com.example.owner.Global.Public_func;
 import com.example.owner.Models.Message;
@@ -26,7 +26,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,11 +34,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class NotificationActivity extends AppCompatActivity{
+public class NotificationActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ImageButton btnMnu;
@@ -53,23 +51,22 @@ public class NotificationActivity extends AppCompatActivity{
     private DatabaseReference databaseReference;
 
     private MessageAdapter messageAdapter;
-    private Message message;
-    private ArrayList<Message> arrMessage;
+    private ChatOneToOneAdapter chatOneToOneAdapter;
+    private ArrayList<Message> arrMessage = new ArrayList<>();
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
-    private String sOwnerID;
+    private String sOwnerID, chatType ,staffID, staffUsername;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thong_bao);
         anhXa();
-        txtTitleActivity.setText("Room");
-        openMenu();
         getOwnerIDFromLocalStorage();
-        arrMessage = new ArrayList<>();
-        displayMessages(arrMessage);
+        getChatTypeFromBundle();
+
+        openMenu();
 
         //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -117,7 +114,7 @@ public class NotificationActivity extends AppCompatActivity{
                         return true;
 
                     case R.id.itemLogOut:
-                        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
@@ -130,6 +127,7 @@ public class NotificationActivity extends AppCompatActivity{
 
         setOnClick();
     }
+
     private void anhXa() {
         drawerLayout = findViewById(R.id.activity_main_drawer);
         navigationView = findViewById(R.id.navDrawerMenu);
@@ -139,6 +137,7 @@ public class NotificationActivity extends AppCompatActivity{
         btnSend = findViewById(R.id.btnSend);
         edtInputMessage = findViewById(R.id.edtInputMessage);
     }
+
     public void openMenu() {
         btnMnu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,54 +153,102 @@ public class NotificationActivity extends AppCompatActivity{
         drawerLayout.closeDrawer(GravityCompat.START);
     }
 
-    private void setOnClick(){
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String messageText = edtInputMessage.getText().toString();
-                if(!messageText.isEmpty())
-                {
-                    String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-                    String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+    private void setOnClick() {
+        if(chatType.equals("room"))
+        {
+            btnSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String messageText = edtInputMessage.getText().toString();
+                    if (!messageText.isEmpty()) {
+                        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                        String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
-                    Message message = new Message(sOwnerID , messageText,currentDate + " " + currentTime);
-                    firebaseDatabase = FirebaseDatabase.getInstance();
-                    databaseReference = firebaseDatabase.getReference();
-                    databaseReference.child("OwnerManager").child(sOwnerID).child("Message").push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            edtInputMessage.setText(null);
-                            recyclerView.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    // Call smooth scroll
-                                    recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
-                                }
-                            });
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            System.out.println("Failed_message");
-                        }
-                    });
+                        Message message = new Message(sOwnerID, messageText, currentDate + " " + currentTime);
+                        firebaseDatabase = FirebaseDatabase.getInstance();
+                        databaseReference = firebaseDatabase.getReference();
+                        databaseReference.child("OwnerManager").child(sOwnerID).child("Message").push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                edtInputMessage.setText(null);
+//                                recyclerView.post(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        // Call smooth scroll
+//                                        recyclerView.smoothScrollToPosition(chatOneToOneAdapter.getCount() - 1);
+//                                    }
+//                                });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                System.out.println("Failed_message");
+                            }
+                        });
+                    }
                 }
-            }
-        });
+            });
+        }
+        if(chatType.equals("one"))
+        {
+            btnSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String messageText = edtInputMessage.getText().toString();
+                    if (!messageText.isEmpty()) {
+                        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                        String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+
+                        Message message = new Message(sOwnerID, messageText, currentDate + " " + currentTime);
+                        firebaseDatabase = FirebaseDatabase.getInstance();
+                        databaseReference = firebaseDatabase.getReference();
+                        databaseReference.child("OwnerManager").child(sOwnerID).child("MessageStaff").child(sOwnerID + "|" + staffID).push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                edtInputMessage.setText(null);
+//                                recyclerView.post(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        // Call smooth scroll
+//                                        recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
+//                                    }
+//                                });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                System.out.println("Failed_message");
+                            }
+                        });
+                    }
+                }
+            });
+        }
     }
 
-    public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
-    {
+    public void getOwnerIDFromLocalStorage() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         System.out.println(sharedPreferences.getString(OWNERID, "null"));
         sOwnerID = sharedPreferences.getString(OWNERID, "null");
     }
 
-    private void displayMessages(final ArrayList<Message> arrMessage)
-    {
+    public void getChatTypeFromBundle() {
+        Bundle bundle = getIntent().getExtras();
+        chatType = bundle.getString("chat_type");
+        staffID = bundle.getString("staff_id");
+        staffUsername = bundle.getString("staff_username");
+        if (chatType.equals("room")) {
+            displayMessagesFromRoom(arrMessage);
+        }
+        if (chatType.equals("one")) {
+            displayMessagesFromStaff(arrMessage);
+        }
+    }
+
+    private void displayMessagesFromRoom(final ArrayList<Message> arrMessage) {
+        txtTitleActivity.setText("Room");
         recyclerView.setLayoutManager(new LinearLayoutManager(NotificationActivity.this));
         recyclerView.setHasFixedSize(true);
-//        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference("Message");
         DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference();
 
         dbReference.child("OwnerManager").child(sOwnerID).child("Message").addValueEventListener(new ValueEventListener() {
@@ -210,18 +257,14 @@ public class NotificationActivity extends AppCompatActivity{
                 if (snapshot.exists()) {
                     arrMessage.clear();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-
                         String messageText = dataSnapshot.child("messageText").getValue().toString();
                         String messageTime = dataSnapshot.child("messageTime").getValue().toString();
                         String userID = dataSnapshot.child("userID").getValue().toString();
                         Message message = new Message(userID, messageText, messageTime);
                         arrMessage.add(message);
-                        System.out.println("message " + message.getMessageText());
+//                        System.out.println("message " + message.getMessageText());
                     }
-//                    messageAdapter = new MessageAdapter(arrMessage, sOwnerID, "Owner01");
-
-                        messageAdapter = new MessageAdapter(arrMessage,sOwnerID);
-//                    messageAdapter = new MessageAdapter(arrMessage);
+                    messageAdapter = new MessageAdapter(arrMessage, sOwnerID);
                     recyclerView.setAdapter(messageAdapter);
                     recyclerView.post(new Runnable() {
                         @Override
@@ -232,12 +275,46 @@ public class NotificationActivity extends AppCompatActivity{
                     });
                     messageAdapter.notifyDataSetChanged();
                     System.out.println("size " + arrMessage.size());
-//                    for (int i = 0; i < arrMessage.size(); i++)
-//                    {
-//                        messageAdapter = new MessageAdapter(arrMessage, sOwnerID, arrMessage.get(i).getUserID());
-//                        recyclerView.setAdapter(messageAdapter);
-//                        messageAdapter.notifyDataSetChanged();
-//                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void displayMessagesFromStaff(final ArrayList<Message> arrMessage) {
+        txtTitleActivity.setText(staffUsername);
+        recyclerView.setLayoutManager(new LinearLayoutManager(NotificationActivity.this));
+        recyclerView.setHasFixedSize(true);
+        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference();
+
+        dbReference.child("OwnerManager").child(sOwnerID).child("MessageStaff").child(sOwnerID + "|" + staffID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    arrMessage.clear();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        String messageText = dataSnapshot.child("messageText").getValue().toString();
+                        String messageTime = dataSnapshot.child("messageTime").getValue().toString();
+                        String userID = dataSnapshot.child("userID").getValue().toString();
+                        Message message = new Message(userID, messageText, messageTime);
+                        arrMessage.add(message);
+                        System.out.println("message " + message.getMessageText());
+                    }
+                    messageAdapter = new MessageAdapter(arrMessage, sOwnerID);
+                    recyclerView.setAdapter(messageAdapter);
+                    recyclerView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Call smooth scroll
+                            recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
+                        }
+                    });
+                    messageAdapter.notifyDataSetChanged();
+                    System.out.println("size " + arrMessage.size());
                 }
             }
 
