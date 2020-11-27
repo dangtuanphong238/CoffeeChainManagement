@@ -38,7 +38,6 @@ public class KhuVuc extends AppCompatActivity {
     private NavigationView navigationView;
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,7 +133,10 @@ public class KhuVuc extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         System.out.println(sharedPreferences.getString(OWNERID, "null"));
         sOwnerID = sharedPreferences.getString(OWNERID, "null");
+
     }
+
+
     public void anXa(){
         drawerLayout = findViewById(R.id.activity_main_drawer);
         navigationView = findViewById(R.id.navDrawerMenu);

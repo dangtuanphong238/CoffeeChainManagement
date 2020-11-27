@@ -13,6 +13,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ThongBaoScreen"></activity>
         <activity android:name=".DatMon" />
+        <activity android:name=".OderActivity" />
         <activity android:name=".ChiTietBan" />
         <activity android:name=".Phong" />
         <activity android:name=".KhuVuc" />

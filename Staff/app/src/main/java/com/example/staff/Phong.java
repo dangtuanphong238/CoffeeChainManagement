@@ -62,7 +62,7 @@ public class Phong extends AppCompatActivity {
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(Phong.this,ChiTietBan.class);
+                    Intent intent = new Intent(Phong.this,OderActivity.class);
                     startActivity(intent);
                 }
             });
@@ -77,18 +77,22 @@ public class Phong extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String name = dataSnapshot.child("name").getValue().toString();
-                System.out.println("name" + name);
-                txtTenPhong.setText(name);
+                if (dataSnapshot.exists())
+                {
+                    String name = dataSnapshot.child("name").getValue().toString();
+                    System.out.println("name" + name);
+                    txtTenPhong.setText(name);
 //                String soban = dataSnapshot.child("soban").getValue().toString();
-                Integer tables = Integer.valueOf(dataSnapshot.child("tables").getValue().toString());
-                System.out.println("soban" + tables);
-                for(int i = 0; i < tables; i++){
-                    lstPhong.add("Ban"+ i);
-                    renderBan();
-                }
+                    Integer tables = Integer.valueOf(dataSnapshot.child("tables").getValue().toString());
+                    System.out.println("soban" + tables);
+                    for(int i = 0; i < tables; i++){
+                        lstPhong.add("Ban"+ i);
+                        renderBan();
+                    }
 
-                System.out.println("asdawd" + lstPhong);
+                    System.out.println("asdawd" + lstPhong);
+
+                }
 
             }
 

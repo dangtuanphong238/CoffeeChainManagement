@@ -43,7 +43,6 @@ public class LoginScreen extends AppCompatActivity {
         idcafe = findViewById(R.id.edtIdCafe);
         database = FirebaseDatabase.getInstance();
         getListOwner();
-        Toast.makeText(LoginScreen.this, lstOwnerList.toString(), Toast.LENGTH_SHORT).show();
         setOnClick();
         SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
         if (sharedPreferences.contains("username") && sharedPreferences.contains("password") && sharedPreferences.contains("idkey"))
@@ -63,7 +62,6 @@ public class LoginScreen extends AppCompatActivity {
     }
 
     public void setOnClick(){
-        Toast.makeText(this, sOwnerID, Toast.LENGTH_SHORT).show();
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +97,7 @@ public class LoginScreen extends AppCompatActivity {
                                 editor.putString("username",username.getEditText().getText().toString());
                                 editor.putString("password",password.getEditText().getText().toString());
                                 editor.putString("idkey",idcafe.getEditText().getText().toString());
+                                editor.putString("myId",user.getId());
                                 editor.commit();
                                 Intent intent = new Intent(LoginScreen.this,KhuVuc.class);
                                 startActivity(intent);
