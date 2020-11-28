@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.OderActivity"></activity>
+        <activity android:name=".Activity.ChooseChatActivity"></activity>
         <activity android:name=".Activity.UpdateStaff" />
         <activity android:name=".Activity.UpdateHangHoaKho" />
         <activity android:name=".Activity.SplashActivity">

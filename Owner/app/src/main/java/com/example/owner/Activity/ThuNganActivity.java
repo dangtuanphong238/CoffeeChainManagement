@@ -49,7 +49,7 @@ public class ThuNganActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(ThuNganActivity.this, WareHouseManageActivity.class);
                         return true;
                     case R.id.itemThongBao:
-                        Public_func.clickItemMenu(ThuNganActivity.this, NotificationActivity.class);
+                        Public_func.clickItemMenu(ThuNganActivity.this, ChooseChatActivity.class);
                         return true;
                     case R.id.itemThuNgan:
                         recreate();
