@@ -140,7 +140,7 @@ public class AddHangHoaActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(AddHangHoaActivity.this, WareHouseManageActivity.class);
                         return true;
                     case R.id.itemThongBao:
-                        Public_func.clickItemMenu(AddHangHoaActivity.this, NotificationActivity.class);
+                        Public_func.clickItemMenu(AddHangHoaActivity.this, ChooseChatActivity.class);
                         return true;
                     case R.id.itemThuNgan:
                         Public_func.clickItemMenu(AddHangHoaActivity.this, ThuNganActivity.class);

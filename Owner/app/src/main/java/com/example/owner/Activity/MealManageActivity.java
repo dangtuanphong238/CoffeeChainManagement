@@ -193,7 +193,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                         Public_func.clickItemMenu(MealManageActivity.this, WareHouseManageActivity.class);
                         return true;
                     case R.id.itemThongBao:
-                        Public_func.clickItemMenu(MealManageActivity.this, NotificationActivity.class);
+                        Public_func.clickItemMenu(MealManageActivity.this, ChooseChatActivity.class);
                         return true;
                     case R.id.itemThuNgan:
                         Public_func.clickItemMenu(MealManageActivity.this, ThuNganActivity.class);
