@@ -179,6 +179,14 @@ public class ThongBaoScreen extends AppCompatActivity {
 //                    messageAdapter = new MessageAdapter(arrMessage, sOwnerID, "Owner01");
                     messageAdapter = new MessageAdapter(arrMessage);
                     recyclerView.setAdapter(messageAdapter);
+                    recyclerView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            recyclerView.smoothScrollToPosition(messageAdapter.getItemCount());
+                        }
+                    });
+
+
                     messageAdapter.notifyDataSetChanged();
                     System.out.println("size " + arrMessage.size());
 //                    for (int i = 0; i < arrMessage.size(); i++)
@@ -187,6 +195,7 @@ public class ThongBaoScreen extends AppCompatActivity {
 //                        recyclerView.setAdapter(messageAdapter);
 //                        messageAdapter.notifyDataSetChanged();
 //                    }
+
                 }
             }
 
