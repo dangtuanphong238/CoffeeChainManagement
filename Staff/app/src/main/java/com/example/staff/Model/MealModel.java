@@ -2,7 +2,9 @@ package com.example.staff.Model;
 
 import android.graphics.Bitmap;
 
-public class MealModel {
+import java.io.Serializable;
+
+public class MealModel implements Serializable {
     String meal_category;
     String meal_id;
     String meal_price;
@@ -15,6 +17,10 @@ public class MealModel {
         this.meal_price = meal_price;
         this.meal_name = meal_name;
         this.meal_image = meal_image;
+    }
+
+    public MealModel(String meal_name) {
+        this.meal_name = meal_name;
     }
 
     public MealModel() {

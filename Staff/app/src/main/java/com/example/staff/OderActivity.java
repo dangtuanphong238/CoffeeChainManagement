@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.staff.Adapter.ListMealAdapter;
 import com.example.staff.Model.MealModel;
@@ -40,7 +40,8 @@ public class OderActivity extends AppCompatActivity {
     private String keySpinner;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
-
+    private MealModel mealModel;
+    private String timkiemMon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +57,9 @@ public class OderActivity extends AppCompatActivity {
                 keySpinner = parent.getItemAtPosition(position).toString();
                 if (keySpinner.equals("Tất Cả")) {
                     getDataSpiner();
-                }
-                else
-                {
+                } else {
                     FillSpinner(keySpinner);
                 }
-
             }
 
             @Override
@@ -69,16 +67,9 @@ public class OderActivity extends AppCompatActivity {
 
             }
         });
+        getDataName( sreachMon.getText().toString().trim());
         setEvent();
     }
-    private void DialogDatMon(){
-        Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.activity_dat_mon_dialog);
-        dialog.show();
-        TextView txtTenMon = findViewById(R.id.txtTenMonAn);
-        TextView txtGiaMonAn = findViewById(R.id.txtGiaMonAn);
-    }
-
     private void FillSpinner(final String key) {
                 firebaseDatabase = FirebaseDatabase.getInstance();
                 databaseReference = firebaseDatabase.getReference("OwnerManager").child(sOwnerID).child("QuanLyMonAn");
@@ -121,7 +112,7 @@ public class OderActivity extends AppCompatActivity {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             if (snapshot.exists())
                             {
-                                MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
+                                 mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
                                         snapshot.child("meal _id").getValue() + "",
                                         snapshot.child("meal_price").getValue() + "",
                                         snapshot.child("meal_name").getValue() + "",
@@ -144,15 +135,46 @@ public class OderActivity extends AppCompatActivity {
                 });
 
             }
+    private void getDataName(final String keyName) {
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("OwnerManager").child(sOwnerID).child("QuanLyMonAn");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listMonAn.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.exists())
+                    {
+                        MealModel mealModel = new MealModel(snapshot.child("meal_name").getValue() + "");
+                        if (mealModel.getMeal_name().equals(keyName)) {
+                            listMonAn.add(mealModel);
+                        }
+                    }
+                }
+                listMealAdapter = new ListMealAdapter(OderActivity.this, R.layout.custom_recycleview, listMonAn);
+                listMealAdapter.notifyDataSetChanged();
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                listView.setAdapter(listMealAdapter);
+            }
 
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }
+        });
+
+    }
     private void setEvent() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(OderActivity.this, "Bạn chọn cái này à!", Toast.LENGTH_SHORT).show();
-                DialogDatMon();
+                MealModel mealMEAL = listMonAn.get(position);
+                Intent intent = new Intent(getApplicationContext(), CaiDatBill.class);
+                intent.putExtra("BILL", mealMEAL);
+                startActivity(intent);
             }
         });
+
     }
 
     private void AnhXa() {

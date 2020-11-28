@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".DatMon"
+    tools:context=".CaiDatBill"
     android:background="#FE9B58">
 
 
@@ -29,6 +29,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2">
                 <ImageView
+                    android:id="@+id/imgMonAn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -59,18 +60,7 @@
                             android:gravity="center"
                             android:textColor="#000000"></TextView>
                     </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="right">
-                        <ImageView
-                            android:id="@+id/imgExit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/highlight_off"
-                            ></ImageView>
-                    </LinearLayout>
+
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -99,18 +89,23 @@
                         android:layout_weight="1"
                         android:orientation="horizontal">
                         <ImageView
+                            android:id="@+id/imgViewUp"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:src="@drawable/ic_add"></ImageView>
+
                         <EditText
+                            android:id="@+id/soluongMon"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:text="1"
-                            android:textSize="20dp"
-                            android:gravity="center"></EditText>
+                            android:textColor="#FFFFFF"
+                            android:textSize="16dp"></EditText>
                         <ImageView
+                            android:id="@+id/imgViewDown"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -132,6 +127,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/txtTongTien"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|center"
@@ -139,6 +135,7 @@
                 android:text="65.000 đ"></TextView>
 
             <Button
+                android:id="@+id/btnAdd"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|right"
