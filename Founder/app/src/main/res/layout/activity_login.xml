@@ -64,23 +64,18 @@
 
                 android:text="Show"></Button>
             <Button
-                android:id="@+id/click"
+                android:id="@+id/btnLogin"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="Click"></Button>
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:layout_gravity="center"
+                android:text="Login"
+                android:textAllCaps="false"
+                android:background="@drawable/custom_button"
+                android:layout_marginVertical="20dp"/>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:padding="10dp"
-            android:layout_gravity="center"
-            android:text="Login"
-            android:textAllCaps="false"
-            android:background="@drawable/custom_button"
-            android:layout_marginVertical="20dp"/>
+
 
     </LinearLayout>
 </LinearLayout>

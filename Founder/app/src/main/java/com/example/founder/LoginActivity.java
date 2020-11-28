@@ -22,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 public class LoginActivity extends AppCompatActivity {
     Button btnLogin,PasswordVisble;;
     EditText edtTaikhoan,edtPassword;
+    String idFouder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,18 +50,45 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
-        if (sharedPreferences.contains("taikhoan")&& sharedPreferences.contains("password"))
+        if (sharedPreferences.contains("taikhoan")&& sharedPreferences.contains("password") && sharedPreferences.contains("idFounder"))
         {
             edtTaikhoan.setText(sharedPreferences.getString("taikhoan",""));
             edtPassword.setText(sharedPreferences.getString("password",""));
             User user = new User();
             user.setUser(edtTaikhoan.getText().toString());
+            user.setId(idFouder);
             Intent intent = new Intent(LoginActivity.this, TongDoanhThuActivity.class);
             startActivity(intent);
             finish();
 
         }
     }
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+//        DatabaseReference reference = firebaseDatabase.getReference("FounderManager").child("FounderAccount");
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists())
+//                {
+//                    for (DataSnapshot item : snapshot.getChildren())
+//                    {
+//                       idFouder =  item.child("id").getValue() + "";
+//                        System.out.println("id f" + idFouder);
+//                    }
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 
     private void setOnClick()
     {
@@ -68,13 +97,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseDatabase login = FirebaseDatabase.getInstance();
                 DatabaseReference reference = login.getReference();
-                reference.child("FounderManager").child("FounderAccount").child("Founder01").addValueEventListener(new ValueEventListener() {
+                reference.child("FounderManager").child("FounderAccount").child("Founder0").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                             User user = dataSnapshot.getValue(User.class);
                             String username = user.user;
                             String password = user.pass;
+                            String id = user.id;
                         Toast.makeText(LoginActivity.this, password, Toast.LENGTH_SHORT).show();
                             String taikhoan = edtTaikhoan.getText().toString();
                             String matkhau = edtPassword.getText().toString();
@@ -88,11 +118,13 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             if (taikhoan.equals(username) && matkhau.equals(password))
                             {
+                                System.out.println("id f " + id);
                                 Toast.makeText(LoginActivity.this, "Dang Nhap Thanh Cong", Toast.LENGTH_SHORT).show();
                                 SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("taikhoan",taikhoan);
                                 editor.putString("password",matkhau);
+                                editor.putString("idFounder",id);
                                 editor.commit();
                                 Intent intent = new Intent(LoginActivity.this, TongDoanhThuActivity.class);
                                 startActivity(intent);
@@ -120,4 +152,5 @@ public class LoginActivity extends AppCompatActivity {
         edtTaikhoan = findViewById(R.id.edttaikhoan);
         edtPassword = findViewById(R.id.edtpassword);
     }
+
 }

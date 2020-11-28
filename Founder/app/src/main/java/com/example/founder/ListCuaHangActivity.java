@@ -97,16 +97,16 @@ public class ListCuaHangActivity extends AppCompatActivity implements ItemClickL
                     case R.id.it1:
                         Public_func.clickItemMenu(ListCuaHangActivity.this, TongDoanhThuActivity.class);
                         return true;
-                    case R.id.it2:
+                    case R.id.danh_sach_cua_hang:
                         recreate();
                         return true;
-                    case R.id.item3:
+                    case R.id.tao_tai_khoan_owner:
                         Public_func.clickItemMenu(ListCuaHangActivity.this, CreateOwnerAccountActivity.class);
                         return true;
-//                    case R.id.item4:
-//                        Public_func.clickItemMenu(ListCuaHangActivity.this, layout_notification.class);
-//                        return true;
-                    case R.id.itemLogOut:
+                    case R.id.thong_bao:
+                        Public_func.clickItemMenu(ListCuaHangActivity.this, ChooseChatActivity.class);
+                        return true;
+                    case R.id.log_out:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();

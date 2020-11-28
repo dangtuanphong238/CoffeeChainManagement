@@ -22,7 +22,12 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".NotificationActivity">
 
+        </activity>
+        <activity android:name=".ChooseChatActivity">
+
+        </activity>
     </application>
 
 </manifest>

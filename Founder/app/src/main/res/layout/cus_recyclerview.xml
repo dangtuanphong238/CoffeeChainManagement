@@ -5,24 +5,17 @@
     android:layout_height="wrap_content"
     android:layout_margin="1dp"
     android:layout_gravity="center"
-    android:background="#FE9B58"
     >
     <!--phong lÃ m recylerView-->
-    <androidx.cardview.widget.CardView
-        android:background="#FE9B58"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:layout_centerInParent="true"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="1dp"
-        app:cardMaxElevation="2dp">
+
 
         <LinearLayout
             android:background="@drawable/custom_recycleview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:layout_marginHorizontal="5dp">
 
             <TextView
                 android:id="@+id/txtTenCH"
@@ -98,6 +91,7 @@
                     android:layout_weight="2"
                     android:text="0935823828" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -114,11 +108,10 @@
                 <TextView
                     android:id="@+id/txtTrangThai"
                     android:layout_width="0dp"
-                    android:textColor="@color/colorPrimaryred"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Đang hoạt động" />
+                    android:text="Đang hoạt động"
+                    android:textColor="@color/colorPrimaryred" />
             </LinearLayout>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
 </RelativeLayout>
