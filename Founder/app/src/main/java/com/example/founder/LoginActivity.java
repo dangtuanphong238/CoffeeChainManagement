@@ -19,13 +19,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class LoginScreen extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     Button btnLogin,PasswordVisble;;
     EditText edtTaikhoan,edtPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_screen);
+        setContentView(R.layout.activity_login);
         anhXa();
         setOnClick();
         edtPassword.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +54,7 @@ public class LoginScreen extends AppCompatActivity {
             edtPassword.setText(sharedPreferences.getString("password",""));
             User user = new User();
             user.setUser(edtTaikhoan.getText().toString());
-            Intent intent = new Intent(LoginScreen.this, layout_tongdoanhthu.class);
+            Intent intent = new Intent(LoginActivity.this, TongDoanhThuActivity.class);
             startActivity(intent);
             finish();
 
@@ -75,7 +75,7 @@ public class LoginScreen extends AppCompatActivity {
                             User user = dataSnapshot.getValue(User.class);
                             String username = user.user;
                             String password = user.pass;
-                        Toast.makeText(LoginScreen.this, password, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, password, Toast.LENGTH_SHORT).show();
                             String taikhoan = edtTaikhoan.getText().toString();
                             String matkhau = edtPassword.getText().toString();
                             if (taikhoan.equals(""))
@@ -88,19 +88,19 @@ public class LoginScreen extends AppCompatActivity {
                             }
                             if (taikhoan.equals(username) && matkhau.equals(password))
                             {
-                                Toast.makeText(LoginScreen.this, "Dang Nhap Thanh Cong", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Dang Nhap Thanh Cong", Toast.LENGTH_SHORT).show();
                                 SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("taikhoan",taikhoan);
                                 editor.putString("password",matkhau);
                                 editor.commit();
-                                Intent intent = new Intent(LoginScreen.this, layout_tongdoanhthu.class);
+                                Intent intent = new Intent(LoginActivity.this, TongDoanhThuActivity.class);
                                 startActivity(intent);
                                 finish();
 
                             }
                             else {
-                                Toast.makeText(LoginScreen.this, "Dang Nhap That Bai", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Dang Nhap That Bai", Toast.LENGTH_SHORT).show();
                         }
                         }
 

@@ -8,7 +8,7 @@
     android:background="#FE9B58"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecyclerViewLstCH">
+    tools:context=".ListCuaHangActivity">
 <!--phong làm phần này-->
    <LinearLayout
        android:layout_width="match_parent"

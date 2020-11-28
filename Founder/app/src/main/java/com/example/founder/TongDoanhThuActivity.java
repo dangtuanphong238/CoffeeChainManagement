@@ -13,20 +13,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.founder.Public.Public_func;
 import com.google.android.material.navigation.NavigationView;
 
-public class layout_notification extends AppCompatActivity {
+public class TongDoanhThuActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private NavigationView navigationView;
     private ImageButton imgMnu;
-    private TextView txtnamethongbao;
+    private TextView txttenlayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_layout_notification);
+        setContentView(R.layout.activity_tongdoanhthu);
+
         anhXa();
-        txtnamethongbao.setText("Thông Báo");
+        txttenlayout.setText("Tổng Doanh Thu");
         openMenu();
         //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -35,37 +37,36 @@ public class layout_notification extends AppCompatActivity {
                 switch (item.getItemId()) {
 
                     case R.id.it1:
-                        Public_func.clickItemMenu(layout_notification.this, layout_tongdoanhthu.class);
-                        return true;
-                    case R.id.it2:
-                        Public_func.clickItemMenu(layout_notification.this, RecyclerViewLstCH.class);
-                        return true;
-                    case R.id.item3:
-                        Public_func.clickItemMenu(layout_notification.this, Screen_Account_creation.class);
-                        return true;
-                    case R.id.item4:
                         recreate();
                         return true;
+                    case R.id.it2:
+                        Public_func.clickItemMenu(TongDoanhThuActivity.this, ListCuaHangActivity.class);
+                        return true;
+                    case R.id.item3:
+                        Public_func.clickItemMenu(TongDoanhThuActivity.this, CreateOwnerAccountActivity.class);
+                        return true;
+//                    case R.id.item4:
+//                        Public_func.clickItemMenu(layout_tongdoanhthu.this, layout_notification.class);
+//                        return true;
                     case R.id.itemLogOut:
-                        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.clear();
-                        editor.apply();
-                        Public_func.clickLogout(layout_notification.this, LoginScreen.class);
+                    SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();
+                    editor.apply();
+                    Public_func.clickLogout(TongDoanhThuActivity.this, LoginActivity.class);
                         return true;
                 }
                 return true;
             }
         });
-    }
 
-    private void anhXa() {
+    }
+    private void anhXa(){
         drawerLayout = findViewById(R.id.activity_main_drawer);
         navigationView = findViewById(R.id.navDrawerMenu);
         imgMnu = findViewById(R.id.btnMnu);
-        txtnamethongbao = findViewById(R.id.idtoolbar);
+        txttenlayout = findViewById(R.id.idtoolbar);
     }
-
     public void openMenu() {
         imgMnu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,4 +81,5 @@ public class layout_notification extends AppCompatActivity {
         super.onRestart();
         drawerLayout.closeDrawer(GravityCompat.START);
     }
+
 }

@@ -1,4 +1,4 @@
-package com.example.founder;
+package com.example.founder.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.founder.Interfaces.ItemClickListener;
+import com.example.founder.R;
 import com.example.founder.model.InforStore;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemlayout_recyclerview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cus_recyclerview, parent, false);
         return new ViewHolder(view);
     }
 

@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.founder.Interfaces.ItemClickListener;
+import com.example.founder.Public.Public_func;
+import com.example.founder.adapter.RecyclerViewAdapter;
 import com.example.founder.model.InforStore;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 //Phong làm file này
-public class RecyclerViewLstCH extends AppCompatActivity implements ItemClickListener {
+public class ListCuaHangActivity extends AppCompatActivity implements ItemClickListener {
     private ArrayList<String> arrayDSCH = new ArrayList<>();
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -46,7 +48,7 @@ public class RecyclerViewLstCH extends AppCompatActivity implements ItemClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.recyclerview_liststore);
+        setContentView(R.layout.activity_liststore);
         anhXa();
 
 
@@ -93,23 +95,23 @@ public class RecyclerViewLstCH extends AppCompatActivity implements ItemClickLis
                 switch (item.getItemId()) {
 
                     case R.id.it1:
-                        Public_func.clickItemMenu(RecyclerViewLstCH.this, layout_tongdoanhthu.class);
+                        Public_func.clickItemMenu(ListCuaHangActivity.this, TongDoanhThuActivity.class);
                         return true;
                     case R.id.it2:
                         recreate();
                         return true;
                     case R.id.item3:
-                        Public_func.clickItemMenu(RecyclerViewLstCH.this, Screen_Account_creation.class);
+                        Public_func.clickItemMenu(ListCuaHangActivity.this, CreateOwnerAccountActivity.class);
                         return true;
-                    case R.id.item4:
-                        Public_func.clickItemMenu(RecyclerViewLstCH.this, layout_notification.class);
-                        return true;
+//                    case R.id.item4:
+//                        Public_func.clickItemMenu(ListCuaHangActivity.this, layout_notification.class);
+//                        return true;
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
-                        Public_func.clickLogout(RecyclerViewLstCH.this, LoginScreen.class);
+                        Public_func.clickLogout(ListCuaHangActivity.this, LoginActivity.class);
                         return true;
                 }
                 return true;
@@ -172,7 +174,7 @@ public class RecyclerViewLstCH extends AppCompatActivity implements ItemClickLis
                         InforStore inforStore1 = new InforStore(id,diachi, giayphep, sdt, tencuahang, trangthai);
                         lstStore.add(inforStore1);
                     }
-                    recyclerViewAdapter = new RecyclerViewAdapter(lstStore,RecyclerViewLstCH.this);
+                    recyclerViewAdapter = new RecyclerViewAdapter(lstStore, ListCuaHangActivity.this);
                     recyclerView.setAdapter(recyclerViewAdapter);
                     recyclerViewAdapter.notifyDataSetChanged();
                 }
@@ -202,7 +204,7 @@ public class RecyclerViewLstCH extends AppCompatActivity implements ItemClickLis
 
     @Override
     public void onClick(int position) {
-        Intent intent = new Intent(RecyclerViewLstCH.this, Result_Store_Activity.class);
+        Intent intent = new Intent(ListCuaHangActivity.this, InfoStoreActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("tench",lstStore.get(position).getTencuahang());
         bundle.putString("diachi",lstStore.get(position).getDiachi());

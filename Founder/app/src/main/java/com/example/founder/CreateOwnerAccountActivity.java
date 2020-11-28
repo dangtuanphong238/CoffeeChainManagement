@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.founder.Public.Public_func;
 import com.example.founder.model.OnwerAccount;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,7 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class    Screen_Account_creation<eventListener> extends AppCompatActivity {
+public class CreateOwnerAccountActivity<eventListener> extends AppCompatActivity {
      EditText edtTencuahang,edtTendangnhap,edtMatkhau,edtSdt,edtCMND,edtHoahong;
      Spinner spTrangthai;
      Button btnTaomoi;
@@ -44,7 +45,7 @@ public class    Screen_Account_creation<eventListener> extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_screen_account_creation);
+        setContentView(R.layout.activity_create_owner_account);
         setControl();
         txtcreation.setText("Tạo Tài Khoản");
         openMenu();
@@ -55,23 +56,23 @@ public class    Screen_Account_creation<eventListener> extends AppCompatActivity
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.it1:
-                        Public_func.clickItemMenu(Screen_Account_creation.this, layout_tongdoanhthu.class);
+                        Public_func.clickItemMenu(CreateOwnerAccountActivity.this, TongDoanhThuActivity.class);
                         return true;
                     case R.id.it2:
-                        Public_func.clickItemMenu(Screen_Account_creation.this, RecyclerViewLstCH.class);
+                        Public_func.clickItemMenu(CreateOwnerAccountActivity.this, ListCuaHangActivity.class);
                         return true;
                     case R.id.item3:
                         recreate();
                         return true;
-                    case R.id.item4:
-                        Public_func.clickItemMenu(Screen_Account_creation.this, layout_notification.class);
-                        return true;
+//                    case R.id.item4:
+//                        Public_func.clickItemMenu(OwnerManagerAccount.this, layout_notification.class);
+//                        return true;
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
-                        Public_func.clickLogout(Screen_Account_creation.this, LoginScreen.class);
+                        Public_func.clickLogout(CreateOwnerAccountActivity.this, LoginActivity.class);
                         return true;
                 }
                 return true;
@@ -99,7 +100,7 @@ public class    Screen_Account_creation<eventListener> extends AppCompatActivity
                 for (OnwerAccount onwerAccount : lstOwnerAccount) {
 
                     if (onwerAccount.user.equals(user)) {
-                        Toast.makeText(Screen_Account_creation.this, "Tài khoản đã tồn tại!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateOwnerAccountActivity.this, "Tài khoản đã tồn tại!", Toast.LENGTH_SHORT).show();
                         isExist = true;
                     }
 
@@ -112,13 +113,13 @@ public class    Screen_Account_creation<eventListener> extends AppCompatActivity
                     reference.setValue(onwerAccount).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(Screen_Account_creation.this, "Thêm Thành Công", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CreateOwnerAccountActivity.this, "Thêm Thành Công", Toast.LENGTH_SHORT).show();
 
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(Screen_Account_creation.this, "Thêm Thất Bại", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CreateOwnerAccountActivity.this, "Thêm Thất Bại", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
