@@ -1,4 +1,4 @@
-package com.example.staff;
+package com.example.staff.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.staff.Model.MonAnModel;
+import com.example.staff.R;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +20,10 @@ import java.util.Locale;
 
 public class MonAnAdapter extends RecyclerView.Adapter<MonAnAdapter.ViewHolder> {
     Context context;
-    List<MonAn> listMonAn;
-    public MonAnAdapter(ArrayList<MonAn> listMonAn) {
+    List<MonAnModel> listMonAnModel;
+    public MonAnAdapter(ArrayList<MonAnModel> listMonAnModel) {
         this.context = context;
-        this.listMonAn = listMonAn;
+        this.listMonAnModel = listMonAnModel;
     }
     @NonNull
     @Override
@@ -31,17 +34,17 @@ public class MonAnAdapter extends RecyclerView.Adapter<MonAnAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        MonAn monAn = listMonAn.get(position);
-        holder.txtTenMonAn.setText(monAn.getTen());
+        MonAnModel monAnModel = listMonAnModel.get(position);
+        holder.txtTenMonAn.setText(monAnModel.getTen());
         Locale locale = new Locale("vn", "VN");
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
-        holder.txtGiaMonAn.setText(currencyFormatter.format(monAn.getGia()));
+        holder.txtGiaMonAn.setText(currencyFormatter.format(monAnModel.getGia()));
         //holder.imgAnhMonAn.setImageResource(monAn.getImgAnhMonAn());
     }
 
     @Override
     public int getItemCount() {
-        return listMonAn.size();
+        return listMonAnModel.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

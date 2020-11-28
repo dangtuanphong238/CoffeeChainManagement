@@ -11,10 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ThongBaoScreen"></activity>
+        <activity android:name=".CaiDatBill"></activity>
+        <activity android:name=".ThongBaoScreen" />
         <activity android:name=".DatMon" />
+        <activity android:name=".OderActivity" />
         <activity android:name=".ChiTietBan" />
-        <activity android:name=".Phong" />
+        <activity android:name=".PhongScreen" />
         <activity android:name=".KhuVuc" />
         <activity android:name=".LoginScreen" />
         <activity android:name=".SplashScreen">

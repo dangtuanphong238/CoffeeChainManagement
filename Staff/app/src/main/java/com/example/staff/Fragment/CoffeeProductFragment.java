@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.staff.DatMon;
-import com.example.staff.MonAn;
-import com.example.staff.MonAnAdapter;
+import com.example.staff.Model.MonAnModel;
+import com.example.staff.Adapter.MonAnAdapter;
 import com.example.staff.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +28,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class CoffeeProductFragment extends Fragment {
     RecyclerView coffeerecyclerView;
-    ArrayList<MonAn> listMonAn;
+    ArrayList<MonAnModel> listMonAnModel;
     MonAnAdapter monAnAdapter;
     DatabaseReference databaseReference;
     private FirebaseDatabase database;
@@ -42,7 +42,7 @@ public class CoffeeProductFragment extends Fragment {
         View view = null;
         view = inflater.inflate(R.layout.fragment_coffee_product, container, false);
         coffeerecyclerView = view.findViewById(R.id.coffeeRecycleView);
-        listMonAn = new ArrayList<>();
+        listMonAnModel = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference().child("OwnerManager").child(sOwnerID).child("QuanLyMonAn").child("CaPhe");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -50,10 +50,10 @@ public class CoffeeProductFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        MonAn monAn = snapshot.getValue(MonAn.class);
-                        listMonAn.add(monAn);
+                        MonAnModel monAnModel = snapshot.getValue(MonAnModel.class);
+                        listMonAnModel.add(monAnModel);
                     }
-                    monAnAdapter = new MonAnAdapter(listMonAn);
+                    monAnAdapter = new MonAnAdapter(listMonAnModel);
                     coffeerecyclerView.setAdapter(monAnAdapter);
                 }
             }

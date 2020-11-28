@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FE9B58"
     android:orientation="vertical"
-    tools:context=".Phong"
+    tools:context=".PhongScreen"
     android:padding="10dp">
 
     <LinearLayout

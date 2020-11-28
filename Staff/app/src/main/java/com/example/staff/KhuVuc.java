@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.staff.Fragment.KhuVucAdapter;
+import com.example.staff.Adapter.KhuVucAdapter;
 import com.example.staff.Global.Public_func;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -38,7 +38,6 @@ public class KhuVuc extends AppCompatActivity {
     private NavigationView navigationView;
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +84,7 @@ public class KhuVuc extends AppCompatActivity {
                     System.out.println("name " + lstKhuVuc.get(position).toString());
                     String loaiPhong = lstKhuVuc.get(position).toString();
                     if (!loaiPhong.isEmpty()) {
-                        Intent intent = new Intent(KhuVuc.this, Phong.class);
+                        Intent intent = new Intent(KhuVuc.this, PhongScreen.class);
 //                    intent.putExtra("values", lstKhuVuc.toString());
                         Bundle bundle = new Bundle();
                         bundle.putString("values", loaiPhong);
@@ -134,7 +133,10 @@ public class KhuVuc extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         System.out.println(sharedPreferences.getString(OWNERID, "null"));
         sOwnerID = sharedPreferences.getString(OWNERID, "null");
+
     }
+
+
     public void anXa(){
         drawerLayout = findViewById(R.id.activity_main_drawer);
         navigationView = findViewById(R.id.navDrawerMenu);
