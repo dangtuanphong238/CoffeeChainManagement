@@ -12,17 +12,19 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.staff.Adapter.MonAnAdapter;
 import com.example.staff.Fragment.AllProductFragment;
 import com.example.staff.Fragment.CoffeeProductFragment;
 import com.example.staff.Fragment.TraSuaProductFragment;
+import com.example.staff.Model.MonAnModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 
 public class ChiTietBan extends AppCompatActivity {
-    RecyclerView rcChiTiet,rcChiTiet1;
-    ArrayList<MonAn> listMonAn;
+    RecyclerView rcChiTiet, rcChiTiet1;
+    ArrayList<MonAnModel> listMonAnModel;
     MonAnAdapter monAnAdapter;
     DatabaseReference databaseReference;
 
@@ -38,21 +40,23 @@ public class ChiTietBan extends AppCompatActivity {
 
         ViewPageAdapter viewPageAdapter = new ViewPageAdapter(getSupportFragmentManager());
 
-        viewPageAdapter.addFragment(new AllProductFragment(),"Bánh ngọt");
-        viewPageAdapter.addFragment(new CoffeeProductFragment(),"Coffee");
-        viewPageAdapter.addFragment(new TraSuaProductFragment(),"Trà Sữa");
+        viewPageAdapter.addFragment(new AllProductFragment(), "Bánh ngọt");
+        viewPageAdapter.addFragment(new CoffeeProductFragment(), "Coffee");
+        viewPageAdapter.addFragment(new TraSuaProductFragment(), "Trà Sữa");
         viewPager.setAdapter(viewPageAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
-    class ViewPageAdapter extends FragmentPagerAdapter{
-private  ArrayList<Fragment> fragments;
-private ArrayList<String> titles;
 
-ViewPageAdapter(FragmentManager fm){
-    super(fm);
-    this.fragments = new ArrayList<>();
-    this.titles = new ArrayList<>();
-}
+    class ViewPageAdapter extends FragmentPagerAdapter {
+        private ArrayList<Fragment> fragments;
+        private ArrayList<String> titles;
+
+        ViewPageAdapter(FragmentManager fm) {
+            super(fm);
+            this.fragments = new ArrayList<>();
+            this.titles = new ArrayList<>();
+        }
+
         @NonNull
         @Override
         public Fragment getItem(int position) {
@@ -63,7 +67,8 @@ ViewPageAdapter(FragmentManager fm){
         public int getCount() {
             return fragments.size();
         }
-        public void addFragment(Fragment fragment, String title){
+
+        public void addFragment(Fragment fragment, String title) {
             fragments.add(fragment);
             titles.add(title);
         }

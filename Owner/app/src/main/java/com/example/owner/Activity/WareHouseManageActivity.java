@@ -253,7 +253,7 @@ public class WareHouseManageActivity extends AppCompatActivity {
                         recreate();
                         return true;
                     case R.id.itemThongBao:
-                        Public_func.clickItemMenu(WareHouseManageActivity.this, NotificationActivity.class);
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, ChooseChatActivity.class);
                         return true;
                     case R.id.itemThuNgan:
                         Public_func.clickItemMenu(WareHouseManageActivity.this, ThuNganActivity.class);

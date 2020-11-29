@@ -2,4 +2,12 @@
     <string name="app_name">Staff</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <array name="lstQuanLyBill">
+        <item>Tất Cả</item>
+        <item>Combo</item>
+        <item>Cafe</item>
+        <item>Trà Sữa</item>
+        <item>Bánh Ngọt</item>
+        <item>Nước Ngọt</item>
+    </array>
 </resources>

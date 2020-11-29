@@ -123,7 +123,7 @@ public class UpdateHangHoaKho extends AppCompatActivity  {
                         Public_func.clickItemMenu(UpdateHangHoaKho.this, WareHouseManageActivity.class);
                         return true;
                     case R.id.itemThongBao:
-                        Public_func.clickItemMenu(UpdateHangHoaKho.this, NotificationActivity.class);
+                        Public_func.clickItemMenu(UpdateHangHoaKho.this, ChooseChatActivity.class);
                         return true;
                     case R.id.itemThuNgan:
                         Public_func.clickItemMenu(UpdateHangHoaKho.this, ThuNganActivity.class);

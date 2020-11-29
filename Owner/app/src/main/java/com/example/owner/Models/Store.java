@@ -6,7 +6,7 @@ public class Store {
     public String diachi;
     public String giayphepkinhdoanh;
     public String sdt;
-
+    public String id,trangthai;
     public Store(String imgUrl ,String tencuahang, String diachi, String giayphepkinhdoanh, String sdt) {
         this.imgUrl = imgUrl;
         this.tencuahang = tencuahang;
@@ -15,11 +15,13 @@ public class Store {
         this.sdt = sdt;
     }
 
-    public Store(String tencuahang, String diachi, String giayphepkinhdoanh, String sdt) {
+    public Store(String tencuahang, String diachi, String giayphepkinhdoanh, String sdt, String id, String trangthai) {
         this.tencuahang = tencuahang;
         this.diachi = diachi;
         this.giayphepkinhdoanh = giayphepkinhdoanh;
         this.sdt = sdt;
+        this.id = id;
+        this.trangthai = trangthai;
     }
 
     public Store() {

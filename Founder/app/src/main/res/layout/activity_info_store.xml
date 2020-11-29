@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#FE9B53"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".InfoStoreActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="RESULT STORE"
+        android:textSize="28dp"
+        android:background="#008080"
+        android:gravity="center"
+        ></TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginVertical="10dp"
+        >
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Ten cua hang:"
+            android:textColor="#767B97"
+            android:textSize="20dp"></TextView>
+        <EditText
+            android:id="@+id/edtrsTencuahang"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:hint="Tên Cửa Hàng"
+            android:paddingHorizontal="10dp"
+            android:background="@drawable/custom_edittext"
+            android:paddingRight="20px"></EditText>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/txtrsDiachi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="Địa Chỉ:"
+        android:textColor="#767B97"
+        android:textSize="20dp"></TextView>
+    <EditText
+        android:id="@+id/edtrsdiachi"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:hint="Nhap ten dia chi"
+        android:paddingHorizontal="10dp"
+        android:background="@drawable/custom_edittext"
+        android:paddingRight="20px"></EditText>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txtrsGiayphepkinhdoanh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Giấy Phép Kinh Doanh:"
+            android:textColor="#767B97"
+            android:textSize="20dp"></TextView>
+        <EditText
+            android:id="@+id/edtrsgiayphepkinhdoanh"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:hint="Nhap giay phep kinh doanh"
+            android:paddingHorizontal="10dp"
+            android:background="@drawable/custom_edittext"
+            android:paddingRight="20px"></EditText>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txtrsSodienthoai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Số Điện Thoại:"
+            android:textColor="#767B97"
+            android:textSize="20dp"></TextView>
+        <EditText
+            android:id="@+id/edtrsSodienthoai"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:hint="Nhap vao SDT"
+            android:paddingHorizontal="10dp"
+            android:background="@drawable/custom_edittext"
+            android:paddingRight="20px"></EditText>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txtrsTrangthai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Trạng Thái:"
+            android:textColor="#767B97"
+            android:textSize="20dp"></TextView>
+        <EditText
+            android:id="@+id/edtrstrangthai"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:hint="Trang Thai là "
+            android:paddingHorizontal="10dp"
+            android:background="@drawable/custom_edittext"
+            android:paddingRight="20px"></EditText>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_marginHorizontal="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/btnrsCapnhat"
+            android:padding="20px"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/custom_button"
+            android:text="Cập Nhật " />
+
+        <Button
+            android:layout_marginHorizontal="5dp"
+            android:padding="20px"
+            android:id="@+id/btnrsXoa"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/custom_button"
+            android:text="XÓA " />
+
+    </LinearLayout>
+
+
+</LinearLayout>
