@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
+    android:layout_margin="5dp"
     android:elevation="10dp">
 
     <LinearLayout
+        android:minWidth="290dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -21,8 +23,7 @@
             <ImageView
                 android:id="@+id/imgMeal_image"
                 android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/ic_image"/>
+                android:layout_height="60dp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
@@ -35,26 +36,28 @@
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:gravity="center_vertical"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="Tên:"
                     android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tvMeal_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:maxLines="2"
+                    android:gravity="center_vertical"
                     android:layout_weight="3"
                     android:text="Trà sữa thái xanh"
                     android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -65,6 +68,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:gravity="center_vertical"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -73,6 +77,7 @@
                     android:textSize="15sp" />
 
                 <TextView
+                    android:gravity="center_vertical"
                     android:id="@+id/tvMeal_price"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -90,19 +95,21 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:gravity="center_vertical"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="TL:"
+                    android:text="SL:"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/tvMeal_Category"
+                    android:gravity="center_vertical"
+                    android:id="@+id/tvMeal_amount"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:text="Trà sữa"
+                    android:text="1"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
             </LinearLayout>

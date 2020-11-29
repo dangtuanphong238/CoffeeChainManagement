@@ -491,7 +491,6 @@ public class AddMonActivity extends AppCompatActivity {
                 } else {
                     String id = "";
                     for (DataSnapshot data:snapshot.getChildren()){
-                        System.out.println("TEST"+data.toString());
                          id = data.getKey();
                     }
                     id = id.replace("Meal","");

@@ -14,8 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.owner.Interface.RecyclerviewClick;
-import com.example.owner.Interface.SendDataAround;
 import com.example.owner.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,57 +21,55 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ListMealAdapter extends RecyclerView.Adapter<ListMealAdapter.MyViewHolder> {
-    String path;
-    ArrayList<MealModel> list;
+public class DetailTableAdapter extends RecyclerView.Adapter<DetailTableAdapter.MyViewHolder> {
+    ArrayList<MealUsed> list;
     Context context;
-    RecyclerviewClick recyclerviewClick;
-    SendDataAround sendDataAround;
-    public ListMealAdapter(Context context, ArrayList<MealModel> list, RecyclerviewClick recyclerviewClick, SendDataAround sendDataAround, String path){
+    String ownerID;
+
+    public DetailTableAdapter(ArrayList<MealUsed> list, Context context, String ownerID){
         this.context = context;
         this.list = list;
-        this.recyclerviewClick = recyclerviewClick;
-        this.sendDataAround = sendDataAround;
-        this.path = path;
+        this.ownerID = ownerID;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        CardView cardView = (CardView) inflater.inflate(R.layout.layout_item_meal, parent, false);
+        CardView cardView = (CardView) inflater.inflate(R.layout.layout_item_detail_table, parent, false);
         return new MyViewHolder(cardView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        MealModel meal = list.get(position);
-        holder.tvMealName.setText(meal.getMeal_name());
-        holder.tvMealPrice.setText(meal.getMeal_price());
-        holder.tvMealCategory.setText(meal.getMeal_category());
-        setImage(holder,path,meal.getMeal_id());
+            MealUsed model = list.get(position);
+            holder.tvMeal_amount.setText(model.getAmount()+"");
+            holder.tvMeal_name.setText(model.getMealName());
+            holder.tvMeal_price.setText(model.getMealPrice());
+            String path = "OwnerManager/"+ownerID+"/QuanLyMonAn";
+            setImage(holder,path,model.getMealImage());
     }
 
-    public void setImage(final MyViewHolder holder, String path,String id_image) {
+    public void setImage(final MyViewHolder holder, String path, String id_image) {
         try {
             final File localFile = File.createTempFile("images", "png");
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
             //TODO: return value path image
-            StorageReference riversRef = mStorageRef.child("/"+path+"/"+id_image+".png");
-            System.out.println("TEST:"+riversRef.toString());
+            StorageReference riversRef = mStorageRef.child("/"+path+"/"+id_image);
+
             riversRef.getFile(localFile)
                     .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                             // Successfully downloaded data to local file
-                            holder.imgMeal.setBackground(null);
+                            holder.imgMeal_image.setBackground(null);
                             Bitmap myBitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                            holder.imgMeal.setImageBitmap(Bitmap.createScaledBitmap(myBitmap,60,60,false));
+                            holder.imgMeal_image.setImageBitmap(Bitmap.createScaledBitmap(myBitmap,
+                                    60,60,false));
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -92,33 +88,18 @@ public class ListMealAdapter extends RecyclerView.Adapter<ListMealAdapter.MyView
         return list.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends  RecyclerView.ViewHolder{
 
-        TextView tvMealName;
-        TextView tvMealPrice;
-        TextView tvMealCategory;
-        ImageView imgMeal;
+        TextView tvMeal_amount;
+        TextView tvMeal_price;
+        TextView tvMeal_name;
+        ImageView imgMeal_image;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvMealName = itemView.findViewById(R.id.tvMeal_name);
-            tvMealPrice = itemView.findViewById(R.id.tvMeal_price);
-            tvMealCategory = itemView.findViewById(R.id.tvMeal_Category);
-            imgMeal = itemView.findViewById(R.id.imgMeal_image);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sendDataAround.sendData(list.get(getAdapterPosition()));
-                    recyclerviewClick.onItemClick(getAdapterPosition());
-                }
-            });
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    recyclerviewClick.onItemLongClick(getAdapterPosition());
-                    return true;
-                }
-            });
+            imgMeal_image = itemView.findViewById(R.id.imgMeal_image);
+            tvMeal_amount = itemView.findViewById(R.id.tvMeal_amount);
+            tvMeal_price = itemView.findViewById(R.id.tvMeal_price);
+            tvMeal_name = itemView.findViewById(R.id.tvMeal_name);
         }
-
     }
 }

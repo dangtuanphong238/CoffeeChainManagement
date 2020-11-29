@@ -47,18 +47,17 @@ public class ListAreaAdapter extends RecyclerView.Adapter<ListAreaAdapter.MyView
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         AreaModel model = list.get(position);
         holder.tvRoomName.setText(model.getName());
-        int id = Integer.parseInt(model.getId().trim());
 
-        if (id == 1) {
+        if (model.getId().equals("Area1")) {
             holder.btnRoom.setImageResource(R.drawable.ic_air_conditioner);
         }
-        else if (id == 2) {
+        else if (model.getId().equals("Area2")) {
             holder.btnRoom.setImageResource(R.drawable.ic_sofa);
         }
-        else if (id == 3) {
+        else if (model.getId().equals("Area3")) {
             holder.btnRoom.setImageResource(R.drawable.ic_meeting);
         }
-        else if (id == 4) {
+        else if (model.getId().equals("Area4")) {
             holder.btnRoom.setImageResource(R.drawable.ic_table);
         }
         else{

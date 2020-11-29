@@ -131,14 +131,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.owner.Global.Public_func;
 import com.example.owner.Interface.RecyclerviewClick;
-import com.example.owner.Interface.SendData;
-import com.example.owner.Model.ListAreaAdapter;
+import com.example.owner.Interface.SendDataAround;
 import com.example.owner.Model.ListMealAdapter;
 import com.example.owner.Model.MealModel;
 import com.example.owner.R;
@@ -151,7 +149,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MealManageActivity extends AppCompatActivity implements RecyclerviewClick, SendData {
+public class MealManageActivity extends AppCompatActivity implements RecyclerviewClick, SendDataAround {
     public static final String KEY_UPDATE = "UPDATE_ITEM";
 
     String TAG = "MealManageActivity_TAG: ";
