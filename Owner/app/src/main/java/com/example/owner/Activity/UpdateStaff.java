@@ -95,7 +95,7 @@ public class UpdateStaff extends AppCompatActivity {
                         return true;
 
                     case R.id.itemThemNV:
-                        recreate();
+                        Public_func.clickItemMenu(UpdateStaff.this, AddNhanVienActivity.class);
                         return true;
 
                     case R.id.itemSPKho:

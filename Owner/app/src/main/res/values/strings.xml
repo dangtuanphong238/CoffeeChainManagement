@@ -42,7 +42,6 @@
         <item>Tối</item>
     </string-array>
     <string-array name="lstChucvu">
-        <item>Tất cả</item>
         <item>Quản Lý</item>
         <item>Thu Ngân</item>
         <item>Phục Vụ</item>
