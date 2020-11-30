@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_chat_24"
                     android:drawablePadding="10dp"
-                    android:text="Chat to all staff"
+                    android:text="Chat to all Owner"
                     android:padding="10dp"
                     android:textAllCaps="false"/>
                 <TextView
