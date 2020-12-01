@@ -121,8 +121,6 @@ public class UpdateStaff extends AppCompatActivity {
         Intent intent = getIntent();
         Staff staff = (Staff) intent.getSerializableExtra("NHANVIEN");
 
-
-
         edtTenNV.setText(staff.getTennv());
 //        edtChucVu.setText(staff.getChucvu());
 

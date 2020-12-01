@@ -3,7 +3,6 @@
 import java.io.Serializable;
 
 public class Staff implements Serializable {
-
     public String id;
     public String user;
     public String pass;

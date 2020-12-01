@@ -7,14 +7,7 @@ public class Store {
     public String giayphepkinhdoanh;
     public String sdt;
     public String id,trangthai;
-    public Store(String imgUrl ,String tencuahang, String diachi, String giayphepkinhdoanh, String sdt) {
-        this.imgUrl = imgUrl;
-        this.tencuahang = tencuahang;
-        this.diachi = diachi;
-        this.giayphepkinhdoanh = giayphepkinhdoanh;
-        this.sdt = sdt;
-    }
-
+    public String imgName;
     public Store(String tencuahang, String diachi, String giayphepkinhdoanh, String sdt, String id, String trangthai) {
         this.tencuahang = tencuahang;
         this.diachi = diachi;
@@ -22,6 +15,16 @@ public class Store {
         this.sdt = sdt;
         this.id = id;
         this.trangthai = trangthai;
+    }
+
+    public Store(String tencuahang, String diachi, String giayphepkinhdoanh, String sdt, String id, String trangthai, String imgName) {
+        this.tencuahang = tencuahang;
+        this.diachi = diachi;
+        this.giayphepkinhdoanh = giayphepkinhdoanh;
+        this.sdt = sdt;
+        this.id = id;
+        this.trangthai = trangthai;
+        this.imgName = imgName;
     }
 
     public Store() {
