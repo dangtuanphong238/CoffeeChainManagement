@@ -23,6 +23,7 @@ public class InfoStoreActivity extends AppCompatActivity {
         Spinner trangThai;
         Button btnCapNhat, btnXoa;
         private String id;
+        private String imgAnh;
         private String spinnerTrangThai;
          DatabaseReference reference;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -114,7 +115,7 @@ public class InfoStoreActivity extends AppCompatActivity {
             String giayphepkinhdoanh = bundle.getString("giayphepkinhdoanh", "");
             String sodienthoai = bundle.getString("sodienthoai", "");
             String trangthai = bundle.getString("trangthai", "");
-            id = bundle.getString("id", "");
+                id = bundle.getString("id", "");
             edtTencuahang.setText(tench);
             edtDiachi.setText(diachi);
             edtGiayphepKD.setText(giayphepkinhdoanh);

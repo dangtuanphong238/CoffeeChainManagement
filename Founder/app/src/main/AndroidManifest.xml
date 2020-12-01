@@ -11,10 +11,10 @@
         android:theme="@style/AppTheme">
         <activity android:name=".InfoStoreActivity"></activity>
         <activity android:name=".CreateOwnerAccountActivity" />
+        <activity android:name=".TongDoanhThuActivity" />
         <activity android:name=".ListCuaHangActivity" />
-        <activity android:name=".LoginActivity" />
 
-        <activity android:name=".TongDoanhThuActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -4,6 +4,15 @@ public class Owner {
     public String user;
     public String pass;
     public String id;
+    public String imgName;
+
+    public String getImgName() {
+        return imgName;
+    }
+
+    public void setImgName(String imgName) {
+        this.imgName = imgName;
+    }
 
     public Owner(String user, String pass, String id) {
         this.user = user;

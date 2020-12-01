@@ -57,7 +57,8 @@ public class LoginActivity extends AppCompatActivity {
             User user = new User();
             user.setUser(edtTaikhoan.getText().toString());
             user.setId(idFouder);
-            Intent intent = new Intent(LoginActivity.this, TongDoanhThuActivity.class);
+            Toast.makeText(this, "Đăng Nhập Thành Công!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(LoginActivity.this, ListCuaHangActivity.class);
             startActivity(intent);
             finish();
 
@@ -125,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putString("password",matkhau);
                                 editor.putString("idFounder",id);
                                 editor.commit();
-                                Intent intent = new Intent(LoginActivity.this, TongDoanhThuActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, ListCuaHangActivity.class);
                                 startActivity(intent);
                                 finish();
 

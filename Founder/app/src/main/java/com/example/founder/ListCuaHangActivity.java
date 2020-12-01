@@ -20,6 +20,7 @@ import com.example.founder.Interfaces.ItemClickListener;
 import com.example.founder.Public.Public_func;
 import com.example.founder.adapter.RecyclerViewAdapter;
 import com.example.founder.model.InforStore;
+import com.example.founder.model.Owner;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,6 +41,7 @@ public class ListCuaHangActivity extends AppCompatActivity implements ItemClickL
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
     DatabaseReference databaseReference;
+    Owner owner;
 
 
     //Phong lam

@@ -7,6 +7,24 @@ public class InforStore {
     public String sdt;
     public String tencuahang;
     public String trangthai;
+    public String imgName;
+
+    public String getImgName() {
+        return imgName;
+    }
+    public InforStore(String id, String diachi, String giayphepkinhdoanh, String sdt, String tencuahang, String trangthai, String imgName) {
+        this.id = id;
+        this.diachi = diachi;
+        this.giayphepkinhdoanh = giayphepkinhdoanh;
+        this.sdt = sdt;
+        this.tencuahang = tencuahang;
+        this.trangthai = trangthai;
+        this.imgName = imgName;
+    }
+
+    public void setImgName(String imgName) {
+        this.imgName = imgName;
+    }
 
     public InforStore(String id, String diachi, String giayphepkinhdoanh, String sdt, String tencuahang, String trangthai) {
         this.id = id;
