@@ -41,11 +41,10 @@ public class ChatOneToOneAdapter extends BaseAdapter {
 
     private class ViewHolder
     {
-        ImageView imgStaff;
+        ImageView imgOwner;
         TextView txtIDStaff;
         TextView txtUsernameStaff;
     }
-
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder;
@@ -60,7 +59,7 @@ public class ChatOneToOneAdapter extends BaseAdapter {
 
             //anhxa view
             viewHolder.txtIDStaff = view.findViewById(R.id.txtIDStaff);
-            viewHolder.imgStaff = view.findViewById(R.id.imgStaff);
+            viewHolder.imgOwner = view.findViewById(R.id.imgStaff);
             viewHolder.txtUsernameStaff = view.findViewById(R.id.txtUsernameStaff);
             //giữ trạng thái ánh xạ
             view.setTag(viewHolder);
@@ -70,7 +69,7 @@ public class ChatOneToOneAdapter extends BaseAdapter {
         }
         Owner owner = arrStaff.get(i);
         viewHolder.txtIDStaff.setText("ID: " + owner.getId());
-        viewHolder.imgStaff.setImageResource(R.drawable.ic_person_24);
+        viewHolder.imgOwner.setImageResource(R.drawable.ic_person_24);
         viewHolder.txtUsernameStaff.setText(owner.getUser());
 
         //gán animation
@@ -79,4 +78,23 @@ public class ChatOneToOneAdapter extends BaseAdapter {
 
         return view;
     }
+    //lay hinh explam
+//    //getImage
+//    StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlychuoicoffee.appspot.com/OwnerManager/Owner0/ThongTinCuaHang/" + sOwnerID);
+//        System.out.println("MstoreR " + mStorageRef.toString());
+//    final File localFile = File.createTempFile("images","jpg");
+//        mStorageRef.getFile(localFile)
+//            .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+//        @Override
+//        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+//            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+//                        .setImageBitmap(bitmap);
+//        }
+//    }).addOnFailureListener(new OnFailureListener() {
+//        @Override
+//        public void onFailure(@NonNull Exception e) {
+//            Toast.makeText(InfoStoreActivity.this, "Chưa cập nhật ảnh", Toast.LENGTH_SHORT).show();
+//            System.out.println("ex " + e.getMessage());
+//        }
+//    });
 }

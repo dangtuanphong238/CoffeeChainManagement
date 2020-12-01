@@ -210,7 +210,6 @@ public class ListCuaHangActivity extends AppCompatActivity implements ItemClickL
         bundle.putString("diachi",lstStore.get(position).getDiachi());
         bundle.putString("giayphepkinhdoanh",lstStore.get(position).getGiayphepkinhdoanh());
         bundle.putString("sodienthoai",lstStore.get(position).getSdt());
-        bundle.putString("trangthai",lstStore.get(position).getTrangthai());
         bundle.putString("id",lstStore.get(position).getId());
         intent.putExtras(bundle);
        // System.out.println("aa" + lstStore.get(position).);

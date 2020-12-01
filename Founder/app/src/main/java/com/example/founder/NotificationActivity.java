@@ -92,7 +92,6 @@ public class NotificationActivity extends AppCompatActivity {
                 return true;
             }
         });
-
         setOnClick();
     }
 
@@ -235,7 +234,8 @@ public class NotificationActivity extends AppCompatActivity {
                         Message message = new Message(founderID, messageText, currentDate + " " + currentTime);
                         firebaseDatabase = FirebaseDatabase.getInstance();
                         databaseReference = firebaseDatabase.getReference();
-                        databaseReference.child("FounderManager").child("FounderAccount").child(founderID).child("MessageRoom").push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        databaseReference.child("FounderManager").child("FounderAccount").child(founderID).
+                                child("MessageRoom").push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 edtInputMessage.setText(null);

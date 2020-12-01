@@ -90,7 +90,7 @@ public class ChooseChatActivity extends AppCompatActivity {
 
         setOnClick();
     }
-    private void GetData() {
+    private void GetData()  {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference();
         myRef.child("FounderManager").child("OwnerAccount").addValueEventListener(new ValueEventListener() {
@@ -114,6 +114,7 @@ public class ChooseChatActivity extends AppCompatActivity {
                 Toast.makeText(ChooseChatActivity.this, "Load Data Failed!", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
     private void setOnClick(){
         btnChatRoom.setOnClickListener(new View.OnClickListener() {

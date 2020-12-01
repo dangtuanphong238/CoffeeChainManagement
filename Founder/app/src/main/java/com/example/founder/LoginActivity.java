@@ -105,7 +105,6 @@ public class LoginActivity extends AppCompatActivity {
                             String username = user.user;
                             String password = user.pass;
                             String id = user.id;
-                        Toast.makeText(LoginActivity.this, password, Toast.LENGTH_SHORT).show();
                             String taikhoan = edtTaikhoan.getText().toString();
                             String matkhau = edtPassword.getText().toString();
                             if (taikhoan.equals(""))
