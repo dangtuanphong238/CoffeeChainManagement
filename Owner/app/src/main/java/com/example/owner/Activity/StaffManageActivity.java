@@ -245,47 +245,7 @@ public class StaffManageActivity extends AppCompatActivity {
     }
 
     private void GetData() {
-//        initList();
-//        mAdapter = new CountryAdapter(this, mCountryList);
-//        spSort.setAdapter(mAdapter);
-//        spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                ListSpinner clickedItem = (ListSpinner) adapterView.getItemAtPosition(i);
-//                clickedCountryName = clickedItem.getCountryName();
-//                Toast.makeText(WareHouseManageActivity.this, "Bạn chọn " + clickedCountryName ,
-//                        Toast.LENGTH_SHORT).show();
-//                saveOwnerIDToLocalStorage(clickedItem.getCountryName());
-//                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-//                DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
-//                myRef.child(sOwnerID).child("QuanLyKho").child(clickedCountryName).addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        if (dataSnapshot.exists())
-//                        {
-//                            //xoa du lieu tren listview
-//                            hangHoaAdapter.clear();
-//                            for (DataSnapshot data : dataSnapshot.getChildren())
-//                            {
-//                                HangHoa danhSachHH = data.getValue(HangHoa.class);
-//                                danhSachHH.setId(data.getKey());
-//                                hangHoaAdapter.add(danhSachHH);
-//                                hangHoaAdapter.notifyDataSetChanged();
-//                            }
-//                        }
-//                    }
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                        Toast.makeText(WareHouseManageActivity.this, "Load Data Failed!", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
+
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
         myRef.child(sOwnerID).child("QuanLyNhanVien").addValueEventListener(new ValueEventListener() {
@@ -326,7 +286,7 @@ public class StaffManageActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String key = spnOffice.getSelectedItem().toString();
-                if(key.equals("Tất cả")){
+                if(key.equals("Tất Cả")){
                     GetData();
                     nhanVienAdapter = new NhanVienAdapter(StaffManageActivity.this,
                             R.layout.custom_listview_quanly_nhanvien,arrStaff);

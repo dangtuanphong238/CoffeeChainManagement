@@ -197,42 +197,6 @@ public class InfoStoreActivity extends AppCompatActivity {
     }
 
     private void setOnClick() {
-//        btnLuuThongTin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                final String tenCH = edtTenCH.getText().toString();
-//                final String diaChi = edtDiaChi.getText().toString();
-//                final String giayPhep = edtSoGiayPhep.getText().toString();
-//                final String sdt = edtSDT.getText().toString();
-//                firebaseDatabase = FirebaseDatabase.getInstance();
-//                databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID);
-//
-//                if (mImageUri != null && !tenCH.isEmpty() && !diaChi.isEmpty() && !giayPhep.isEmpty() && !sdt.isEmpty()) {
-//                    storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(sOwnerID).child("ThongTinCuaHang").child(sOwnerID + "." + getFileExtension(mImageUri));
-//                    dialog = new ProgressDialog(InfoStoreActivity.this);
-//                    dialog.setMessage("Upload in progress");
-//                    dialog.show();
-//                    storageReference.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            Store store = new Store(tenCH, diaChi, giayPhep, sdt);
-//                            databaseReference.child("ThongTinCuaHang").setValue(store);
-//                            Toast.makeText(InfoStoreActivity.this, "Cập nhật thông tin cửa hàng thành công!", Toast.LENGTH_SHORT).show();
-//                            dialog.cancel();
-//                        }
-//                    }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Toast.makeText(InfoStoreActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//                            System.out.println(e.getMessage().toString());
-//                        }
-//                    });
-//
-//                } else {
-//                    Toast.makeText(InfoStoreActivity.this, "Vui lòng nhập đủ các trường!", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
         btnLuuThongTin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -288,11 +252,11 @@ public class InfoStoreActivity extends AppCompatActivity {
         });
     }
 
-    private String getFileExtension(Uri uri) {
-        ContentResolver contentResolver = getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-    }
+//    private String getFileExtension(Uri uri) {
+//        ContentResolver contentResolver = getContentResolver();
+//        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+//        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+//    }
 
     private void openFileChoose() {
         Intent intent = new Intent();
