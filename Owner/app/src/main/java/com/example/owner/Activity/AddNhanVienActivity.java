@@ -63,7 +63,6 @@ public class AddNhanVienActivity extends AppCompatActivity {
     public static final String OWNERID = "ownerID";
     private String sOwnerID;
     private ArrayList<Staff> lstStaff = new ArrayList<>();
-    private ArrayList lstChucVu,lstCaLam;
 
     public static final int PICK_IMAGE_REQUEST = 1;
     private Uri mImageUri;
@@ -219,7 +218,8 @@ public class AddNhanVienActivity extends AppCompatActivity {
                         storageReference.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Staff staff1 = new Staff("Staff" + lstStaff.size(), tenDangNhap, matKhau, tenNV, sdt, soCMND, chucVu, caLam);
+                                Staff staff1 = new Staff("Staff" + lstStaff.size(), tenDangNhap, matKhau, tenNV, sdt, soCMND, chucVu, caLam,"Staff" + lstStaff.size() );
+
                                 databaseReference.setValue(staff1);
                                 Toast.makeText(AddNhanVienActivity.this, "Cập nhật thông tin nhân viên thành công!", Toast.LENGTH_SHORT).show();
                                 clearEditText();
@@ -236,26 +236,11 @@ public class AddNhanVienActivity extends AppCompatActivity {
                     else {
                         Toast.makeText(AddNhanVienActivity.this, "Vui lòng nhập đủ các trường!", Toast.LENGTH_SHORT).show();
                     }
-//                    final Staff staff1 = new Staff("Staff" + lstStaff.size(), tenDangNhap, matKhau, tenNV, sdt, soCMND, "quản lý", "sáng");
-//
-//
-//                    databaseReference.setValue(staff1).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                        @Override
-//                        public void onSuccess(Void aVoid) {
-//                            Toast.makeText(AddNhanVienActivity.this, "Thêm nhân viên thành công", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Toast.makeText(AddNhanVienActivity.this, "Thêm nhân viên thất bại", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
+
                 }
 
             }
         });
-
-
 
         btnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -277,6 +262,8 @@ public class AddNhanVienActivity extends AppCompatActivity {
         edtSDT.getText().clear();
         edtSoCMND.getText().clear();
         edtTenDangNhap.getText().clear();
+        imgNhanVien.setImageResource(R.drawable.noimage);
+        bitmap = null;
     }
 
     private void getSizeListStaff() //hàm này để lấy size của list nhânvieen để tự động sinh id theo list.size()

@@ -40,7 +40,7 @@ public class UpdateStaff extends AppCompatActivity {
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
     private EditText edtTenNV, edtTenDangNhap, edtMatKhau, edtSDT, edtSoCMND;
-    private EditText edtChucVu, edtCaLam;
+    private Spinner spnChucVu, spnCaLam;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private Button btnXoa,btnCapNhat;
@@ -53,6 +53,7 @@ public class UpdateStaff extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_staff);
         anhXa();
+        initSpinner();
         txtTitleActivity.setText("Cập Nhật Nhân Viên");
         openMenu();
         getOwnerIDFromLocalStorage();
@@ -119,13 +120,17 @@ public class UpdateStaff extends AppCompatActivity {
     private void setOnClick() {
         Intent intent = getIntent();
         Staff staff = (Staff) intent.getSerializableExtra("NHANVIEN");
+
+
+
         edtTenNV.setText(staff.getTennv());
-        edtChucVu.setText(staff.getChucvu());
+//        edtChucVu.setText(staff.getChucvu());
+
         edtTenDangNhap.setText(staff.getUser());
         edtMatKhau.setText(staff.getPass());
         edtSDT.setText(staff.getSdt());
         edtSoCMND.setText(staff.getCmnd());
-        edtCaLam.setText(staff.getCalam());
+//        edtCaLam.setText(staff.getCalam());
         btnXoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,7 +148,15 @@ public class UpdateStaff extends AppCompatActivity {
             }
         });
     }
-
+    private void initSpinner()
+    {
+        ArrayAdapter<String> adapterCaLam = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources().getStringArray(R.array.lstCaLam));
+        adapterCaLam.setDropDownViewResource(R.layout.cus_spinner_dropdown);
+        spnCaLam.setAdapter(adapterCaLam);
+        ArrayAdapter<String> adapterChucVu = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources().getStringArray(R.array.lstChucvu));
+        adapterChucVu.setDropDownViewResource(R.layout.cus_spinner_dropdown);
+        spnChucVu.setAdapter(adapterChucVu);
+    }
     private void anhXa() {
         btnXoa = findViewById(R.id.btnXoaNV);
         btnCapNhat = findViewById(R.id.btnCapNhatNV);
@@ -156,8 +169,8 @@ public class UpdateStaff extends AppCompatActivity {
         edtMatKhau = findViewById(R.id.edtMatKhau);
         edtSDT = findViewById(R.id.edtSoDienThoai);
         edtSoCMND = findViewById(R.id.edtSoCMND);
-        edtCaLam = findViewById(R.id.edtCaLam);
-        edtChucVu = findViewById(R.id.edtChucVu);
+        spnCaLam = findViewById(R.id.spnCaLam);
+        spnChucVu = findViewById(R.id.spnChucVu);
     }
 
     public void openMenu() {
