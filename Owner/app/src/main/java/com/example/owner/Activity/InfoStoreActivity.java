@@ -173,7 +173,7 @@ public class InfoStoreActivity extends AppCompatActivity {
                 }
             });
             //getImage
-            StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlychuoicoffee.appspot.com/OwnerManager/Owner0/ThongTinCuaHang/" + sOwnerID);
+            StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlychuoicoffee.appspot.com/FounderManager/ThongTinCuaHang/" + sOwnerID);
             System.out.println("MstoreR " + mStorageRef.toString());
             final File localFile = File.createTempFile("images","jpg");
             mStorageRef.getFile(localFile)
