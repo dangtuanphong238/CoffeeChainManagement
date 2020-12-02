@@ -173,7 +173,7 @@ public class InfoStoreActivity extends AppCompatActivity {
                 }
             });
             //getImage
-            StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlychuoicoffee.appspot.com/OwnerManager/Owner0/ThongTinCuaHang/" + sOwnerID);
+            StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlychuoicoffee.appspot.com/FounderManager/ThongTinCuaHang/" + sOwnerID);
             System.out.println("MstoreR " + mStorageRef.toString());
             final File localFile = File.createTempFile("images","jpg");
             mStorageRef.getFile(localFile)
@@ -211,7 +211,9 @@ public class InfoStoreActivity extends AppCompatActivity {
                     dialog = new ProgressDialog(InfoStoreActivity.this);
                     dialog.setMessage("Upload in progress");
                     dialog.show();
-                    storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(sOwnerID).child("ThongTinCuaHang").child(sOwnerID);
+//                    storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(sOwnerID).child("ThongTinCuaHang").child(sOwnerID);
+                    storageReference = FirebaseStorage.getInstance().getReference().child("FounderManager").child("ThongTinCuaHang").child(sOwnerID);
+
                     //Chuyen duoi file
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -220,7 +222,9 @@ public class InfoStoreActivity extends AppCompatActivity {
                     storageReference.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Store store = new Store(tenCH, diaChi, giayPhep, sdt, sOwnerID, "");
+//                            Store store = new Store(tenCH, diaChi, giayPhep, sdt, sOwnerID, "");
+                            Store store = new Store(tenCH, diaChi, giayPhep, sdt, sOwnerID, "", sOwnerID);
+
                             databaseReference.setValue(store);
                             Toast.makeText(InfoStoreActivity.this, "Cập nhật thông tin cửa hàng thành công!", Toast.LENGTH_SHORT).show();
                             dialog.cancel();
