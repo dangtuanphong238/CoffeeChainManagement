@@ -31,69 +31,61 @@
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:textColor="@color/black"
-                android:text="Ban 1"/>
+                android:text="Bàn 1"/>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvMealUsed"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="20dp"
-            android:orientation="horizontal"
-            android:layout_weight="1">
+            android:orientation="vertical"
+            android:layout_weight="5">
             <Button
                 android:id="@+id/btnReport"
                 android:layout_margin="5dp"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="Báo Lỗi"
                 android:gravity="center"
                 android:background="@drawable/button_main_color"
-                android:layout_height="match_parent"/>
+                android:layout_height="0dp"/>
 
             <Button
                 android:id="@+id/btnRemove"
                 android:layout_margin="5dp"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="Xóa"
                 android:gravity="center"
                 android:background="@drawable/button_main_color"
-                android:layout_height="match_parent"/>
+                android:layout_height="0dp"/>
             <Button
                 android:id="@+id/btnBook"
                 android:layout_margin="5dp"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="Đặt trước"
                 android:gravity="center"
                 android:background="@drawable/button_main_color"
-                android:layout_height="match_parent"/>
+                android:layout_height="0dp"/>
             <Button
                 android:id="@+id/btnUnBook"
                 android:layout_margin="5dp"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="Hủy Đặt"
                 android:gravity="center"
                 android:background="@drawable/button_main_color"
-                android:layout_height="match_parent"/>
+                android:layout_height="0dp"/>
             <Button
                 android:id="@+id/btnUpdate"
                 android:layout_margin="5dp"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="Xóa Lỗi"
                 android:gravity="center"
                 android:background="@drawable/button_main_color"
-                android:layout_height="match_parent"/>
+                android:layout_height="0dp"/>
         </LinearLayout>
     </LinearLayout>
 

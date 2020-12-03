@@ -137,7 +137,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.owner.Global.Public_func;
 import com.example.owner.Interface.RecyclerviewClick;
 import com.example.owner.Interface.SendDataAround;
-import com.example.owner.Model.ListMealAdapter;
+import com.example.owner.Adapter.ListMealAdapter;
 import com.example.owner.Model.MealModel;
 import com.example.owner.R;
 import com.google.android.material.navigation.NavigationView;
@@ -157,7 +157,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
     ListMealAdapter adapter;
     MealModel itemUpdate;
 
-    private Spinner spnCategory;
+private Spinner spnCategory;
     private RecyclerView rvListMeal;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
