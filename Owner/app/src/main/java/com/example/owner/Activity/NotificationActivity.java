@@ -171,7 +171,7 @@ public class NotificationActivity extends AppCompatActivity {
                                 edtInputMessage.setText(null);
                                 recyclerView.post(new Runnable() {
                                     @Override
-                                    public void run() {
+                                     public void run() {
                                         // Call smooth scroll
                                         recyclerView.smoothScrollToPosition(chatRoomAdapter.getItemCount() - 1);
                                     }
@@ -306,7 +306,7 @@ public class NotificationActivity extends AppCompatActivity {
                     recyclerView.setAdapter(chatRoomAdapter);
                     recyclerView.post(new Runnable() {
                         @Override
-                        public void run() {
+                         public void run() {
                             // Call smooth scroll
                             recyclerView.smoothScrollToPosition(chatRoomAdapter.getItemCount() - 1);
                         }

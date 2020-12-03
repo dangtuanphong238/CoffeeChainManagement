@@ -1,31 +1,40 @@
-package com.example.founder;
+package com.example.founder.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.founder.Interfaces.ItemClickListener;
+import com.example.founder.R;
 import com.example.founder.model.InforStore;
 
 import java.util.ArrayList;
-import java.util.List;
 
 // File này phong làm
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private ArrayList<InforStore> listData;
-
-    public RecyclerViewAdapter(ArrayList<InforStore> listData) {
+//    private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            int itemPosition = mRecyclerView.getChildLayoutPosition(view);
+//
+//        }
+//    };
+    ItemClickListener itemClickListener;
+    public RecyclerViewAdapter(ArrayList<InforStore> listData,ItemClickListener itemClickListener ) {
         this.listData = listData;
+        this.itemClickListener = itemClickListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemlayout_recyclerview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cus_recyclerview, parent, false);
         return new ViewHolder(view);
     }
 
@@ -37,6 +46,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.sdt.setText(store.getSdt());
         holder.tencuahang.setText(store.getTencuahang());
         holder.trangthai.setText(store.getTrangthai());
+
+//        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+
     }
 
     @Override
@@ -46,6 +63,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView diachi, giayphepkinhdoanh, sdt, tencuahang,trangthai;
+        RelativeLayout relativeLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -54,8 +72,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             sdt = (TextView) itemView.findViewById(R.id.txtSDT);
             tencuahang = (TextView) itemView.findViewById(R.id.txtTenCH);
             trangthai = (TextView) itemView.findViewById(R.id.txtTrangThai);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemClickListener.onClick(getAdapterPosition());
+                }
+            });
         }
     }
+
+
 //    ArrayList<InforStore> inforStores;
 //
 //

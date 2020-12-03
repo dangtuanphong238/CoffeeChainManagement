@@ -1,12 +1,12 @@
 package com.example.founder;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -16,9 +16,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.founder.Interfaces.ItemClickListener;
+import com.example.founder.Public.Public_func;
+import com.example.founder.adapter.RecyclerViewAdapter;
 import com.example.founder.model.InforStore;
-import com.example.founder.model.OnwerAccount;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.example.founder.model.Owner;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,10 +29,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 //Phong làm file này
-public class RecyclerViewLstCH extends AppCompatActivity {
+public class ListCuaHangActivity extends AppCompatActivity implements ItemClickListener {
     private ArrayList<String> arrayDSCH = new ArrayList<>();
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -40,8 +41,8 @@ public class RecyclerViewLstCH extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
     DatabaseReference databaseReference;
-    List<InforStore> inforStores;
-    private ArrayList <InforStore> lstInforStore = new ArrayList<>();
+    Owner owner;
+
 
     //Phong lam
     private ArrayList<InforStore> lstStore = new ArrayList<>();
@@ -49,9 +50,10 @@ public class RecyclerViewLstCH extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.recyclerview_liststore);
+        setContentView(R.layout.activity_liststore);
         anhXa();
-        recyclerView = findViewById(R.id.recyclerViewLstCH);
+
+
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        recyclerView.setHasFixedSize(true);
 //        inforStores = new ArrayList<>();
@@ -95,19 +97,23 @@ public class RecyclerViewLstCH extends AppCompatActivity {
                 switch (item.getItemId()) {
 
                     case R.id.it1:
-                        Public_func.clickItemMenu(RecyclerViewLstCH.this, layout_tongdoanhthu.class);
+                        Public_func.clickItemMenu(ListCuaHangActivity.this, TongDoanhThuActivity.class);
                         return true;
-                    case R.id.it2:
+                    case R.id.danh_sach_cua_hang:
                         recreate();
                         return true;
-                    case R.id.item3:
-                        Public_func.clickItemMenu(RecyclerViewLstCH.this, Screen_Account_creation.class);
+                    case R.id.tao_tai_khoan_owner:
+                        Public_func.clickItemMenu(ListCuaHangActivity.this, CreateOwnerAccountActivity.class);
                         return true;
-                    case R.id.item4:
-                        Public_func.clickItemMenu(RecyclerViewLstCH.this, layout_notification.class);
+                    case R.id.thong_bao:
+                        Public_func.clickItemMenu(ListCuaHangActivity.this, ChooseChatActivity.class);
                         return true;
-                    case R.id.itemLogOut:
-                        Public_func.clickLogout(RecyclerViewLstCH.this, LoginScreen.class);
+                    case R.id.log_out:
+                        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.apply();
+                        Public_func.clickLogout(ListCuaHangActivity.this, LoginActivity.class);
                         return true;
                 }
                 return true;
@@ -115,7 +121,8 @@ public class RecyclerViewLstCH extends AppCompatActivity {
         });
 
     }
-//    private void getSizeListOnwer() //hàm này để lấy size của list nhânvieen để tự động sinh id theo list.size()
+
+    //    private void getSizeListOnwer() //hàm này để lấy size của list nhânvieen để tự động sinh id theo list.size()
 //    {
 //        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 //        DatabaseReference reference = firebaseDatabase.getReference().child("OwnerManager").child("ThongTinCuaHang");
@@ -149,46 +156,65 @@ public class RecyclerViewLstCH extends AppCompatActivity {
         });
     }
 
-   public void getData(final ArrayList<InforStore> lstStore)
-   {
-       recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-       recyclerView.setHasFixedSize(true);
-       databaseReference = FirebaseDatabase.getInstance().getReference("FounderManager").child("ThongTinCuaHang");
-       databaseReference.addValueEventListener(new ValueEventListener() {
-           @Override
-           public void onDataChange(@NonNull DataSnapshot snap) {
-               if (snap.exists()) {
-                   lstStore.clear();
-                   for (DataSnapshot dataSnapshot : snap.getChildren()) {
+    public void getData(final ArrayList<InforStore> lstStore) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setHasFixedSize(true);
+        databaseReference = FirebaseDatabase.getInstance().getReference("FounderManager").child("ThongTinCuaHang");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snap) {
+                if (snap.exists()) {
+                    lstStore.clear();
+                    for (DataSnapshot dataSnapshot : snap.getChildren()) {
 //                       InforStore inforStore = dataSnapshot.getValue(InforStore.class);
-                       String tencuahang = dataSnapshot.child("tencuahang").getValue().toString();
-                       String diachi = dataSnapshot.child("diachi").getValue().toString();
-                       String giayphep = dataSnapshot.child("giayphepkinhdoanh").getValue().toString();
-                       String sdt = dataSnapshot.child("sdt").getValue().toString();
-                       String trangthai = dataSnapshot.child("trangthai").getValue().toString();
-                       InforStore inforStore1 = new InforStore(diachi,giayphep,sdt,tencuahang,trangthai);
-                       lstStore.add(inforStore1);
-                   }
-                   recyclerViewAdapter = new RecyclerViewAdapter(lstStore);
-                   recyclerView.setAdapter(recyclerViewAdapter);
-                   recyclerViewAdapter.notifyDataSetChanged();
-               }
-           }
+                        String tencuahang = dataSnapshot.child("tencuahang").getValue().toString();
+                        String diachi = dataSnapshot.child("diachi").getValue().toString();
+                        String giayphep = dataSnapshot.child("giayphepkinhdoanh").getValue().toString();
+                        String sdt = dataSnapshot.child("sdt").getValue().toString();
+                        String trangthai = dataSnapshot.child("trangthai").getValue().toString();
+                        String id = dataSnapshot.child("id").getValue().toString();
+                        InforStore inforStore1 = new InforStore(id,diachi, giayphep, sdt, tencuahang, trangthai);
+                        lstStore.add(inforStore1);
+                    }
+                    recyclerViewAdapter = new RecyclerViewAdapter(lstStore, ListCuaHangActivity.this);
+                    recyclerView.setAdapter(recyclerViewAdapter);
+                    recyclerViewAdapter.notifyDataSetChanged();
+                }
+            }
 
-           @Override
-           public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-           }
-       });
+            }
+        });
+        recyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-   }
+            }
+        });
+    }
 
     private void anhXa() {
         drawerLayout = findViewById(R.id.activity_main_drawer);
         navigationView = findViewById(R.id.navDrawerMenu);
         imgMnu = findViewById(R.id.btnMnu);
         txtstorelist = findViewById(R.id.idtoolbar);
+        recyclerView = findViewById(R.id.recyclerViewLstCH);
     }
 
 
+    @Override
+    public void onClick(int position) {
+        Intent intent = new Intent(ListCuaHangActivity.this, InfoStoreActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("tench",lstStore.get(position).getTencuahang());
+        bundle.putString("diachi",lstStore.get(position).getDiachi());
+        bundle.putString("giayphepkinhdoanh",lstStore.get(position).getGiayphepkinhdoanh());
+        bundle.putString("sodienthoai",lstStore.get(position).getSdt());
+        bundle.putString("id",lstStore.get(position).getId());
+        intent.putExtras(bundle);
+       // System.out.println("aa" + lstStore.get(position).);
+       startActivity(intent);
+    }
 }

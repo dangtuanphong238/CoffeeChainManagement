@@ -1,11 +1,5 @@
 package com.example.founder;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -13,9 +7,16 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.example.founder.Public.Public_func;
 import com.google.android.material.navigation.NavigationView;
 
-public class layout_tongdoanhthu extends AppCompatActivity {
+public class TongDoanhThuActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private NavigationView navigationView;
@@ -24,7 +25,7 @@ public class layout_tongdoanhthu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_layout_tongdoanhthu);
+        setContentView(R.layout.activity_tongdoanhthu);
 
         anhXa();
         txttenlayout.setText("Tổng Doanh Thu");
@@ -38,21 +39,21 @@ public class layout_tongdoanhthu extends AppCompatActivity {
                     case R.id.it1:
                         recreate();
                         return true;
-                    case R.id.it2:
-                        Public_func.clickItemMenu(layout_tongdoanhthu.this, RecyclerViewLstCH.class);
+                    case R.id.danh_sach_cua_hang:
+                        Public_func.clickItemMenu(TongDoanhThuActivity.this, ListCuaHangActivity.class);
                         return true;
-                    case R.id.item3:
-                        Public_func.clickItemMenu(layout_tongdoanhthu.this, Screen_Account_creation.class);
+                    case R.id.tao_tai_khoan_owner:
+                        Public_func.clickItemMenu(TongDoanhThuActivity.this, CreateOwnerAccountActivity.class);
                         return true;
-                    case R.id.item4:
-                        Public_func.clickItemMenu(layout_tongdoanhthu.this, layout_notification.class);
+                    case R.id.thong_bao:
+                        Public_func.clickItemMenu(TongDoanhThuActivity.this, ChooseChatActivity.class);
                         return true;
-                    case R.id.itemLogOut:
+                    case R.id.log_out:
                     SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.clear();
                     editor.apply();
-                    Public_func.clickLogout(layout_tongdoanhthu.this, LoginScreen.class);
+                    Public_func.clickLogout(TongDoanhThuActivity.this, LoginActivity.class);
                         return true;
                 }
                 return true;

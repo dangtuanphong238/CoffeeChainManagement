@@ -1,11 +1,10 @@
 package com.example.owner.Activity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +13,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.owner.Dialog.DetailTableDialog;
+import com.example.owner.Dialog.UpdateTableDialog;
 import com.example.owner.Interface.RecyclerviewClick;
 import com.example.owner.Model.ListTableAdapter;
 import com.example.owner.Model.TableModel;
@@ -29,6 +30,8 @@ import java.util.ArrayList;
 public class RoomActivity extends AppCompatActivity implements RecyclerviewClick {
     String TAG = "ROOM_ACTIVITY TAG:";
 
+    String areaID = "";
+    String tableID = "";
     //NOTE: Table status
     //STATUS_0: Blank
     //STATUS_1: Book
@@ -51,22 +54,18 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
     ListTableAdapter adapter;
     String getLayout;
     int roomName;
-
+    String url = null;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
-        layoutButton = findViewById(R.id.layoutButton);
+//        layoutButton = findViewById(R.id.layoutButton);
         recyclerView = findViewById(R.id.rvListTable);
         Bundle bundle = getIntent().getExtras();
         roomName = bundle.getInt(AreaManageActivity.KEY_ROOM);
+
         getLayout = bundle.getString(AreaManageActivity.KEY_GET_LAYOUT);
-        System.out.println(TAG+getLayout);
-        if (getLayout != null){
-            layoutButton.setVisibility(View.VISIBLE);
-        }else{
-            layoutButton.setVisibility(View.GONE);
-        }
+
         SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
         String ownerID = pref.getString(LoginActivity.OWNERID, null);
         int areaID = 0;
@@ -81,12 +80,14 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
         } else {
             areaID = 5;
         }
-
-        String path = "OwnerManager/" + ownerID + "/QuanLyBan/Area0" + areaID;
-        getData(path);
+        this.areaID = areaID+"";
+        String path = "OwnerManager/" + ownerID + "/QuanLyBan/Area" + areaID;
+        String path_tempt = "OwnerManager/" + ownerID + "/TableActive/Area" + areaID;
+        url = path_tempt;
+        getDataWhenHaving(path);
     }
 
-    private void getData(String path) {
+    private void getDataWhenHaving(String path) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(path);
         myRef.addValueEventListener(new ValueEventListener() {
@@ -118,13 +119,32 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
         super.onStart();
     }
 
+
     @Override
     public void onItemClick(int position) {
+        String url = this.url
+                +"/Table"+(position+1);
+        tableID = "Table"+(position+1);
+        SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
+        String ownerID = pref.getString(LoginActivity.OWNERID, null);
+        if (listTable.get(position).getTableStatus().equals("2")){
+            DetailTableDialog dialog = new DetailTableDialog(this, url,ownerID,areaID,tableID);
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.show();
+        }else {
+            UpdateTableDialog dialog = new UpdateTableDialog(this,"");
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.show();
+        }
 
     }
+
 
     @Override
     public void onItemLongClick(int position) {
-
+        UpdateTableDialog dialog = new UpdateTableDialog(this,"");
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
     }
+
 }

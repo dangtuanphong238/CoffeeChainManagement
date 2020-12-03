@@ -41,8 +41,15 @@
         <item>Chiều</item>
         <item>Tối</item>
     </string-array>
+
     <string-array name="lstChucvu">
-        <item>Tất cả</item>
+        <item>Quản Lý</item>
+        <item>Thu Ngân</item>
+        <item>Phục Vụ</item>
+    </string-array>
+
+    <string-array name="filterChucVu">
+        <item>Tất Cả</item>
         <item>Quản Lý</item>
         <item>Thu Ngân</item>
         <item>Phục Vụ</item>

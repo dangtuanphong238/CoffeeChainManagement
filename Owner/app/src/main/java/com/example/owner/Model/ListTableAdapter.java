@@ -51,7 +51,7 @@ public class ListTableAdapter extends RecyclerView.Adapter<ListTableAdapter.MyVi
         holder.tvTableName.setText("Bàn " + (position + 1));
 
         if (model.getTableStatus().equals((RoomActivity.ERROR + ""))) {
-            holder.imgTable.setBackgroundColor(0xFF000);
+            holder.imgTable.setBackgroundColor(0xFF000000);
         } else if (model.getTableStatus().equals(RoomActivity.BOOK + "")) {
             holder.imgTable.setBackgroundColor(0xFFCA62E4);
         } else if (model.getTableStatus().equals(RoomActivity.HAVING + "")) {
@@ -87,7 +87,7 @@ public class ListTableAdapter extends RecyclerView.Adapter<ListTableAdapter.MyVi
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    recyclerviewClick.onItemClick(getAdapterPosition());
+                    recyclerviewClick.onItemLongClick(getAdapterPosition());
                     return true;
                 }
             });

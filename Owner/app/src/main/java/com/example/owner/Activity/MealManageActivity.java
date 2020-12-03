@@ -131,14 +131,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.owner.Global.Public_func;
 import com.example.owner.Interface.RecyclerviewClick;
-import com.example.owner.Interface.SendData;
-import com.example.owner.Model.ListAreaAdapter;
+import com.example.owner.Interface.SendDataAround;
 import com.example.owner.Model.ListMealAdapter;
 import com.example.owner.Model.MealModel;
 import com.example.owner.R;
@@ -151,7 +149,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MealManageActivity extends AppCompatActivity implements RecyclerviewClick, SendData {
+public class MealManageActivity extends AppCompatActivity implements RecyclerviewClick, SendDataAround {
     public static final String KEY_UPDATE = "UPDATE_ITEM";
 
     String TAG = "MealManageActivity_TAG: ";
@@ -316,7 +314,8 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
         SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
         String ownerID = pref.getString(LoginActivity.OWNERID, null);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/QuanLyMonAn");
+        final String path = "/OwnerManager/" + ownerID + "/QuanLyMonAn";
+        DatabaseReference myRef = database.getReference(path);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -329,7 +328,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                             snapshot.child("meal_image").getValue() + "");
                     list.add(mealModel);
                 }
-                adapter = new ListMealAdapter(MealManageActivity.this, list, MealManageActivity.this, MealManageActivity.this);
+                adapter = new ListMealAdapter(MealManageActivity.this, list, MealManageActivity.this, MealManageActivity.this, path);
                 adapter.notifyDataSetChanged();
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -350,7 +349,8 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
         SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
         String ownerID = pref.getString(LoginActivity.OWNERID, null);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/QuanLyMonAn");
+        final String path = "/OwnerManager/" + ownerID + "/QuanLyMonAn";
+        DatabaseReference myRef = database.getReference(path);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -365,7 +365,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                         list.add(mealModel);
                     }
                 }
-                adapter = new ListMealAdapter(MealManageActivity.this, list, MealManageActivity.this, MealManageActivity.this);
+                adapter = new ListMealAdapter(MealManageActivity.this, list, MealManageActivity.this, MealManageActivity.this, path);
                 adapter.notifyDataSetChanged();
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

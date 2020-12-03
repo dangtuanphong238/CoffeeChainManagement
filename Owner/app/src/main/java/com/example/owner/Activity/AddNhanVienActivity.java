@@ -1,14 +1,21 @@
 
 package com.example.owner.Activity;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +27,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.owner.Global.Public_func;
+import com.example.owner.Models.Store;
 import com.example.owner.R;
 import com.example.owner.Models.Staff;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,14 +38,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AddNhanVienActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private ImageButton btnMnu;
+    private ImageButton btnMnu, btnChoose, btnCapture;
+    private ImageView imgNhanVien;
+
     private TextView txtTitleActivity;
     private Button btnThemNV;
     private EditText edtTenNV, edtTenDangNhap, edtMatKhau, edtSDT, edtSoCMND;
@@ -49,7 +63,14 @@ public class AddNhanVienActivity extends AppCompatActivity {
     public static final String OWNERID = "ownerID";
     private String sOwnerID;
     private ArrayList<Staff> lstStaff = new ArrayList<>();
-    private ArrayList lstChucVu,lstCaLam;
+
+    public static final int PICK_IMAGE_REQUEST = 1;
+    private Uri mImageUri;
+    private StorageReference storageReference;
+    private Bitmap bitmap;
+    private ProgressDialog dialog;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,51 +144,126 @@ public class AddNhanVienActivity extends AppCompatActivity {
 
     private void initSpinner()
     {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources().getStringArray(R.array.lstCaLam));
-        adapter.setDropDownViewResource(R.layout.cus_spinner_dropdown);
-        spnLamTheoCa.setAdapter(adapter);
+        ArrayAdapter<String> adapterCaLam = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources().getStringArray(R.array.lstCaLam));
+        adapterCaLam.setDropDownViewResource(R.layout.cus_spinner_dropdown);
+        spnLamTheoCa.setAdapter(adapterCaLam);
+        ArrayAdapter<String> adapterChucVu = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources().getStringArray(R.array.lstChucvu));
+        adapterChucVu.setDropDownViewResource(R.layout.cus_spinner_dropdown);
+        spnChucVu.setAdapter(adapterChucVu);
+    }
+
+    private void openFileChoose() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    private void capturePicture() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, 100);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            mImageUri = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),mImageUri);
+                imgNhanVien.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (requestCode == 100 && resultCode == RESULT_OK) { //Phần này camera chưa đẩy lên storage đc
+            bitmap = (Bitmap) data.getExtras().get("data");
+            imgNhanVien.setImageBitmap(bitmap);
+        }
     }
 
     private void setOnClick() {
         btnThemNV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String tenNV = edtTenNV.getText().toString();
-                String tenDangNhap = edtTenDangNhap.getText().toString();
-                String matKhau = edtMatKhau.getText().toString();
-                String sdt = edtSDT.getText().toString();
-                String soCMND = edtSoCMND.getText().toString();
+                firebaseDatabase = FirebaseDatabase.getInstance();
+                databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID).child("QuanLyNhanVien").child("Staff" + lstStaff.size());
+                final String tenNV = edtTenNV.getText().toString();
+                final String tenDangNhap = edtTenDangNhap.getText().toString();
+                final String matKhau = edtMatKhau.getText().toString();
+                final String sdt = edtSDT.getText().toString();
+                final String soCMND = edtSoCMND.getText().toString();
                 boolean isExist = false;
-                //        String caLam = ;
-                //        String chucVu = ;
+                final String caLam = spnLamTheoCa.getSelectedItem().toString();
+                final String chucVu = spnChucVu.getSelectedItem().toString();
                 for (Staff staff : lstStaff) {
                     if (staff.user.equals(tenDangNhap)) {
                         Toast.makeText(AddNhanVienActivity.this, "Tài khoản đã tồn tại!", Toast.LENGTH_SHORT).show();
                         isExist = true;
                     }
                 }
-                System.out.println("is Exist1 " + isExist);
 
                 if (isExist == false) {
-                    System.out.println("ADD");
-                    final Staff staff1 = new Staff("Staff" + lstStaff.size(), tenDangNhap, matKhau, tenNV, sdt, soCMND, "quản lý", "sáng");
+                    if (bitmap != null && !tenNV.isEmpty() && !tenDangNhap.isEmpty() && !matKhau.isEmpty() && !sdt.isEmpty() && !soCMND.isEmpty()) {
+                        dialog = new ProgressDialog(AddNhanVienActivity.this);
+                        dialog.setMessage("Upload in progress");
+                        dialog.show();
+                        storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(sOwnerID).child("QuanLyNhanVien").child("Staff" + lstStaff.size());
+                        //Chuyen duoi file
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                        byte[] data = baos.toByteArray();
 
-                    firebaseDatabase = FirebaseDatabase.getInstance();
-                    databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID);
-                    databaseReference.child("QuanLyNhanVien").child("Staff" + lstStaff.size()).setValue(staff1).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(AddNhanVienActivity.this, "Thêm nhân viên thành công", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(AddNhanVienActivity.this, "Thêm nhân viên thất bại", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                        storageReference.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Staff staff1 = new Staff("Staff" + lstStaff.size(), tenDangNhap, matKhau, tenNV, sdt, soCMND, chucVu, caLam,"Staff" + lstStaff.size() );
+
+                                databaseReference.setValue(staff1);
+                                Toast.makeText(AddNhanVienActivity.this, "Cập nhật thông tin nhân viên thành công!", Toast.LENGTH_SHORT).show();
+                                clearEditText();
+                                dialog.cancel();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(AddNhanVienActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                System.out.println(e.getMessage().toString());
+                            }
+                        });
+                    }
+                    else {
+                        Toast.makeText(AddNhanVienActivity.this, "Vui lòng nhập đủ các trường!", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
+
             }
         });
+
+        btnChoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFileChoose();
+            }
+        });
+        btnCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                capturePicture();
+            }
+        });
+    }
+
+    private void clearEditText(){
+        edtTenNV.getText().clear();
+        edtMatKhau.getText().clear();
+        edtSDT.getText().clear();
+        edtSoCMND.getText().clear();
+        edtTenDangNhap.getText().clear();
+        imgNhanVien.setImageResource(R.drawable.noimage);
+        bitmap = null;
     }
 
     private void getSizeListStaff() //hàm này để lấy size của list nhânvieen để tự động sinh id theo list.size()
@@ -205,6 +301,9 @@ public class AddNhanVienActivity extends AppCompatActivity {
         edtSoCMND = findViewById(R.id.edtSoCMND);
         spnChucVu = findViewById(R.id.spChucVu);
         spnLamTheoCa = findViewById(R.id.spCaLam);
+        btnCapture = findViewById(R.id.btnCapture);
+        btnChoose = findViewById(R.id.btnChoose);
+        imgNhanVien = findViewById(R.id.imgNhanVien);
     }
 
     public void openMenu() {

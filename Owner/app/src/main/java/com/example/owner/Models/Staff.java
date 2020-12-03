@@ -3,7 +3,6 @@
 import java.io.Serializable;
 
 public class Staff implements Serializable {
-
     public String id;
     public String user;
     public String pass;
@@ -12,7 +11,7 @@ public class Staff implements Serializable {
     public String cmnd;
     public String chucvu;
     public String calam;
-
+    public String imgName;
     public Staff(String id, String user, String pass, String tennv, String sdt, String cmnd, String chucvu, String calam) {
         this.id = id;
         this.user = user;
@@ -24,12 +23,32 @@ public class Staff implements Serializable {
         this.calam = calam;
     }
 
+    public Staff(String id, String user, String pass, String tennv, String sdt, String cmnd, String chucvu, String calam, String imgName) {
+        this.id = id;
+        this.user = user;
+        this.pass = pass;
+        this.tennv = tennv;
+        this.sdt = sdt;
+        this.cmnd = cmnd;
+        this.chucvu = chucvu;
+        this.calam = calam;
+        this.imgName = imgName;
+    }
+
     public Staff(String id, String user) {
         this.id = id;
         this.user = user;
     }
 
     public Staff() {
+    }
+
+    public String getImgName() {
+        return imgName;
+    }
+
+    public void setImgName(String imgName) {
+        this.imgName = imgName;
     }
 
     public String getId() {

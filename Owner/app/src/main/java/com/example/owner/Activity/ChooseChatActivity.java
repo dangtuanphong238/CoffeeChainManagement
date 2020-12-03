@@ -129,7 +129,9 @@ public class ChooseChatActivity extends AppCompatActivity {
                         arrStaff.add(staff);
 
                     }
-                    adapter = new ChatOneToOneAdapter(ChooseChatActivity.this ,R.layout.cus_listview_chat_staff ,arrStaff);
+//                    adapter = new ChatOneToOneAdapter(ChooseChatActivity.this ,R.layout.cus_listview_chat_staff ,arrStaff);
+                    adapter = new ChatOneToOneAdapter(ChooseChatActivity.this ,R.layout.cus_listview_chat_staff ,arrStaff,"Owner0");
+
                     lvStaff.setAdapter(adapter);
                 }
             }

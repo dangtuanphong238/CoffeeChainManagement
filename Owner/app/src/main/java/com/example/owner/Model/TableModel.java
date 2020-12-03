@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class TableModel {
     String tableID;
     String tableStatus;
-
     public TableModel() {
     }
 

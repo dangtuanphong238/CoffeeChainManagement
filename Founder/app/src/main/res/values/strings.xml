@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Founder</string>
+    <array name="lstDanhSachTrangThai">
+        <item>Đang hoạt động</item>
+        <item>Ngưng hoạt động</item>
+        <item>Đang tạm khóa</item>
+    </array>
 </resources>

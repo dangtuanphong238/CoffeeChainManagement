@@ -290,7 +290,6 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
                     AreaModel area = dataSnapshot.getValue(AreaModel.class);
                     listArea.add(area);
                 }
-
                 listAreaAdapter = new ListAreaAdapter(AreaManageActivity.this, listArea, AreaManageActivity.this);
                 listAreaAdapter.notifyDataSetChanged();
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
