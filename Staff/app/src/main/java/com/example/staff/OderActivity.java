@@ -48,9 +48,9 @@ public class OderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_oder);
         getOwnerIDFromLocalStorage();
         AnhXa();
-        Bundle bundle = getIntent().getExtras();
-        String title = bundle.getString("tenban");
-        txtTenBan.setText(title);
+       // Bundle bundle = getIntent().getExtras();
+       // String title = bundle.getString("tenban");
+       // txtTenBan.setText(title);
         spPhanLoaiMon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

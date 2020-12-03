@@ -34,10 +34,10 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
     //STATUS_1: Book
     //STATUS_2: Having
     //STATUS_3: Error
-    public final static int BLANK = 0;
-    public final static int BOOK = 1;
-    public final static int HAVING = 2;
-    public final static int ERROR = 3;
+        public final static int BLANK = 0;
+        public final static int BOOK = 1;
+        public final static int HAVING = 2;
+        public final static int ERROR = 3;
 
     private final int PHONG_LANH = 0;
     private final int PHONG_VIP = 1;

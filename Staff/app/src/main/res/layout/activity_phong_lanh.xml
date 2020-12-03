@@ -23,15 +23,15 @@
             android:textSize="20dp"></TextView>
     </LinearLayout>
 
-   <GridView
+   <androidx.recyclerview.widget.RecyclerView
        android:id="@+id/gridviewPl"
        android:layout_width="match_parent"
        android:numColumns="auto_fit"
        android:gravity="center"
        android:layout_height="0dp"
        android:columnWidth="100dp"
-       android:layout_weight="4"
-       android:background="#DCDCDC"></GridView>
+       android:layout_weight="4 "
+       android:background="#DCDCDC"></androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -127,16 +127,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="right">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Đặt trước"></Button>
-    </LinearLayout>
 
 </LinearLayout>
