@@ -67,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
             owner.setUser(edtUser.getText().toString());
             Intent intent = new Intent(LoginActivity.this, AreaManageActivity.class);
             startActivity(intent);
+            finish();
             Toast.makeText(this, "Đăng nhập thành công !", Toast.LENGTH_SHORT).show();
         }
         setOnClick();
