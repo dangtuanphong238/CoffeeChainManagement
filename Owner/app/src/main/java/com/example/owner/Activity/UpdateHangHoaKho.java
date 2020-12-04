@@ -64,7 +64,7 @@ public class UpdateHangHoaKho extends AppCompatActivity  {
 
     private void setEvent() {
         Intent intent = getIntent();
-        HangHoa hangHoa = (HangHoa) intent.getSerializableExtra("HANGHOA");
+        final HangHoa hangHoa = (HangHoa) intent.getSerializableExtra("HANGHOA");
         txtTenHangHoa.setText(hangHoa.getTenhanghoa());
        txtsoluong.setText(hangHoa.getSoluong());
         if ( txtTenHangHoa.getText().toString().equals("") || txtsoluong.getText().toString().equals(""))
@@ -80,10 +80,16 @@ public class UpdateHangHoaKho extends AppCompatActivity  {
         btnCapNhat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                DatabaseReference databaseReference = firebaseDatabase.getReference()
-                .child("OwnerManager").child(sOwnerID).child("QuanLyKho").child(txtMaSP).child(tenHangHoa);
-                databaseReference.child("soluong").setValue(txtsoluong.getText().toString());
+
+                    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                    DatabaseReference databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID).child("QuanLyKho").child(txtMaSP).child(tenHangHoa);
+                    databaseReference.child("soluong").setValue(txtsoluong.getText().toString());
+                    Toast.makeText(UpdateHangHoaKho.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                    Intent intent1 = new Intent(UpdateHangHoaKho.this,WareHouseManageActivity.class);
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent1);
+                    finish();
+
             }
         });
         btnXoa.setOnClickListener(new View.OnClickListener() {

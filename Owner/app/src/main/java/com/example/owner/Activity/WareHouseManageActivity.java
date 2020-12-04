@@ -109,6 +109,7 @@ package com.example.owner.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -125,13 +126,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.owner.Adapter.ListMealAdapter;
 import com.example.owner.Global.Public_func;
 import com.example.owner.Model.CountryAdapter;
 import com.example.owner.Model.HangHoa;
 import com.example.owner.Model.HangHoaAdapter;
 import com.example.owner.Model.ListSpinner;
 import com.example.owner.Adapter.NhanVienAdapter;
+import com.example.owner.Model.MealModel;
 import com.example.owner.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -232,7 +236,6 @@ public class WareHouseManageActivity extends AppCompatActivity {
         });
 
     }
-
     public void getMenu()
     {
         //call function onClickItem
