@@ -7,6 +7,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,9 +21,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
-    Button btnLogin,PasswordVisble;;
+    Button btnLogin;
     EditText edtTaikhoan,edtPassword;
     String idFouder;
+    ImageButton imgClick;
+    boolean isShow = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,22 +33,25 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         anhXa();
         setOnClick();
-        edtPassword.setOnClickListener(new View.OnClickListener() {
+        imgClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(edtPassword.getText().toString().isEmpty()){
                     edtPassword.setError("Please Enter Pass word");
                 }else{
-                    if(PasswordVisble.getText().toString().equals("Show")){
-                        PasswordVisble.setText("Hide");
+                    if(isShow == true){
+                        imgClick.setImageResource(R.drawable.un_eyes_24);
                         edtPassword.setTransformationMethod(null);
-
-                    }else {
-                        PasswordVisble.setText("Show");
+                        isShow = false;
+                    }
+                    else
+                        {
+                        isShow = true;
+                        imgClick.setImageResource(R.drawable.ic_baseline_remove_red_eye_24);
                         edtPassword.setTransformationMethod(new PasswordTransformationMethod());
 
                     }
+
                 }
             }
         });
@@ -65,9 +71,88 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
+    private void togglePass(boolean isShow)
+    {
+        if(!isShow)
+        {
+            edtPassword.setTransformationMethod(new PasswordTransformationMethod());
+            isShow = false;
+
+        }
+        else {
+            edtPassword.setTransformationMethod(null);
+            isShow = true;
+        }
+    }
+
+    private void setOnClick()
+    {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseDatabase login = FirebaseDatabase.getInstance();
+                DatabaseReference reference = login.getReference();
+                reference.child("FounderManager").child("FounderAccount").child(edtTaikhoan.getText().toString()).child("TaiKhoan").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists())
+                            {
+                                User user = dataSnapshot.getValue(User.class);
+                                String username = user.user;
+                                String password = user.pass;
+                                String id = user.id;
+                                String taikhoan = edtTaikhoan.getText().toString();
+                                String matkhau = edtPassword.getText().toString();
+                                if (taikhoan.equals(""))
+                                {
+                                    edtTaikhoan.setError("Ban can nhap tai khoan");
+                                }
+                                if (matkhau.equals(""))
+                                {
+                                    edtPassword.setError("Ban can nhap mat khau");
+                                }
+                                if (taikhoan.equals(username) && matkhau.equals(password))
+                                {
+                                    System.out.println("id f " + id);
+                                    Toast.makeText(LoginActivity.this, "Dang Nhap Thanh Cong", Toast.LENGTH_SHORT).show();
+                                    SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString("taikhoan",taikhoan);
+                                    editor.putString("password",matkhau);
+                                    editor.putString("idFounder",id);
+                                    editor.commit();
+                                    Intent intent = new Intent(LoginActivity.this, ListCuaHangActivity.class);
+                                    startActivity(intent);
+                                    finish();
+
+                                }
+                                else {
+                                    Toast.makeText(LoginActivity.this, "Dang Nhap That Bai", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            else
+                            {
+                                Toast.makeText(LoginActivity.this, "Dang Nhap That Bai", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(LoginActivity.this, "Dang Nhap That Bai", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
+
+    }
+    private void anhXa(){
+        imgClick=findViewById(R.id.imgClickicons);
+        btnLogin = findViewById(R.id.btnLogin);
+        edtTaikhoan = findViewById(R.id.edttaikhoan);
+        edtPassword = findViewById(R.id.edtpassword);
+
 //        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 //        DatabaseReference reference = firebaseDatabase.getReference("FounderManager").child("FounderAccount");
 //        reference.addValueEventListener(new ValueEventListener() {
@@ -77,11 +162,10 @@ public class LoginActivity extends AppCompatActivity {
 //                {
 //                    for (DataSnapshot item : snapshot.getChildren())
 //                    {
-//                       idFouder =  item.child("id").getValue() + "";
-//                        System.out.println("id f" + idFouder);
+//                        idFouder = item.child("id").getValue().toString();
+//                        Toast.makeText(LoginActivity.this, idFouder, Toast.LENGTH_SHORT).show();
 //                    }
 //                }
-//
 //            }
 //
 //            @Override
@@ -89,68 +173,7 @@ public class LoginActivity extends AppCompatActivity {
 //
 //            }
 //        });
-//    }
 
-    private void setOnClick()
-    {
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseDatabase login = FirebaseDatabase.getInstance();
-                DatabaseReference reference = login.getReference();
-                reference.child("FounderManager").child("FounderAccount").child("Founder0").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                            User user = dataSnapshot.getValue(User.class);
-                            String username = user.user;
-                            String password = user.pass;
-                            String id = user.id;
-                            String taikhoan = edtTaikhoan.getText().toString();
-                            String matkhau = edtPassword.getText().toString();
-                            if (taikhoan.equals(""))
-                            {
-                                edtTaikhoan.setError("Ban can nhap tai khoan");
-                            }
-                            if (matkhau.equals(""))
-                            {
-                                edtPassword.setError("Ban can nhap mat khau");
-                            }
-                            if (taikhoan.equals(username) && matkhau.equals(password))
-                            {
-                                System.out.println("id f " + id);
-                                Toast.makeText(LoginActivity.this, "Dang Nhap Thanh Cong", Toast.LENGTH_SHORT).show();
-                                SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString("taikhoan",taikhoan);
-                                editor.putString("password",matkhau);
-                                editor.putString("idFounder",id);
-                                editor.commit();
-                                Intent intent = new Intent(LoginActivity.this, ListCuaHangActivity.class);
-                                startActivity(intent);
-                                finish();
-
-                            }
-                            else {
-                                Toast.makeText(LoginActivity.this, "Dang Nhap That Bai", Toast.LENGTH_SHORT).show();
-                        }
-                        }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-            }
-        });
-
-    }
-    private void anhXa(){
-        PasswordVisble=findViewById(R.id.passwordVisible);
-        btnLogin = findViewById(R.id.btnLogin);
-        edtTaikhoan = findViewById(R.id.edttaikhoan);
-        edtPassword = findViewById(R.id.edtpassword);
     }
 
 }
