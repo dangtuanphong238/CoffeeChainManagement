@@ -13,6 +13,12 @@ public class TableModel {
         this.tableStatus = tableStatus;
     }
 
+    public int getID(){
+        int id;
+        id = Integer.parseInt(this.getTableID().replace("TB", ""));
+        return id;
+    }
+
     public String getTableID() {
         return tableID;
     }

@@ -121,14 +121,12 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_weight="2">
-
                     <ImageView
+                        android:layout_gravity="center_horizontal"
                         android:id="@+id/imgPictureMeal"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginBottom="3dp"
-                        android:background="@drawable/ic_image"></ImageView>
+                        app:srcCompat="@drawable/noimage"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -137,26 +135,22 @@
                     android:gravity="right"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1">
-
                     <ImageButton
                         android:id="@+id/btnCamera"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/ic_camera"></ImageButton>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_camera_24"/>
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_marginLeft="5dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
-
                     <ImageButton
                         android:id="@+id/btnGallery"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginBottom="3dp"
-                        android:background="@drawable/ic_image_gallery"></ImageButton>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_photo_24"/>
                 </LinearLayout>
             </LinearLayout>
 
