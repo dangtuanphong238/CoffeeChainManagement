@@ -14,8 +14,7 @@
             android:id="@+id/imgAnhMonAn"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/cf" />
+            android:scaleType="fitXY" />
     </LinearLayout>
 
     <LinearLayout

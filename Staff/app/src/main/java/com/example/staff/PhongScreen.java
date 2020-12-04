@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -115,6 +116,6 @@ public final static int BLANK = 0;
 
     @Override
     public void onItemLongClick(int position) {
-
+        Toast.makeText(this, "ItemLongClick", Toast.LENGTH_SHORT).show();
     }
 }
