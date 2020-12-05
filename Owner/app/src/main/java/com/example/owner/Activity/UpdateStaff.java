@@ -162,6 +162,9 @@ public class UpdateStaff extends AppCompatActivity {
             case "Phục Vụ":
                 spnChucVu.setSelection(2);
                 break;
+            default:
+                spnChucVu.setSelection(0);
+                break;
         }
         switch (staff.getCalam())
         {
@@ -173,6 +176,9 @@ public class UpdateStaff extends AppCompatActivity {
                 break;
             case "Tối":
                 spnCaLam.setSelection(2);
+                break;
+            default:
+                spnCaLam.setSelection(0);
                 break;
         }
         //get Image

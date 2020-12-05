@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private ImageButton btnEye;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
-
+    private boolean isShow = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +73,22 @@ public class LoginActivity extends AppCompatActivity {
         setOnClick();
 
     }
+    public boolean togglePass()
+    {
+        if(isShow){
+            btnEye.setImageResource(R.drawable.ic_un_eye);
+            edtPass.setTransformationMethod(null);
+            isShow = !isShow;
+        }
+        else
+        {
+            isShow = !isShow;
+            btnEye.setImageResource(R.drawable.ic_eye_24);
+            edtPass.setTransformationMethod(new PasswordTransformationMethod());
 
+        }
+        return isShow;
+    }
     private void setOnClick() {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,12 +114,24 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-       //  btnEye.setOnClickListener(new View.OnClickListener() {
-        // @Override
-        //  public void onClick(View v) {
-         // edtPass.setTransformationMethod(new PasswordTransformationMethod());
-        //   }
-      //  });
+         btnEye.setOnClickListener(new View.OnClickListener() {
+         @Override
+          public void onClick(View v) {
+                togglePass();
+//             if(isShow == true){
+//                 btnEye.setImageResource(R.drawable.ic_un_eye);
+//                 edtPass.setTransformationMethod(null);
+//                 isShow = false;
+//             }
+//             else
+//             {
+//                 isShow = true;
+//                 btnEye.setImageResource(R.drawable.ic_eye_24);
+//                 edtPass.setTransformationMethod(new PasswordTransformationMethod());
+//
+//             }
+           }
+        });
      }
 
     private void saveOwnerIDToLocalStorage(String ownerKey){
