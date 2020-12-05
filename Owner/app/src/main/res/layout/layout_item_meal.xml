@@ -19,6 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content">
             <ImageView
+                android:layout_margin="10dp"
                 android:id="@+id/imgMeal_image"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
