@@ -23,7 +23,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
+                android:layout_marginHorizontal="@dimen/normal5dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -65,7 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:paddingHorizontal="10dp"
+                    android:paddingHorizontal="@dimen/normal10dp"
                     android:text="@string/tennhanvien"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16dp"></TextView>
@@ -73,18 +73,18 @@
                 <EditText
                     android:id="@+id/edtTenNhanVien"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_height="@dimen/normal50dp"
+                    android:layout_marginHorizontal="@dimen/normal10dp"
                     android:background="@drawable/custom_edittext"
-                    android:padding="5dp"
+                    android:padding="@dimen/normal5dp"
                     />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:padding="5dp"
-                    android:paddingHorizontal="5dp"
+                    android:padding="@dimen/normal5dp"
+                    android:paddingHorizontal="@dimen/normal5dp"
                     android:text="@string/chucvu"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16dp"></TextView>
@@ -93,17 +93,17 @@
                     android:id="@+id/spnChucVu"
                     android:entries="@array/lstChucvu"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_height="@dimen/normal50dp"
+                    android:layout_marginHorizontal="@dimen/normal10dp"
                     android:background="@drawable/custom_edittext"
-                    android:padding="10dp"
+                    android:padding="@dimen/normal10dp"
                     android:textAlignment="center"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:paddingHorizontal="10dp"
+                    android:paddingHorizontal="@dimen/normal10dp"
                     android:text="@string/tendangnhap"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16dp"></TextView>
@@ -112,17 +112,17 @@
                     android:id="@+id/edtTenDangNhap"
                     android:enabled="false"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_height="@dimen/normal50dp"
+                    android:layout_marginHorizontal="@dimen/normal10dp"
                     android:background="@drawable/custom_edittext"
-                    android:padding="5dp"
+                    android:padding="@dimen/normal5dp"
                     />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:paddingHorizontal="10dp"
+                    android:paddingHorizontal="@dimen/normal10dp"
                     android:text="@string/matkhau"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16dp"></TextView>
@@ -130,18 +130,18 @@
                 <EditText
                     android:id="@+id/edtMatKhau"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_height="@dimen/normal50dp"
+                    android:layout_marginHorizontal="@dimen/normal10dp"
                     android:background="@drawable/custom_edittext"
-                    android:padding="5dp"
+                    android:padding="@dimen/normal5dp"
                     />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:layout_marginVertical="5dp"
-                    android:paddingHorizontal="10dp"
+                    android:layout_marginVertical="@dimen/normal5dp"
+                    android:paddingHorizontal="@dimen/normal10dp"
                     android:text="@string/sodienthoai"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16dp"></TextView>
@@ -149,17 +149,17 @@
                 <EditText
                     android:id="@+id/edtSoDienThoai"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_height="@dimen/normal50dp"
+                    android:layout_marginHorizontal="@dimen/normal10dp"
                     android:background="@drawable/custom_edittext"
-                    android:padding="5dp"
+                    android:padding="@dimen/normal5dp"
                     />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:paddingHorizontal="10dp"
+                    android:paddingHorizontal="@dimen/normal10dp"
                     android:text="@string/soCMND"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16dp"/>
@@ -167,18 +167,18 @@
                 <EditText
                     android:id="@+id/edtSoCMND"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_height="@dimen/normal50dp"
+                    android:layout_marginHorizontal="@dimen/normal10dp"
                     android:background="@drawable/custom_edittext"
-                    android:padding="5dp"
+                    android:padding="@dimen/normal5dp"
                     />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:padding="5dp"
-                    android:paddingHorizontal="10dp"
+                    android:padding="@dimen/normal5dp"
+                    android:paddingHorizontal="@dimen/normal10dp"
                     android:text="@string/lamtheoca"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16dp"/>
@@ -187,17 +187,17 @@
                     android:id="@+id/spnCaLam"
                     android:entries="@array/lstCaLam"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_height="@dimen/normal50dp"
+                    android:layout_marginHorizontal="@dimen/normal10dp"
                     android:background="@drawable/custom_edittext"
-                    android:padding="10dp"
+                    android:padding="@dimen/normal10dp"
                     android:textAlignment="center"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginVertical="10dp"
+                    android:layout_marginVertical="@dimen/normal10dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -206,12 +206,12 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginVertical="15dp"
+                        android:layout_marginHorizontal="@dimen/normal20dp"
+                        android:layout_marginVertical="@dimen/normal15dp"
                         android:layout_weight="1"
                         android:background="@drawable/custom_button"
                         android:drawableLeft="@android:drawable/ic_menu_edit"
-                        android:padding="10dp"
+                        android:padding="@dimen/normal10dp"
                         android:text="@string/capnhat"
                         android:textSize="16dp"/>
 
@@ -220,12 +220,12 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginVertical="15dp"
+                        android:layout_marginHorizontal="@dimen/normal20dp"
+                        android:layout_marginVertical="@dimen/normal15dp"
                         android:layout_weight="1"
                         android:background="@drawable/custom_button"
                         android:drawableLeft="@android:drawable/ic_menu_delete"
-                        android:padding="10dp"
+                        android:padding="@dimen/normal10dp"
                         android:text="@string/xoa"
                         android:textSize="16dp"/>
                 </LinearLayout>
@@ -240,5 +240,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/main_actions"></com.google.android.material.navigation.NavigationView>
+        app:menu="@menu/main_actions"/>
 </androidx.drawerlayout.widget.DrawerLayout>

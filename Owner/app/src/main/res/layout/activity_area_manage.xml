@@ -18,7 +18,7 @@
             android:gravity="left"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="@dimen/normal20dp"
             android:layout_weight="4"
             android:text="Quản l  ý khu vực"
             android:textColor="#000"
@@ -52,8 +52,7 @@
         android:fitsSystemWindows="true"
         android:id="@+id/navDrawerMenu"
         app:menu="@menu/main_actions"
-        >
-    </com.google.android.material.navigation.NavigationView>
+        />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

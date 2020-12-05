@@ -39,7 +39,7 @@
                         android:layout_weight="1"
                         android:textColor="#000"
                         android:text="Danh sách:"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/normal20dp"
                         android:layout_height="wrap_content"/>
                     <LinearLayout
                         android:gravity="end"
@@ -50,7 +50,7 @@
                             android:entries="@array/filterChucVu"
                             android:id="@+id/spnOffice"
                             android:layout_width="150dp"
-                            android:layout_height="50dp"
+                            android:layout_height="@dimen/normal50dp"
                             android:background="@drawable/background_spinner"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -59,7 +59,7 @@
                     android:background="@drawable/background_corner_grey"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="@dimen/normal20dp"
                     android:layout_weight="7"
                     android:orientation="vertical">
                     <LinearLayout
@@ -123,7 +123,7 @@
                     android:layout_weight="1">
                         <Button
                             android:id="@+id/btnThemNV"
-                            android:layout_marginRight="20dp"
+                            android:layout_marginRight="@dimen/normal20dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/background_corner_grey"
@@ -141,7 +141,6 @@
         android:fitsSystemWindows="true"
         android:id="@+id/navDrawerMenu"
         app:menu="@menu/main_actions"
-        >
-    </com.google.android.material.navigation.NavigationView>
+        />
 
 </androidx.drawerlayout.widget.DrawerLayout>

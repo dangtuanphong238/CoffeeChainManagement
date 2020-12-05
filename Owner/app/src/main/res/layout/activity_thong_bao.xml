@@ -29,21 +29,21 @@
            android:layout_weight="0.5"
            android:gravity="center"
            android:orientation="horizontal"
-           android:paddingHorizontal="5dp"
+           android:paddingHorizontal="@dimen/normal5dp"
            android:background="#fff">
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/normal50dp"
                 android:background="@drawable/custom_edittext"
                 android:layout_weight="1"
-                android:paddingHorizontal="10dp"
+                android:paddingHorizontal="@dimen/normal20dp"
                 android:id="@+id/edtInputMessage"
                 />
            <com.google.android.material.floatingactionbutton.FloatingActionButton
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                 android:src="@drawable/ic_send_48"
-               android:layout_marginStart="5dp"
+               android:layout_marginStart="@dimen/normal5dp"
                android:id="@+id/btnSend"
                />
        </LinearLayout>
@@ -56,6 +56,5 @@
         android:fitsSystemWindows="true"
         android:id="@+id/navDrawerMenu"
         app:menu="@menu/main_actions"
-        >
-    </com.google.android.material.navigation.NavigationView>
+        />
 </androidx.drawerlayout.widget.DrawerLayout>
