@@ -26,10 +26,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_marginVertical="5dp"
-                android:paddingHorizontal="10dp"
+                android:paddingHorizontal="@dimen/normal10dp"
                 android:text="@string/tenmonan"
                 android:textColor="@color/black"
-                android:textSize="20dp"></TextView>
+                android:textSize="20sp"></TextView>
 
             <EditText
                 android:id="@+id/edtTenMonAn"
@@ -37,20 +37,20 @@
                 android:layout_height="50dp"
                 android:layout_gravity="right"
                 android:gravity="start"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="@dimen/normal10dp"
+                android:layout_marginVertical="@dimen/normal5dp"
                 android:background="@drawable/background_corner_edittext"
-                android:paddingHorizontal="20dp" />
+                android:paddingHorizontal="@dimen/normal20dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginVertical="5dp"
-                android:paddingHorizontal="10dp"
+                android:layout_marginVertical="@dimen/normal5dp"
+                android:paddingHorizontal="@dimen/normal10dp"
                 android:text="@string/phanloai"
                 android:textColor="@color/black"
-                android:textSize="20dp"></TextView>
+                android:textSize="20sp"></TextView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/normal20dp"
                     android:layout_height="match_parent"/>
                 <LinearLayout
                     android:gravity="end|center_vertical"
@@ -71,7 +71,7 @@
                     <Spinner
                         android:id="@+id/spnCategory"
                         android:layout_width="match_parent"
-                        android:paddingRight="10dp"
+                        android:paddingRight="@dimen/normal10dp"
                         android:layout_height="match_parent" />
                 </LinearLayout>
             </LinearLayout>
@@ -80,11 +80,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginVertical="5dp"
-                android:paddingHorizontal="10dp"
+                android:layout_marginVertical="@dimen/normal5dp"
+                android:paddingHorizontal="@dimen/normal10dp"
                 android:text="@string/gia"
                 android:textColor="@color/black"
-                android:textSize="20dp"></TextView>
+                android:textSize="20sp"></TextView>
 
             <EditText
                 android:id="@+id/edtGiaMonAn"
@@ -92,24 +92,24 @@
                 android:layout_height="50dp"
                 android:layout_gravity="right"
                 android:gravity="left"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="@dimen/normal10dp"
+                android:layout_marginVertical="@dimen/normal5dp"
                 android:inputType="number"
                 android:background="@drawable/background_corner_edittext"
-                android:paddingHorizontal="20dp" />
+                android:paddingHorizontal="@dimen/normal20dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginVertical="5dp"
-                android:paddingHorizontal="10dp"
+                android:layout_marginVertical="@dimen/normal5dp"
+                android:paddingHorizontal="@dimen/normal10dp"
                 android:text="@string/chonanh"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="@dimen/normal20dp" />
 
             <LinearLayout
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/normal20dp"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:gravity="center"
@@ -132,7 +132,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="@dimen/normal5dp"
                     android:layout_weight="1">
                     <ImageButton
                         android:id="@+id/btnCamera"
@@ -142,7 +142,7 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="@dimen/normal5dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
                     <ImageButton
@@ -157,16 +157,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_margin="20dp"
+                android:layout_margin="@dimen/normal20dp"
                 android:gravity="right"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:padding="@dimen/normal10dp">
 
                 <Button
                     android:id="@+id/btnAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginHorizontal="@dimen/normal5dp"
                     android:background="@drawable/custom_button"
                     android:text="Thêm"
                     android:visibility="visible"></Button>
@@ -175,7 +175,7 @@
                     android:id="@+id/btnUpdate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginHorizontal="@dimen/normal5dp"
                     android:background="@drawable/custom_button"
                     android:text="@string/capnhat"
                     android:visibility="gone"></Button>
@@ -184,7 +184,7 @@
                     android:id="@+id/btnRemove"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginHorizontal="@dimen/normal5dp"
                     android:background="@drawable/custom_button"
                     android:text="@string/xoa"
                     android:visibility="gone"></Button>
@@ -198,5 +198,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/main_actions"></com.google.android.material.navigation.NavigationView>
+        app:menu="@menu/main_actions"/>
 </androidx.drawerlayout.widget.DrawerLayout>
