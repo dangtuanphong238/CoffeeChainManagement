@@ -36,11 +36,11 @@
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_gravity="right"
-                android:gravity="right"
+                android:gravity="start"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="5dp"
                 android:background="@drawable/background_corner_edittext"
-                android:paddingRight="20dp" />
+                android:paddingHorizontal="20dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -87,17 +87,16 @@
                 android:textSize="20dp"></TextView>
 
             <EditText
-                android:padding="10dp"
                 android:id="@+id/edtGiaMonAn"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_gravity="right"
-                android:gravity="right"
+                android:gravity="left"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="5dp"
                 android:inputType="number"
                 android:background="@drawable/background_corner_edittext"
-                android:paddingRight="20dp" />
+                android:paddingHorizontal="20dp" />
 
             <TextView
                 android:layout_width="match_parent"

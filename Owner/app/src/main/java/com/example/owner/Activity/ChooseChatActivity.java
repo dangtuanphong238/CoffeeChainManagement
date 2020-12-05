@@ -36,7 +36,7 @@ public class ChooseChatActivity extends AppCompatActivity {
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
 
-    private Button btnChatRoom;
+    private Button btnChatRoom, btnChatToFounder;
     private ListView lvStaff;
     private ArrayList<Staff> arrStaff = new ArrayList<>();;
     private ChatOneToOneAdapter adapter;
@@ -172,6 +172,16 @@ public class ChooseChatActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        btnChatToFounder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChooseChatActivity.this, NotificationActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("chat_type", "founder");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     private void anhXa() {
@@ -181,6 +191,7 @@ public class ChooseChatActivity extends AppCompatActivity {
         txtTitleActivity = findViewById(R.id.txtTitle);
         btnChatRoom = findViewById(R.id.btnChatRoom);
         lvStaff = findViewById(R.id.lvStaff);
+        btnChatToFounder = findViewById(R.id.btnChatToFounder);
     }
 
     public void openMenu() {
