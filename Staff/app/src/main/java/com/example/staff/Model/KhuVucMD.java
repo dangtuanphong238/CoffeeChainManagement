@@ -1,12 +1,28 @@
 package com.example.staff.Model;
 
 public class KhuVucMD {
-    public String soban;
-    public String ten;
+    public String id;
+    public String name;
 
-    public KhuVucMD(String soban, String ten) {
-        this.soban = soban;
-        this.ten = ten;
+    public KhuVucMD(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public KhuVucMD() {

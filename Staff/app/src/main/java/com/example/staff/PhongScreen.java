@@ -72,6 +72,7 @@ public final static int BLANK = 0;
     private void setData() {
         Bundle bundle = getIntent().getExtras();
         title = bundle.getString("values");
+        System.out.println(title);
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference().child("OwnerManager").child(sOwnerID).child("QuanLyBan").child(title);
     }

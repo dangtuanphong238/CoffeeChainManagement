@@ -37,8 +37,6 @@ public class ListMealAdapter extends ArrayAdapter<MealModel> {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
     private String sOwnerID;
-    private ImageView imgMeal;
-    private TextView txtGiaMon,txtTenMonAn;
     private ArrayList<MealModel> listMeal;
     @NonNull
     Activity activity;
@@ -62,12 +60,12 @@ public class ListMealAdapter extends ArrayAdapter<MealModel> {
         MealModel mealModel = listMeal.get(position);
         LayoutInflater inflater = this.activity.getLayoutInflater();
         View view = inflater.inflate(this.resource, null);
-        txtTenMonAn = view.findViewById(R.id.txtTenMonAn);
-        txtGiaMon = view.findViewById(R.id.txtGiaMonAn);
-        imgMeal = view.findViewById(R.id.imgMeal);
+        viewHolder.txtTenMonAn = view.findViewById(R.id.txtTenMonAn);
+        viewHolder.txtGiaMon = view.findViewById(R.id.txtGiaMonAn);
+        viewHolder.imgMeal = view.findViewById(R.id.imgMeal);
 //        final MealModel hangHoa = this.objects.get(position);
-        txtTenMonAn.setText("Tên Món : " + mealModel.getMeal_name());
-        txtGiaMon.setText("Giá Món : " + mealModel.getMeal_price());
+        viewHolder.txtTenMonAn.setText("Tên Món : " + mealModel.getMeal_name());
+        viewHolder.txtGiaMon.setText("Giá Món : " + mealModel.getMeal_price());
         String path = "/OwnerManager/"+sOwnerID+"/QuanLyMonAn";
         setImage(viewHolder,path,mealModel.getMeal_image());
         System.out.println("img _ " + mealModel.getMeal_image());
@@ -75,6 +73,10 @@ public class ListMealAdapter extends ArrayAdapter<MealModel> {
     }
 
     private class ViewHolder {
+        private ImageView imgMeal;
+        private TextView txtGiaMon,txtTenMonAn;
+
+
     }
 
     public void setImage(final ViewHolder holder, String path, String meal_image) {
@@ -89,9 +91,9 @@ public class ListMealAdapter extends ArrayAdapter<MealModel> {
                         @Override
                         public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                             // Successfully downloaded data to local file
-                            imgMeal.setBackground(null);
+                            holder.imgMeal.setBackground(null);
                             Bitmap myBitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                            imgMeal.setImageBitmap(Bitmap.createScaledBitmap(myBitmap,
+                            holder.imgMeal.setImageBitmap(Bitmap.createScaledBitmap(myBitmap,
                                     240, 240, false));
                         }
                     }).addOnFailureListener(new OnFailureListener() {
