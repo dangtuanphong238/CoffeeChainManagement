@@ -1,4 +1,4 @@
-package com.example.owner.Model;
+package com.example.owner.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.owner.Interface.RecyclerviewClick;
 import com.example.owner.Interface.SendDataAround;
+import com.example.owner.Model.MealModel;
 import com.example.owner.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

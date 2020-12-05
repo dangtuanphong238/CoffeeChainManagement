@@ -180,7 +180,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.owner.Global.Public_func;
 import com.example.owner.Interface.RecyclerviewClick;
 import com.example.owner.Model.AreaModel;
-import com.example.owner.Model.ListAreaAdapter;
+import com.example.owner.Adapter.ListAreaAdapter;
 import com.example.owner.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;

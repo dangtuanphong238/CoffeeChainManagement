@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.owner.Model.DetailTableAdapter;
+import com.example.owner.Adapter.DetailTableAdapter;
 import com.example.owner.Model.MealModel;
 import com.example.owner.Model.MealUsed;
 import com.example.owner.R;
@@ -58,7 +58,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
         tvTableName = findViewById(R.id.tvTableName);
         rvMealUsed = findViewById(R.id.rvMealUsed);
         tvSumPrice = findViewById(R.id.tvSumPrice);
-        btnPay = findViewById(R.id.btnPay);
+        btnPay = findViewById(R.id.btnOrder);
         btnCancel = findViewById(R.id.btnCancel);
         getDataOfTable();
         btnPay.setOnClickListener(this);
@@ -68,8 +68,9 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
     public void getDataOfTable() {
         //Read list meal used in dialog from branch TableActive
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        String path = url + "/Meal";
+        String path = url + "/"+tableID+"/Meal";
         DatabaseReference myRef = database.getReference(path);
+        System.out.println("URL_CHECK:"+myRef.toString());
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -98,7 +99,6 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
                 System.out.println("CHECKING:"+list.toString());
                 tvSumPrice.setText(sumMoney(list) + "");
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error)
             {
@@ -120,6 +120,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         String path = url + "/Meal";
         DatabaseReference myRef = database.getReference(path);
+        System.out.println("TEST_URL:"+myRef.toString());
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -228,7 +229,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
             case R.id.btnCancel:
                 dismiss();
                 break;
-            case R.id.btnPay:
+            case R.id.btnOrder:
                 createBill();
                 break;
             default:
