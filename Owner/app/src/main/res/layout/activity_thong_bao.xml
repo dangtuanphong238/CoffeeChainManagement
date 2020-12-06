@@ -17,16 +17,6 @@
            android:layout_height="0dp"
            android:layout_weight="4"
            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
            <androidx.recyclerview.widget.RecyclerView
                android:id="@+id/recyclerViewChat"
                android:layout_width="match_parent"

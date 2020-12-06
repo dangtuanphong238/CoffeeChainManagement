@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-
+import com.example.owner.Adapter.DetailTableAdapter;
 import com.example.owner.Models.Staff;
 import com.example.owner.R;
 import com.google.android.gms.tasks.OnFailureListener;

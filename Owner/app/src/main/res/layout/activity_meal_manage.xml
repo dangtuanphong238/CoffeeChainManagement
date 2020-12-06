@@ -11,7 +11,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#FE9B58">
 
         <include layout="@layout/toolbar"/>
 
@@ -19,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="8"
-            android:background="#FE9B58">
+            android:layout_margin="@dimen/normal10dp">
 <!--            //Noi Dung Phan MealManageActivity-->
             <LinearLayout
                 android:orientation="vertical"
@@ -53,44 +54,13 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:background="@drawable/background_corner_grey"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="20dp"
                     android:layout_weight="7"
                     android:orientation="vertical">
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:gravity="bottom"
-                        android:layout_weight="1">
-                        <TextView
-                            android:gravity="center"
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:text="Tên Món Ăn"
-                            android:textColor="#000"
-                            android:textSize="20sp"/>
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="2dp"-->
-<!--                            android:layout_height="match_parent"-->
-<!--                            android:background="#000"/>-->
-                        <TextView
-                            android:gravity="center"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="Giá"
-                            android:textColor="#000"
-                            android:textSize="20sp"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_gravity="bottom"
-                        android:background="@color/black"/>
+
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"

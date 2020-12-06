@@ -11,14 +11,16 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#FE9B58"
+        >
         <include layout="@layout/toolbar"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="8"
-            android:background="#FE9B58">
+            android:layout_margin="@dimen/normal10dp">
 <!--            //Noi Dung Phan StaffManageActivity-->
 
             <LinearLayout
@@ -116,7 +118,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/normal10dp"
                     android:gravity="end"
                     android:layout_weight="1">
                         <Button

@@ -222,6 +222,40 @@ public class NotificationActivity extends AppCompatActivity {
                 }
             });
         }
+        if(chatType.equals("founder"))
+        {
+            btnSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String messageText = edtInputMessage.getText().toString();
+                    if (!messageText.isEmpty()) {
+                        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                        String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+
+                        Message message = new Message(sOwnerID, messageText, currentDate + " " + currentTime);
+                        firebaseDatabase = FirebaseDatabase.getInstance();
+                        databaseReference = firebaseDatabase.getReference();
+                        databaseReference.child("FounderManager/FounderAccount/Founder0/MessageOwner/Founder0|" + sOwnerID).push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                edtInputMessage.setText(null);
+                                recyclerView.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // Call smooth scroll
+                                        recyclerView.smoothScrollToPosition(chatRoomAdapter.getItemCount() - 1);
+                                    }
+                                });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                System.out.println("Failed_message");
+                            }
+                        });
+                    }                }
+            });
+        }
     }
 
     public void getOwnerIDFromLocalStorage() {
@@ -241,6 +275,50 @@ public class NotificationActivity extends AppCompatActivity {
         if (chatType.equals("one")) {
             displayMessagesFromStaff(arrMessage);
         }
+        if(chatType.equals("founder")){
+            displayMessageFromFounder(arrMessage);
+        }
+    }
+
+    private void displayMessageFromFounder(final ArrayList<Message> arrMessage)
+    {
+        txtTitleActivity.setText("Founder");
+        recyclerView.setLayoutManager(new LinearLayoutManager(NotificationActivity.this));
+        recyclerView.setHasFixedSize(true);
+        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference();
+        dbReference.child("FounderManager/FounderAccount/Founder0/MessageOwner/Founder0|" + sOwnerID)
+                .addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    arrMessage.clear();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        String messageText = dataSnapshot.child("messageText").getValue().toString();
+                        String messageTime = dataSnapshot.child("messageTime").getValue().toString();
+                        String userID = dataSnapshot.child("userID").getValue().toString();
+                        Message message = new Message(userID, messageText, messageTime);
+                        arrMessage.add(message);
+                        System.out.println("message " + message.getMessageText());
+                    }
+                    chatRoomAdapter = new ChatRoomAdapter(arrMessage, sOwnerID);
+                    recyclerView.setAdapter(chatRoomAdapter);
+                    recyclerView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Call smooth scroll
+                            recyclerView.smoothScrollToPosition(chatRoomAdapter.getItemCount() - 1);
+                        }
+                    });
+                    chatRoomAdapter.notifyDataSetChanged();
+                    System.out.println("size " + arrMessage.size());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void displayMessagesFromRoom(final ArrayList<Message> arrMessage) {
