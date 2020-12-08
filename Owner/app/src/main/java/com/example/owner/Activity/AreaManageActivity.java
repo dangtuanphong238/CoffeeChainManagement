@@ -158,9 +158,12 @@
 
 package com.example.owner.Activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -192,6 +195,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class AreaManageActivity extends AppCompatActivity implements RecyclerviewClick {
+    boolean doubleBackToExitPressedOnce = false;
     public static final String KEY_GET_LAYOUT = "KEY_GET_LAYOUT";
     public static final String KEY_ROOM = "PHONG";
 //    public static final String KEY_ROOM_2="PHONG_VIP";
@@ -351,6 +355,25 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
     @Override
     public void onItemLongClick(int position) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }
 

@@ -68,6 +68,7 @@ public class HangHoaAdapter extends ArrayAdapter<HangHoa> {
                             Intent intent = new Intent(activity, UpdateHangHoaKho.class);
                             Log.d("hhh", hangHoa.getId());
                             intent.putExtra("HANGHOA", hangHoa);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                             activity.startActivity(intent);
                         }
                         return false;
