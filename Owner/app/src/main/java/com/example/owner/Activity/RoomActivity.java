@@ -149,9 +149,9 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
 
     @Override
     public void onItemLongClick(int position) {
-        UpdateTableDialog dialog = new UpdateTableDialog(this, "");
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.show();
+        //UpdateTableDialog dialog = new UpdateTableDialog(this, "");
+        //dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        //dialog.show();
     }
 
     void checkTable(int position, String ownerID){
@@ -189,7 +189,7 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
         }
         else {
             //Toast exception
-            UpdateTableDialog dialog = new UpdateTableDialog(this, "");
+            UpdateTableDialog dialog = new UpdateTableDialog(this, url, ownerID, areaID, tableID);
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
         }

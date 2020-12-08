@@ -27,10 +27,16 @@ import java.util.ArrayList;
 public class UpdateTableDialog extends Dialog implements View.OnClickListener {
     String url;
     Context context;
-    public UpdateTableDialog(@NonNull Context context, String url) {
+    String ownerID;
+    String areaID;
+    String tableID;
+    public UpdateTableDialog(@NonNull Context context, String url, String ownerID, String areaID, String tableID) {
         super(context);
         this.context = context;
         this.url = url;
+        this.ownerID = ownerID;
+        this.areaID = areaID;
+        this.tableID = tableID;
     }
 
 
@@ -46,8 +52,10 @@ public class UpdateTableDialog extends Dialog implements View.OnClickListener {
         btnCancel.setOnClickListener(this);
     }
 
-
-
+    public void updateTable() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String manageTable = "OwnerManager/"+ownerID+"/QuanLyBan/Area"+areaID+"/"+tableID;
+    }
 
     @Override
     public void onClick(View v) {

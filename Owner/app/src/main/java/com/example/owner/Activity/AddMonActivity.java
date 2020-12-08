@@ -114,6 +114,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.owner.Global.Public_func;
 import com.example.owner.Global.VNCharacterUtils;
 import com.example.owner.Model.MealModel;
+import com.example.owner.Model.TableModel;
 import com.example.owner.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -138,6 +139,8 @@ import java.io.InputStream;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -292,11 +295,11 @@ public class AddMonActivity extends AppCompatActivity {
             String path = "OwnerManager/" + ownerID + "/QuanLyMonAn/" + meal_image;
 
             edtTenMonAn.setText(meal_name);
-            if(meal_category.equals("Trà Sữa")){
+            if (meal_category.equals("Trà Sữa")) {
                 spnPhanLoai.setSelection(2);
-            }else if (meal_category.equals("Cafe")){
+            } else if (meal_category.equals("Cafe")) {
                 spnPhanLoai.setSelection(1);
-            }else{
+            } else {
                 spnPhanLoai.setSelection(0);
             }
             edtGiaMonAn.setText(meal_price);
@@ -304,7 +307,7 @@ public class AddMonActivity extends AppCompatActivity {
             btnRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    removeItem(meal_id,ownerID);
+                    removeItem(meal_id, ownerID);
                 }
             });
 
@@ -312,7 +315,7 @@ public class AddMonActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     //TODO: BUG in this (cập nhật lại ảnh). test kỹ chức năng cập nhật
-                    updateItem(meal_id,ownerID);
+                    updateItem(meal_id, ownerID);
                 }
             });
 
@@ -323,17 +326,17 @@ public class AddMonActivity extends AppCompatActivity {
         }
     }
 
-    public void updateItem(String key, String ownerID){
+    public void updateItem(String key, String ownerID) {
         String path = "OwnerManager/" + ownerID + "/QuanLyMonAn/" + key;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(path);
         myRef.child("meal_name").setValue(edtTenMonAn.getText().toString().trim());
         myRef.child("meal_category").setValue(spnPhanLoai.getSelectedItem().toString().trim());
         myRef.child("meal_price").setValue(edtGiaMonAn.getText().toString().trim());
-        pushImageInStorage(key+".png");
+        pushImageInStorage(key + ".png");
     }
 
-    public void removeItem(String key, String ownerID){
+    public void removeItem(String key, String ownerID) {
         final String path = "OwnerManager/" + ownerID + "/QuanLyMonAn/" + key;
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -343,8 +346,8 @@ public class AddMonActivity extends AppCompatActivity {
         riversRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(AddMonActivity.this,"Đã xóa thành công",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(AddMonActivity.this,MealManageActivity.class);
+                Toast.makeText(AddMonActivity.this, "Đã xóa thành công", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AddMonActivity.this, MealManageActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -358,7 +361,7 @@ public class AddMonActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(AddMonActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddMonActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -369,7 +372,7 @@ public class AddMonActivity extends AppCompatActivity {
             final File localFile = File.createTempFile("images", "png");
             mStorageRef = FirebaseStorage.getInstance().getReference();
             //TODO: return value path image
-            StorageReference riversRef = mStorageRef.child("/"+path);
+            StorageReference riversRef = mStorageRef.child("/" + path);
             riversRef.getFile(localFile)
                     .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override
@@ -466,6 +469,7 @@ public class AddMonActivity extends AppCompatActivity {
     }
 
     String meal_id = "";
+    ArrayList<MealModel> listTempt = new ArrayList<>();
 
     public void pushNewMeal() {
         SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
@@ -486,24 +490,26 @@ public class AddMonActivity extends AppCompatActivity {
                     path.child("meal_name").setValue(meal_name);
                     path.child("meal_price").setValue(meal_price);
                     path.child("meal_category").setValue(meal_category);
-                    path.child("meal_image").setValue(meal_id+".png");
-                    pushImageInStorage(meal_id+".png");
+                    path.child("meal_image").setValue(meal_id + ".png");
+                    pushImageInStorage(meal_id + ".png");
                 } else {
-                    String id = "";
-                    for (DataSnapshot data:snapshot.getChildren()){
-                         id = data.getKey();
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        MealModel mealModel = data.getValue(MealModel.class);
+                        listTempt.add(mealModel);
                     }
-                    id = id.replace("Meal","");
-                    meal_id= "Meal"+(Integer.parseInt(id)+1);
+                    listTempt = sortListAsASC(listTempt);
+                    String id = "";
+                    id = (listTempt.get(listTempt.size()-1).getID() + 1) + "";
+                    meal_id = "Meal" + id;
                     DatabaseReference path = myRef.child(meal_id);
                     path.child("meal_id").setValue(meal_id);
                     path.child("meal_name").setValue(meal_name);
                     path.child("meal_price").setValue(meal_price);
                     path.child("meal_category").setValue(meal_category);
-                    path.child("meal_image").setValue(meal_id+".png");
-                    pushImageInStorage(meal_id+".png");
+                    path.child("meal_image").setValue(meal_id + ".png");
+                    pushImageInStorage(meal_id + ".png");
                 }
-                Intent intent = new Intent(AddMonActivity.this,MealManageActivity.class);
+                Intent intent = new Intent(AddMonActivity.this, MealManageActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -513,6 +519,17 @@ public class AddMonActivity extends AppCompatActivity {
                 Log.w(TAG, error.getMessage());
             }
         });
+    }
+
+    ArrayList<MealModel> sortListAsASC(ArrayList<MealModel> list) {
+        ArrayList<MealModel> array = list;
+        Collections.sort(array, new Comparator<MealModel>() {
+            @Override
+            public int compare(MealModel o1, MealModel o2) {
+                return o1.getID() > o2.getID() ? 1 : -1;
+            }
+        });
+        return array;
     }
 
     public void pushImageInStorage(String meal_image) {
@@ -543,7 +560,7 @@ public class AddMonActivity extends AppCompatActivity {
         });
     }
 
-    public void defaultScreen(){
+    public void defaultScreen() {
         edtTenMonAn.setText("");
         spnPhanLoai.setSelection(0);
         edtGiaMonAn.setText("");

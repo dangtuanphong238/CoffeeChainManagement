@@ -18,6 +18,11 @@ public class MealModel {
         this.meal_image = meal_image;
     }
 
+    public int getID() {
+        String meal_id = this.meal_id.replace("Meal","");
+        return Integer.parseInt(meal_id);
+    }
+
     public String getMeal_category() {
         return meal_category;
     }
