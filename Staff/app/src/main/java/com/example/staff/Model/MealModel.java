@@ -58,8 +58,7 @@ public class MealModel implements Serializable {
         this.meal_name = meal_name;
     }
 
-
-    public void setMeal_image(String meal_image) {
-        this.meal_image = meal_image;
+    public  String getMeal_image() {
+        return meal_image;
     }
 }
