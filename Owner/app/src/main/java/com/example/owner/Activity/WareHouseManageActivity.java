@@ -250,7 +250,7 @@ public class WareHouseManageActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(WareHouseManageActivity.this, StaffManageActivity.class);
                         return true;
                     case R.id.itemQLKho:
-                        recreate();
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
                     case R.id.itemThongBao:
                         Public_func.clickItemMenu(WareHouseManageActivity.this, ChooseChatActivity.class);
@@ -268,17 +268,17 @@ public class WareHouseManageActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(WareHouseManageActivity.this, InfoStoreActivity.class);
                         return true;
 
-                    case R.id.itemThemMon:
-                        Public_func.clickItemMenu(WareHouseManageActivity.this, AddMonActivity.class);
-                        return true;
-
-                    case R.id.itemThemNV:
-                        Public_func.clickItemMenu(WareHouseManageActivity.this, AddNhanVienActivity.class);
-                        return true;
-
-                    case R.id.itemSPKho:
-                        Public_func.clickItemMenu(WareHouseManageActivity.this, AddHangHoaActivity.class);
-                        return true;
+//                    case R.id.itemThemMon:
+//                        Public_func.clickItemMenu(WareHouseManageActivity.this, AddMonActivity.class);
+//                        return true;
+//
+//                    case R.id.itemThemNV:
+//                        Public_func.clickItemMenu(WareHouseManageActivity.this, AddNhanVienActivity.class);
+//                        return true;
+//
+//                    case R.id.itemSPKho:
+//                        Public_func.clickItemMenu(WareHouseManageActivity.this, AddHangHoaActivity.class);
+//                        return true;
 
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);

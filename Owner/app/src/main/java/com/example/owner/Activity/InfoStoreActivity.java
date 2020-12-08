@@ -124,20 +124,20 @@ public class InfoStoreActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemInfoStore:
-                        recreate();
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
-
-                    case R.id.itemThemMon:
-                        Public_func.clickItemMenu(InfoStoreActivity.this, AddMonActivity.class);
-                        return true;
-
-                    case R.id.itemThemNV:
-                        Public_func.clickItemMenu(InfoStoreActivity.this, AddNhanVienActivity.class);
-                        return true;
-
-                    case R.id.itemSPKho:
-                        Public_func.clickItemMenu(InfoStoreActivity.this, AddHangHoaActivity.class);
-                        return true;
+//
+//                    case R.id.itemThemMon:
+//                        Public_func.clickItemMenu(InfoStoreActivity.this, AddMonActivity.class);
+//                        return true;
+//
+//                    case R.id.itemThemNV:
+//                        Public_func.clickItemMenu(InfoStoreActivity.this, AddNhanVienActivity.class);
+//                        return true;
+//
+//                    case R.id.itemSPKho:
+//                        Public_func.clickItemMenu(InfoStoreActivity.this, AddHangHoaActivity.class);
+//                        return true;
 
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
