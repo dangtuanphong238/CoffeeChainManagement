@@ -158,8 +158,6 @@
 
 package com.example.owner.Activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -195,7 +193,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class AreaManageActivity extends AppCompatActivity implements RecyclerviewClick {
-    boolean doubleBackToExitPressedOnce = false;
     public static final String KEY_GET_LAYOUT = "KEY_GET_LAYOUT";
     public static final String KEY_ROOM = "PHONG";
 //    public static final String KEY_ROOM_2="PHONG_VIP";
@@ -227,7 +224,7 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.itemQLKV:
-                        recreate();
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
                     case R.id.itemQLMon:
                         Public_func.clickItemMenu(AreaManageActivity.this, MealManageActivity.class);
@@ -254,17 +251,17 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
                         Public_func.clickItemMenu(AreaManageActivity.this, InfoStoreActivity.class);
                         return true;
 
-                    case R.id.itemThemMon:
-                        Public_func.clickItemMenu(AreaManageActivity.this, AddMonActivity.class);
-                        return true;
-
-                    case R.id.itemThemNV:
-                        Public_func.clickItemMenu(AreaManageActivity.this, AddNhanVienActivity.class);
-                        return true;
-
-                    case R.id.itemSPKho:
-                        Public_func.clickItemMenu(AreaManageActivity.this, AddHangHoaActivity.class);
-                        return true;
+//                    case R.id.itemThemMon:
+//                        Public_func.clickItemMenu(AreaManageActivity.this, AddMonActivity.class);
+//                        return true;
+//
+//                    case R.id.itemThemNV:
+//                        Public_func.clickItemMenu(AreaManageActivity.this, AddNhanVienActivity.class);
+//                        return true;
+//
+//                    case R.id.itemSPKho:
+//                        Public_func.clickItemMenu(AreaManageActivity.this, AddHangHoaActivity.class);
+//                        return true;
 
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
@@ -357,6 +354,9 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
 
     }
 
+
+    boolean doubleBackToExitPressedOnce = false;
+
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -372,6 +372,7 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
             @Override
             public void run() {
                 doubleBackToExitPressedOnce=false;
+
             }
         }, 2000);
     }

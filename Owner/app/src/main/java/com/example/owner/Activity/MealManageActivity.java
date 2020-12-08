@@ -157,7 +157,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
     ListMealAdapter adapter;
     MealModel itemUpdate;
 
-private Spinner spnCategory;
+    private Spinner spnCategory;
     private RecyclerView rvListMeal;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -182,7 +182,7 @@ private Spinner spnCategory;
                         Public_func.clickItemMenu(MealManageActivity.this, AreaManageActivity.class);
                         return true;
                     case R.id.itemQLMon:
-                        recreate();
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
                     case R.id.itemQLNV:
                         Public_func.clickItemMenu(MealManageActivity.this, StaffManageActivity.class);
@@ -206,17 +206,17 @@ private Spinner spnCategory;
                         Public_func.clickItemMenu(MealManageActivity.this, InfoStoreActivity.class);
                         return true;
 
-                    case R.id.itemThemMon:
-                        Public_func.clickItemMenu(MealManageActivity.this, AddMonActivity.class);
-                        return true;
-
-                    case R.id.itemThemNV:
-                        Public_func.clickItemMenu(MealManageActivity.this, AddNhanVienActivity.class);
-                        return true;
-
-                    case R.id.itemSPKho:
-                        Public_func.clickItemMenu(MealManageActivity.this, AddHangHoaActivity.class);
-                        return true;
+//                    case R.id.itemThemMon:
+//                        Public_func.clickItemMenu(MealManageActivity.this, AddMonActivity.class);
+//                        return true;
+//
+//                    case R.id.itemThemNV:
+//                        Public_func.clickItemMenu(MealManageActivity.this, AddNhanVienActivity.class);
+//                        return true;
+//
+//                    case R.id.itemSPKho:
+//                        Public_func.clickItemMenu(MealManageActivity.this, AddHangHoaActivity.class);
+//                        return true;
 
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
@@ -237,9 +237,9 @@ private Spinner spnCategory;
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String key = spnCategory.getSelectedItem().toString();
-                if (key.equals("Tất cả")){
+                if (key.equals("Tất cả")) {
                     getDataForListMeal();
-                }else{
+                } else {
                     filterCategory(key);
                 }
 
@@ -361,7 +361,7 @@ private Spinner spnCategory;
                             snapshot.child("meal_price").getValue() + "",
                             snapshot.child("meal_name").getValue() + "",
                             snapshot.child("meal_image").getValue() + "");
-                    if (mealModel.getMeal_category().equals(key)){
+                    if (mealModel.getMeal_category().equals(key)) {
                         list.add(mealModel);
                     }
                 }

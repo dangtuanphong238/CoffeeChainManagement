@@ -155,17 +155,17 @@ public class AddHangHoaActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(AddHangHoaActivity.this, InfoStoreActivity.class);
                         return true;
 
-                    case R.id.itemThemMon:
-                        Public_func.clickItemMenu(AddHangHoaActivity.this, AddMonActivity.class);
-                        return true;
-
-                    case R.id.itemThemNV:
-                        Public_func.clickItemMenu(AddHangHoaActivity.this, AddNhanVienActivity.class);
-                        return true;
-
-                    case R.id.itemSPKho:
-                        recreate();
-                        return true;
+//                    case R.id.itemThemMon:
+//                        Public_func.clickItemMenu(AddHangHoaActivity.this, AddMonActivity.class);
+//                        return true;
+//
+//                    case R.id.itemThemNV:
+//                        Public_func.clickItemMenu(AddHangHoaActivity.this, AddNhanVienActivity.class);
+//                        return true;
+//
+//                    case R.id.itemSPKho:
+//                        recreate();
+//                        return true;
 
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
