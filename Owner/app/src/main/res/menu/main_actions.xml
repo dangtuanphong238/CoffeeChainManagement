@@ -4,38 +4,46 @@
 
     <item
         android:id="@+id/itemQLKV"
+        android:icon="@drawable/ic_area_24"
         android:title="Quản lý khu vực"
         app:showAsAction="always"
         />
 
     <item
         android:id="@+id/itemQLMon"
+        android:icon="@drawable/ic_meal_24"
         android:title="Quản lý món"
         app:showAsAction="never"
         />
 
     <item
         android:id="@+id/itemQLNV"
+        android:icon="@drawable/ic_staff_manager_24"
         android:title="Quản lý nhân viên"
         app:showAsAction="never" />
     <item
         android:id="@+id/itemQLKho"
+        android:icon="@drawable/ic_warehouse_24"
         android:title="Quản lý kho"
         app:showAsAction="never"/>
     <item
         android:id="@+id/itemThongBao"
+        android:icon="@drawable/ic_notification_24"
         android:title="Thông báo"
         app:showAsAction="never"/>
     <item
         android:id="@+id/itemThuNgan"
+        android:icon="@drawable/ic_cashier_24"
         android:title="Thu Ngân"
         app:showAsAction="never"/>
     <item
         android:id="@+id/itemDoanhThu"
+        android:icon="@drawable/ic_sales_24"
         android:title="Doanh Thu"
         app:showAsAction="never"/>
     <item
         android:id="@+id/itemInfoStore"
+        android:icon="@drawable/ic_coffee_shop_24"
         android:title="Thông tin cửa hàng"
         app:showAsAction="never"/>
     <item
@@ -52,6 +60,7 @@
         app:showAsAction="never"/>
     <item
         android:id="@+id/itemLogOut"
+        android:icon="@drawable/ic_logout_24"
         android:title="Log Out"
         app:showAsAction="never"/>
 </menu>
