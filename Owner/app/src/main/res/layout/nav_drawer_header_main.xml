@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#01BCD6"
+    android:id="@+id/nav_header_layout"
+    android:orientation="vertical"
+    android:gravity="left"
+    android:padding="@dimen/normal10dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="100dp">
+        <ImageView
+            android:id="@+id/nav_head_avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginVertical="@dimen/normal5dp"
+            android:src="@drawable/noimage"
+            />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/nav_head_name_store"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="Cửa hàng con mòe"
+        android:layout_marginBottom="@dimen/normal5dp"
+        />
+
+    <TextView
+        android:id="@+id/nav_head_address_store"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="address"
+        android:textSize="20dp"
+        android:layout_marginBottom="@dimen/normal5dp"/>
+
+</LinearLayout>

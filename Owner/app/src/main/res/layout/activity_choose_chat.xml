@@ -21,27 +21,42 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="horizontal">
                 <Button
                     android:id="@+id/btnChatRoom"
                     android:background="@drawable/custom_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_chat_24"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="@dimen/normal10dp"
                     android:text="Chat to all staff"
-                    android:padding="10dp"
+                    android:padding="@dimen/normal10dp"
+                    android:layout_marginRight="@dimen/normal10dp"
                     android:textAllCaps="false"/>
-                <TextView
+                <Button
+                    android:id="@+id/btnChatToFounder"
+                    android:background="@drawable/custom_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Or"
-                    android:layout_marginVertical="10dp"/>
+                    android:drawableLeft="@drawable/ic_chat_24"
+                    android:drawablePadding="@dimen/normal10dp"
+                    android:text="Chat to founder"
+                    android:padding="@dimen/normal10dp"
+                    android:layout_marginLeft="@dimen/normal10dp"
+                    android:textAllCaps="false"/>
+
             </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Or"
+                android:layout_marginVertical="@dimen/normal10dp"
+                android:layout_gravity="center"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="6">
+
                 <ListView
                     android:id="@+id/lvStaff"
                     android:layout_width="match_parent"
@@ -58,6 +73,5 @@
         android:fitsSystemWindows="true"
         android:id="@+id/navDrawerMenu"
         app:menu="@menu/main_actions"
-        >
-    </com.google.android.material.navigation.NavigationView>
+        />
 </androidx.drawerlayout.widget.DrawerLayout>

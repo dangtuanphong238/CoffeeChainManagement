@@ -52,8 +52,10 @@ public class UpdateHangHoaKho extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_hang_hoa_kho);
         anhXa();
+        btnMnu.setImageResource(R.drawable.ic_back_24);
+        backPressed();
         getSpinnerID();
-        getMenu();
+//        getMenu();
         getOwnerIDFromLocalStorage();
         txtTitleActivity.setText("Cập Nhật Hàng Hóa");
         txtPhanLoai.setText(spinnerID);
@@ -64,7 +66,7 @@ public class UpdateHangHoaKho extends AppCompatActivity  {
 
     private void setEvent() {
         Intent intent = getIntent();
-        HangHoa hangHoa = (HangHoa) intent.getSerializableExtra("HANGHOA");
+        final HangHoa hangHoa = (HangHoa) intent.getSerializableExtra("HANGHOA");
         txtTenHangHoa.setText(hangHoa.getTenhanghoa());
        txtsoluong.setText(hangHoa.getSoluong());
         if ( txtTenHangHoa.getText().toString().equals("") || txtsoluong.getText().toString().equals(""))
@@ -80,10 +82,16 @@ public class UpdateHangHoaKho extends AppCompatActivity  {
         btnCapNhat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                DatabaseReference databaseReference = firebaseDatabase.getReference()
-                .child("OwnerManager").child(sOwnerID).child("QuanLyKho").child(txtMaSP).child(tenHangHoa);
-                databaseReference.child("soluong").setValue(txtsoluong.getText().toString());
+
+                    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                    DatabaseReference databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID).child("QuanLyKho").child(txtMaSP).child(tenHangHoa);
+                    databaseReference.child("soluong").setValue(txtsoluong.getText().toString());
+                    Toast.makeText(UpdateHangHoaKho.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                    Intent intent1 = new Intent(UpdateHangHoaKho.this,WareHouseManageActivity.class);
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent1);
+                    finish();
+
             }
         });
         btnXoa.setOnClickListener(new View.OnClickListener() {
@@ -104,64 +112,64 @@ public class UpdateHangHoaKho extends AppCompatActivity  {
             }
         });
     }
-    private void getMenu()
-    {
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.itemQLKV:
-                        Public_func.clickItemMenu(UpdateHangHoaKho.this, AreaManageActivity.class);
-                        return true;
-                    case R.id.itemQLMon:
-                        Public_func.clickItemMenu(UpdateHangHoaKho.this, MealManageActivity.class);
-                        return true;
-                    case R.id.itemQLNV:
-                        Public_func.clickItemMenu(UpdateHangHoaKho.this, StaffManageActivity.class);
-                        return true;
-                    case R.id.itemQLKho:
-                        Public_func.clickItemMenu(UpdateHangHoaKho.this, WareHouseManageActivity.class);
-                        return true;
-                    case R.id.itemThongBao:
-                        Public_func.clickItemMenu(UpdateHangHoaKho.this, ChooseChatActivity.class);
-                        return true;
-                    case R.id.itemThuNgan:
-                        Public_func.clickItemMenu(UpdateHangHoaKho.this, ThuNganActivity.class);
-                        return true;
-
-                    case R.id.itemDoanhThu:
-//                        Public_func.clickLogout(AddHangHoaActivity.this, DoanhThuActivity.class);
-                        Toast.makeText(UpdateHangHoaKho.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
-                        return true;
-
-                    case R.id.itemInfoStore:
-                        Public_func.clickItemMenu(UpdateHangHoaKho.this, InfoStoreActivity.class);
-                        return true;
-
-                    case R.id.itemThemMon:
-                        Public_func.clickItemMenu(UpdateHangHoaKho.this, AddMonActivity.class);
-                        return true;
-
-                    case R.id.itemThemNV:
-                        Public_func.clickItemMenu(UpdateHangHoaKho.this, AddNhanVienActivity.class);
-                        return true;
-
-                    case R.id.itemSPKho:
-                        recreate();
-                        return true;
-
-                    case R.id.itemLogOut:
-                        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.clear();
-                        editor.apply();
-                        Public_func.clickLogout(UpdateHangHoaKho.this, LoginActivity.class);
-                        return true;
-                }
-                return true;
-            }
-        });
-    }
+//    private void getMenu()
+//    {
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.itemQLKV:
+//                        Public_func.clickItemMenu(UpdateHangHoaKho.this, AreaManageActivity.class);
+//                        return true;
+//                    case R.id.itemQLMon:
+//                        Public_func.clickItemMenu(UpdateHangHoaKho.this, MealManageActivity.class);
+//                        return true;
+//                    case R.id.itemQLNV:
+//                        Public_func.clickItemMenu(UpdateHangHoaKho.this, StaffManageActivity.class);
+//                        return true;
+//                    case R.id.itemQLKho:
+//                        Public_func.clickItemMenu(UpdateHangHoaKho.this, WareHouseManageActivity.class);
+//                        return true;
+//                    case R.id.itemThongBao:
+//                        Public_func.clickItemMenu(UpdateHangHoaKho.this, ChooseChatActivity.class);
+//                        return true;
+//                    case R.id.itemThuNgan:
+//                        Public_func.clickItemMenu(UpdateHangHoaKho.this, ThuNganActivity.class);
+//                        return true;
+//
+//                    case R.id.itemDoanhThu:
+////                        Public_func.clickLogout(AddHangHoaActivity.this, DoanhThuActivity.class);
+//                        Toast.makeText(UpdateHangHoaKho.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
+//                        return true;
+//
+//                    case R.id.itemInfoStore:
+//                        Public_func.clickItemMenu(UpdateHangHoaKho.this, InfoStoreActivity.class);
+//                        return true;
+//
+////                    case R.id.itemThemMon:
+////                        Public_func.clickItemMenu(UpdateHangHoaKho.this, AddMonActivity.class);
+////                        return true;
+////
+////                    case R.id.itemThemNV:
+////                        Public_func.clickItemMenu(UpdateHangHoaKho.this, AddNhanVienActivity.class);
+////                        return true;
+////
+////                    case R.id.itemSPKho:
+////                        recreate();
+////                        return true;
+//
+//                    case R.id.itemLogOut:
+//                        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+//                        SharedPreferences.Editor editor = sharedPreferences.edit();
+//                        editor.clear();
+//                        editor.apply();
+//                        Public_func.clickLogout(UpdateHangHoaKho.this, LoginActivity.class);
+//                        return true;
+//                }
+//                return true;
+//            }
+//        });
+//    }
     private void anhXa() {
         btnCapNhat = findViewById(R.id.btnCapNhat);
         btnXoa = findViewById(R.id.btnXoaHang);
@@ -198,5 +206,13 @@ public class UpdateHangHoaKho extends AppCompatActivity  {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         System.out.println(sharedPreferences.getString(OWNERID,"null"));
         sOwnerID = sharedPreferences.getString(OWNERID,"null");
+    }
+    public void backPressed() {
+        btnMnu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

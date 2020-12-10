@@ -9,7 +9,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,8 +20,6 @@ import com.example.owner.Interface.SendAmountsOrder;
 import com.example.owner.Model.MealModel;
 import com.example.owner.Model.MealUsed;
 import com.example.owner.R;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,7 +48,7 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
     TextView tvTableName;
     RecyclerView rvMenuOrder;
     TextView tvSumPrice;
-    Button btnPay;
+    Button btnOrder;
     LinearLayout btnCancel;
     LinearLayout layoutChooseAmount;
     TextView tvCart;
@@ -65,13 +62,15 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         tvTableName = findViewById(R.id.tvTableName);
         rvMenuOrder = findViewById(R.id.rvMenuOrder);
         tvSumPrice = findViewById(R.id.tvSumPrice);
-        btnPay = findViewById(R.id.btnOrder);
+        btnOrder = findViewById(R.id.btnOrder);
         btnCancel = findViewById(R.id.btnCancel);
         layoutChooseAmount = findViewById(R.id.layoutChooseAmount);
         tvCart = findViewById(R.id.tvCart);
         tvSumPrice = findViewById(R.id.tvSumPrice);
-        btnPay.setOnClickListener(this);
+        btnOrder.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
+        String name = tableID.replace("Table","Bàn ");
+        tvTableName.setText(name);
         //layoutChooseAmount.setVisibility(View.VISIBLE);
         getMenu();
     }
@@ -187,7 +186,6 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         String path = "OwnerManager/" + ownerID + "/TableActive/Area"+areaID+"/"+tableID+"/Meal";
         String manageTable = "OwnerManager/"+ownerID+"/QuanLyBan/Area"+areaID+"/"+tableID;
         DatabaseReference myRef = database.getReference(path);
-        System.out.println("URL_CHECK_A"+myRef.toString());
         for (int i=0;i<listUsed.size();i++){
             DatabaseReference root = myRef.child(listUsed.get(i).getMealID());
             root.child("amount").setValue(listUsed.get(i).getAmount());

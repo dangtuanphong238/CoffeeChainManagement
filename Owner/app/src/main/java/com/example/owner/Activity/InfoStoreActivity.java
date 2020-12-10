@@ -80,6 +80,10 @@ public class InfoStoreActivity extends AppCompatActivity {
     private String sOwnerID;
     private Bitmap bitmap;
 
+
+    //header nav
+    private TextView nav_head_name_store, nav_head_address_store;
+    private ImageView nav_head_avatar;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +93,8 @@ public class InfoStoreActivity extends AppCompatActivity {
         openMenu();
         getOwnerIDFromLocalStorage();
         getDatabase();
-        //call function onClickItem
+//        headerNav();
+                //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -119,20 +124,20 @@ public class InfoStoreActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemInfoStore:
-                        recreate();
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
-
-                    case R.id.itemThemMon:
-                        Public_func.clickItemMenu(InfoStoreActivity.this, AddMonActivity.class);
-                        return true;
-
-                    case R.id.itemThemNV:
-                        Public_func.clickItemMenu(InfoStoreActivity.this, AddNhanVienActivity.class);
-                        return true;
-
-                    case R.id.itemSPKho:
-                        Public_func.clickItemMenu(InfoStoreActivity.this, AddHangHoaActivity.class);
-                        return true;
+//
+//                    case R.id.itemThemMon:
+//                        Public_func.clickItemMenu(InfoStoreActivity.this, AddMonActivity.class);
+//                        return true;
+//
+//                    case R.id.itemThemNV:
+//                        Public_func.clickItemMenu(InfoStoreActivity.this, AddNhanVienActivity.class);
+//                        return true;
+//
+//                    case R.id.itemSPKho:
+//                        Public_func.clickItemMenu(InfoStoreActivity.this, AddHangHoaActivity.class);
+//                        return true;
 
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
@@ -146,6 +151,18 @@ public class InfoStoreActivity extends AppCompatActivity {
             }
         });
         setOnClick();
+    }
+
+    private void headerNav(){
+        View headerView = navigationView.getHeaderView(0);
+        nav_head_avatar = headerView.findViewById(R.id.nav_head_avatar);
+        if(bitmap != null)
+        {
+            nav_head_avatar.setImageBitmap(bitmap);
+        }
+        else {
+            System.out.println("bitmapp null");
+        }
     }
 
     private void getDatabase() {
@@ -182,6 +199,7 @@ public class InfoStoreActivity extends AppCompatActivity {
                         public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                             bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
                             imgCuaHang.setImageBitmap(bitmap);
+                            headerNav();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -313,6 +331,8 @@ public class InfoStoreActivity extends AppCompatActivity {
         imgCuaHang = findViewById(R.id.imgCuaHang);
         btnChoose = findViewById(R.id.btnChoose);
         btnCapture = findViewById(R.id.btnCapture);
+
+        //header navgation
     }
 
     public void openMenu() {
