@@ -7,7 +7,7 @@
     android:padding="10dp"
     android:orientation="vertical"
 
-    tools:context=".Activity.DoanhThuActivity">
+    tools:context=".Activity.DoanhThuTheoMonth">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             android:text="DOANH THU CỦA CỬA HÀNG"
             android:textSize="20dp"
             android:gravity="center"
-          android:layout_marginVertical="10dp"
+            android:layout_marginVertical="10dp"
             android:textColor="@color/black"
             tools:ignore="Suspicious0dp">
         </TextView>
@@ -52,9 +52,9 @@
                 tools:ignore="Suspicious0dp"
                 android:layout_weight="2">
                 <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
                     <TextView
                         android:gravity="center"
                         android:layout_gravity="center"
@@ -64,14 +64,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                     </TextView>
-            </LinearLayout>
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1">
                     <Spinner
                         android:background="@color/colorAccent"
-                        android:id="@+id/locNam"
+                        android:id="@+id/locThang"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"></Spinner>
                 </LinearLayout>
@@ -80,15 +80,20 @@
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="20dp"
-        android:layout_weight="5"
+        android:layout_weight="6"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         tools:ignore="MissingConstraints">
 
         <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/chartNam"
+            android:id="@+id/chartThang"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"/>
 
 </LinearLayout>

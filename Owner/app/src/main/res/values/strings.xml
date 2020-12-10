@@ -36,6 +36,7 @@
     <string name="sua">Sửa</string>
     <string name="capnhathanghoa">Cập Nhật</string>
     <string name="xoahanghoa">Xóa Hàng</string>
+    <string name="doanhthuNam">Doanh Thu Theo Năm</string>
 
     <string-array name="lstCaLam">
         <item>Sáng</item>

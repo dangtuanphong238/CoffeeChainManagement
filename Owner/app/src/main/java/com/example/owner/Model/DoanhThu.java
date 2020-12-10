@@ -1,34 +1,34 @@
 package com.example.owner.Model;
 
 public class DoanhThu {
-    public String sumtotal;
-    public String date;
+    public String month;
+    public String total;
 
-    public DoanhThu(String sumtotal, String date) {
-        this.sumtotal = sumtotal;
-        this.date = date;
+    public DoanhThu(String month, String total) {
+        this.month = month;
+        this.total = total;
     }
 
-    public DoanhThu(String sumtotal) {
-        this.sumtotal = sumtotal;
+    public DoanhThu(String total) {
+        this.total = total;
     }
 
     public DoanhThu() {
     }
 
-    public String getSumtotal() {
-        return sumtotal;
+    public String getMonth() {
+        return month;
     }
 
-    public void setSumtotal(String sumtotal) {
-        this.sumtotal = sumtotal;
+    public void setMonth(String month) {
+        this.month = month;
     }
 
-    public String getDate() {
-        return date;
+    public String getTotal() {
+        return total;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setTotal(String total) {
+        this.total = total;
     }
 }

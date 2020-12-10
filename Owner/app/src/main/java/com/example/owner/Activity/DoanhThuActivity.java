@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Size;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -44,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DoanhThuActivity extends AppCompatActivity {
+
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
     private String sOwnerID;
@@ -56,21 +60,19 @@ public class DoanhThuActivity extends AppCompatActivity {
     private LineDataSet lineDataSet = new LineDataSet(null, null);
     ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
     LineData lineData;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doanh_thu);
         getOwnerIDFromLocalStorage();
-        getAnhXa();
+       getAnhXa();
         setDuLieu();
     }
-
     @Override
     protected void onStart() {
         super.onStart();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("OwnerManager").child(sOwnerID).child("QuanLyHoaDon").addValueEventListener(new ValueEventListener() {
+        reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists())
@@ -81,7 +83,7 @@ public class DoanhThuActivity extends AppCompatActivity {
                         spinnerLocNam = item.getKey();
                         arrayListNam.add(spinnerLocNam);
                     }
-                    mArrayAdapter = new ArrayAdapter(DoanhThuActivity.this,R.layout.cus_spinner,arrayListNam);
+                    mArrayAdapter = new ArrayAdapter(DoanhThuActivity.this,R.layout.cus_spinner_dropdown,arrayListNam);
                     spinner.setAdapter(mArrayAdapter);
                 }
             }
@@ -91,9 +93,10 @@ public class DoanhThuActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
-    private void setDuLieu() {
+     private void setDuLieu() {
         try {
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -101,7 +104,7 @@ public class DoanhThuActivity extends AppCompatActivity {
                     getSpinner = spinner.getItemAtPosition(position).toString();
                     Toast.makeText(DoanhThuActivity.this, "Bạn chọn :" + getSpinner, Toast.LENGTH_SHORT).show();
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                    reference.child("OwnerManager").child(sOwnerID).child("QuanLyHoaDon").child(getSpinner)
+                    reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID).child(getSpinner)
                             .addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -114,7 +117,7 @@ public class DoanhThuActivity extends AppCompatActivity {
                                             for (DataSnapshot item : snapshot.getChildren())
                                             {
                                                 DoanhThu doanhThu = item.getValue(DoanhThu.class);
-                                                entries.add(new Entry(Float.valueOf( doanhThu.date),Float.valueOf(doanhThu.sumtotal)));
+                                                entries.add(new Entry(Integer.parseInt(doanhThu.month),Float.valueOf(doanhThu.total)));
                                             }
                                             showCharrt(entries);
                                         }
@@ -148,14 +151,22 @@ public class DoanhThuActivity extends AppCompatActivity {
         {
             exception.getMessage();
         }
-
-
     }
 
     private void showCharrt(ArrayList<Entry> entries) {
+        int colorArray[] = new int[]{Color.RED,Color.BLACK,Color.BLUE,Color.YELLOW,Color.GREEN};
         lineDataSet.setValues(entries);
         lineDataSet.setLabel("Doanh Thu Hàng Tháng");
-        lineDataSet.setColor(Color.BLUE);
+        lineDataSet.setDrawCircleHole(true);
+        lineDataSet.setCircleColor( Color.YELLOW );
+        lineDataSet.setColor(Color.RED);
+        lineDataSet.setLineWidth(3);
+        lineDataSet.setDrawCircles(true);
+        lineDataSet.setCircleRadius(5);
+        lineDataSet.setCircleHoleRadius(3);
+        lineDataSet.setValueTextSize(16);
+        lineDataSet.setValueTextColor(Color.BLUE);
+        lineDataSet.enableDashedLine(1,3,0);
         iLineDataSets.clear();
         iLineDataSets.add(lineDataSet);
         lineData = new LineData(iLineDataSets);
@@ -165,8 +176,8 @@ public class DoanhThuActivity extends AppCompatActivity {
     }
 
     private void getAnhXa() {
-        lineChart = findViewById(R.id.chart);
-          spinner = findViewById(R.id.spinnerDoanhThu);
+        lineChart = findViewById(R.id.chartNam);
+          spinner = findViewById(R.id.locNam);
     }
 
 
@@ -176,4 +187,12 @@ public class DoanhThuActivity extends AppCompatActivity {
         System.out.println(sharedPreferences.getString(OWNERID,"null"));
         sOwnerID = sharedPreferences.getString(OWNERID,"null");
     }
+    @Override
+    public void onBackPressed() {
+        {
+            Intent intent = new Intent(DoanhThuActivity.this, DoanhThuTheoMonth.class);
+            startActivity(intent);
+            finish();
+        }}
+
 }
