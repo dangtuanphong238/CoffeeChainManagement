@@ -243,7 +243,7 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
                         return true;
 
                     case R.id.itemDoanhThu:
-//                        Public_func.clickLogout(AreaManageActivity.this, DoanhThuActivity.class);
+                       Public_func.clickLogout(AreaManageActivity.this, DoanhThuActivity.class);
                         Toast.makeText(AreaManageActivity.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
                         return true;
 
