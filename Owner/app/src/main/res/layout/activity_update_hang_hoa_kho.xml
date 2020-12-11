@@ -14,11 +14,11 @@
         <include layout="@layout/toolbar"/>
 
         <TextView
-            android:paddingHorizontal="10dp"
-            android:layout_marginVertical="10dp"
+            android:paddingHorizontal="@dimen/normal10dp"
+            android:layout_marginVertical="@dimen/normal10dp"
             android:textColor="@color/colorPrimary"
             android:layout_gravity="left"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,30 +29,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginVertical="10dp"
+            android:layout_marginVertical="@dimen/normal10dp"
             android:gravity="center"
-            android:paddingHorizontal="10dp"
+            android:paddingHorizontal="@dimen/normal10dp"
             android:text="Phân Loại"
             android:textColor="#0E0E0E"
-            android:textSize="20dp"></TextView>
+            android:textSize="@dimen/normal20dp"></TextView>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tenhanghoa"
             android:layout_gravity="left"
-            android:textSize="20dp"
-            android:paddingHorizontal="10dp"
-            android:layout_marginVertical="10dp"
+            android:textSize="@dimen/normal20dp"
+            android:paddingHorizontal="@dimen/normal10dp"
+            android:layout_marginVertical="@dimen/normal10dp"
             android:textColor="@color/colorPrimary">
         </TextView>
         <EditText
             android:id="@+id/edtTenHangHoa"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="10dp"
-            android:padding="10dp"
-            android:layout_marginVertical="5dp"
+            android:layout_height="@dimen/normal50dp"
+            android:layout_marginHorizontal="@dimen/normal10dp"
+            android:padding="@dimen/normal10dp"
+            android:layout_marginVertical="@dimen/normal5dp"
             android:background="@drawable/custom_edittext">
         </EditText>
         <TextView
@@ -60,24 +60,24 @@
             android:layout_height="wrap_content"
             android:text="@string/soluong"
             android:layout_gravity="left"
-            android:textSize="20dp"
-            android:paddingHorizontal="10dp"
-            android:layout_marginVertical="20dp"
+            android:textSize="@dimen/normal20dp"
+            android:paddingHorizontal="@dimen/normal10dp"
+            android:layout_marginVertical="@dimen/normal20dp"
             android:textColor="@color/colorPrimary">
         </TextView>
         <EditText
             android:id="@+id/edtSoLuong"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="10dp"
-            android:padding="10dp"
-            android:layout_marginVertical="5dp"
+            android:layout_height="@dimen/normal50dp"
+            android:layout_marginHorizontal="@dimen/normal10dp"
+            android:padding="@dimen/normal10dp"
+            android:layout_marginVertical="@dimen/normal5dp"
             android:background="@drawable/custom_edittext">
         </EditText>
         <LinearLayout
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_marginVertical="10dp"
+            android:layout_marginVertical="@dimen/normal10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -88,11 +88,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="@dimen/normal10dp"
+                android:layout_marginVertical="@dimen/normal10dp"
                 android:background="@drawable/custom_button"
                 android:drawableLeft="@android:drawable/ic_menu_edit"
-                android:padding="10dp"
+                android:padding="@dimen/normal10dp"
                 android:textSize="16dp"
                 android:text="@string/capnhathanghoa"></Button>
 
@@ -102,23 +102,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="@dimen/normal10dp"
+                android:layout_marginVertical="@dimen/normal10dp"
                 android:background="@drawable/custom_button"
                 android:drawableLeft="@android:drawable/ic_menu_delete"
                 android:gravity="center"
-                android:padding="10dp"
+                android:padding="@dimen/normal10dp"
                 android:text="@string/xoahanghoa"></Button>
         </LinearLayout>
 
     </LinearLayout>
-    <com.google.android.material.navigation.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:id="@+id/navDrawerMenu"
-        app:menu="@menu/main_actions"
-        >
-    </com.google.android.material.navigation.NavigationView>
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="start"-->
+<!--        android:fitsSystemWindows="true"-->
+<!--        android:id="@+id/navDrawerMenu"-->
+<!--        app:menu="@menu/main_actions"-->
+<!--        />-->
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -14,10 +14,10 @@
             android:layout_weight="2">
             <ImageView
                 android:id="@+id/imgMeal"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/cf"></ImageView>
+                android:layout_gravity="center"
+                android:layout_width="240px"
+                android:layout_height="240px"
+                android:src="@drawable/img_meal"></ImageView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"

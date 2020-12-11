@@ -2,24 +2,20 @@ package com.example.owner.Activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.owner.Adapter.ChatOneToOneAdapter;
 import com.example.owner.Adapter.ChatRoomAdapter;
-import com.example.owner.Global.Public_func;
 import com.example.owner.Models.Message;
 import com.example.owner.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -56,72 +52,73 @@ public class NotificationActivity extends AppCompatActivity {
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
-    private String sOwnerID, chatType ,staffID, staffUsername;
+    private String sOwnerID, chatType, staffID, staffUsername;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thong_bao);
         anhXa();
+        btnMnu.setImageResource(R.drawable.ic_back_24);
         getOwnerIDFromLocalStorage();
         getChatTypeFromBundle();
-        openMenu();
-        //call function onClickItem
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.itemQLKV:
-                        Public_func.clickItemMenu(NotificationActivity.this, AreaManageActivity.class);
-                        return true;
-                    case R.id.itemQLMon:
-                        Public_func.clickItemMenu(NotificationActivity.this, MealManageActivity.class);
-                        return true;
-                    case R.id.itemQLNV:
-                        Public_func.clickItemMenu(NotificationActivity.this, StaffManageActivity.class);
-                        return true;
-                    case R.id.itemQLKho:
-                        Public_func.clickItemMenu(NotificationActivity.this, WareHouseManageActivity.class);
-                        return true;
-                    case R.id.itemThongBao:
-                        Public_func.clickItemMenu(NotificationActivity.this, ChooseChatActivity.class);
-                        return true;
-                    case R.id.itemThuNgan:
-                        Public_func.clickItemMenu(NotificationActivity.this, ThuNganActivity.class);
-                        return true;
-
-                    case R.id.itemDoanhThu:
-//                        Public_func.clickLogout(NotificationActivity.this, DoanhThuActivity.class);
-                        Toast.makeText(NotificationActivity.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
-                        return true;
-
-                    case R.id.itemInfoStore:
-                        Public_func.clickItemMenu(NotificationActivity.this, InfoStoreActivity.class);
-                        return true;
-
-                    case R.id.itemThemMon:
-                        Public_func.clickItemMenu(NotificationActivity.this, AddMonActivity.class);
-                        return true;
-
-                    case R.id.itemThemNV:
-                        Public_func.clickItemMenu(NotificationActivity.this, AddNhanVienActivity.class);
-                        return true;
-
-                    case R.id.itemSPKho:
-                        Public_func.clickItemMenu(NotificationActivity.this, AddHangHoaActivity.class);
-                        return true;
-
-                    case R.id.itemLogOut:
-                        SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.clear();
-                        editor.apply();
-                        Public_func.clickLogout(NotificationActivity.this, LoginActivity.class);
-                        return true;
-                }
-                return true;
-            }
-        });
+        backPressed();
+        ////call function onClickItem
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.itemQLKV:
+//                        Public_func.clickItemMenu(NotificationActivity.this, AreaManageActivity.class);
+//                        return true;
+//                    case R.id.itemQLMon:
+//                        Public_func.clickItemMenu(NotificationActivity.this, MealManageActivity.class);
+//                        return true;
+//                    case R.id.itemQLNV:
+//                        Public_func.clickItemMenu(NotificationActivity.this, StaffManageActivity.class);
+//                        return true;
+//                    case R.id.itemQLKho:
+//                        Public_func.clickItemMenu(NotificationActivity.this, WareHouseManageActivity.class);
+//                        return true;
+//                    case R.id.itemThongBao:
+//                        Public_func.clickItemMenu(NotificationActivity.this, ChooseChatActivity.class);
+//                        return true;
+//                    case R.id.itemThuNgan:
+//                        Public_func.clickItemMenu(NotificationActivity.this, ThuNganActivity.class);
+//                        return true;
+//
+//                    case R.id.itemDoanhThu:
+////                        Public_func.clickLogout(NotificationActivity.this, DoanhThuActivity.class);
+//                        Toast.makeText(NotificationActivity.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
+//                        return true;
+//
+//                    case R.id.itemInfoStore:
+//                        Public_func.clickItemMenu(NotificationActivity.this, InfoStoreActivity.class);
+//                        return true;
+//
+//                    case R.id.itemThemMon:
+//                        Public_func.clickItemMenu(NotificationActivity.this, AddMonActivity.class);
+//                        return true;
+//
+//                    case R.id.itemThemNV:
+//                        Public_func.clickItemMenu(NotificationActivity.this, AddNhanVienActivity.class);
+//                        return true;
+//
+//                    case R.id.itemSPKho:
+//                        Public_func.clickItemMenu(NotificationActivity.this, AddHangHoaActivity.class);
+//                        return true;
+//
+//                    case R.id.itemLogOut:
+//                        SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
+//                        SharedPreferences.Editor editor = sharedPreferences.edit();
+//                        editor.clear();
+//                        editor.apply();
+//                        Public_func.clickLogout(NotificationActivity.this, LoginActivity.class);
+//                        return true;
+//                }
+//                return true;
+//            }
+//        });
 
         setOnClick();
     }
@@ -136,24 +133,31 @@ public class NotificationActivity extends AppCompatActivity {
         edtInputMessage = findViewById(R.id.edtInputMessage);
     }
 
-    public void openMenu() {
+//    public void openMenu() {
+//        btnMnu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                drawerLayout.openDrawer(GravityCompat.START);
+//            }
+//        });
+//    }
+
+    public void backPressed() {
         btnMnu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
+                finish();
             }
         });
     }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        drawerLayout.closeDrawer(GravityCompat.START);
-    }
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        drawerLayout.closeDrawer(GravityCompat.START);
+//    }
 
     private void setOnClick() {
-        if(chatType.equals("room"))
-        {
+        if (chatType.equals("room")) {
             btnSend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -171,7 +175,7 @@ public class NotificationActivity extends AppCompatActivity {
                                 edtInputMessage.setText(null);
                                 recyclerView.post(new Runnable() {
                                     @Override
-                                     public void run() {
+                                    public void run() {
                                         // Call smooth scroll
                                         recyclerView.smoothScrollToPosition(chatRoomAdapter.getItemCount() - 1);
                                     }
@@ -187,8 +191,7 @@ public class NotificationActivity extends AppCompatActivity {
                 }
             });
         }
-        if(chatType.equals("one"))
-        {
+        if (chatType.equals("one")) {
             btnSend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -222,8 +225,7 @@ public class NotificationActivity extends AppCompatActivity {
                 }
             });
         }
-        if(chatType.equals("founder"))
-        {
+        if (chatType.equals("founder")) {
             btnSend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -253,7 +255,8 @@ public class NotificationActivity extends AppCompatActivity {
                                 System.out.println("Failed_message");
                             }
                         });
-                    }                }
+                    }
+                }
             });
         }
     }
@@ -275,50 +278,49 @@ public class NotificationActivity extends AppCompatActivity {
         if (chatType.equals("one")) {
             displayMessagesFromStaff(arrMessage);
         }
-        if(chatType.equals("founder")){
+        if (chatType.equals("founder")) {
             displayMessageFromFounder(arrMessage);
         }
     }
 
-    private void displayMessageFromFounder(final ArrayList<Message> arrMessage)
-    {
+    private void displayMessageFromFounder(final ArrayList<Message> arrMessage) {
         txtTitleActivity.setText("Founder");
         recyclerView.setLayoutManager(new LinearLayoutManager(NotificationActivity.this));
         recyclerView.setHasFixedSize(true);
         DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference();
         dbReference.child("FounderManager/FounderAccount/Founder0/MessageOwner/Founder0|" + sOwnerID)
                 .addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    arrMessage.clear();
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        String messageText = dataSnapshot.child("messageText").getValue().toString();
-                        String messageTime = dataSnapshot.child("messageTime").getValue().toString();
-                        String userID = dataSnapshot.child("userID").getValue().toString();
-                        Message message = new Message(userID, messageText, messageTime);
-                        arrMessage.add(message);
-                        System.out.println("message " + message.getMessageText());
-                    }
-                    chatRoomAdapter = new ChatRoomAdapter(arrMessage, sOwnerID);
-                    recyclerView.setAdapter(chatRoomAdapter);
-                    recyclerView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            // Call smooth scroll
-                            recyclerView.smoothScrollToPosition(chatRoomAdapter.getItemCount() - 1);
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            arrMessage.clear();
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                String messageText = dataSnapshot.child("messageText").getValue().toString();
+                                String messageTime = dataSnapshot.child("messageTime").getValue().toString();
+                                String userID = dataSnapshot.child("userID").getValue().toString();
+                                Message message = new Message(userID, messageText, messageTime);
+                                arrMessage.add(message);
+                                System.out.println("message " + message.getMessageText());
+                            }
+                            chatRoomAdapter = new ChatRoomAdapter(arrMessage, sOwnerID);
+                            recyclerView.setAdapter(chatRoomAdapter);
+                            recyclerView.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // Call smooth scroll
+                                    recyclerView.smoothScrollToPosition(chatRoomAdapter.getItemCount() - 1);
+                                }
+                            });
+                            chatRoomAdapter.notifyDataSetChanged();
+                            System.out.println("size " + arrMessage.size());
                         }
-                    });
-                    chatRoomAdapter.notifyDataSetChanged();
-                    System.out.println("size " + arrMessage.size());
-                }
-            }
+                    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                    }
+                });
     }
 
     private void displayMessagesFromRoom(final ArrayList<Message> arrMessage) {
@@ -384,7 +386,7 @@ public class NotificationActivity extends AppCompatActivity {
                     recyclerView.setAdapter(chatRoomAdapter);
                     recyclerView.post(new Runnable() {
                         @Override
-                         public void run() {
+                        public void run() {
                             // Call smooth scroll
                             recyclerView.smoothScrollToPosition(chatRoomAdapter.getItemCount() - 1);
                         }

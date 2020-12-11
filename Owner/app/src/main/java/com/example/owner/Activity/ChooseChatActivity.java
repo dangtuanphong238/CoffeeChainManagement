@@ -73,7 +73,8 @@ public class ChooseChatActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(ChooseChatActivity.this, WareHouseManageActivity.class);
                         return true;
                     case R.id.itemThongBao:
-                        recreate();
+//                        recreate();
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
                     case R.id.itemThuNgan:
                         Public_func.clickItemMenu(ChooseChatActivity.this, ThuNganActivity.class);
@@ -88,17 +89,17 @@ public class ChooseChatActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(ChooseChatActivity.this, InfoStoreActivity.class);
                         return true;
 
-                    case R.id.itemThemMon:
-                        Public_func.clickItemMenu(ChooseChatActivity.this, AddMonActivity.class);
-                        return true;
-
-                    case R.id.itemThemNV:
-                        Public_func.clickItemMenu(ChooseChatActivity.this, AddNhanVienActivity.class);
-                        return true;
-
-                    case R.id.itemSPKho:
-                        Public_func.clickItemMenu(ChooseChatActivity.this, AddHangHoaActivity.class);
-                        return true;
+//                    case R.id.itemThemMon:
+//                        Public_func.clickItemMenu(ChooseChatActivity.this, AddMonActivity.class);
+//                        return true;
+//
+//                    case R.id.itemThemNV:
+//                        Public_func.clickItemMenu(ChooseChatActivity.this, AddNhanVienActivity.class);
+//                        return true;
+//
+//                    case R.id.itemSPKho:
+//                        Public_func.clickItemMenu(ChooseChatActivity.this, AddHangHoaActivity.class);
+//                        return true;
 
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);

@@ -175,7 +175,7 @@ public class StaffManageActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
     private String sOwnerID;
-    private Spinner spnOffice;
+    private Spinner spnOffice,spnCaLam;
     private NhanVienAdapter nhanVienAdapter;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -197,7 +197,7 @@ public class StaffManageActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(StaffManageActivity.this, MealManageActivity.class);
                         return true;
                     case R.id.itemQLNV:
-                        recreate();
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
                     case R.id.itemQLKho:
                         Public_func.clickItemMenu(StaffManageActivity.this, WareHouseManageActivity.class);
@@ -218,17 +218,17 @@ public class StaffManageActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(StaffManageActivity.this, InfoStoreActivity.class);
                         return true;
 
-                    case R.id.itemThemMon:
-                        Public_func.clickItemMenu(StaffManageActivity.this, AddMonActivity.class);
-                        return true;
-
-                    case R.id.itemThemNV:
-                        Public_func.clickItemMenu(StaffManageActivity.this, AddNhanVienActivity.class);
-                        return true;
-
-                    case R.id.itemSPKho:
-                        Public_func.clickItemMenu(StaffManageActivity.this, AddHangHoaActivity.class);
-                        return true;
+//                    case R.id.itemThemMon:
+//                        Public_func.clickItemMenu(StaffManageActivity.this, AddMonActivity.class);
+//                        return true;
+//
+//                    case R.id.itemThemNV:
+//                        Public_func.clickItemMenu(StaffManageActivity.this, AddNhanVienActivity.class);
+//                        return true;
+//
+//                    case R.id.itemSPKho:
+//                        Public_func.clickItemMenu(StaffManageActivity.this, AddHangHoaActivity.class);
+//                        return true;
 
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
@@ -301,6 +301,26 @@ public class StaffManageActivity extends AppCompatActivity {
 
             }
         });
+
+        spnCaLam.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String key = spnCaLam.getSelectedItem().toString();
+                if(key.equals("Tất Cả")){
+                    GetData();
+                    nhanVienAdapter = new NhanVienAdapter(StaffManageActivity.this,
+                            R.layout.custom_listview_quanly_nhanvien,arrStaff);
+                    lvNhanVien.setAdapter(nhanVienAdapter);
+                }else {
+                    filterCategory(key);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     public void filterCategory(final String key) {
@@ -321,6 +341,9 @@ public class StaffManageActivity extends AppCompatActivity {
                                 snapshot.child("chucvu").getValue() + "",
                                 snapshot.child("calam").getValue() + ""
                         );
+                        if (staff.getCalam().equals(key)){
+                            arrStaff.add(staff);
+                        }
                         if (staff.getChucvu().equals(key)){
                             arrStaff.add(staff);
                         }
@@ -350,6 +373,7 @@ public class StaffManageActivity extends AppCompatActivity {
         txtTitleActivity = findViewById(R.id.txtTitle);
         btnThemNV = findViewById(R.id.btnThemNV);
         spnOffice = findViewById(R.id.spnOffice);
+        spnCaLam = findViewById(R.id.spnCaLam);
     }
 
     public void openMenu() {

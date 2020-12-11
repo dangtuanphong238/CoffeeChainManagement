@@ -79,7 +79,7 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
                         Public_func.clickItemMenu(ThuNganActivity.this, ChooseChatActivity.class);
                         return true;
                     case R.id.itemThuNgan:
-                        recreate();
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
 
                     case R.id.itemDoanhThu:
@@ -91,17 +91,17 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
                         Public_func.clickItemMenu(ThuNganActivity.this, InfoStoreActivity.class);
                         return true;
 
-                    case R.id.itemThemMon:
-                        Public_func.clickItemMenu(ThuNganActivity.this, AddMonActivity.class);
-                        return true;
-
-                    case R.id.itemThemNV:
-                        Public_func.clickItemMenu(ThuNganActivity.this, AddNhanVienActivity.class);
-                        return true;
-
-                    case R.id.itemSPKho:
-                        Public_func.clickItemMenu(ThuNganActivity.this, AddHangHoaActivity.class);
-                        return true;
+//                    case R.id.itemThemMon:
+//                        Public_func.clickItemMenu(ThuNganActivity.this, AddMonActivity.class);
+//                        return true;
+//
+//                    case R.id.itemThemNV:
+//                        Public_func.clickItemMenu(ThuNganActivity.this, AddNhanVienActivity.class);
+//                        return true;
+//
+//                    case R.id.itemSPKho:
+//                        Public_func.clickItemMenu(ThuNganActivity.this, AddHangHoaActivity.class);
+//                        return true;
 
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);

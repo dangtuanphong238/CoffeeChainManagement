@@ -77,70 +77,78 @@ public class UpdateStaff extends AppCompatActivity {
         anhXa();
         initSpinner();
         txtTitleActivity.setText("Cập Nhật Nhân Viên");
-        openMenu();
+        btnMnu.setImageResource(R.drawable.ic_back_24);
+        backPressed();
         getOwnerIDFromLocalStorage();
 //        getSizeListStaff();
         //call function onClickItem
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.itemQLKV:
-                        Public_func.clickItemMenu(UpdateStaff.this, AreaManageActivity.class);
-                        return true;
-                    case R.id.itemQLMon:
-                        Public_func.clickItemMenu(UpdateStaff.this, MealManageActivity.class);
-                        return true;
-                    case R.id.itemQLNV:
-                        Public_func.clickItemMenu(UpdateStaff.this, StaffManageActivity.class);
-                        return true;
-                    case R.id.itemQLKho:
-                        Public_func.clickItemMenu(UpdateStaff.this, WareHouseManageActivity.class);
-                        return true;
-                    case R.id.itemThongBao:
-                        Public_func.clickItemMenu(UpdateStaff.this, ChooseChatActivity.class);
-                        return true;
-                    case R.id.itemThuNgan:
-                        Public_func.clickItemMenu(UpdateStaff.this, ThuNganActivity.class);
-                        return true;
-
-                    case R.id.itemDoanhThu:
-//                        Public_func.clickLogout(AddNhanVienActivity.this, DoanhThuActivity.class);
-                        Toast.makeText(UpdateStaff.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
-                        return true;
-
-                    case R.id.itemInfoStore:
-                        Public_func.clickItemMenu(UpdateStaff.this, InfoStoreActivity.class);
-                        return true;
-
-                    case R.id.itemThemMon:
-                        Public_func.clickItemMenu(UpdateStaff.this, AddMonActivity.class);
-                        return true;
-
-                    case R.id.itemThemNV:
-                        Public_func.clickItemMenu(UpdateStaff.this, AddNhanVienActivity.class);
-                        return true;
-
-                    case R.id.itemSPKho:
-                        Public_func.clickItemMenu(UpdateStaff.this, AddHangHoaActivity.class);
-                        return true;
-
-                    case R.id.itemLogOut:
-                        SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.clear();
-                        editor.apply();
-                        Public_func.clickLogout(UpdateStaff.this, LoginActivity.class);
-                        return true;
-                }
-                return true;
-            }
-        });
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.itemQLKV:
+//                        Public_func.clickItemMenu(UpdateStaff.this, AreaManageActivity.class);
+//                        return true;
+//                    case R.id.itemQLMon:
+//                        Public_func.clickItemMenu(UpdateStaff.this, MealManageActivity.class);
+//                        return true;
+//                    case R.id.itemQLNV:
+//                        Public_func.clickItemMenu(UpdateStaff.this, StaffManageActivity.class);
+//                        return true;
+//                    case R.id.itemQLKho:
+//                        Public_func.clickItemMenu(UpdateStaff.this, WareHouseManageActivity.class);
+//                        return true;
+//                    case R.id.itemThongBao:
+//                        Public_func.clickItemMenu(UpdateStaff.this, ChooseChatActivity.class);
+//                        return true;
+//                    case R.id.itemThuNgan:
+//                        Public_func.clickItemMenu(UpdateStaff.this, ThuNganActivity.class);
+//                        return true;
+//
+//                    case R.id.itemDoanhThu:
+////                        Public_func.clickLogout(AddNhanVienActivity.this, DoanhThuActivity.class);
+//                        Toast.makeText(UpdateStaff.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
+//                        return true;
+//
+//                    case R.id.itemInfoStore:
+//                        Public_func.clickItemMenu(UpdateStaff.this, InfoStoreActivity.class);
+//                        return true;
+//
+////                    case R.id.itemThemMon:
+////                        Public_func.clickItemMenu(UpdateStaff.this, AddMonActivity.class);
+////                        return true;
+////
+////                    case R.id.itemThemNV:
+////                        Public_func.clickItemMenu(UpdateStaff.this, AddNhanVienActivity.class);
+////                        return true;
+////
+////                    case R.id.itemSPKho:
+////                        Public_func.clickItemMenu(UpdateStaff.this, AddHangHoaActivity.class);
+////                        return true;
+//
+//                    case R.id.itemLogOut:
+//                        SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
+//                        SharedPreferences.Editor editor = sharedPreferences.edit();
+//                        editor.clear();
+//                        editor.apply();
+//                        Public_func.clickLogout(UpdateStaff.this, LoginActivity.class);
+//                        return true;
+//                }
+//                return true;
+//            }
+//        });
         setOnClick();
     }
 
 
-
+    public void backPressed() {
+        btnMnu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
     private void setOnClick() {
         Intent intent = getIntent();
         final Staff staff = (Staff) intent.getSerializableExtra("NHANVIEN");

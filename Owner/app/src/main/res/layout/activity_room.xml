@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:padding="@dimen/normal10dp"
     android:background="#FE9B58">
 
     <LinearLayout
@@ -40,8 +40,8 @@
                 android:layout_weight="1"
                 android:gravity="center">
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="@dimen/normal25dp"
+                    android:layout_height="@dimen/normal25dp"
                     android:background="#E82929"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -54,8 +54,8 @@
                 android:layout_weight="1"
                 android:gravity="center">
             <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="@dimen/normal25dp"
+                    android:layout_height="@dimen/normal25dp"
                     android:background="#000"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -74,8 +74,8 @@
                 android:layout_weight="1"
                 android:gravity="top|center">
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="@dimen/normal25dp"
+                    android:layout_height="@dimen/normal25dp"
                     android:background="#CA62E4"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -87,10 +87,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="top|center"
-                android:paddingEnd="20dp">
+                android:paddingEnd="@dimen/normal20dp">
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="@dimen/normal25dp"
+                    android:layout_height="@dimen/normal25dp"
                     android:background="#fff"/>
                 <TextView
                     android:layout_width="wrap_content"
