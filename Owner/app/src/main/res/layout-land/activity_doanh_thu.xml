@@ -28,14 +28,25 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
                 tools:ignore="Suspicious0dp">
+
+                <Button
+                    android:id="@+id/theothang"
+                    android:layout_marginHorizontal="50dp"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/custom_button"
+                    android:gravity="center"
+                    android:text="Theo Tháng"></Button>
             </LinearLayout>
             <LinearLayout
-                android:layout_weight="6"
+                android:layout_weight="8"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
