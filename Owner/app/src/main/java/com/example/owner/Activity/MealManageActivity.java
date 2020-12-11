@@ -205,19 +205,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                     case R.id.itemInfoStore:
                         Public_func.clickItemMenu(MealManageActivity.this, InfoStoreActivity.class);
                         return true;
-
-                    case R.id.itemThemMon:
-                        Public_func.clickItemMenu(MealManageActivity.this, AddMonActivity.class);
-                        return true;
-
-                    case R.id.itemThemNV:
-                        Public_func.clickItemMenu(MealManageActivity.this, AddNhanVienActivity.class);
-                        return true;
-
-                    case R.id.itemSPKho:
-                        Public_func.clickItemMenu(MealManageActivity.this, AddHangHoaActivity.class);
-                        return true;
-
+                        
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
