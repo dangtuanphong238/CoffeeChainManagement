@@ -103,18 +103,22 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
         return array;
     }
 
-    private void getListTable(String path) {
+    private void getListTable(final String path) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(path);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listTable.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    TableModel tableModel = dataSnapshot.getValue(TableModel.class);
-                    listTable.add(tableModel);
+                try {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        TableModel tableModel = dataSnapshot.getValue(TableModel.class);
+                        listTable.add(tableModel);
+                    }
+                }catch (Exception ex){
+                    Log.w("PROBLEM","get data from url "+ path +" have problem");
+                    System.out.println("PROBLEM: "+"get data from url "+ path +" have problem");
                 }
-
                 adapter = new ListTableAdapter(RoomActivity.this, sortListAsASC(listTable), RoomActivity.this);
                 adapter.notifyDataSetChanged();
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -153,6 +157,16 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
         //UpdateTableDialog dialog = new UpdateTableDialog(this, "");
         //dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         //dialog.show();
+        SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
+        String ownerID = pref.getString(LoginActivity.OWNERID, null);
+        tableID = "Table" + (position + 1);
+//        DetailTableDialog dialog = new DetailTableDialog(this, url, ownerID, areaID, tableID);
+//        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//        dialog.show();
+        String status = listTable.get(position).getTableStatus();
+        UpdateTableDialog dialog = new UpdateTableDialog(this, url, ownerID, areaID, tableID, status);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
     }
 
     void checkTable(int position, String ownerID){
@@ -170,29 +184,33 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
         }
-        else if(listTable.get(position).getTableStatus().equals("1")){
+        if(listTable.get(position).getTableStatus().equals("1")){
             //When booked
             //Show menu
             OrderDialog dialog = new OrderDialog(this,ownerID,areaID,"Table"+listTable.get(position).getID());
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
         }
-        else if(listTable.get(position).getTableStatus().equals("2")){
+        if(listTable.get(position).getTableStatus().equals("2")){
             //When Having
             //Show detail dialog(- payment dialog)
-            DetailTableDialog dialog = new DetailTableDialog(this, url, ownerID, areaID, tableID);
+            //Show list meal already and amounts.
+            OrderDialog dialog = new OrderDialog(this,ownerID,areaID,"Table"+listTable.get(position).getID());
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
-        } else if(listTable.get(position).getTableStatus().equals("3")){
+        }
+        if(listTable.get(position).getTableStatus().equals("3")){
             //When be error
             //Toast notification
-
-        }
-        else {
-            //Toast exception
-            UpdateTableDialog dialog = new UpdateTableDialog(this, url, ownerID, areaID, tableID);
+            UpdateTableDialog dialog = new UpdateTableDialog(this, url, ownerID, areaID, tableID, listTable.get(position).getTableStatus());
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
         }
+//        ì {
+//            //Toast exception
+//            UpdateTableDialog dialog = new UpdateTableDialog(this, url, ownerID, areaID, tableID);
+//            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//            dialog.show();
+//        }
     }
 }

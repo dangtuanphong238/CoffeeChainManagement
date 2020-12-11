@@ -1,129 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main_drawer"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".Activity.ThuNganActivity">
-   <LinearLayout
-       android:background="#FE9B58"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:orientation="vertical"
-       >
-       <include layout="@layout/toolbar"/>
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_weight="1"
-           android:gravity="center"
-           android:padding="20dp">
-           <EditText
-               android:layout_width="match_parent"
-               android:layout_height="55dp"
-               android:background="@drawable/custom_edittext"
-               android:drawableRight="@drawable/ic_search_24"
-               android:paddingEnd="10dp"
-               android:hint="search"
-               android:paddingStart="20dp"
-               />
-       </LinearLayout>
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_weight="6">
-           <include layout="@layout/layout_main_area_manage"/>
-       </LinearLayout>
-<!--       <LinearLayout-->
-<!--           android:layout_width="match_parent"-->
-<!--           android:layout_height="0dp"-->
-<!--           android:layout_weight="3"-->
-<!--           android:orientation="vertical"-->
-<!--           android:padding="10dp">-->
-<!--           <LinearLayout-->
-<!--               android:layout_width="match_parent"-->
-<!--               android:layout_height="0dp"-->
-<!--               android:layout_weight="1">-->
-<!--               <LinearLayout-->
-<!--                   android:layout_width="0dp"-->
-<!--                   android:layout_height="match_parent"-->
-<!--                   android:layout_weight="1"-->
-<!--                   android:orientation="vertical"-->
-<!--                   android:gravity="center">-->
-<!--                   <ImageButton-->
-<!--                       android:layout_width="150dp"-->
-<!--                       android:layout_height="150dp"-->
-<!--                       />-->
-<!--                   <TextView-->
-<!--                       android:layout_width="wrap_content"-->
-<!--                       android:layout_height="wrap_content"-->
-<!--                       android:text="Phòng Lạnh"/>-->
-<!--               </LinearLayout>-->
-<!--               <LinearLayout-->
-<!--                   android:layout_width="0dp"-->
-<!--                   android:layout_height="match_parent"-->
-<!--                   android:layout_weight="1"-->
-<!--                   android:orientation="vertical"-->
-<!--                   android:gravity="center">-->
 
-<!--                   <ImageButton-->
-<!--                       android:layout_width="150dp"-->
-<!--                       android:layout_height="150dp"-->
-<!--                       />-->
-<!--                   <TextView-->
-<!--                       android:layout_width="wrap_content"-->
-<!--                       android:layout_height="wrap_content"-->
-<!--                       android:text="Phòng Họp"/>-->
-<!--               </LinearLayout>-->
-<!--           </LinearLayout>-->
-<!--           <LinearLayout-->
-<!--               android:layout_width="match_parent"-->
-<!--               android:layout_height="0dp"-->
-<!--               android:layout_weight="1"-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FE9B58"
+        android:orientation="vertical">
 
-<!--               >-->
-<!--               <LinearLayout-->
-<!--                   android:layout_width="0dp"-->
-<!--                   android:layout_height="match_parent"-->
-<!--                   android:layout_weight="1"-->
-<!--                   android:orientation="vertical"-->
-<!--                   android:gravity="top|center">-->
-<!--                   <ImageButton-->
-<!--                       android:layout_width="150dp"-->
-<!--                       android:layout_height="150dp"-->
-<!--                       />-->
-<!--                   <TextView-->
-<!--                       android:layout_width="wrap_content"-->
-<!--                       android:layout_height="wrap_content"-->
-<!--                       android:text="Phòng VIP"/>-->
-<!--               </LinearLayout>-->
-<!--               <LinearLayout-->
-<!--                   android:layout_width="0dp"-->
-<!--                   android:layout_height="match_parent"-->
-<!--                   android:layout_weight="1"-->
-<!--                   android:orientation="vertical"-->
-<!--                   android:gravity="top|center">-->
+        <include layout="@layout/toolbar" />
 
-<!--                   <ImageButton-->
-<!--                       android:layout_width="150dp"-->
-<!--                       android:layout_height="150dp"-->
-<!--                       />-->
-<!--                   <TextView-->
-<!--                       android:layout_width="wrap_content"-->
-<!--                       android:layout_height="wrap_content"-->
-<!--                       android:text="Phòng Thường"/>-->
-<!--               </LinearLayout>-->
-<!--           </LinearLayout>-->
-<!--       </LinearLayout>-->
-   </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/normal10dp"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvThuNgan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navDrawerMenu"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:id="@+id/navDrawerMenu"
-        app:menu="@menu/main_actions"
-        >
-    </com.google.android.material.navigation.NavigationView>
+        app:menu="@menu/main_actions"></com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -157,7 +157,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
     ListMealAdapter adapter;
     MealModel itemUpdate;
 
-private Spinner spnCategory;
+    private Spinner spnCategory;
     private RecyclerView rvListMeal;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -237,9 +237,9 @@ private Spinner spnCategory;
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String key = spnCategory.getSelectedItem().toString();
-                if (key.equals("Tất cả")){
+                if (key.equals("Tất cả")) {
                     getDataForListMeal();
-                }else{
+                } else {
                     filterCategory(key);
                 }
 
@@ -320,13 +320,18 @@ private Spinner spnCategory;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
-                            snapshot.child("meal_id").getValue() + "",
-                            snapshot.child("meal_price").getValue() + "",
-                            snapshot.child("meal_name").getValue() + "",
-                            snapshot.child("meal_image").getValue() + "");
-                    list.add(mealModel);
+                try {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
+                                snapshot.child("meal_id").getValue() + "",
+                                snapshot.child("meal_price").getValue() + "",
+                                snapshot.child("meal_name").getValue() + "",
+                                snapshot.child("meal_image").getValue() + "");
+                        list.add(mealModel);
+                    }
+                } catch (Exception ex) {
+                    Log.w("PROBLEM", "get data from url " + path + " have problem");
+                    System.out.println("PROBLEM: " + "get data from url " + path + " have problem");
                 }
                 adapter = new ListMealAdapter(MealManageActivity.this, list, MealManageActivity.this, MealManageActivity.this, path);
                 adapter.notifyDataSetChanged();
@@ -355,15 +360,20 @@ private Spinner spnCategory;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
-                            snapshot.child("meal_id").getValue() + "",
-                            snapshot.child("meal_price").getValue() + "",
-                            snapshot.child("meal_name").getValue() + "",
-                            snapshot.child("meal_image").getValue() + "");
-                    if (mealModel.getMeal_category().equals(key)){
-                        list.add(mealModel);
+                try {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
+                                snapshot.child("meal_id").getValue() + "",
+                                snapshot.child("meal_price").getValue() + "",
+                                snapshot.child("meal_name").getValue() + "",
+                                snapshot.child("meal_image").getValue() + "");
+                        if (mealModel.getMeal_category().equals(key)) {
+                            list.add(mealModel);
+                        }
                     }
+                } catch (Exception ex) {
+                    Log.w("PROBLEM", "get data from url " + path + " have problem");
+                    System.out.println("PROBLEM: " + "get data from url " + path + " have problem");
                 }
                 adapter = new ListMealAdapter(MealManageActivity.this, list, MealManageActivity.this, MealManageActivity.this, path);
                 adapter.notifyDataSetChanged();
