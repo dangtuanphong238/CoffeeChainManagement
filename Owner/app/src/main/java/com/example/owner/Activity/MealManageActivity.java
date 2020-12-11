@@ -182,7 +182,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                         Public_func.clickItemMenu(MealManageActivity.this, AreaManageActivity.class);
                         return true;
                     case R.id.itemQLMon:
-                        drawerLayout.closeDrawer(GravityCompat.START);
+                        recreate();
                         return true;
                     case R.id.itemQLNV:
                         Public_func.clickItemMenu(MealManageActivity.this, StaffManageActivity.class);
@@ -198,7 +198,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                         return true;
 
                     case R.id.itemDoanhThu:
-                        Public_func.clickLogout(MealManageActivity.this, DoanhThuActivity.class);
+//                        Public_func.clickLogout(MealManageActivity.this, DoanhThuActivity.class);
                         Toast.makeText(MealManageActivity.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
                         return true;
 
@@ -206,17 +206,17 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                         Public_func.clickItemMenu(MealManageActivity.this, InfoStoreActivity.class);
                         return true;
 
-//                    case R.id.itemThemMon:
-//                        Public_func.clickItemMenu(MealManageActivity.this, AddMonActivity.class);
-//                        return true;
-//
-//                    case R.id.itemThemNV:
-//                        Public_func.clickItemMenu(MealManageActivity.this, AddNhanVienActivity.class);
-//                        return true;
-//
-//                    case R.id.itemSPKho:
-//                        Public_func.clickItemMenu(MealManageActivity.this, AddHangHoaActivity.class);
-//                        return true;
+                    case R.id.itemThemMon:
+                        Public_func.clickItemMenu(MealManageActivity.this, AddMonActivity.class);
+                        return true;
+
+                    case R.id.itemThemNV:
+                        Public_func.clickItemMenu(MealManageActivity.this, AddNhanVienActivity.class);
+                        return true;
+
+                    case R.id.itemSPKho:
+                        Public_func.clickItemMenu(MealManageActivity.this, AddHangHoaActivity.class);
+                        return true;
 
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
@@ -320,13 +320,18 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
-                            snapshot.child("meal_id").getValue() + "",
-                            snapshot.child("meal_price").getValue() + "",
-                            snapshot.child("meal_name").getValue() + "",
-                            snapshot.child("meal_image").getValue() + "");
-                    list.add(mealModel);
+                try {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
+                                snapshot.child("meal_id").getValue() + "",
+                                snapshot.child("meal_price").getValue() + "",
+                                snapshot.child("meal_name").getValue() + "",
+                                snapshot.child("meal_image").getValue() + "");
+                        list.add(mealModel);
+                    }
+                } catch (Exception ex) {
+                    Log.w("PROBLEM", "get data from url " + path + " have problem");
+                    System.out.println("PROBLEM: " + "get data from url " + path + " have problem");
                 }
                 adapter = new ListMealAdapter(MealManageActivity.this, list, MealManageActivity.this, MealManageActivity.this, path);
                 adapter.notifyDataSetChanged();
@@ -355,15 +360,20 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
-                            snapshot.child("meal_id").getValue() + "",
-                            snapshot.child("meal_price").getValue() + "",
-                            snapshot.child("meal_name").getValue() + "",
-                            snapshot.child("meal_image").getValue() + "");
-                    if (mealModel.getMeal_category().equals(key)) {
-                        list.add(mealModel);
+                try {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
+                                snapshot.child("meal_id").getValue() + "",
+                                snapshot.child("meal_price").getValue() + "",
+                                snapshot.child("meal_name").getValue() + "",
+                                snapshot.child("meal_image").getValue() + "");
+                        if (mealModel.getMeal_category().equals(key)) {
+                            list.add(mealModel);
+                        }
                     }
+                } catch (Exception ex) {
+                    Log.w("PROBLEM", "get data from url " + path + " have problem");
+                    System.out.println("PROBLEM: " + "get data from url " + path + " have problem");
                 }
                 adapter = new ListMealAdapter(MealManageActivity.this, list, MealManageActivity.this, MealManageActivity.this, path);
                 adapter.notifyDataSetChanged();
