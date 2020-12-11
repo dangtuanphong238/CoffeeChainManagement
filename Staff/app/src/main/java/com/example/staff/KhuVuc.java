@@ -3,12 +3,14 @@ package com.example.staff;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class KhuVuc extends AppCompatActivity {
+    boolean doubleBackToExitPressedOnce = false;
     GridView gridView;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
@@ -50,7 +53,7 @@ public class KhuVuc extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.itemthongBao:
-                        Public_func.clickItemMenu(KhuVuc.this, ThongBaoScreen.class);
+                        Public_func.clickItemMenu(KhuVuc.this, ChooseChat.class);
                         return true;
                     case R.id.itemKhuVuc:
                         recreate();
@@ -90,6 +93,7 @@ public class KhuVuc extends AppCompatActivity {
                         bundle.putString("values", loaiPhong);
                         intent.putExtras(bundle);
                         startActivity(intent);
+                        System.out.println("1123" + lstKhuVuc);
                     }
 //                    Intent intent = new Intent(KhuVuc.this, Phong.class);
 ////                    intent.putExtra("values", lstKhuVuc.toString());
@@ -156,6 +160,25 @@ public class KhuVuc extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 
 }
