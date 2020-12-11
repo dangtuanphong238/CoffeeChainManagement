@@ -92,7 +92,7 @@
                     android:textColor="@color/black"/>
             </LinearLayout>
             <Button
-                android:id="@+id/btnOrder"
+                android:id="@+id/btnPayment"
                 android:layout_margin="5dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"

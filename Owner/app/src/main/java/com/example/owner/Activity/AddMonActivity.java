@@ -113,6 +113,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.owner.Global.Public_func;
 import com.example.owner.Global.VNCharacterUtils;
+import com.example.owner.Model.AreaModel;
 import com.example.owner.Model.MealModel;
 import com.example.owner.Model.TableModel;
 import com.example.owner.R;
@@ -362,6 +363,7 @@ public class AddMonActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                Log.w("PROBLEM",e.getMessage());
                 Toast.makeText(AddMonActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -494,13 +496,17 @@ public class AddMonActivity extends AppCompatActivity {
                     path.child("meal_image").setValue(meal_id + ".png");
                     pushImageInStorage(meal_id + ".png");
                 } else {
-                    for (DataSnapshot data : snapshot.getChildren()) {
-                        MealModel mealModel = data.getValue(MealModel.class);
-                        listTempt.add(mealModel);
+                    try {
+                        for (DataSnapshot data : snapshot.getChildren()) {
+                            MealModel mealModel = data.getValue(MealModel.class);
+                            listTempt.add(mealModel);
+                        }
+                    } catch (Exception ex) {
+                        Log.w("PROBLEM", "get data from url " + myRef.toString() + " have problem");
+                        System.out.println("PROBLEM: " + "get data from url " + myRef.toString() + " have problem");
                     }
                     listTempt = sortListAsASC(listTempt);
-                    String id = "";
-                    id = (listTempt.get(listTempt.size()-1).getID() + 1) + "";
+                    String id = (listTempt.get(listTempt.size()-1).getID() + 1) + "";
                     meal_id = "Meal" + id;
                     DatabaseReference path = myRef.child(meal_id);
                     path.child("meal_id").setValue(meal_id);
@@ -565,7 +571,7 @@ public class AddMonActivity extends AppCompatActivity {
         edtTenMonAn.setText("");
         spnPhanLoai.setSelection(0);
         edtGiaMonAn.setText("");
-        imgPictureMeal.setImageResource(R.drawable.ic_image);
+        imgPictureMeal.setImageResource(R.drawable.noimage);
     }
 
 }

@@ -178,6 +178,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.owner.Global.ParseTime;
 import com.example.owner.Global.Public_func;
 import com.example.owner.Interface.RecyclerviewClick;
 import com.example.owner.Model.AreaModel;
@@ -217,7 +218,6 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
         anhXa();
         txtTitleActivity.setText("Quản lý khu vực");
         openMenu();
-
         //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -281,15 +281,20 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
         String ownerID = pref.getString(LoginActivity.OWNERID, null);
-        String url = "OwnerManager/" + ownerID + "/QuanLyKhuVuc";
+        final String url = "OwnerManager/" + ownerID + "/QuanLyKhuVuc";
         final DatabaseReference myRef = database.getReference(url);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 listArea.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    AreaModel area = dataSnapshot.getValue(AreaModel.class);
-                    listArea.add(area);
+                try {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        AreaModel area = dataSnapshot.getValue(AreaModel.class);
+                        listArea.add(area);
+                    }
+                } catch (Exception ex) {
+                    Log.w("PROBLEM", "get data from url " + url + " have problem");
+                    System.out.println("PROBLEM: " + "get data from url " + url + " have problem");
                 }
                 listAreaAdapter = new ListAreaAdapter(AreaManageActivity.this, listArea, AreaManageActivity.this);
                 listAreaAdapter.notifyDataSetChanged();
@@ -343,8 +348,8 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
     public void onItemClick(int position) {
         Intent intent = new Intent(this, RoomActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putInt(KEY_ROOM,position);
-        bundle.putString(KEY_GET_LAYOUT,"GET");
+        bundle.putInt(KEY_ROOM, position);
+        bundle.putString(KEY_GET_LAYOUT, "GET");
         intent.putExtras(bundle);
         startActivity(intent);
     }
