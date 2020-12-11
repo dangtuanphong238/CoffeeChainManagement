@@ -1,6 +1,8 @@
 package com.example.founder;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
@@ -16,44 +18,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ThemKhuVuc extends AppCompatActivity {
-    private ListView lvAddTable;
-    private Button btnCreate;
-//    private ArrayList<String> arrArea = new ArrayList<>();;
-    private List list;
     private AddTableAdapter adapter;
+    private ArrayList arrList;
+    private RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_khu_vuc);
         anhXa();
-        list = new ArrayList<Integer>();
-        lvAddTable.setItemsCanFocus(true);
-        for(int i=0;i<5;i++){
-            list.add(i);
+        arrList = new ArrayList();
+        for(int i = 0; i < 10; i++)
+        {
+            arrList.add(i);
         }
-//        arrArea.add("ban1");
-//        arrArea.add("ban2");
-//        arrArea.add("ban3");
-//        arrArea.add("ban4");
-        adapter = new AddTableAdapter(this,R.layout.cus_lv_them_ban, list);
-        lvAddTable.setAdapter(adapter);
-//        adapter.notifyDataSetChanged();
+        adapter = new AddTableAdapter(ThemKhuVuc.this ,R.layout.cus_lv_them_ban ,arrList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(linearLayoutManager);
     }
 
     private void anhXa()
     {
-        lvAddTable = findViewById(R.id.lvSoBan);
-        btnCreate = findViewById(R.id.btnTaomoi);
-
+        recyclerView = findViewById(R.id.lvSoBan);
     }
 
-//    @Override
-//    public void GetValue(String value) {
-//
-//    }
-//
-//    @Override
-//    public void returnValueForAddTableActivity(ArrayList arrayList) {
-//        System.out.println("arrs " + arrayList.toString());
-//    }
 }

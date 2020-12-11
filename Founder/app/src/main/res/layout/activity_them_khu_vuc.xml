@@ -79,12 +79,12 @@
                 android:paddingHorizontal="10dp"
                 android:paddingRight="20px"></EditText>
 
-            <ListView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/lvSoBan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:visibility="visible" />
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
