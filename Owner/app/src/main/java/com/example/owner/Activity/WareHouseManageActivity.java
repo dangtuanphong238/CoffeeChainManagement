@@ -148,10 +148,11 @@ import java.util.ArrayList;
 
 
 public class WareHouseManageActivity extends AppCompatActivity {
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String OWNERID = "ownerID";
+
     public static final String SHARED_PREF = "sharedPref";
     public static final String SPINNERID = "spinnerID";
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String OWNERID = "ownerID";
     private String sOwnerID;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -236,6 +237,16 @@ public class WareHouseManageActivity extends AppCompatActivity {
         });
 
     }
+
+    private void anhXa() {
+        spSort = findViewById(R.id.spnSort);
+        btnThem = findViewById(R.id.themhanghoa);
+        listViewKho = findViewById(R.id.lvDSSPKho);
+        drawerLayout = findViewById(R.id.activity_main_drawer);
+        navigationView = findViewById(R.id.navDrawerMenu);
+        btnMnu = findViewById(R.id.btnMnu);
+        txtTitleActivity = findViewById(R.id.txtTitle);
+    }
     public void getMenu()
     {
         //call function onClickItem
@@ -263,7 +274,7 @@ public class WareHouseManageActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemDoanhThu:
-//                        Public_func.clickLogout(WareHouseManageActivity.this, DoanhThuActivity.class);
+                        Public_func.clickLogout(WareHouseManageActivity.this, DoanhThuActivity.class);
                         Toast.makeText(WareHouseManageActivity.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
                         return true;
 
@@ -294,15 +305,6 @@ public class WareHouseManageActivity extends AppCompatActivity {
                 return true;
             }
         });
-    }
-    private void anhXa() {
-        spSort = findViewById(R.id.spnSort);
-        btnThem = findViewById(R.id.themhanghoa);
-        listViewKho = findViewById(R.id.lvDSSPKho);
-        drawerLayout = findViewById(R.id.activity_main_drawer);
-        navigationView = findViewById(R.id.navDrawerMenu);
-        btnMnu = findViewById(R.id.btnMnu);
-        txtTitleActivity = findViewById(R.id.txtTitle);
     }
     public void openMenu() {
         btnMnu.setOnClickListener(new View.OnClickListener() {
