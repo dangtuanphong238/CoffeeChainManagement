@@ -12,23 +12,26 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.owner.Dialog.DetailTableDialog;
 import com.example.owner.Interface.RecyclerviewClick;
 import com.example.owner.Model.AreaActiveModel;
 import com.example.owner.R;
 
 import java.util.ArrayList;
 
-public class ThuNganAdapter extends RecyclerView.Adapter<ThuNganAdapter.ViewHolder> {
+public class ThuNganAdapter extends RecyclerView.Adapter<ThuNganAdapter.ViewHolder> implements RecyclerviewClick{
 
     RecyclerviewClick recyclerviewClick;
     ArrayList<AreaActiveModel> list;
     Context context;
+    String path;
 
-    public ThuNganAdapter(ArrayList<AreaActiveModel> list, Context context, RecyclerviewClick recyclerviewClick) {
+    public ThuNganAdapter(ArrayList<AreaActiveModel> list, Context context, RecyclerviewClick recyclerviewClick, String path) {
         this.list = list;
         this.context = context;
         System.out.println("List Area active: "+list);
         this.recyclerviewClick = recyclerviewClick;
+        this.path = path;
     }
 
     @NonNull
@@ -58,6 +61,17 @@ public class ThuNganAdapter extends RecyclerView.Adapter<ThuNganAdapter.ViewHold
         return list.size();
     }
 
+    @Override
+    public void onItemClick(int position) {
+        DetailTableDialog dialog = new DetailTableDialog(context,path,ownerID,list.get(position).getNameArea(),listTableActive.get(position).getNameTable());
+        dialog.show();
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
+
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView tvAreaName;
@@ -66,6 +80,7 @@ public class ThuNganAdapter extends RecyclerView.Adapter<ThuNganAdapter.ViewHold
             super(itemView);
             tvAreaName = itemView.findViewById(R.id.tvAreaName);
             rvListTableActive = itemView.findViewById(R.id.rvListTableActive);
+
         }
     }
 }
