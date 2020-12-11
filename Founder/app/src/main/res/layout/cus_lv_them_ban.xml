@@ -32,6 +32,11 @@
                 android:hint="Nhập số bàn..."
                 android:inputType="number"
                 />
+<!--            <Spinner-->
+<!--                android:id="@+id/spnInputSLBan"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:entries="@array/lstSoLuong"/>-->
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

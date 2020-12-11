@@ -6,15 +6,18 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.founder.Interfaces.GetValueTable;
 import com.example.founder.Interfaces.ItemClickListener;
 import com.example.founder.R;
 import com.example.founder.model.InforStore;
@@ -22,11 +25,11 @@ import com.example.founder.model.InforStore;
 import java.util.ArrayList;
 
 // File này phong làm
-public class AddTableAdapter extends RecyclerView.Adapter<AddTableAdapter.ViewHolder> {
+public class AddTableAdapter extends RecyclerView.Adapter<AddTableAdapter.ViewHolder>{
     ArrayList arrList;
-    private int pos;
     public Context context;
     public int layout;
+
     public AddTableAdapter(Context context, int layout, ArrayList arrList) {
         this.context = context;
         this.layout = layout;
@@ -39,22 +42,18 @@ public class AddTableAdapter extends RecyclerView.Adapter<AddTableAdapter.ViewHo
     @NonNull
     @Override
     public AddTableAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.cus_lv_them_ban,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cus_lv_them_ban, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AddTableAdapter.ViewHolder holder, int position) {
-        holder.txtTenKhuVuc.setText("Area " + position);
+        int pos = position + 1;
+        holder.txtTenKhuVuc.setText("Area " + pos);
 
         holder.edtSLBan.setTag(position);
-        if(holder.edtSLBan.getText().toString().isEmpty())
-        {
-            holder.edtSLBan.setHint("Nhap vao so luong");
-        }
-        else {
-            holder.edtSLBan.setText(arrList.get(position).toString());
-        }
+
+        holder.edtSLBan.setText(arrList.get(position).toString());
 
         holder.edtSLBan.addTextChangedListener(new TextWatcher() {
             @Override
@@ -64,10 +63,10 @@ public class AddTableAdapter extends RecyclerView.Adapter<AddTableAdapter.ViewHo
                 final int position2 = (int) holder.edtSLBan.getTag();
                 System.out.println(position2 + "-" + position);
                 final EditText Caption = (EditText) holder.edtSLBan;
-                if(!Caption.getText().toString().isEmpty()){
-                    arrList.set(position2,Integer.parseInt(Caption.getText().toString()));
-                    System.out.println(arrList.toString());
-                }else{
+                if (!Caption.getText().toString().isEmpty()) {
+                    arrList.set(position2, Integer.parseInt(Caption.getText().toString()));
+//                    System.out.println(arrList.toString());
+                } else {
                     Toast.makeText(context, "Please enter some value", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -88,7 +87,6 @@ public class AddTableAdapter extends RecyclerView.Adapter<AddTableAdapter.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        pos = position;
         return super.getItemViewType(position);
     }
 
@@ -97,14 +95,19 @@ public class AddTableAdapter extends RecyclerView.Adapter<AddTableAdapter.ViewHo
         return arrList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView txtTenKhuVuc;
         private EditText edtSLBan;
+        private Spinner spnSLBan;
         public ViewHolder(View itemView) {
             super(itemView);
-            txtTenKhuVuc=(TextView)itemView.findViewById(R.id.txtNameArea);
-            edtSLBan=(EditText)itemView.findViewById(R.id.edtInputSLBan);
-
+            txtTenKhuVuc = (TextView) itemView.findViewById(R.id.txtNameArea);
+            edtSLBan = (EditText) itemView.findViewById(R.id.edtInputSLBan);
+//            spnSLBan = (Spinner) itemView.findViewById(R.id.spnInputSLBan);
         }
+    }
+
+    public ArrayList getModifyList() {
+        return arrList;
     }
 }
