@@ -70,9 +70,10 @@ public class AddTableAdapter extends BaseAdapter {
             holder.txtNameArea = convertView.findViewById(R.id.txtNameArea);
             holder.edtSLBan = convertView.findViewById(R.id.edtInputSLBan);
             int stt = position+1;
-            holder.txtNameArea.setText("Area " + stt);
+//            holder.txtNameArea.setText("Area " + stt);
 
             holder.edtSLBan.setTag(position);
+            holder.edtSLBan.setText(list.get(position).toString());
             convertView.setTag(holder);
 
         } else {
@@ -89,6 +90,7 @@ public class AddTableAdapter extends BaseAdapter {
                 final EditText Caption = (EditText) holder.edtSLBan;
                 if(Caption.getText().toString().length() > 0){
                     list.set(position2,Integer.parseInt(Caption.getText().toString()));
+//                    holder.edtSLBan.setText(list.get(position).toString());
                     System.out.println(list.toString());
                 }else{
                     Toast.makeText(context, "Please enter some value", Toast.LENGTH_SHORT).show();

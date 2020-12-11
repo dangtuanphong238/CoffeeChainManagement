@@ -13,23 +13,29 @@ import com.example.founder.adapter.AddTableAdapter;
 import com.example.founder.model.Owner;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ThemKhuVuc extends AppCompatActivity {
     private ListView lvAddTable;
     private Button btnCreate;
-    private ArrayList<String> arrArea = new ArrayList<>();;
+//    private ArrayList<String> arrArea = new ArrayList<>();;
+    private List list;
     private AddTableAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_khu_vuc);
         anhXa();
-
-        arrArea.add("ban1");
-        arrArea.add("ban2");
-        arrArea.add("ban3");
-        arrArea.add("ban4");
-        adapter = new AddTableAdapter(this,R.layout.cus_lv_them_ban, arrArea);
+        list = new ArrayList<Integer>();
+        lvAddTable.setItemsCanFocus(true);
+        for(int i=0;i<5;i++){
+            list.add(i);
+        }
+//        arrArea.add("ban1");
+//        arrArea.add("ban2");
+//        arrArea.add("ban3");
+//        arrArea.add("ban4");
+        adapter = new AddTableAdapter(this,R.layout.cus_lv_them_ban, list);
         lvAddTable.setAdapter(adapter);
 //        adapter.notifyDataSetChanged();
     }
