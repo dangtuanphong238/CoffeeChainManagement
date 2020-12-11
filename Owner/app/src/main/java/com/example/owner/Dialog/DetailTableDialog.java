@@ -63,7 +63,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
         getDataOfTable();
         btnPay.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
-        String name = tableID.replace("Table","Bàn ");
+        String name = tableID.replace("Table","Bàn");
         tvTableName.setText(name);
     }
 
