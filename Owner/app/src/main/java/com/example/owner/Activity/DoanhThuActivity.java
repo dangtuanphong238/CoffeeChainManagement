@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -47,9 +48,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DoanhThuActivity extends AppCompatActivity {
-
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
+    public static final String SPINNERID = "spinnerID";
     private String sOwnerID;
     Spinner spinner;
     private String spinnerLocNam;
@@ -60,14 +61,29 @@ public class DoanhThuActivity extends AppCompatActivity {
     private LineDataSet lineDataSet = new LineDataSet(null, null);
     ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
     LineData lineData;
+    Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doanh_thu);
         getOwnerIDFromLocalStorage();
-       getAnhXa();
+        getAnhXa();
         setDuLieu();
+        onClick();
     }
+
+    private void onClick() {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),DoanhThuTheoMonth.class);
+                intent.putExtra("GETSPINNER", getSpinner);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -80,8 +96,11 @@ public class DoanhThuActivity extends AppCompatActivity {
                     arrayListNam.clear();
                     for (DataSnapshot item : snapshot.getChildren())
                     {
-                        spinnerLocNam = item.getKey();
-                        arrayListNam.add(spinnerLocNam);
+                        if (item.hasChildren())
+                        {
+                            spinnerLocNam = item.getKey();
+                            arrayListNam.add(spinnerLocNam);
+                        }
                     }
                     mArrayAdapter = new ArrayAdapter(DoanhThuActivity.this,R.layout.cus_spinner_dropdown,arrayListNam);
                     spinner.setAdapter(mArrayAdapter);
@@ -102,6 +121,7 @@ public class DoanhThuActivity extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                     getSpinner = spinner.getItemAtPosition(position).toString();
+                    saveOwnerIDToLocalStorage(getSpinner);
                     Toast.makeText(DoanhThuActivity.this, "Bạn chọn :" + getSpinner, Toast.LENGTH_SHORT).show();
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                     reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID).child(getSpinner)
@@ -159,14 +179,14 @@ public class DoanhThuActivity extends AppCompatActivity {
         lineDataSet.setLabel("Doanh Thu Hàng Tháng");
         lineDataSet.setDrawCircleHole(true);
         lineDataSet.setCircleColor( Color.YELLOW );
-        lineDataSet.setColor(Color.RED);
+        lineDataSet.setColors(colorArray);
         lineDataSet.setLineWidth(3);
         lineDataSet.setDrawCircles(true);
         lineDataSet.setCircleRadius(5);
         lineDataSet.setCircleHoleRadius(3);
         lineDataSet.setValueTextSize(16);
         lineDataSet.setValueTextColor(Color.BLUE);
-        lineDataSet.enableDashedLine(1,3,0);
+        lineDataSet.enableDashedLine(1,2,0);
         iLineDataSets.clear();
         iLineDataSets.add(lineDataSet);
         lineData = new LineData(iLineDataSets);
@@ -178,7 +198,9 @@ public class DoanhThuActivity extends AppCompatActivity {
     private void getAnhXa() {
         lineChart = findViewById(R.id.chartNam);
           spinner = findViewById(R.id.locNam);
+          button = findViewById(R.id.theothang);
     }
+
 
 
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
@@ -190,9 +212,15 @@ public class DoanhThuActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         {
-            Intent intent = new Intent(DoanhThuActivity.this, DoanhThuTheoMonth.class);
+            Intent intent = new Intent(DoanhThuActivity.this, AreaManageActivity.class);
             startActivity(intent);
             finish();
-        }}
-
+        }
+    }
+    private void saveOwnerIDToLocalStorage(String ownerKey){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SPINNERID,ownerKey);
+        editor.apply();
+    }
 }
