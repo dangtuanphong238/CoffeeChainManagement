@@ -53,7 +53,7 @@ public class AddTableAdapter extends RecyclerView.Adapter<AddTableAdapter.ViewHo
 
         holder.edtSLBan.setTag(position);
 
-        holder.edtSLBan.setText(arrList.get(position).toString());
+//        holder.edtSLBan.setText(arrList.get(position).toString());
 
         holder.edtSLBan.addTextChangedListener(new TextWatcher() {
             @Override
@@ -67,6 +67,7 @@ public class AddTableAdapter extends RecyclerView.Adapter<AddTableAdapter.ViewHo
                     arrList.set(position2, Integer.parseInt(Caption.getText().toString()));
 //                    System.out.println(arrList.toString());
                 } else {
+//                    Caption.setError("You need to enter data");
                     Toast.makeText(context, "Please enter some value", Toast.LENGTH_SHORT).show();
                 }
             }

@@ -53,6 +53,7 @@ public class ThemKhuVuc extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(!edtSoKhuVuc.getText().toString().isEmpty())
                 {
+                    arrList.clear();
                     int soKhuVuc = Integer.parseInt(edtSoKhuVuc.getText().toString());
 
                     for(int i = 1; i <= soKhuVuc; i++)
@@ -120,8 +121,8 @@ public class ThemKhuVuc extends AppCompatActivity {
             reference.setValue(onwerAccount).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    Toast.makeText(ThemKhuVuc.this, "Thêm Thành Công", Toast.LENGTH_SHORT).show();
                     AddArea(arrayList);
+                    Toast.makeText(ThemKhuVuc.this, "Thêm Thành Công", Toast.LENGTH_SHORT).show();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -150,7 +151,7 @@ public class ThemKhuVuc extends AppCompatActivity {
             reference.child("Area " + posName).setValue(area).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    Toast.makeText(ThemKhuVuc.this, "Thêm Thành Công", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(ThemKhuVuc.this, "Thêm Thành Công", Toast.LENGTH_SHORT).show();
 
                 }
             }).addOnFailureListener(new OnFailureListener() {

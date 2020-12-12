@@ -1,31 +1,31 @@
 package com.example.founder.model;
 
 public class Area {
-    private String tenKhuVuc;
-    private String soLuongBan;
+    private String tenkhuvuc;
+    private String soluongban;
 
     public Area() {
     }
 
     public Area(String tenKhuVuc, String soLuongBan) {
-        this.tenKhuVuc = tenKhuVuc;
-        this.soLuongBan = soLuongBan;
+        this.tenkhuvuc = tenKhuVuc;
+        this.soluongban = soLuongBan;
     }
 
     public String getTenKhuVuc() {
-        return tenKhuVuc;
+        return tenkhuvuc;
     }
 
     public void setTenKhuVuc(String tenKhuVuc) {
-        this.tenKhuVuc = tenKhuVuc;
+        this.tenkhuvuc = tenKhuVuc;
     }
 
     public String getSoLuongBan() {
-        return soLuongBan;
+        return soluongban;
     }
 
     public void setSoLuongBan(String soLuongBan) {
-        this.soLuongBan = soLuongBan;
+        this.soluongban = soLuongBan;
     }
 }
 
