@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.owner.Adapter.ThuNganAdapter;
+import com.example.owner.Dialog.DetailTableDialog;
+import com.example.owner.Dialog.UpdateTableDialog;
 import com.example.owner.Global.Public_func;
 import com.example.owner.Interface.RecyclerviewClick;
 import com.example.owner.Model.AreaActiveModel;
@@ -142,18 +144,20 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
         super.onRestart();
         drawerLayout.closeDrawer(GravityCompat.START);
     }
-
+    ArrayList<AreaActiveModel> list = new ArrayList<>();
+    ArrayList<TableActiveModel> listTableActive = new ArrayList<>();
     public void getDataFromBranchTableActive(String ownerID) {
-        String path = "OwnerManager/" + ownerID + "/TableActive";
+        final String path = "OwnerManager/" + ownerID + "/TableActive";
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference(path);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<AreaActiveModel> list = new ArrayList<>();
+                list.clear();
+                listTableActive.clear();
                 try {
                     for (DataSnapshot data : snapshot.getChildren()) {
-                        ArrayList<TableActiveModel> listTableActive = new ArrayList<>();
+
                         for (DataSnapshot table : data.getChildren()) {
                             ArrayList<MealUsed> listUsed = new ArrayList<>();
                             DataSnapshot meal = table.child("Meal");
@@ -180,7 +184,7 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
                     System.out.println("get data from branch table active have problem");
                 }
 
-                ThuNganAdapter adapter = new ThuNganAdapter( list, ThuNganActivity.this, ThuNganActivity.this);
+                ThuNganAdapter adapter = new ThuNganAdapter( list, ThuNganActivity.this, ThuNganActivity.this,path);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 rvThuNgan.setLayoutManager(linearLayoutManager);
@@ -196,11 +200,16 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
 
     @Override
     public void onItemClick(int position) {
-
+        SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
+        String ownerID = pref.getString(LoginActivity.OWNERID, null);
+        String path = "OwnerManager/" + ownerID + "/TableActive";
+//        Toast.makeText(this,list.get(position).getNameArea()+"--"+listTableActive.get(position).getNameTable()+"",Toast.LENGTH_SHORT).show();
+//        DetailTableDialog dialog = new DetailTableDialog(this,path,ownerID,list.get(position).getNameArea(),listTableActive.get(position).getNameTable());
+//        dialog.show();
     }
 
     @Override
     public void onItemLongClick(int position) {
-
+        Toast.makeText(this,"TEST",Toast.LENGTH_SHORT).show();
     }
 }
