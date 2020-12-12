@@ -299,7 +299,6 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
             public void onFailure(@NonNull Exception e) {
                 Log.w("PROBLEM", e.getMessage());
                 System.out.println("PROBLEM: " + "have problem with url " + e.getMessage());
-                System.out.println("PROBLEM: " + "have problem with url " + myRef.toString());
             }
         });
     }
