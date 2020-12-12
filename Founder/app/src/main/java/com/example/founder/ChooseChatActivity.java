@@ -65,7 +65,7 @@ public class ChooseChatActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
 
                     case R.id.it1:
-                        Public_func.clickItemMenu(ChooseChatActivity.this, TongDoanhThuActivity.class);
+                        Public_func.clickItemMenu(ChooseChatActivity.this, ActivityDoanhThu.class);
                         return true;
                     case R.id.danh_sach_cua_hang:
                         Public_func.clickItemMenu(ChooseChatActivity.this, ListCuaHangActivity.class);

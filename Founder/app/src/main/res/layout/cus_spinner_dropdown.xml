@@ -4,10 +4,10 @@
     android:layout_height="?attr/dropdownListPreferredItemHeight"
     android:singleLine="true"
     style="?attr/spinnerDropDownItemStyle"
-    android:id="@+id/cus_spinner"
+    android:id="@+id/cus_spinner_dropdown"
     android:ellipsize="marquee"
-    android:textColor="@android:color/black"
-    android:gravity="center"
-    android:background="@drawable/abc_spinner_mtrl_am_alpha"
-    android:backgroundTint="@android:color/background_dark">
+    android:textColor="@android:color/holo_blue_light"
+    android:background="@android:color/white"
+    android:textAlignment="center"
+    android:backgroundTint="@android:color/white">
 </TextView>

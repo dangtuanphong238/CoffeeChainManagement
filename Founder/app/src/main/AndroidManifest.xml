@@ -9,25 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".InfoStoreActivity"></activity>
+        <activity android:name=".InfoStoreActivity" />
         <activity android:name=".CreateOwnerAccountActivity" />
-        <activity android:name=".TongDoanhThuActivity" />
-        <activity android:name=".ListCuaHangActivity" />
+        <activity android:name=".ActivityDoanhThu"  android:screenOrientation="landscape" />
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".ListCuaHangActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".SplashScreen"
+           >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".NotificationActivity">
-
-        </activity>
-        <activity android:name=".ChooseChatActivity">
-
-        </activity>
+        <activity android:name=".NotificationActivity"></activity>
+        <activity android:name=".ChooseChatActivity"></activity>
     </application>
 
 </manifest>
