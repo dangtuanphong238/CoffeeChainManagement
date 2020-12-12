@@ -203,9 +203,9 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
         SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
         String ownerID = pref.getString(LoginActivity.OWNERID, null);
         String path = "OwnerManager/" + ownerID + "/TableActive";
-//        Toast.makeText(this,list.get(position).getNameArea()+"--"+listTableActive.get(position).getNameTable()+"",Toast.LENGTH_SHORT).show();
-//        DetailTableDialog dialog = new DetailTableDialog(this,path,ownerID,list.get(position).getNameArea(),listTableActive.get(position).getNameTable());
-//        dialog.show();
+        Toast.makeText(this,listTableActive.get(position).getNameTable()+"",Toast.LENGTH_SHORT).show();
+        // DetailTableDialog dialog = new DetailTableDialog(context,path,ownerID,list.get(position).getNameArea(),listTableActive.get(position).getNameTable());
+        //dialog.show();
     }
 
     @Override

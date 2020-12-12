@@ -73,7 +73,7 @@ public class ThuNganAdapter extends RecyclerView.Adapter<ThuNganAdapter.ViewHold
        // DetailTableDialog dialog = new DetailTableDialog(context,path,ownerID,list.get(position).getNameArea(),listTableActive.get(position).getNameTable());
         //dialog.show();
 
-        //Toast.makeText(context,list.get(position).getNameArea()+"--"+listTableActive.get(position).getNameTable()+"",Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,list.get(position).getNameArea()+"--"+listTableActive.get(position).getNameTable()+"",Toast.LENGTH_SHORT).show();
 
     }
 
