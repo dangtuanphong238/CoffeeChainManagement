@@ -16,14 +16,14 @@
 
         <include layout="@layout/toolbar" />
 
-        <GridView
-            android:id="@+id/gridviewKhuVuc"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleviewKhuVuc"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="4"
             android:columnWidth="150dp"
             android:numColumns="auto_fit"
-            tools:listitem="@layout/item_khuvuc" />
+            tools:listitem="@layout/item_khuvuc"></androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 

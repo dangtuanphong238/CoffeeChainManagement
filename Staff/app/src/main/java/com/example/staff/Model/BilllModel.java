@@ -1,17 +1,13 @@
 package com.example.staff.Model;
 
-import android.graphics.Bitmap;
-
-import java.io.Serializable;
-
-public class MealModel implements Serializable {
+public class BilllModel {
     String meal_category;
     String meal_id;
     String meal_price;
     String meal_name;
     String meal_image;
 
-    public MealModel(String meal_category, String meal_id, String meal_price, String meal_name, String meal_image) {
+    public BilllModel(String meal_category, String meal_id, String meal_price, String meal_name, String meal_image) {
         this.meal_category = meal_category;
         this.meal_id = meal_id;
         this.meal_price = meal_price;
@@ -19,11 +15,7 @@ public class MealModel implements Serializable {
         this.meal_image = meal_image;
     }
 
-    public MealModel(String meal_name) {
-        this.meal_name = meal_name;
-    }
-
-    public MealModel() {
+    public BilllModel() {
     }
 
     public String getMeal_category() {
@@ -58,7 +50,7 @@ public class MealModel implements Serializable {
         this.meal_name = meal_name;
     }
 
-    public  String getMeal_image() {
+    public String getMeal_image() {
         return meal_image;
     }
 

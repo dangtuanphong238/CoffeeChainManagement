@@ -172,6 +172,7 @@ public class OderActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), CaiDatBill.class);
                 intent.putExtra("BILL", mealMEAL);
                 startActivity(intent);
+                System.out.println("1111"+mealMEAL);
             }
         });
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1">
+    <ImageView
+        android:layout_width="240px"
+        android:layout_height="240px"
+        android:layout_weight="1"
+        android:id="@+id/imgBill"
+        android:src="@drawable/cfsua"></ImageView>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:layout_weight="1"
+            android:text="Coffee Milk Ice"
+            android:padding="10dp"></TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:layout_weight="1"
+            android:text="30000"
+            android:padding="10dp"></TextView>
+    </LinearLayout>
+</LinearLayout>

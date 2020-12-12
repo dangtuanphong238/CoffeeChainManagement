@@ -63,7 +63,6 @@ public class ListMealAdapter extends ArrayAdapter<MealModel> {
         viewHolder.txtTenMonAn = view.findViewById(R.id.txtTenMonAn);
         viewHolder.txtGiaMon = view.findViewById(R.id.txtGiaMonAn);
         viewHolder.imgMeal = view.findViewById(R.id.imgMeal);
-//        final MealModel hangHoa = this.objects.get(position);
         viewHolder.txtTenMonAn.setText("Tên Món : " + mealModel.getMeal_name());
         viewHolder.txtGiaMon.setText("Giá Món : " + mealModel.getMeal_price());
         String path = "/OwnerManager/"+sOwnerID+"/QuanLyMonAn";
