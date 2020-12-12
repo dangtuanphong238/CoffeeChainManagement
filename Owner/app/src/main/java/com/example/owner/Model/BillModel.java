@@ -16,12 +16,17 @@ public class BillModel {
 
     public BillModel(String ID, String area, String table, ArrayList<MealUsed> meal, String sum, String timeInput, String timeOutput) {
         this.ID = ID;
-        Area = area;
-        Table = table;
-        Meal = meal;
-        Sum = sum;
-        TimeInput = timeInput;
-        TimeOutput = timeOutput;
+        this.Area = area;
+        this.Table = table;
+        this.Meal = meal;
+        this.Sum = sum;
+        this.TimeInput = timeInput;
+        this.TimeOutput = timeOutput;
+    }
+
+    public int get_ID(){
+        String id = ID.replace("Bill","");
+        return Integer.parseInt(id);
     }
 
     public String getID() {
