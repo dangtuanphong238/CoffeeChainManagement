@@ -9,6 +9,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import com.example.owner.Interface.SendAmountsOrder;
 import com.example.owner.Model.MealModel;
 import com.example.owner.Model.MealUsed;
 import com.example.owner.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +33,9 @@ import java.util.ArrayList;
 
 public class OrderDialog extends Dialog implements View.OnClickListener, RecyclerviewClick, SendAmountsOrder {
 
+    int sumPrice = 0;
+    int amountsProducts = 0;
+    ArrayList<MealUsed> listUsed = new ArrayList<>();
 
     Context context;
     String ownerID;
@@ -62,14 +67,14 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         tvTableName = findViewById(R.id.tvTableName);
         rvMenuOrder = findViewById(R.id.rvMenuOrder);
         tvSumPrice = findViewById(R.id.tvSumPrice);
-        btnOrder = findViewById(R.id.btnOrder);
+        btnOrder = findViewById(R.id.btnPayment);
         btnCancel = findViewById(R.id.btnCancel);
         layoutChooseAmount = findViewById(R.id.layoutChooseAmount);
         tvCart = findViewById(R.id.tvCart);
         tvSumPrice = findViewById(R.id.tvSumPrice);
         btnOrder.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
-        String name = tableID.replace("Table","Bàn ");
+        String name = tableID.replace("Table", "Bàn ");
         tvTableName.setText(name);
         //layoutChooseAmount.setVisibility(View.VISIBLE);
         getMenu();
@@ -79,18 +84,21 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         //Read list meal used in dialog from branch TableActive
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         String path = "OwnerManager/" + ownerID + "/QuanLyMonAn";
-        DatabaseReference myRef = database.getReference(path);
-        System.out.println("Check" + myRef.toString());
+        final DatabaseReference myRef = database.getReference(path);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<MealModel> list = new ArrayList<>();
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    MealModel model = data.getValue(MealModel.class);
-                    list.add(model);
+                try {
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        MealModel model = data.getValue(MealModel.class);
+                        list.add(model);
+                    }
+                } catch (Exception ex) {
+                    Log.w("PROBLEM", "get data from branch table active have problem " + ex.getMessage());
+                    System.out.println("get data from branch table active have problem in url: " + myRef.toString());
                 }
                 final String path = "/OwnerManager/" + ownerID + "/QuanLyMonAn";
-                System.out.println("ListCrawl" + list);
                 MenuOrderAdapter adapter = new MenuOrderAdapter(context, list, OrderDialog.this, path, OrderDialog.this);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -112,7 +120,7 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
             case R.id.btnCancel:
                 dismiss();
                 break;
-            case R.id.btnOrder:
+            case R.id.btnPayment:
                 orderMeal();
             default:
                 break;
@@ -129,10 +137,6 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
     public void onItemLongClick(int position) {
 
     }
-
-    int amountsProducts = 0;
-    ArrayList<MealUsed> listUsed = new ArrayList<>();
-    int sumPrice = 0;
 
     @Override
     public void sendAmount(int times, MealModel mealModel, int last_amount) {
@@ -156,7 +160,6 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         }
         tvSumPrice.setText(sumPrice + "");
         tvCart.setText(amountsProducts + "");
-        System.out.println("TIMES" + times + "_" + amountsProducts + "_" + last_amount);
         checkAndUpdateForAddTable(mealModel, last_amount);
     }
 
@@ -167,36 +170,51 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         if (listUsed.size() == 0) {
             listUsed.add(mealUsed);
         } else {
-            for(int i = 0; i < listUsed.size(); i++){
-                if (listUsed.get(i).getMealID().equalsIgnoreCase(mealUsed.getMealID())){
+            for (int i = 0; i < listUsed.size(); i++) {
+                if (listUsed.get(i).getMealID().equalsIgnoreCase(mealUsed.getMealID())) {
                     listUsed.remove(listUsed.get(i));
                     listUsed.add(mealUsed);
                     flag = true;
                     break;
                 }
             }
-            if (flag == false){
+            if (flag == false) {
                 listUsed.add(mealUsed);
             }
         }
     }
 
-    public void orderMeal(){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        String path = "OwnerManager/" + ownerID + "/TableActive/Area"+areaID+"/"+tableID+"/Meal";
-        String manageTable = "OwnerManager/"+ownerID+"/QuanLyBan/Area"+areaID+"/"+tableID;
-        DatabaseReference myRef = database.getReference(path);
-        for (int i=0;i<listUsed.size();i++){
-            DatabaseReference root = myRef.child(listUsed.get(i).getMealID());
-            root.child("amount").setValue(listUsed.get(i).getAmount());
-            root.child("category").setValue(listUsed.get(i).getMealCategory());
-            root.child("id").setValue(listUsed.get(i).getMealID());
-            root.child("image").setValue(listUsed.get(i).getMealImage());
-            root.child("name").setValue(listUsed.get(i).getMealName());
-            root.child("price").setValue(listUsed.get(i).getMealPrice());
-            root.child("timeInput").setValue(listUsed.get(i).getTimeInput());
+    public void orderMeal() {
+        if (listUsed.size()>0){
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            String path = "OwnerManager/" + ownerID + "/TableActive/Area" + areaID + "/" + tableID + "/Meal";
+            String manageTable = "OwnerManager/" + ownerID + "/QuanLyBan/Area" + areaID + "/" + tableID;
+            DatabaseReference myRef = database.getReference(path);
+            for (int i = 0; i < listUsed.size(); i++) {
+                DatabaseReference root = myRef.child(listUsed.get(i).getMealID());
+                root.child("amount").setValue(listUsed.get(i).getAmount());
+                root.child("category").setValue(listUsed.get(i).getMealCategory());
+                root.child("id").setValue(listUsed.get(i).getMealID());
+                root.child("image").setValue(listUsed.get(i).getMealImage());
+                root.child("name").setValue(listUsed.get(i).getMealName());
+                root.child("price").setValue(listUsed.get(i).getMealPrice());
+                root.child("timeInput").setValue(listUsed.get(i).getTimeInput());
+            }
+            DatabaseReference status = database.getReference(manageTable);
+            status.child("tableStatus").setValue("2").addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(context,"Order thành công",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else {
+            Toast.makeText(context,"Vui lòng chọn món để order",Toast.LENGTH_SHORT).show();
         }
-        DatabaseReference status = database.getReference(manageTable);
-        status.child("tableStatus").setValue("2");
     }
+
+    public void orderForTableHadCustomer() {
+
+    }
+
+    //UPDATE thêm chức năng order cho bàn đã có khách và try catch lại đàng hoàng
 }

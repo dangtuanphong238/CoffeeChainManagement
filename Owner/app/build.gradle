@@ -44,5 +44,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:19.2.0'
     //recyclerview
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    //chart-kit
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
 }
