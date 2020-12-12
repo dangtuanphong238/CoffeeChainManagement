@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.owner.Dialog.DetailTableDialog;
 import com.example.owner.Interface.RecyclerviewClick;
 import com.example.owner.Model.AreaActiveModel;
+import com.example.owner.Model.TableActiveModel;
 import com.example.owner.R;
 
 import java.util.ArrayList;
@@ -23,8 +25,11 @@ public class ThuNganAdapter extends RecyclerView.Adapter<ThuNganAdapter.ViewHold
 
     RecyclerviewClick recyclerviewClick;
     ArrayList<AreaActiveModel> list;
+    ArrayList<TableActiveModel> listTableActive;
     Context context;
     String path;
+    String ownerID;
+
 
     public ThuNganAdapter(ArrayList<AreaActiveModel> list, Context context, RecyclerviewClick recyclerviewClick, String path) {
         this.list = list;
@@ -63,8 +68,13 @@ public class ThuNganAdapter extends RecyclerView.Adapter<ThuNganAdapter.ViewHold
 
     @Override
     public void onItemClick(int position) {
-        DetailTableDialog dialog = new DetailTableDialog(context,path,ownerID,list.get(position).getNameArea(),listTableActive.get(position).getNameTable());
-        dialog.show();
+        //TODO: Note in this doing first
+        // Get position in ThuNganAdapter and send to ListTableThuNganAdapter
+       // DetailTableDialog dialog = new DetailTableDialog(context,path,ownerID,list.get(position).getNameArea(),listTableActive.get(position).getNameTable());
+        //dialog.show();
+
+        //Toast.makeText(context,list.get(position).getNameArea()+"--"+listTableActive.get(position).getNameTable()+"",Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

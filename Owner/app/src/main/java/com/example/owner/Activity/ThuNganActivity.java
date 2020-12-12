@@ -147,7 +147,7 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
     ArrayList<AreaActiveModel> list = new ArrayList<>();
     ArrayList<TableActiveModel> listTableActive = new ArrayList<>();
     public void getDataFromBranchTableActive(String ownerID) {
-        String path = "OwnerManager/" + ownerID + "/TableActive";
+        final String path = "OwnerManager/" + ownerID + "/TableActive";
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference(path);
         myRef.addValueEventListener(new ValueEventListener() {
@@ -184,7 +184,7 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
                     System.out.println("get data from branch table active have problem");
                 }
 
-                ThuNganAdapter adapter = new ThuNganAdapter( list, ThuNganActivity.this, ThuNganActivity.this);
+                ThuNganAdapter adapter = new ThuNganAdapter( list, ThuNganActivity.this, ThuNganActivity.this,path);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 rvThuNgan.setLayoutManager(linearLayoutManager);
@@ -203,8 +203,9 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
         SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
         String ownerID = pref.getString(LoginActivity.OWNERID, null);
         String path = "OwnerManager/" + ownerID + "/TableActive";
-        Toast.makeText(this,listTableActive.get(position).getNameTable()+"",Toast.LENGTH_SHORT).show();
-
+//        Toast.makeText(this,list.get(position).getNameArea()+"--"+listTableActive.get(position).getNameTable()+"",Toast.LENGTH_SHORT).show();
+//        DetailTableDialog dialog = new DetailTableDialog(this,path,ownerID,list.get(position).getNameArea(),listTableActive.get(position).getNameTable());
+//        dialog.show();
     }
 
     @Override
