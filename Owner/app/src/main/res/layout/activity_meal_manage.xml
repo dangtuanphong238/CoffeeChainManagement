@@ -98,6 +98,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         android:id="@+id/navDrawerMenu"
+        app:headerLayout="@layout/nav_drawer_header_main"
         app:menu="@menu/main_actions"
         />
 
