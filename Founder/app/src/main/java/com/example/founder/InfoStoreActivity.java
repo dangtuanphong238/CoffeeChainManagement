@@ -88,6 +88,8 @@ public class InfoStoreActivity extends AppCompatActivity {
                     reference.child("tencuahang").setValue(edtTencuahang.getText().toString());
                     reference.child("trangthai").setValue(spinnerTrangThai);
                     Toast.makeText(getApplicationContext(),"Cập Nhật Thành Công!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(InfoStoreActivity.this, ListCuaHangActivity.class);
+                    startActivity(intent);
                 }catch (Exception ex)
                 {
                     ex.getMessage();
