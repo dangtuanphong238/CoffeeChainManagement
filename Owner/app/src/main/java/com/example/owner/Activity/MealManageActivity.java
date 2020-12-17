@@ -167,7 +167,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
     private NavigationView navigationView;
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
-    private Button btnAddMeal;
+    private Button btnAddMeal, btnAddCombo;
 
     //drawer header:
     Bitmap bitmapDecoded;
@@ -256,6 +256,14 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                 startActivity(intent);
             }
         });
+
+        btnAddCombo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MealManageActivity.this, AddComboActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     //header drawer:
@@ -289,6 +297,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
         txtTitleActivity = findViewById(R.id.txtTitle);
         btnAddMeal = findViewById(R.id.btnAddMeal);
         spnCategory = findViewById(R.id.spnCategory);
+        btnAddCombo = findViewById(R.id.btnAddCombo);
     }
 
     public void openMenu() {
