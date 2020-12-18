@@ -79,7 +79,6 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         //layoutChooseAmount.setVisibility(View.VISIBLE);
         getMenu();
     }
-
     public void getMenu() {
         //Read list meal used in dialog from branch TableActive
         FirebaseDatabase database = FirebaseDatabase.getInstance();

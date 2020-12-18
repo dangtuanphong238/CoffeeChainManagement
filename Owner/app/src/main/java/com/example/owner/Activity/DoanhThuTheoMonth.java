@@ -101,8 +101,12 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
                                             entries.clear();
                                             for (DataSnapshot item : snapshot.getChildren())
                                             {
-                                                DoanhThuMonth monthThu = item.getValue(DoanhThuMonth.class);
-                                                entries.add(new Entry(Integer.parseInt(monthThu.date),Integer.parseInt(monthThu.sumtotal)));
+                                                for (DataSnapshot cart : item.getChildren()) {
+                                                    DoanhThuMonth doanhThuMonth = item.getValue(DoanhThuMonth.class);
+                                                    entries.add(new Entry(Integer.parseInt(doanhThuMonth.date)
+                                                            ,Integer.parseInt(doanhThuMonth.sumtotal)));
+                                                }
+
                                             }
                                             showChart(entries);
                                         }
@@ -174,7 +178,7 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         {
-            Intent intent = new Intent(DoanhThuTheoMonth.this, DoanhThu.class);
+            Intent intent = new Intent(DoanhThuTheoMonth.this, DoanhThuActivity.class);
             startActivity(intent);
             finish();
         }

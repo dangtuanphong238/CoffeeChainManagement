@@ -1,5 +1,6 @@
 package com.example.owner.Dialog;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -15,14 +16,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.owner.Activity.DoanhThuTheoMonth;
 import com.example.owner.Adapter.DetailTableAdapter;
 import com.example.owner.Global.ParseTime;
 import com.example.owner.Model.BillModel;
+import com.example.owner.Model.DoanhThuMonth;
 import com.example.owner.Model.MealModel;
 import com.example.owner.Model.MealUsed;
+import com.example.owner.Model.Sum;
 import com.example.owner.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,6 +47,13 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
     String ownerID;
     String areaID;
     String tableID;
+    int sum,tongtienngay;
+    Date date = new Date();
+    ParseTime parseTime = new ParseTime(date.getTime());
+    String year = parseTime.getYear();
+    String month = parseTime.getMonth();
+    String _date =  parseTime.getDate();
+    ArrayList<Integer> listTienNgay = new ArrayList<>();
 
     public DetailTableDialog(@NonNull Context context, String url, String ownerID, String areaID, String tableID) {
         super(context);
@@ -74,6 +86,12 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
         btnCancel.setOnClickListener(this);
         String name = tableID.replace("Table", "Bàn ");
         tvTableName.setText(name);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     ArrayList<MealUsed> list = new ArrayList<>();
@@ -115,6 +133,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
                 }
             }
 
+            @SuppressLint("LongLogTag")
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.w("PROBLEM", error.getMessage());
@@ -130,7 +149,6 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
         }
         return sum;
     }
-
     ArrayList<MealUsed> listMealUsed = new ArrayList<>();
 
     public void createBill() {
@@ -171,17 +189,14 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
             }
         });
         payment(listMealUsed);
+
     }
 
     public void payment(final ArrayList<MealUsed> list) {
         //Read data from branch QuanLyHoaDon to check how much bill?
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        Date date = new Date();
-        ParseTime parseTime = new ParseTime(date.getTime());
-        String year = parseTime.getYear();
-        String month = "Thang" + parseTime.getMonth();
-        String _date = "Ngay" + parseTime.getDate();
-        final DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/QuanLyHoaDon/" + year + "/" + month + "/" + _date);
+        final DatabaseReference myRef = database.getReference("/OwnerManager/" +
+                ownerID + "/QuanLyHoaDon/" + year + "/" + "Thang" +month + "/" + "Ngay"+_date + "/Bills/");
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -195,7 +210,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
                     path.child("Table").setValue(tableID);
                     path.child("TimeOutput").setValue(timestamp.getTime() + "");
                     path.child("TimeInput").setValue(list.get(0).getTimeInput());
-                    int sum = 0;
+                    sum = 0;
                     for (int i = 0; i < list.size(); i++) {
                         sum += list.get(i).getSumPrice();
                         DatabaseReference infoMeal = path.child("Meal").child(list.get(i).getMealID());
@@ -208,7 +223,8 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
                         infoMeal.child("timeInput").setValue(list.get(i).getTimeInput());
                     }
                     path.child("Sum").setValue(sum + "");
-                } else {
+                }
+                else {
                     ArrayList<BillModel> listBill = new ArrayList<>();
                     try {
                         for (DataSnapshot data : snapshot.getChildren()) {
@@ -244,7 +260,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
                             path.child("Table").setValue(tableID);
                             path.child("TimeOutput").setValue(timestamp.getTime() + "");
                             path.child("TimeInput").setValue(list.get(0).getTimeInput());
-                            int sum = 0;
+                            sum = 0;
                             for (int i = 0; i < list.size(); i++) {
                                 sum += list.get(i).getSumPrice();
                                 DatabaseReference infoMeal = path.child("Meal").child(list.get(i).getMealID());
@@ -258,7 +274,8 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
                             }
                             path.child("Sum").setValue(sum + "");
                         }
-                    } catch (Exception ex) {
+                    }
+                    catch (Exception ex) {
                         Log.w("PROBLEM", "get data from url " + myRef.toString() + " have problem");
                         System.out.println("PROBLEM: " + "get data from url " + myRef.toString() + " have problem");
                     }
@@ -272,7 +289,6 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
             }
         });
     }
-
     ArrayList<BillModel> sortListAsASC(ArrayList<BillModel> list) {
         ArrayList<BillModel> array = list;
         Collections.sort(array, new Comparator<BillModel>() {
@@ -283,7 +299,6 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
         });
         return array;
     }
-
     public void setUpTableAfterPayment() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference status = database.getReference("/OwnerManager/" + ownerID + "/QuanLyBan/Area" + areaID + "/" + tableID);
@@ -317,4 +332,37 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
         }
         dismiss();
     }
+//    public void tongThuNgay()
+//    {
+//        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+//        DatabaseReference reference = firebaseDatabase.getReference();
+//        reference.child("OwnerManager").child(ownerID).child("QuanLyHoaDon")
+//                .child(year).child("Thang"+month).child("Ngay"+_date).child("Bills").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists())
+//                {
+//                    listTienNgay.clear();
+//                    for (DataSnapshot item : snapshot.getChildren())
+//                    {
+//                        String a = item.child("Sum").getValue().toString();
+//                        Toast.makeText(context, a, Toast.LENGTH_SHORT).show();
+//                        listTienNgay.add(a);
+//                    }
+//                    for (int i = 0; i < listTienNgay.size(); i++)
+//                    {
+//                       Double sotien = Double.parseDouble(listTienNgay.get(i).toString());
+//                       Double tienthat = 0.0;
+//                       tienthat += sotien;
+//
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 }
