@@ -5,15 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.owner.Dialog.DetailTableDialog;
 import com.example.owner.Interface.RecyclerviewClick;
 import com.example.owner.Model.AreaActiveModel;
 import com.example.owner.Model.TableActiveModel;
@@ -21,7 +18,7 @@ import com.example.owner.R;
 
 import java.util.ArrayList;
 
-public class ThuNganAdapter extends RecyclerView.Adapter<ThuNganAdapter.ViewHolder> implements RecyclerviewClick{
+public class ThuNganAdapter extends RecyclerView.Adapter<ThuNganAdapter.ViewHolder>{
 
     RecyclerviewClick recyclerviewClick;
     ArrayList<AreaActiveModel> list;
@@ -52,7 +49,7 @@ public class ThuNganAdapter extends RecyclerView.Adapter<ThuNganAdapter.ViewHold
         AreaActiveModel areaActiveModel = list.get(position);
         holder.tvAreaName.setText(areaActiveModel.getNameArea());
         if (areaActiveModel.getListTable().size() != 0){
-            ListTableThuNganAdapter adapter = new ListTableThuNganAdapter(areaActiveModel.getListTable(),context,recyclerviewClick);
+            ListTableThuNganAdapter adapter = new ListTableThuNganAdapter(areaActiveModel.getListTable(),context,recyclerviewClick,ownerID,areaActiveModel.getNameArea(),path);
             GridLayoutManager linearLayoutManager = new GridLayoutManager(context,3);
             //linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             holder.rvListTableActive.setLayoutManager(linearLayoutManager);
@@ -66,23 +63,6 @@ public class ThuNganAdapter extends RecyclerView.Adapter<ThuNganAdapter.ViewHold
         return list.size();
     }
 
-    @Override
-    public void onItemClick(int position) {
-        //TODO: Note in this doing first
-        // Get position in ThuNganAdapter and send to ListTableThuNganAdapter
-       // DetailTableDialog dialog = new DetailTableDialog(context,path,ownerID,list.get(position).getNameArea(),listTableActive.get(position).getNameTable());
-        //dialog.show();
-
-        Toast.makeText(context,list.get(position).getNameArea()+"--"+listTableActive.get(position).getNameTable()+"",Toast.LENGTH_SHORT).show();
-
-    }
-
-    @Override
-    public void onItemLongClick(int position) {
-
-    }
-
-
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView tvAreaName;
         RecyclerView rvListTableActive;
@@ -90,7 +70,7 @@ public class ThuNganAdapter extends RecyclerView.Adapter<ThuNganAdapter.ViewHold
             super(itemView);
             tvAreaName = itemView.findViewById(R.id.tvAreaName);
             rvListTableActive = itemView.findViewById(R.id.rvListTableActive);
-
+            //ListTableThuNganAdapter listTableThuNganAdapter = new ListTableThuNganAdapter(list.get(getAdapterPosition()).getListTable(),context,recyclerviewClick);
         }
     }
 }

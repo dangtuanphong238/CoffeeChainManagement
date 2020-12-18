@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.owner.Adapter.DetailTableAdapter;
+import com.example.owner.Adapter.DetailAndPaymentTableAdapter;
 import com.example.owner.Global.ParseTime;
 import com.example.owner.Model.BillModel;
 import com.example.owner.Model.MealModel;
@@ -36,20 +36,21 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
-public class DetailTableDialog extends Dialog implements View.OnClickListener {
+public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickListener {
     String url;
     Context context;
     String ownerID;
     String areaID;
     String tableID;
 
-    public DetailTableDialog(@NonNull Context context, String url, String ownerID, String areaID, String tableID) {
+    public DetaiAndPaymentlTableDialog(@NonNull Context context, String url, String ownerID, String areaID, String tableID) {
         super(context);
         this.context = context;
         this.url = url;
         this.ownerID = ownerID;
         this.areaID = areaID;
         this.tableID = tableID;
+        System.out.println("URL_DETAIL:"+url);
     }
 
     TextView tvTableName;
@@ -103,7 +104,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
                         MealUsed mealUsed = new MealUsed(amount, model, timeInput);
                         list.add(mealUsed);
                     }
-                    DetailTableAdapter adapter = new DetailTableAdapter(list, context, ownerID);
+                    DetailAndPaymentTableAdapter adapter = new DetailAndPaymentTableAdapter(list, context, ownerID);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
                     linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     rvMealUsed.setLayoutManager(linearLayoutManager);
@@ -152,7 +153,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
                             String amount_tempt = (data.child("amount").getValue() + "");
                             String timeInput = (data.child("timeInput").getValue() + "");
                             int amount = 0;
-                            if (!amount_tempt.equals("null")) {
+                            if (!amount_tempt.equals("null") || !amount_tempt.equals("")) {
                                 amount = Integer.parseInt(amount_tempt);
                             }
                             MealUsed mealUsed = new MealUsed(amount, model, timeInput);
@@ -181,7 +182,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
         String year = parseTime.getYear();
         String month = "Thang" + parseTime.getMonth();
         String _date = "Ngay" + parseTime.getDate();
-        final DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/QuanLyHoaDon/" + year + "/" + month + "/" + _date);
+        final DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/QuanLyHoaDon/" + year + "/" + month + "/" + _date+"/Bills");
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

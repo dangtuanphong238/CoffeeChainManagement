@@ -21,7 +21,9 @@ import com.example.owner.Interface.SendAmountsOrder;
 import com.example.owner.Model.MealModel;
 import com.example.owner.Model.MealUsed;
 import com.example.owner.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +37,7 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
 
     int sumPrice = 0;
     int amountsProducts = 0;
-    ArrayList<MealUsed> listUsed = new ArrayList<>();
+    ArrayList<MealUsed> listOrder = new ArrayList<>();
 
     Context context;
     String ownerID;
@@ -121,7 +123,8 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
                 dismiss();
                 break;
             case R.id.btnPayment:
-                orderMeal();
+                checkTableAndOrder();
+                break;
             default:
                 break;
         }
@@ -158,63 +161,144 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         } else if (times == 0) {
             amountsProducts += 0;
         }
+        if (sumPrice < 0){
+            sumPrice = 0;
+        }
         tvSumPrice.setText(sumPrice + "");
         tvCart.setText(amountsProducts + "");
-        checkAndUpdateForAddTable(mealModel, last_amount);
+        addMealForTable(mealModel, last_amount);
     }
 
-    public void checkAndUpdateForAddTable(MealModel meal, int used) {
+    //Add meal into listOrder to order
+    public void addMealForTable(MealModel meal, int used) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         MealUsed mealUsed = new MealUsed(used, meal, timestamp.getTime() + "");
         boolean flag = false;
-        if (listUsed.size() == 0) {
-            listUsed.add(mealUsed);
+        if (listOrder.size() == 0) {
+            listOrder.add(mealUsed);
         } else {
-            for (int i = 0; i < listUsed.size(); i++) {
-                if (listUsed.get(i).getMealID().equalsIgnoreCase(mealUsed.getMealID())) {
-                    listUsed.remove(listUsed.get(i));
-                    listUsed.add(mealUsed);
+            for (int i = 0; i < listOrder.size(); i++) {
+                if (listOrder.get(i).getMealID().equals(mealUsed.getMealID())) {
+                    listOrder.remove(listOrder.get(i));
+                    listOrder.add(mealUsed);
                     flag = true;
                     break;
                 }
             }
             if (flag == false) {
-                listUsed.add(mealUsed);
+                listOrder.add(mealUsed);
             }
         }
     }
 
-    public void orderMeal() {
-        if (listUsed.size()>0){
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
+    public void checkTableAndOrder() {
+        if (listOrder.size() > 0) {
+            //Order when table had customer
             String path = "OwnerManager/" + ownerID + "/TableActive/Area" + areaID + "/" + tableID + "/Meal";
-            String manageTable = "OwnerManager/" + ownerID + "/QuanLyBan/Area" + areaID + "/" + tableID;
-            DatabaseReference myRef = database.getReference(path);
-            for (int i = 0; i < listUsed.size(); i++) {
-                DatabaseReference root = myRef.child(listUsed.get(i).getMealID());
-                root.child("amount").setValue(listUsed.get(i).getAmount());
-                root.child("category").setValue(listUsed.get(i).getMealCategory());
-                root.child("id").setValue(listUsed.get(i).getMealID());
-                root.child("image").setValue(listUsed.get(i).getMealImage());
-                root.child("name").setValue(listUsed.get(i).getMealName());
-                root.child("price").setValue(listUsed.get(i).getMealPrice());
-                root.child("timeInput").setValue(listUsed.get(i).getTimeInput());
-            }
-            DatabaseReference status = database.getReference(manageTable);
-            status.child("tableStatus").setValue("2").addOnSuccessListener(new OnSuccessListener<Void>() {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            final DatabaseReference myRef = database.getReference(path);
+            final ArrayList<MealUsed> usedArrayList = new ArrayList<>();
+            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onSuccess(Void aVoid) {
-                    Toast.makeText(context,"Order thành công",Toast.LENGTH_SHORT).show();
+                public void onDataChange(@NonNull DataSnapshot data) {
+
+                    for (DataSnapshot snapshot : data.getChildren()) {
+                        MealModel mealModel = new MealModel(
+                                snapshot.child("category").getValue() + "",
+                                snapshot.child("id").getValue() + "",
+                                snapshot.child("price").getValue() + "",
+                                snapshot.child("name").getValue() + "",
+                                snapshot.child("image").getValue() + "");
+                        MealUsed mealUsed = new MealUsed(Integer.parseInt(snapshot.child("amount").getValue() + ""), mealModel, snapshot.child("timeInput").getValue() + "");
+                        usedArrayList.add(mealUsed);
+                    }
+
+                    if (usedArrayList.size() > 0) {
+                        if (listOrder.size() > 0) {
+                            writeListOrderInDB(checkData(listOrder, usedArrayList));
+                        } else {
+                            System.out.println("Check BUG");
+                        }
+                    } else {
+                        writeListOrderInDB(listOrder);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
                 }
             });
-        }else {
-            Toast.makeText(context,"Vui lòng chọn món để order",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Vui lòng chọn món để order", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void orderForTableHadCustomer() {
-
+    public void writeListOrderInDB(ArrayList<MealUsed> listOrder) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String path = "OwnerManager/" + ownerID + "/TableActive/Area" + areaID + "/" + tableID + "/Meal";
+        String manageTable = "OwnerManager/" + ownerID + "/QuanLyBan/Area" + areaID + "/" + tableID;
+        DatabaseReference myRef = database.getReference(path);
+        for (int i = 0; i < listOrder.size(); i++) {
+            DatabaseReference root = myRef.child(listOrder.get(i).getMealID());
+            root.child("amount").setValue(listOrder.get(i).getAmount());
+            root.child("category").setValue(listOrder.get(i).getMealCategory());
+            root.child("id").setValue(listOrder.get(i).getMealID());
+            root.child("image").setValue(listOrder.get(i).getMealImage());
+            root.child("name").setValue(listOrder.get(i).getMealName());
+            root.child("price").setValue(listOrder.get(i).getMealPrice());
+            root.child("timeInput").setValue(listOrder.get(i).getTimeInput());
+        }
+        DatabaseReference status = database.getReference(manageTable);
+        status.child("tableStatus").setValue("2").addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(context, "Order thanh cong", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    //UPDATE thêm chức năng order cho bàn đã có khách và try catch lại đàng hoàng
+    //If table had customer, add amounts new meal in old arrayList
+    public ArrayList<MealUsed> checkData(ArrayList<MealUsed> arrOrder, ArrayList<MealUsed> arrUsed) {
+        try {
+            ArrayList<MealUsed> temptArr = new ArrayList<>();
+            for (int i = 0; i < arrOrder.size(); i++) {
+                boolean flag = false;
+                for (int j = 0; j < arrUsed.size(); j++) {
+                    if (arrOrder.get(j).getMealID().equals(arrUsed.get(i).getMealID())) {
+                        int oldAmounts = Integer.parseInt(arrUsed.get(i).getAmount() + "");
+                        System.out.println("arr ORDER: " + arrOrder.get(i).getAmount() + "");
+                        int newAmounts = Integer.parseInt(arrOrder.get(i).getAmount() + "");
+                        arrUsed.get(i).setAmount((oldAmounts + newAmounts));
+                        arrOrder.remove(arrOrder.get(i));
+                        flag = true;
+                    }
+                }
+                if (flag == false){
+                    temptArr.add(arrOrder.get(i));
+                    arrOrder.remove(arrOrder.get(i));
+                }
+                System.out.println("position I:"+ i);
+            }
+        } catch (Exception ex) {
+            System.out.println("PROBLEM: " + ex.getMessage());
+        }
+        System.out.println("TEST ARR_USED: " + arrUsed.toString());
+        return arrUsed;
+    }
+
+    //Used to catch new meal if add meal for table had customer
+    public ArrayList handleTemptArr(ArrayList<MealUsed> temptArr) {
+        for (int i = 0; i < temptArr.size(); i++) {
+            for (int j = i++; j < temptArr.size(); j++) {
+                if ( temptArr.get(i).getMealID().equals(temptArr.get(i).getMealID())
+                        && temptArr.get(i).getAmount() == temptArr.get(j).getAmount())
+                {
+                    temptArr.remove(temptArr.get(i));
+                }
+            }
+        }
+        return temptArr;
+    }
+
 }
