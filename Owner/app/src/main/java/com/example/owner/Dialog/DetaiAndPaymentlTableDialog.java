@@ -16,8 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.owner.Activity.DoanhThuTheoMonth;
-import com.example.owner.Adapter.DetailTableAdapter;
+import com.example.owner.Adapter.DetailAndPaymentTableAdapter;
+
 import com.example.owner.Global.ParseTime;
 import com.example.owner.Model.BillModel;
 import com.example.owner.Model.DoanhThuMonth;
@@ -41,13 +41,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
-public class DetailTableDialog extends Dialog implements View.OnClickListener {
+public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickListener {
     String url;
     Context context;
     String ownerID;
     String areaID;
     String tableID;
-    int sum,tongtienngay;
+    int sum;
     Date date = new Date();
     ParseTime parseTime = new ParseTime(date.getTime());
     String year = parseTime.getYear();
@@ -55,13 +55,14 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
     String _date =  parseTime.getDate();
     ArrayList<Integer> listTienNgay = new ArrayList<>();
 
-    public DetailTableDialog(@NonNull Context context, String url, String ownerID, String areaID, String tableID) {
+    public DetaiAndPaymentlTableDialog(@NonNull Context context, String url, String ownerID, String areaID, String tableID) {
         super(context);
         this.context = context;
         this.url = url;
         this.ownerID = ownerID;
         this.areaID = areaID;
         this.tableID = tableID;
+        System.out.println("URL_DETAIL:"+url);
     }
 
     TextView tvTableName;
@@ -86,12 +87,11 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
         btnCancel.setOnClickListener(this);
         String name = tableID.replace("Table", "Bàn ");
         tvTableName.setText(name);
-
     }
-
     @Override
     protected void onStart() {
         super.onStart();
+        Toast.makeText(context,_date , Toast.LENGTH_SHORT).show();
     }
 
     ArrayList<MealUsed> list = new ArrayList<>();
@@ -121,7 +121,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
                         MealUsed mealUsed = new MealUsed(amount, model, timeInput);
                         list.add(mealUsed);
                     }
-                    DetailTableAdapter adapter = new DetailTableAdapter(list, context, ownerID);
+                    DetailAndPaymentTableAdapter adapter = new DetailAndPaymentTableAdapter(list, context, ownerID);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
                     linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     rvMealUsed.setLayoutManager(linearLayoutManager);
@@ -170,7 +170,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
                             String amount_tempt = (data.child("amount").getValue() + "");
                             String timeInput = (data.child("timeInput").getValue() + "");
                             int amount = 0;
-                            if (!amount_tempt.equals("null")) {
+                            if (!amount_tempt.equals("null") || !amount_tempt.equals("")) {
                                 amount = Integer.parseInt(amount_tempt);
                             }
                             MealUsed mealUsed = new MealUsed(amount, model, timeInput);
@@ -195,8 +195,9 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
     public void payment(final ArrayList<MealUsed> list) {
         //Read data from branch QuanLyHoaDon to check how much bill?
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference("/OwnerManager/" +
-                ownerID + "/QuanLyHoaDon/" + year + "/" + "Thang" +month + "/" + "Ngay"+_date + "/Bills/");
+
+        final DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/QuanLyHoaDon/" + year + "/" + "Thang"+month + "/" + "Ngay"+_date+"/Bills");
+        System.out.println("myRef" + myRef.toString());
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -332,37 +333,4 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
         }
         dismiss();
     }
-//    public void tongThuNgay()
-//    {
-//        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-//        DatabaseReference reference = firebaseDatabase.getReference();
-//        reference.child("OwnerManager").child(ownerID).child("QuanLyHoaDon")
-//                .child(year).child("Thang"+month).child("Ngay"+_date).child("Bills").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists())
-//                {
-//                    listTienNgay.clear();
-//                    for (DataSnapshot item : snapshot.getChildren())
-//                    {
-//                        String a = item.child("Sum").getValue().toString();
-//                        Toast.makeText(context, a, Toast.LENGTH_SHORT).show();
-//                        listTienNgay.add(a);
-//                    }
-//                    for (int i = 0; i < listTienNgay.size(); i++)
-//                    {
-//                       Double sotien = Double.parseDouble(listTienNgay.get(i).toString());
-//                       Double tienthat = 0.0;
-//                       tienthat += sotien;
-//
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
 }

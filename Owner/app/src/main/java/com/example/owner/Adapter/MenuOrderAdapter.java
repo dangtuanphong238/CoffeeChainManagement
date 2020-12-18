@@ -39,10 +39,10 @@ public class MenuOrderAdapter extends RecyclerView.Adapter<MenuOrderAdapter.MyVi
     SendDataAround sendDataAround;
     SendAmountsOrder sendAmountsOrder;
 
-    public MenuOrderAdapter(Context context, ArrayList<MealModel> list, RecyclerviewClick recyclerviewClick, String path, SendAmountsOrder sendAmountsOrder){
+    public MenuOrderAdapter(Context context, ArrayList<MealModel> list, RecyclerviewClick recyclerviewClick, String path, SendAmountsOrder sendAmountsOrder) {
         this.context = context;
         this.list = list;
-        System.out.println("ListInMenuOrder"+list.toString());
+        System.out.println("ListInMenuOrder" + list.toString());
         this.recyclerviewClick = recyclerviewClick;
         //this.sendDataAround = sendDataAround;
         this.path = path;
@@ -57,53 +57,77 @@ public class MenuOrderAdapter extends RecyclerView.Adapter<MenuOrderAdapter.MyVi
         return new MenuOrderAdapter.MyViewHolder(cardView);
     }
 
+    Boolean flag = false;
+
     @Override
     public void onBindViewHolder(@NonNull final MenuOrderAdapter.MyViewHolder holder, int position) {
         final MealModel meal = list.get(position);
         holder.tvMealName.setText(meal.getMeal_name());
         holder.tvMealPrice.setText(meal.getMeal_price());
         holder.tvMealCategory.setText(meal.getMeal_category());
-        setImage(holder,path,meal.getMeal_id());
-
+        // holder.layoutChooseAmount.setVisibility(View.GONE);
+        setImage(holder, path, meal.getMeal_id());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!flag) {
+                    if (holder.tvMealName.getText().toString().equals(meal.getMeal_name())) {
+                        holder.layoutChooseAmount.setVisibility(View.VISIBLE);
+                        flag = !flag;
+                    }
+                } else {
+                    holder.layoutChooseAmount.setVisibility(View.GONE);
+                    flag = !flag;
+                }
+            }
+        });
         holder.btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int i = Integer.parseInt(holder.tvAmounts.getText().toString());
                 i++;
-                holder.tvAmounts.setText(i+"");
+                holder.tvAmounts.setText(i + "");
                 int last_amounts = Integer.parseInt(holder.tvAmounts.getText().toString().trim());
                 int price = Integer.parseInt(meal.getMeal_price());
-                holder.tvPrice.setText((last_amounts*price)+"");
-                sendAmountsOrder.sendAmount(1,meal, last_amounts);
+                holder.tvPrice.setText((last_amounts * price) + "");
+                sendAmountsOrder.sendAmount(1, meal, last_amounts);
             }
         });
         holder.btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int i = Integer.parseInt(holder.tvAmounts.getText().toString());
-                if (i<=0){
-                    holder.tvAmounts.setText(0+"");
-                    holder.tvPrice.setText(0+"");
-                    sendAmountsOrder.sendAmount(0,meal,0);
-                }else{
+                if (i <= 0) {
+                    holder.tvAmounts.setText(0 + "");
+                    holder.tvPrice.setText(0 + "");
+                    sendAmountsOrder.sendAmount(0, meal, 0);
+                } else {
                     i--;
-                    holder.tvAmounts.setText(i+"");
+                    holder.tvAmounts.setText(i + "");
                     int last_amounts = Integer.parseInt(holder.tvAmounts.getText().toString().trim());
                     int price = Integer.parseInt(meal.getMeal_price());
-                    holder.tvPrice.setText((last_amounts*price)+"");
-                    sendAmountsOrder.sendAmount(-1,meal, last_amounts);
+                    holder.tvPrice.setText((last_amounts * price) + "");
+                    sendAmountsOrder.sendAmount(-1, meal, last_amounts);
                 }
             }
         });
+        holder.setIsRecyclable(true);
     }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    
 
     public void setImage(final MenuOrderAdapter.MyViewHolder holder, String path, String id_image) {
         try {
             final File localFile = File.createTempFile("images", "png");
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
             //TODO: return value path image
-            StorageReference riversRef = mStorageRef.child("/"+path+"/"+id_image+".png");
-            System.out.println("TEST:"+riversRef.toString());
+            StorageReference riversRef = mStorageRef.child("/" + path + "/" + id_image + ".png");
+            System.out.println("TEST:" + riversRef.toString());
             riversRef.getFile(localFile)
                     .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override
@@ -111,7 +135,7 @@ public class MenuOrderAdapter extends RecyclerView.Adapter<MenuOrderAdapter.MyVi
                             // Successfully downloaded data to local file
                             holder.imgMeal.setBackground(null);
                             Bitmap myBitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                            holder.imgMeal.setImageBitmap(Bitmap.createScaledBitmap(myBitmap,60,60,false));
+                            holder.imgMeal.setImageBitmap(Bitmap.createScaledBitmap(myBitmap, 60, 60, false));
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -130,7 +154,7 @@ public class MenuOrderAdapter extends RecyclerView.Adapter<MenuOrderAdapter.MyVi
         return list.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvPrice;
         TextView tvMealName;
@@ -138,10 +162,11 @@ public class MenuOrderAdapter extends RecyclerView.Adapter<MenuOrderAdapter.MyVi
         TextView tvMealCategory;
         ImageView imgMeal;
         LinearLayout layoutChooseAmount;
-        Boolean flag = false;
+
         ImageButton btnPlus;
         ImageButton btnMinus;
         TextView tvAmounts;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvMealName = itemView.findViewById(R.id.tvMeal_name);
@@ -157,14 +182,14 @@ public class MenuOrderAdapter extends RecyclerView.Adapter<MenuOrderAdapter.MyVi
                 @Override
                 public void onClick(View v) {
                     //sendDataAround.sendData(list.get(getAdapterPosition()));
-                    if (!flag){
-                        layoutChooseAmount.setVisibility(View.VISIBLE);
-                        flag = !flag;
-                    }
-                    else{
-                        layoutChooseAmount.setVisibility(View.GONE);
-                        flag = !flag;
-                    }
+//                    if (!flag){
+//                        layoutChooseAmount.setVisibility(View.VISIBLE);
+//                        flag = !flag;
+//                    }
+//                    else{
+//                        layoutChooseAmount.setVisibility(View.GONE);
+//                        flag = !flag;
+//                    }
                     recyclerviewClick.onItemClick(getAdapterPosition());
                 }
             });

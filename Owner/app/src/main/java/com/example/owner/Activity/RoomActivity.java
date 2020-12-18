@@ -1,7 +1,6 @@
 package com.example.owner.Activity;
 
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.owner.Dialog.DetailTableDialog;
 import com.example.owner.Dialog.OrderDialog;
 import com.example.owner.Dialog.UpdateTableDialog;
 import com.example.owner.Interface.RecyclerviewClick;
@@ -177,7 +175,7 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
         SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
         String ownerID = pref.getString(LoginActivity.OWNERID, null);
         tableID = "Table" + (position + 1);
-//        DetailTableDialog dialog = new DetailTableDialog(this, url, ownerID, areaID, tableID);
+//        DetaiAndPaymentlTableDialog dialog = new DetaiAndPaymentlTableDialog(this, url, ownerID, areaID, tableID);
 //        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 //        dialog.show();
         String status = listTable.get(position).getTableStatus();
@@ -223,12 +221,6 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
         }
-//        ì {
-//            //Toast exception
-//            UpdateTableDialog dialog = new UpdateTableDialog(this, url, ownerID, areaID, tableID);
-//            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-//            dialog.show();
-//        }
     }
 
     public void backPressed() {
