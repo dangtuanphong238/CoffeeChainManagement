@@ -8,18 +8,17 @@
     android:orientation="vertical"
     tools:context=".InfoStoreActivity">
 
+
     <LinearLayout
-        android:layout_marginVertical="50dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:orientation="vertical"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <TextView
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:text="Ten cua hang:"
+            android:text="Tên Cửa Hàng:"
             android:textColor="#767B97"
             android:textSize="20dp"></TextView>
         <EditText
@@ -27,15 +26,10 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:gravity="center"
-            android:hint="Tên Cửa Hàng"
+            android:hint="Enter the store name"
             android:paddingHorizontal="10dp"
             android:background="@drawable/custom_edittext"
             android:paddingRight="20px"></EditText>
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
     <TextView
         android:id="@+id/txtrsDiachi"
         android:layout_width="wrap_content"
@@ -49,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center"
-        android:hint="Nhap ten dia chi"
+        android:hint="Enter the address"
         android:paddingHorizontal="10dp"
         android:background="@drawable/custom_edittext"
         android:paddingRight="20px"></EditText>
@@ -71,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:gravity="center"
-            android:hint="Nhap giay phep kinh doanh"
+            android:hint="Enter the business license"
             android:paddingHorizontal="10dp"
             android:background="@drawable/custom_edittext"
             android:paddingRight="20px"></EditText>
@@ -93,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:gravity="center"
-            android:hint="Nhap vao SDT"
+            android:hint="Enter your phone number"
             android:paddingHorizontal="10dp"
             android:background="@drawable/custom_edittext"
             android:paddingRight="20px"></EditText>
@@ -116,7 +110,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:gravity="center"
-            android:hint="Trang Thai là "
+            android:layout_gravity="center"
             android:paddingHorizontal="10dp"
             android:background="@drawable/custom_edittext"
             android:paddingRight="20px"></Spinner>

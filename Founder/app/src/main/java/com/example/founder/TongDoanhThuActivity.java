@@ -15,6 +15,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.founder.Public.Public_func;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class TongDoanhThuActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -26,7 +28,6 @@ public class TongDoanhThuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tongdoanhthu);
-
         anhXa();
         txttenlayout.setText("Tổng Doanh Thu");
         openMenu();
@@ -66,6 +67,27 @@ public class TongDoanhThuActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navDrawerMenu);
         imgMnu = findViewById(R.id.btnMnu);
         txttenlayout = findViewById(R.id.idtoolbar);
+    }
+    public class DataPoint{
+        int xValue,yValue;
+        public DataPoint(int xValue,int yValue ){
+            this.xValue = xValue;
+            this.yValue = yValue;
+        }
+        public DataPoint(){
+
+        }
+        public int getxValue(){
+            return  xValue;
+        }
+        public int getyValue(){
+            return  yValue;
+        }
+    }
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = firebaseDatabase.getReference("FounderManager").child("QuanLyDoanhThu").child("Owner3");
+    private void InsertData(){
+        
     }
     public void openMenu() {
         imgMnu.setOnClickListener(new View.OnClickListener() {

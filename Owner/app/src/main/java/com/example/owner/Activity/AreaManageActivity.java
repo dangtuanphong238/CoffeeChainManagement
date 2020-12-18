@@ -160,12 +160,16 @@ package com.example.owner.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -210,12 +214,18 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
     private NavigationView navigationView;
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
+    //drawer header:
+    Bitmap bitmapDecoded;
+    private TextView nav_head_name_store, nav_head_address_store;
+    private ImageView nav_head_avatar;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_area_manage);
         anhXa();
+        headerNav();
         txtTitleActivity.setText("Quản lý khu vực");
         openMenu();
         //call function onClickItem
@@ -276,6 +286,30 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
         });
 
     }
+
+    //header drawer:
+    private void headerNav() {
+        SharedPreferences ref = getSharedPreferences("bitmap_img", MODE_PRIVATE);
+
+        String bitmap = ref.getString("imagePreferance", "");
+        System.out.println(bitmap);
+        decodeBase64(bitmap);
+        View headerView = navigationView.getHeaderView(0);
+        nav_head_avatar = headerView.findViewById(R.id.nav_head_avatar);
+        if (bitmapDecoded != null) {
+            nav_head_avatar.setImageBitmap(bitmapDecoded);
+        } else {
+            System.out.println("bitmapp null");
+        }
+    }
+
+    // method for base64 to bitmap
+    public void decodeBase64(String input) {
+        byte[] decodedByte = Base64.decode(input, 0);
+        bitmapDecoded = BitmapFactory
+                .decodeByteArray(decodedByte, 0, decodedByte.length);
+    }
+
 
     public void getDataAndShowAreaView() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
