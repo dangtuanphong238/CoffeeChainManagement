@@ -41,7 +41,7 @@ public class ListTableAdapter extends RecyclerView.Adapter<ListTableAdapter.MyVi
         TableModel model = list.get(position);
         holder.tvTableName.setText("Bàn " + (position + 1));
         if (model.getTableStatus().equals((PhongScreen.ERROR + ""))) {
-            holder.imgTable.setBackgroundColor(0xFF000);
+            holder.imgTable.setBackgroundColor(0xFF000000);
         } else if (model.getTableStatus().equals(PhongScreen.BOOK + "")) {
             holder.imgTable.setBackgroundColor(0xFFCA62E4);
         } else if (model.getTableStatus().equals(PhongScreen.HAVING + "")) {
