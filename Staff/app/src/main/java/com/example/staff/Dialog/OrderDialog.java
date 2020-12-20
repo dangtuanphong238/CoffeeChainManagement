@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -29,6 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Modifier;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -58,6 +60,7 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
     LinearLayout layoutChooseAmount;
     TextView tvCart;
     Spinner spPhanLoaiMon;
+    private String keySpinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,9 +82,67 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         tvTableName.setText(name);
         System.out.println("aa"+tvTableName);
         //layoutChooseAmount.setVisibility(View.VISIBLE);
-        getMenu();
+        getSpinner();
+//        getMenu();
     }
 
+    private void getSpinner() {
+        spPhanLoaiMon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        keySpinner = parent.getItemAtPosition(position).toString();
+        if(keySpinner.equals("Tất Cả")){
+            getMenu();
+            System.out.println("1111"+ keySpinner);
+        }else {
+            FillSpinner(keySpinner);
+            System.out.println("keu"+keySpinner);
+        }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+    public void FillSpinner(final String key){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String path = "OwnerManager/" + ownerID + "/QuanLyMonAn";
+        final DatabaseReference myRef = database.getReference(path);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<MealModel> list = new ArrayList<>();
+                try {
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        MealModel model = data.getValue(MealModel.class);
+                        if(model.getMeal_category().equals(key)){
+                            list.add(model);
+                            Toast.makeText(context, key, Toast.LENGTH_SHORT).show();
+                        }
+
+                        System.out.println(list);
+                    }
+
+                } catch (Exception ex) {
+                    Log.w("PROBLEM", "get data from branch table active have problem " + ex.getMessage());
+                    System.out.println("get data from branch table active have problem in url: " + myRef.toString());
+                }
+                final String path = "/OwnerManager/" + ownerID + "/QuanLyMonAn";
+                MenuOrderAdapter adapter = new MenuOrderAdapter(context, list, OrderDialog.this, path, OrderDialog.this);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                rvMenuOrder.setLayoutManager(linearLayoutManager);
+                rvMenuOrder.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("Error", error.getMessage());
+            }
+        });
+    }
     public void getMenu() {
         //Read list meal used in dialog from branch TableActive
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -110,7 +171,7 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.w("Read list meal in dialog Error", error.getMessage());
+                Log.w("Error", error.getMessage());
             }
         });
     }
