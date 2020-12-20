@@ -58,8 +58,8 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
     RecyclerView recyclerView;
     ArrayList<TableModel> listTable = new ArrayList<>();
     ListTableAdapter adapter;
-    String getLayout;
-    int roomName;
+    String nameRoom;
+    int keyRoom;
     String url = null;
 
     //Dev_Phong Changed:
@@ -80,22 +80,20 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
 //        layoutButton = findViewById(R.id.layoutButton);
         recyclerView = findViewById(R.id.rvListTable);
         Bundle bundle = getIntent().getExtras();
-        roomName = bundle.getInt(AreaManageActivity.KEY_ROOM);
-
-        txtTitle.setText(roomName + "");
-
-        getLayout = bundle.getString(AreaManageActivity.KEY_GET_LAYOUT);
+        keyRoom = bundle.getInt(AreaManageActivity.KEY_ROOM) ;
+        nameRoom = bundle.getString(AreaManageActivity.KEY_NAME_ROOM);
+        txtTitle.setText(nameRoom);
 
         SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
         String ownerID = pref.getString(LoginActivity.OWNERID, null);
         int areaID = 0;
-        if (roomName == PHONG_LANH) {
+        if (keyRoom == PHONG_LANH) {
             areaID = 1;
-        } else if (roomName == PHONG_VIP) {
+        } else if (keyRoom == PHONG_VIP) {
             areaID = 2;
-        } else if (roomName == PHONG_HOP) {
+        } else if (keyRoom == PHONG_HOP) {
             areaID = 3;
-        } else if (roomName == PHONG_THUONG) {
+        } else if (keyRoom == PHONG_THUONG) {
             areaID = 4;
         } else {
             areaID = 5;

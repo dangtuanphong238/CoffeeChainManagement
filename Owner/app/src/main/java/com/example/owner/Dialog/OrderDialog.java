@@ -1,7 +1,10 @@
 package com.example.owner.Dialog;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,9 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.owner.Activity.RoomActivity;
 import com.example.owner.Adapter.MenuOrderAdapter;
 import com.example.owner.Interface.RecyclerviewClick;
 import com.example.owner.Interface.SendAmountsOrder;
@@ -24,6 +29,7 @@ import com.example.owner.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,6 +50,14 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
     String areaID;
     String tableID;
 
+    TextView tvTableName;
+    RecyclerView rvMenuOrder;
+    TextView tvSumPrice;
+    Button btnOrder;
+    LinearLayout btnCancel;
+    LinearLayout layoutChooseAmount;
+    TextView tvCart;
+
     public OrderDialog(@NonNull Context context, String ownerID, String areaID, String tableID) {
         super(context);
         this.context = context;
@@ -52,13 +66,6 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         this.tableID = tableID;
     }
 
-    TextView tvTableName;
-    RecyclerView rvMenuOrder;
-    TextView tvSumPrice;
-    Button btnOrder;
-    LinearLayout btnCancel;
-    LinearLayout layoutChooseAmount;
-    TextView tvCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,16 +76,16 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         tvTableName = findViewById(R.id.tvTableName);
         rvMenuOrder = findViewById(R.id.rvMenuOrder);
         tvSumPrice = findViewById(R.id.tvSumPrice);
-        btnOrder = findViewById(R.id.btnPayment);
+        btnOrder = findViewById(R.id.btnOrder);
         btnCancel = findViewById(R.id.btnCancel);
         layoutChooseAmount = findViewById(R.id.layoutChooseAmount);
         tvCart = findViewById(R.id.tvCart);
         tvSumPrice = findViewById(R.id.tvSumPrice);
-        btnOrder.setOnClickListener(this);
-        btnCancel.setOnClickListener(this);
         String name = tableID.replace("Table", "Bàn ");
         tvTableName.setText(name);
+        btnCancel.setOnClickListener(this);
         //layoutChooseAmount.setVisibility(View.VISIBLE);
+        checkTableAndOrder();
         getMenu();
     }
 
@@ -108,6 +115,7 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
                 rvMenuOrder.setAdapter(adapter);
             }
 
+            @SuppressLint("LongLogTag")
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.w("Read list meal in dialog Error", error.getMessage());
@@ -115,6 +123,11 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        btnOrder.setOnClickListener(this);
+    }
 
     @Override
     public void onClick(View v) {
@@ -122,8 +135,16 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
             case R.id.btnCancel:
                 dismiss();
                 break;
-            case R.id.btnPayment:
-                checkTableAndOrder();
+            case R.id.btnOrder:
+                if (listOrder.size() > 0) {
+                    if (usedArrayList.size() > 0)
+                        writeListOrderInDB(checkData(listOrder, usedArrayList));
+                    else writeListOrderInDB(listOrder);
+                    listOrder.clear();
+                    usedArrayList.clear();
+                } else {
+                    Toast.makeText(context, "Vui lòng chọn món trước khi order", Toast.LENGTH_SHORT).show();
+                }
                 break;
             default:
                 break;
@@ -161,7 +182,7 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         } else if (times == 0) {
             amountsProducts += 0;
         }
-        if (sumPrice < 0){
+        if (sumPrice < 0) {
             sumPrice = 0;
         }
         tvSumPrice.setText(sumPrice + "");
@@ -189,49 +210,36 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
                 listOrder.add(mealUsed);
             }
         }
+        System.out.println("ARR List Order: " + listOrder.toString());
     }
 
+    public ArrayList<MealUsed> usedArrayList = new ArrayList<>();
+
     public void checkTableAndOrder() {
-        if (listOrder.size() > 0) {
-            //Order when table had customer
-            String path = "OwnerManager/" + ownerID + "/TableActive/Area" + areaID + "/" + tableID + "/Meal";
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            final DatabaseReference myRef = database.getReference(path);
-            final ArrayList<MealUsed> usedArrayList = new ArrayList<>();
-            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot data) {
-
-                    for (DataSnapshot snapshot : data.getChildren()) {
-                        MealModel mealModel = new MealModel(
-                                snapshot.child("category").getValue() + "",
-                                snapshot.child("id").getValue() + "",
-                                snapshot.child("price").getValue() + "",
-                                snapshot.child("name").getValue() + "",
-                                snapshot.child("image").getValue() + "");
-                        MealUsed mealUsed = new MealUsed(Integer.parseInt(snapshot.child("amount").getValue() + ""), mealModel, snapshot.child("timeInput").getValue() + "");
-                        usedArrayList.add(mealUsed);
-                    }
-
-                    if (usedArrayList.size() > 0) {
-                        if (listOrder.size() > 0) {
-                            writeListOrderInDB(checkData(listOrder, usedArrayList));
-                        } else {
-                            System.out.println("Check BUG");
-                        }
-                    } else {
-                        writeListOrderInDB(listOrder);
-                    }
+        String path = "OwnerManager/" + ownerID + "/TableActive/Area" + areaID + "/" + tableID + "/Meal";
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference(path);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot data) {
+                for (DataSnapshot snapshot : data.getChildren()) {
+                    MealModel mealModel = new MealModel(
+                            snapshot.child("category").getValue() + "",
+                            snapshot.child("id").getValue() + "",
+                            snapshot.child("price").getValue() + "",
+                            snapshot.child("name").getValue() + "",
+                            snapshot.child("image").getValue() + "");
+                    MealUsed mealUsed = new MealUsed(Integer.parseInt(snapshot.child("amount").getValue() + ""), mealModel, snapshot.child("timeInput").getValue() + "");
+                    usedArrayList.add(mealUsed);
                 }
+                System.out.println("ARR used2: " + usedArrayList.toString());
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                }
-            });
-        } else {
-            Toast.makeText(context, "Vui lòng chọn món để order", Toast.LENGTH_SHORT).show();
-        }
+            }
+        });
     }
 
     public void writeListOrderInDB(ArrayList<MealUsed> listOrder) {
@@ -250,7 +258,7 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
             root.child("timeInput").setValue(listOrder.get(i).getTimeInput());
         }
         DatabaseReference status = database.getReference(manageTable);
-        status.child("tableStatus").setValue("2").addOnCompleteListener(new OnCompleteListener<Void>() {
+        status.child("tableStatus").setValue(RoomActivity.HAVING + "").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(context, "Order thanh cong", Toast.LENGTH_SHORT).show();
@@ -260,45 +268,18 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
 
     //If table had customer, add amounts new meal in old arrayList
     public ArrayList<MealUsed> checkData(ArrayList<MealUsed> arrOrder, ArrayList<MealUsed> arrUsed) {
-        try {
-            ArrayList<MealUsed> temptArr = new ArrayList<>();
-            for (int i = 0; i < arrOrder.size(); i++) {
-                boolean flag = false;
-                for (int j = 0; j < arrUsed.size(); j++) {
-                    if (arrOrder.get(j).getMealID().equals(arrUsed.get(i).getMealID())) {
-                        int oldAmounts = Integer.parseInt(arrUsed.get(i).getAmount() + "");
-                        System.out.println("arr ORDER: " + arrOrder.get(i).getAmount() + "");
-                        int newAmounts = Integer.parseInt(arrOrder.get(i).getAmount() + "");
-                        arrUsed.get(i).setAmount((oldAmounts + newAmounts));
-                        arrOrder.remove(arrOrder.get(i));
-                        flag = true;
-                    }
+        for (MealUsed mealOrder : arrOrder) {
+            boolean flag = false;
+            for (MealUsed mealUsed : arrUsed) {
+                if (mealUsed.getMealID().equals(mealOrder.getMealID())) {
+                    int oldAmounts = Integer.parseInt(mealUsed.getAmount() + "");
+                    int newAmounts = Integer.parseInt(mealOrder.getAmount() + "");
+                    mealUsed.setAmount((oldAmounts + newAmounts));
+                    flag = true;
                 }
-                if (flag == false){
-                    temptArr.add(arrOrder.get(i));
-                    arrOrder.remove(arrOrder.get(i));
-                }
-                System.out.println("position I:"+ i);
             }
-        } catch (Exception ex) {
-            System.out.println("PROBLEM: " + ex.getMessage());
+            if (flag == false) arrUsed.add(mealOrder);
         }
-        System.out.println("TEST ARR_USED: " + arrUsed.toString());
         return arrUsed;
     }
-
-    //Used to catch new meal if add meal for table had customer
-    public ArrayList handleTemptArr(ArrayList<MealUsed> temptArr) {
-        for (int i = 0; i < temptArr.size(); i++) {
-            for (int j = i++; j < temptArr.size(); j++) {
-                if ( temptArr.get(i).getMealID().equals(temptArr.get(i).getMealID())
-                        && temptArr.get(i).getAmount() == temptArr.get(j).getAmount())
-                {
-                    temptArr.remove(temptArr.get(i));
-                }
-            }
-        }
-        return temptArr;
-    }
-
 }

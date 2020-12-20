@@ -57,30 +57,14 @@ public class MenuOrderAdapter extends RecyclerView.Adapter<MenuOrderAdapter.MyVi
         return new MenuOrderAdapter.MyViewHolder(cardView);
     }
 
-    Boolean flag = false;
-
     @Override
     public void onBindViewHolder(@NonNull final MenuOrderAdapter.MyViewHolder holder, int position) {
         final MealModel meal = list.get(position);
         holder.tvMealName.setText(meal.getMeal_name());
         holder.tvMealPrice.setText(meal.getMeal_price());
         holder.tvMealCategory.setText(meal.getMeal_category());
-        // holder.layoutChooseAmount.setVisibility(View.GONE);
         setImage(holder, path, meal.getMeal_id());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!flag) {
-                    if (holder.tvMealName.getText().toString().equals(meal.getMeal_name())) {
-                        holder.layoutChooseAmount.setVisibility(View.VISIBLE);
-                        flag = !flag;
-                    }
-                } else {
-                    holder.layoutChooseAmount.setVisibility(View.GONE);
-                    flag = !flag;
-                }
-            }
-        });
+
         holder.btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,7 +95,6 @@ public class MenuOrderAdapter extends RecyclerView.Adapter<MenuOrderAdapter.MyVi
                 }
             }
         });
-        holder.setIsRecyclable(true);
     }
 
     @Override
@@ -166,6 +149,7 @@ public class MenuOrderAdapter extends RecyclerView.Adapter<MenuOrderAdapter.MyVi
         ImageButton btnPlus;
         ImageButton btnMinus;
         TextView tvAmounts;
+        Boolean flag = false;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -182,14 +166,9 @@ public class MenuOrderAdapter extends RecyclerView.Adapter<MenuOrderAdapter.MyVi
                 @Override
                 public void onClick(View v) {
                     //sendDataAround.sendData(list.get(getAdapterPosition()));
-//                    if (!flag){
-//                        layoutChooseAmount.setVisibility(View.VISIBLE);
-//                        flag = !flag;
-//                    }
-//                    else{
-//                        layoutChooseAmount.setVisibility(View.GONE);
-//                        flag = !flag;
-//                    }
+                    if (!flag)  layoutChooseAmount.setVisibility(View.VISIBLE);
+                    else layoutChooseAmount.setVisibility(View.GONE);
+                    flag = !flag;
                     recyclerviewClick.onItemClick(getAdapterPosition());
                 }
             });
