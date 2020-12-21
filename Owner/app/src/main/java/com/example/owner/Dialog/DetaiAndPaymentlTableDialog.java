@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.owner.Activity.DoanhThuTheoMonth;
 import com.example.owner.Adapter.DetailAndPaymentTableAdapter;
 
 import com.example.owner.Global.ParseTime;
@@ -53,7 +54,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
     String year = parseTime.getYear();
     String month = parseTime.getMonth();
     String _date =  parseTime.getDate();
-    ArrayList<Integer> listTienNgay = new ArrayList<>();
+    ArrayList<Double> listTienNgay = new ArrayList<Double>();
 
     public DetaiAndPaymentlTableDialog(@NonNull Context context, String url, String ownerID, String areaID, String tableID) {
         super(context);
@@ -62,7 +63,6 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
         this.ownerID = ownerID;
         this.areaID = areaID;
         this.tableID = tableID;
-        System.out.println("URL_DETAIL:"+url);
     }
 
     TextView tvTableName;
@@ -91,7 +91,6 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
     @Override
     protected void onStart() {
         super.onStart();
-        Toast.makeText(context,_date , Toast.LENGTH_SHORT).show();
     }
 
     ArrayList<MealUsed> list = new ArrayList<>();
@@ -197,7 +196,6 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         final DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/QuanLyHoaDon/" + year + "/" + "Thang"+month + "/" + "Ngay"+_date+"/Bills");
-        System.out.println("myRef" + myRef.toString());
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -224,6 +222,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
                         infoMeal.child("timeInput").setValue(list.get(i).getTimeInput());
                     }
                     path.child("Sum").setValue(sum + "");
+                    setTotalNgay(sum);
                 }
                 else {
                     ArrayList<BillModel> listBill = new ArrayList<>();
@@ -274,6 +273,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
                                 infoMeal.child("timeInput").setValue(list.get(i).getTimeInput());
                             }
                             path.child("Sum").setValue(sum + "");
+                            tongThuNgay();
                         }
                     }
                     catch (Exception ex) {
@@ -332,5 +332,35 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
                 break;
         }
         dismiss();
+    }
+    public void tongThuNgay()
+    {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        final DatabaseReference reference = firebaseDatabase.getReference();
+        reference.child("OwnerManager").child(ownerID).child("QuanLyHoaDon")
+                .child(year).child("Thang"+month).child("Ngay"+_date).child("DoanhThuNgay").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue() != null)
+                {
+                    DoanhThuMonth doanhThuMonth = snapshot.getValue(DoanhThuMonth.class);
+                    String sum = doanhThuMonth.sumtotal;
+                    System.out.println("sum" + sum);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    private void setTotalNgay(int sum)
+    {
+        DoanhThuMonth doanhThuMonth = new DoanhThuMonth(_date,String.valueOf(sum));
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference reference = firebaseDatabase.getReference();
+        reference.child("OwnerManager").child(ownerID).child("QuanLyHoaDon")
+                .child(year).child("Thang"+month).child("Ngay"+_date).child("DoanhThuNgay").setValue(doanhThuMonth);
     }
 }
