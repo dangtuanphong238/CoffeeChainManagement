@@ -16,19 +16,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.owner.Activity.DoanhThuTheoMonth;
 import com.example.owner.Adapter.DetailAndPaymentTableAdapter;
-
 import com.example.owner.Global.ParseTime;
 import com.example.owner.Model.BillModel;
-import com.example.owner.Model.DoanhThuMonth;
 import com.example.owner.Model.MealModel;
 import com.example.owner.Model.MealUsed;
-import com.example.owner.Model.Sum;
 import com.example.owner.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -48,13 +43,6 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
     String ownerID;
     String areaID;
     String tableID;
-    int sum;
-    Date date = new Date();
-    ParseTime parseTime = new ParseTime(date.getTime());
-    String year = parseTime.getYear();
-    String month = parseTime.getMonth();
-    String _date =  parseTime.getDate();
-    ArrayList<Double> listTienNgay = new ArrayList<Double>();
 
     public DetaiAndPaymentlTableDialog(@NonNull Context context, String url, String ownerID, String areaID, String tableID) {
         super(context);
@@ -63,6 +51,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
         this.ownerID = ownerID;
         this.areaID = areaID;
         this.tableID = tableID;
+        System.out.println("URL_DETAIL:"+url);
     }
 
     TextView tvTableName;
@@ -83,14 +72,16 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
         btnPay = findViewById(R.id.btnPayment);
         btnCancel = findViewById(R.id.btnCancel);
         getDataOfTable();
-        btnPay.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
         String name = tableID.replace("Table", "Bàn ");
         tvTableName.setText(name);
+        createBill();
     }
+
     @Override
     protected void onStart() {
         super.onStart();
+        btnPay.setOnClickListener(this);
     }
 
     ArrayList<MealUsed> list = new ArrayList<>();
@@ -148,6 +139,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
         }
         return sum;
     }
+
     ArrayList<MealUsed> listMealUsed = new ArrayList<>();
 
     public void createBill() {
@@ -187,15 +179,17 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
 
             }
         });
-        payment(listMealUsed);
-
     }
 
     public void payment(final ArrayList<MealUsed> list) {
         //Read data from branch QuanLyHoaDon to check how much bill?
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-        final DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/QuanLyHoaDon/" + year + "/" + "Thang"+month + "/" + "Ngay"+_date+"/Bills");
+        Date date = new Date();
+        ParseTime parseTime = new ParseTime(date.getTime());
+        String year = parseTime.getYear();
+        String month = "Thang" + parseTime.getMonth();
+        String _date = "Ngay" + parseTime.getDate();
+        final DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/QuanLyHoaDon/" + year + "/" + month + "/" + _date+"/Bills");
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -209,7 +203,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
                     path.child("Table").setValue(tableID);
                     path.child("TimeOutput").setValue(timestamp.getTime() + "");
                     path.child("TimeInput").setValue(list.get(0).getTimeInput());
-                    sum = 0;
+                    int sum = 0;
                     for (int i = 0; i < list.size(); i++) {
                         sum += list.get(i).getSumPrice();
                         DatabaseReference infoMeal = path.child("Meal").child(list.get(i).getMealID());
@@ -222,64 +216,9 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
                         infoMeal.child("timeInput").setValue(list.get(i).getTimeInput());
                     }
                     path.child("Sum").setValue(sum + "");
-                    setTotalNgay(sum);
-                }
-                else {
-                    ArrayList<BillModel> listBill = new ArrayList<>();
-                    try {
-                        for (DataSnapshot data : snapshot.getChildren()) {
-                            String ID = data.child("ID").getValue() + "";
-                            String Area = data.child("Area").getValue() + "";
-                            String Table = data.child("Table").getValue() + "";
-                            ArrayList<MealUsed> listMealUsed = new ArrayList<>();
-                            DataSnapshot meal = data.child("Meal");
-                            for (DataSnapshot dataSnapshot : meal.getChildren()) {
-                                String meal_id = dataSnapshot.child("id").getValue() + "";
-                                String meal_category = dataSnapshot.child("category").getValue() + "";
-                                String meal_amount = dataSnapshot.child("amount").getValue() + "";
-                                int amount = Integer.parseInt(meal_amount);
-                                String meal_image = dataSnapshot.child("image").getValue() + "";
-                                String meal_name = dataSnapshot.child("name").getValue() + "";
-                                String meal_price = dataSnapshot.child("price").getValue() + "";
-                                String meal_timeInput = dataSnapshot.child("timeInput").getValue() + "";
-                                MealModel mealModel = new MealModel(meal_category, meal_id, meal_price, meal_name, meal_image);
-                                MealUsed mealUsed = new MealUsed(amount, mealModel, meal_timeInput);
-                                listMealUsed.add(mealUsed);
-                            }
-                            String Sum = data.child("Sum").getValue() + "";
-                            String TimeInput = data.child("TimeInput").getValue() + "";
-                            String TimeOutput = data.child("TimeOutput").getValue() + "";
-                            BillModel billModel = new BillModel(ID, Area, Table, listMealUsed, Sum, TimeInput, TimeOutput);
-                            listBill.add(billModel);
-                            listBill = sortListAsASC(listBill);
-                            bill_id = "Bill" + (listBill.get(listBill.size() - 1).get_ID() + 1);
-
-                            DatabaseReference path = myRef.child(bill_id);
-                            path.child("ID").setValue(bill_id);
-                            path.child("Area").setValue(ownerID);
-                            path.child("Table").setValue(tableID);
-                            path.child("TimeOutput").setValue(timestamp.getTime() + "");
-                            path.child("TimeInput").setValue(list.get(0).getTimeInput());
-                            sum = 0;
-                            for (int i = 0; i < list.size(); i++) {
-                                sum += list.get(i).getSumPrice();
-                                DatabaseReference infoMeal = path.child("Meal").child(list.get(i).getMealID());
-                                infoMeal.child("amount").setValue(list.get(i).getAmount());
-                                infoMeal.child("category").setValue(list.get(i).getMealCategory());
-                                infoMeal.child("id").setValue(list.get(i).getMealID());
-                                infoMeal.child("image").setValue(list.get(i).getMealImage());
-                                infoMeal.child("name").setValue(list.get(i).getMealName());
-                                infoMeal.child("price").setValue(list.get(i).getMealPrice());
-                                infoMeal.child("timeInput").setValue(list.get(i).getTimeInput());
-                            }
-                            path.child("Sum").setValue(sum + "");
-                            tongThuNgay();
-                        }
-                    }
-                    catch (Exception ex) {
-                        Log.w("PROBLEM", "get data from url " + myRef.toString() + " have problem");
-                        System.out.println("PROBLEM: " + "get data from url " + myRef.toString() + " have problem");
-                    }
+                } else {
+                   ArrayList listBill = parseListBill(snapshot);
+                   setValueForBranchBill(listBill,myRef, list);
                 }
                 setUpTableAfterPayment();
             }
@@ -290,6 +229,72 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
             }
         });
     }
+
+    //Only bill #2 onwards
+    public ArrayList<BillModel> parseListBill(DataSnapshot snapshot){
+        ArrayList<BillModel> listBill = new ArrayList<>();
+        for (DataSnapshot data : snapshot.getChildren()) {
+            String ID = data.child("ID").getValue() + "";
+            String Area = data.child("Area").getValue() + "";
+            String Table = data.child("Table").getValue() + "";
+            ArrayList<MealUsed> listMealUsed = new ArrayList<>();
+            listMealUsed = parseListMealUsed(data, listMealUsed);
+            String Sum = data.child("Sum").getValue() + "";
+            String TimeInput = data.child("TimeInput").getValue() + "";
+            String TimeOutput = data.child("TimeOutput").getValue() + "";
+            BillModel billModel = new BillModel(ID, Area, Table, listMealUsed, Sum, TimeInput, TimeOutput);
+            listBill.add(billModel);
+        }
+        return listBill;
+    }
+
+    public ArrayList<MealUsed> parseListMealUsed(DataSnapshot data, ArrayList<MealUsed> listMealUsed){
+        DataSnapshot meal = data.child("Meal");
+        for (DataSnapshot dataSnapshot : meal.getChildren()) {
+            String meal_id = dataSnapshot.child("id").getValue() + "";
+            String meal_category = dataSnapshot.child("category").getValue() + "";
+            String meal_amount = dataSnapshot.child("amount").getValue() + "";
+            int amount = Integer.parseInt(meal_amount);
+            String meal_image = dataSnapshot.child("image").getValue() + "";
+            String meal_name = dataSnapshot.child("name").getValue() + "";
+            String meal_price = dataSnapshot.child("price").getValue() + "";
+            String meal_timeInput = dataSnapshot.child("timeInput").getValue() + "";
+            MealModel mealModel = new MealModel(meal_category, meal_id, meal_price, meal_name, meal_image);
+            MealUsed mealUsed = new MealUsed(amount, mealModel, meal_timeInput);
+            listMealUsed.add(mealUsed);
+        }
+        return listMealUsed;
+    }
+
+    //Set value for bill #2 onwards
+    public void setValueForBranchBill(ArrayList<BillModel> listBill, DatabaseReference myRef, ArrayList<MealUsed> list){
+        listBill = sortListAsASC(listBill);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String bill_id = "";
+        bill_id = "Bill" + (listBill.get(listBill.size() - 1).get_ID() + 1);
+
+        DatabaseReference path = myRef.child(bill_id);
+        path.child("ID").setValue(bill_id);
+        path.child("Area").setValue(ownerID);
+        path.child("Table").setValue(tableID);
+        path.child("TimeOutput").setValue(timestamp.getTime() + "");
+        path.child("TimeInput").setValue(list.get(0).getTimeInput());
+        int sum = 0;
+        //Write list meal in bill
+        for (int i = 0; i < list.size(); i++) {
+            sum += list.get(i).getSumPrice();
+            DatabaseReference infoMeal = path.child("Meal").child(list.get(i).getMealID());
+            infoMeal.child("amount").setValue(list.get(i).getAmount());
+            infoMeal.child("category").setValue(list.get(i).getMealCategory());
+            infoMeal.child("id").setValue(list.get(i).getMealID());
+            infoMeal.child("image").setValue(list.get(i).getMealImage());
+            infoMeal.child("name").setValue(list.get(i).getMealName());
+            infoMeal.child("price").setValue(list.get(i).getMealPrice());
+            infoMeal.child("timeInput").setValue(list.get(i).getTimeInput());
+        }
+        path.child("Sum").setValue(sum + "");
+    }
+
     ArrayList<BillModel> sortListAsASC(ArrayList<BillModel> list) {
         ArrayList<BillModel> array = list;
         Collections.sort(array, new Comparator<BillModel>() {
@@ -300,6 +305,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
         });
         return array;
     }
+
     public void setUpTableAfterPayment() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference status = database.getReference("/OwnerManager/" + ownerID + "/QuanLyBan/Area" + areaID + "/" + tableID);
@@ -326,41 +332,11 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
                 dismiss();
                 break;
             case R.id.btnPayment:
-                createBill();
+                payment(listMealUsed);
                 break;
             default:
                 break;
         }
         dismiss();
-    }
-    public void tongThuNgay()
-    {
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference reference = firebaseDatabase.getReference();
-        reference.child("OwnerManager").child(ownerID).child("QuanLyHoaDon")
-                .child(year).child("Thang"+month).child("Ngay"+_date).child("DoanhThuNgay").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue() != null)
-                {
-                    DoanhThuMonth doanhThuMonth = snapshot.getValue(DoanhThuMonth.class);
-                    String sum = doanhThuMonth.sumtotal;
-                    System.out.println("sum" + sum);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-    private void setTotalNgay(int sum)
-    {
-        DoanhThuMonth doanhThuMonth = new DoanhThuMonth(_date,String.valueOf(sum));
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference reference = firebaseDatabase.getReference();
-        reference.child("OwnerManager").child(ownerID).child("QuanLyHoaDon")
-                .child(year).child("Thang"+month).child("Ngay"+_date).child("DoanhThuNgay").setValue(doanhThuMonth);
     }
 }
