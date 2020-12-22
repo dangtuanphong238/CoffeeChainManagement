@@ -24,6 +24,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/custom_button"
             android:layout_margin="@dimen/normal10dp"
-            android:text="Táº¡o"/>
+            android:text="Tạo"/>
     </LinearLayout>
 </LinearLayout>

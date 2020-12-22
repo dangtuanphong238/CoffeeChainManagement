@@ -343,56 +343,68 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
             case R.id.btnPayment:
                 payment(listMealUsed);
                 getTien();
+                kiemtraDulieu();
                 break;
             default:
                 break;
         }
         dismiss();
     }
-
     public void getTien()
     {
+        final Sum sumtotal = new Sum(tvSumPrice.getText().toString());
         final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = firebaseDatabase.getReference("/OwnerManager/" + ownerID + "/QuanLyHoaDon/" + year + "/" + month + "/" + _date );
-        myRef.addValueEventListener(new ValueEventListener() {
+        final DatabaseReference myRef = firebaseDatabase.getReference("/OwnerManager/" + ownerID
+                + "/QuanLyHoaDon/" + year + "/" + month + "/" + _date);
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue() == null)
                 {
-                    Sum sum = new Sum(tvSumPrice.getText().toString());
-                    myRef.child("DoanhThuNgay").setValue(sum).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    myRef.child("DoanhThuNgay").child("sumtotal").setValue(sumtotal.getSum())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onSuccess(Void aVoid) {
-                            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                            final DatabaseReference myRef = firebaseDatabase.getReference("/FounderManager/" + "/QuanLyDoanhThu/"  + ownerID + "/" + year + "/" + month + "/" + _date);
-                            DoanhThuMonth doanhThuMonth = new DoanhThuMonth(ngay,tvSumPrice.getText().toString());
-                            myRef.setValue(doanhThuMonth);
+                        public void onSuccess(Void aVoid)
+                        {
+                            FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
+                            final DatabaseReference myRef1 = firebaseDatabase1.getReference("/FounderManager/" +
+                                    "/QuanLyDoanhThu/"  + ownerID + "/" + year + "/" + month + "/" + _date);
+                            DoanhThuMonth doanhThuMonth = new DoanhThuMonth(ngay,sumtotal.getSum());
+                            myRef1.setValue(doanhThuMonth);
                         }
                     });
                 }
-                else
-                {
-                    myRef.child("DoanhThuNgay").child("sum").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            String a = snapshot.getValue().toString();
-                            Sum sum = new Sum(String.valueOf(tongtien));
-                            myRef.child("DoanhThuNgay").setValue(sum).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                                    final DatabaseReference myRef = firebaseDatabase.getReference("/FounderManager/" + "/QuanLyDoanhThu/"  + ownerID + "/" + year + "/" + month + "/" + _date);
-                                    DoanhThuMonth doanhThuMonth = new DoanhThuMonth(ngay,tvSumPrice.getText().toString());
-                                    myRef.setValue(doanhThuMonth);
-                                }
-                            });
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
+            }
+        });
+    }
+    public void kiemtraDulieu()
+    {
+        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = firebaseDatabase.getReference("/OwnerManager/" + ownerID
+                + "/QuanLyHoaDon/" + year + "/" + month + "/" + _date + "/DoanhThuNgay");
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists())
+                {
+                 String tien = snapshot.child("sumtotal").getValue().toString();
+                 tongtien = Float.parseFloat(tien) + Float.parseFloat(tvSumPrice.getText().toString());
                 }
+                myRef.child("sumtotal").setValue(String.valueOf(tongtien)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
+                        final DatabaseReference myRef1 = firebaseDatabase1.getReference("/FounderManager/" +
+                                "/QuanLyDoanhThu/"  + ownerID + "/" + year + "/" + month + "/" + _date);
+                        DoanhThuMonth doanhThuMonth = new DoanhThuMonth(ngay,String.valueOf(tongtien));
+                        myRef1.setValue(doanhThuMonth);
+                    }
+                });
+
             }
 
             @Override
