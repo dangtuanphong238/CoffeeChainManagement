@@ -5,24 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/activity_main_drawer"
-    android:background="#FE9B58"
     tools:context=".TongDoanhThuActivity"
     android:orientation="vertical">
 
     <!--    content-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="wrap_content">
         <include layout="@layout/toolbar"/>
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp"
-            tools:ignore="MissingConstraints"></ListView>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.github.mikephil.charting.charts.BarChart
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:id="@+id/barChart"
+            />
+    </LinearLayout>
+
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"

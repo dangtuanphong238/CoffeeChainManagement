@@ -4,7 +4,10 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -61,14 +64,28 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
     int roomName;
     String url = null;
 
+    //Dev_Phong Changed:
+    private ImageButton btnMnu;
+    private TextView txtTitle;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
+
+        btnMnu = findViewById(R.id.btnMnu);
+        txtTitle = findViewById(R.id.txtTitle);
+        btnMnu.setImageResource(R.drawable.ic_back_24);
+        backPressed();
+
+
 //        layoutButton = findViewById(R.id.layoutButton);
         recyclerView = findViewById(R.id.rvListTable);
         Bundle bundle = getIntent().getExtras();
         roomName = bundle.getInt(AreaManageActivity.KEY_ROOM);
+
+        txtTitle.setText(roomName + "");
+
         getLayout = bundle.getString(AreaManageActivity.KEY_GET_LAYOUT);
 
         SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
@@ -212,5 +229,14 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
 //            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 //            dialog.show();
 //        }
+    }
+
+    public void backPressed() {
+        btnMnu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

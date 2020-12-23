@@ -97,7 +97,7 @@ public class ListCuaHangActivity extends AppCompatActivity implements ItemClickL
                 switch (item.getItemId()) {
 
                     case R.id.it1:
-                        Public_func.clickItemMenu(ListCuaHangActivity.this, TongDoanhThuActivity.class);
+                        Public_func.clickItemMenu(ListCuaHangActivity.this, ActivityDoanhThu.class);
                         return true;
                     case R.id.danh_sach_cua_hang:
                         recreate();

@@ -22,6 +22,7 @@ public class AreaActiveModel {
         this.nameArea = nameArea;
     }
 
+
     public ArrayList<TableActiveModel> getListTable() {
         return listTable;
     }

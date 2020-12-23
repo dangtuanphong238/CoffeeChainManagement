@@ -7,12 +7,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,12 +48,17 @@ public class ChooseChatActivity extends AppCompatActivity {
     private String sOwnerID;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
+    //drawer header:
+    Bitmap bitmapDecoded;
+    private TextView nav_head_name_store, nav_head_address_store;
+    private ImageView nav_head_avatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_chat);
         anhXa();
+        headerNav();
         txtTitleActivity.setText("Thông báo");
         getOwnerIDFromLocalStorage();
         GetData();
@@ -114,6 +123,28 @@ public class ChooseChatActivity extends AppCompatActivity {
         });
 
         setOnClick();
+    }
+    //header drawer:
+    private void headerNav() {
+        SharedPreferences ref = getSharedPreferences("bitmap_img", MODE_PRIVATE);
+
+        String bitmap = ref.getString("imagePreferance", "");
+        System.out.println(bitmap);
+        decodeBase64(bitmap);
+        View headerView = navigationView.getHeaderView(0);
+        nav_head_avatar = headerView.findViewById(R.id.nav_head_avatar);
+        if (bitmapDecoded != null) {
+            nav_head_avatar.setImageBitmap(bitmapDecoded);
+        } else {
+            System.out.println("bitmapp null");
+        }
+    }
+
+    // method for base64 to bitmap
+    public void decodeBase64(String input) {
+        byte[] decodedByte = Base64.decode(input, 0);
+        bitmapDecoded = BitmapFactory
+                .decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
     private void GetData() {
