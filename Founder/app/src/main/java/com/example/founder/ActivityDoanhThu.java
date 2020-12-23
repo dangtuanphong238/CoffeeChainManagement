@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.founder.model.DoanhThu;
@@ -238,20 +237,7 @@ public class ActivityDoanhThu extends AppCompatActivity {
         imgMnu = findViewById(R.id.btnMnu);
 
     }
-    public void openMenu() {
-        imgMnu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-    }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        drawerLayout.closeDrawer(GravityCompat.START);
-    }
 
 
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login

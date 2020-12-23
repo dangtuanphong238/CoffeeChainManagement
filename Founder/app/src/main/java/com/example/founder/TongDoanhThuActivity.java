@@ -60,7 +60,8 @@ public class TongDoanhThuActivity extends AppCompatActivity {
         });
 
     }
-    private void anhXa(){
+    private void anhXa()
+    {
         drawerLayout = findViewById(R.id.activity_main_drawer);
         navigationView = findViewById(R.id.navDrawerMenu);
         imgMnu = findViewById(R.id.btnMnu);
