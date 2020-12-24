@@ -145,34 +145,12 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
     }
     private void anhXa(){
         imgClick=findViewById(R.id.imgClickicons);
         btnLogin = findViewById(R.id.btnLogin);
         edtTaikhoan = findViewById(R.id.edttaikhoan);
         edtPassword = findViewById(R.id.edtpassword);
-
-//        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-//        DatabaseReference reference = firebaseDatabase.getReference("FounderManager").child("FounderAccount");
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists())
-//                {
-//                    for (DataSnapshot item : snapshot.getChildren())
-//                    {
-//                        idFouder = item.child("id").getValue().toString();
-//                        Toast.makeText(LoginActivity.this, idFouder, Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
 
     }
 
