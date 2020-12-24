@@ -3,6 +3,8 @@ package com.example.staff;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +23,7 @@ public class CaiDatBill extends AppCompatActivity {
     private int soluong = 0;
     private Double tongthanhtoan;
     private Double giamonAn;
+    private ImageView imgMonAn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +62,8 @@ public class CaiDatBill extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                Intent intent = new Intent(CaiDatBill.this,BillScreen.class);
+                startActivity(intent);
             }
         });
     }
@@ -86,5 +90,6 @@ public class CaiDatBill extends AppCompatActivity {
         giamon = findViewById(R.id.txtGiaMonAn);
         tongtien = findViewById(R.id.txtTongTien);
         btnAdd = findViewById(R.id.btnAdd);
+        imgMonAn = findViewById(R.id.imgMonAn);
     }
 }

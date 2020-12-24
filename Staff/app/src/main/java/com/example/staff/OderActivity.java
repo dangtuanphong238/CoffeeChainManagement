@@ -145,7 +145,7 @@ public class OderActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if (snapshot.exists())
                     {
-                        MealModel mealModel = new MealModel(snapshot.child("meal_name").getValue() + "");
+//                        MealModel mealModel = new MealModel(snapshot.child("meal_name").getValue() + "");
                         if (mealModel.getMeal_name().equals(keyName)) {
                             listMonAn.add(mealModel);
                         }
@@ -170,8 +170,9 @@ public class OderActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MealModel mealMEAL = listMonAn.get(position);
                 Intent intent = new Intent(getApplicationContext(), CaiDatBill.class);
-                intent.putExtra("BILL", mealMEAL);
+//                intent.putExtra("BILL", mealMEAL);
                 startActivity(intent);
+                System.out.println("1111"+mealMEAL);
             }
         });
 

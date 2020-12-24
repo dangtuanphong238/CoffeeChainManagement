@@ -4,53 +4,70 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.staff.Model.KhuVucMD;
 import com.example.staff.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class KhuVucAdapter extends BaseAdapter {
+public class KhuVucAdapter extends RecyclerView.Adapter<KhuVucAdapter.MyViewHolder> {
+    RecyclerviewClick recyclerviewClick;
     Context context;
-    private final ArrayList<String> values;
-    private final int[] image;
-    View view;
-    LayoutInflater layoutInflater;
-    public KhuVucAdapter(Context context, ArrayList<String> values, int[] image) {
+    ArrayList<KhuVucMD> list;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+
+    public KhuVucAdapter(Context context, ArrayList<KhuVucMD> list, RecyclerviewClick recyclerviewClick) {
         this.context = context;
-        this.values = values;
-        this.image = image;
+        this.list = list;
+        this.recyclerviewClick = recyclerviewClick;
     }
 
-
+    @NonNull
     @Override
-    public int getCount() {
-        return values.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return null;
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        CardView cardView = (CardView) inflater.inflate(R.layout.item_khuvuc, parent, false);
+        return new KhuVucAdapter.MyViewHolder(cardView);
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
+    public void onBindViewHolder(@NonNull KhuVucAdapter.MyViewHolder holder, int position) {
+        KhuVucMD khuVucMD = list.get(position);
+        holder.txtTenKhuVUc.setText(khuVucMD.getName());
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if(convertView == null){
-            view = new View(context);
-            view = layoutInflater.inflate(R.layout.item_khuvuc,null);
-            ImageView imageView = view.findViewById(R.id.imgKhuVuc);
-            TextView txtBan =  view.findViewById(R.id.txtTenKhuVUc);
-            txtBan.setText(values.get(position));
-            imageView.setImageResource(image[position]);
+    public int getItemCount() {
+        return list.size();
+    }
+
+    class MyViewHolder extends RecyclerView.ViewHolder {
+
+        ImageView imgKhuVuc;
+        TextView txtTenKhuVUc;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            imgKhuVuc = itemView.findViewById(R.id.imgKhuVuc);
+            txtTenKhuVUc = itemView.findViewById(R.id.txtTenKhuVUc);
+            imgKhuVuc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    recyclerviewClick.onItemClick(getAdapterPosition());
+
+                }
+            });
         }
-        return view;
     }
 }

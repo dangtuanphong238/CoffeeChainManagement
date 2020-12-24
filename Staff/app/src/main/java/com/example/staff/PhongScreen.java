@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.staff.Adapter.ListTableAdapter;
 import com.example.staff.Adapter.RecyclerviewClick;
+import com.example.staff.Dialog.OrderDialog;
+import com.example.staff.Dialog.UpdateTableDialog;
 import com.example.staff.Model.TableModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +31,7 @@ import java.util.Comparator;
 public class PhongScreen extends AppCompatActivity implements RecyclerviewClick {
     Button btnBan1;
     RecyclerView recyclerView;
+
 //    Ban ban = new Ban();
 public final static int BLANK = 0;
     public final static int BOOK = 1;
@@ -42,7 +45,9 @@ public final static int BLANK = 0;
     public static final String OWNERID = "ownerID";
     private String sOwnerID;
     private ListTableAdapter adapter;
-    String title;
+    String title,name;
+    String tableID;
+    String url = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +80,8 @@ public final static int BLANK = 0;
         System.out.println(title);
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference().child("OwnerManager").child(sOwnerID).child("QuanLyBan").child(title);
+        name = bundle.getString("tenPhong");
+        txtTenPhong.setText(name.toString());
     }
     private void getData() {
         database = FirebaseDatabase.getInstance();
@@ -111,12 +118,59 @@ public final static int BLANK = 0;
 
     @Override
     public void onItemClick(int position) {
-        Intent intent = new Intent(PhongScreen.this,OderActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(PhongScreen.this,OderActivity.class);
+//        startActivity(intent);
+//        OrderDialog dialog = new OrderDialog(this,sOwnerID,title,"Table"+lstPhong.get(position).getID());
+//        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//        dialog.show();
+        checkTable(position,sOwnerID);
     }
 
     @Override
     public void onItemLongClick(int position) {
-        Toast.makeText(this, "ItemLongClick", Toast.LENGTH_SHORT).show();
+        tableID = "Table0" + (position + 1);
+        String status = lstPhong.get(position).getTableStatus();
+        UpdateTableDialog dialog = new UpdateTableDialog(this, url, sOwnerID, title, tableID, status);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
+    }
+    void checkTable(int position, String ownerID) {
+
+
+        if (lstPhong.get(position).getTableStatus().equals("0")) {
+            //When table blank
+            //Show menu
+            OrderDialog dialog = new OrderDialog(this, sOwnerID, title, "Table0" + lstPhong.get(position).getID());
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.show();
+        }
+        if (lstPhong.get(position).getTableStatus().equals("1")) {
+            //When booked
+            //Show menu
+            OrderDialog dialog = new OrderDialog(this, sOwnerID, title, "Table0" + lstPhong.get(position).getID());
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.show();
+        }
+        if (lstPhong.get(position).getTableStatus().equals("2")) {
+            //When Having
+            //Show detail dialog(- payment dialog)
+            //Show list meal already and amounts.
+            OrderDialog dialog = new OrderDialog(this, sOwnerID, title, "Table0" + lstPhong.get(position).getID());
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.show();
+        }
+        if(lstPhong.get(position).getTableStatus().equals("3")){
+            //When be error
+            //Toast notification
+            UpdateTableDialog dialog = new UpdateTableDialog(this, url, sOwnerID, title, "Table0"+lstPhong.get(position).getID(), lstPhong.get(position).getTableStatus());
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.show();
+        }
+//        {
+//            //Toast exception
+//            UpdateTableDialog dialog = new UpdateTableDialog(this, url, ownerID, areaID, tableID);
+//            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//            dialog.show();
+//        }
     }
 }

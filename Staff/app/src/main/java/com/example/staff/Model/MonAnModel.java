@@ -24,6 +24,5 @@ public class MonAnModel {
     public void setGia(double gia) {
         this.gia = gia;
     }
-//private int imgAnhMonAn;
 
 }

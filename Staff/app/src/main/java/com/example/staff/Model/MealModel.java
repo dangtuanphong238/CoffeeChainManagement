@@ -4,12 +4,15 @@ import android.graphics.Bitmap;
 
 import java.io.Serializable;
 
-public class MealModel implements Serializable {
+public class MealModel {
     String meal_category;
     String meal_id;
     String meal_price;
     String meal_name;
     String meal_image;
+
+    public MealModel() {
+    }
 
     public MealModel(String meal_category, String meal_id, String meal_price, String meal_name, String meal_image) {
         this.meal_category = meal_category;
@@ -19,11 +22,9 @@ public class MealModel implements Serializable {
         this.meal_image = meal_image;
     }
 
-    public MealModel(String meal_name) {
-        this.meal_name = meal_name;
-    }
-
-    public MealModel() {
+    public int getID() {
+        String meal_id = this.meal_id.replace("Meal","");
+        return Integer.parseInt(meal_id);
     }
 
     public String getMeal_category() {
@@ -58,7 +59,22 @@ public class MealModel implements Serializable {
         this.meal_name = meal_name;
     }
 
-    public  String getMeal_image() {
+    public String getMeal_image() {
         return meal_image;
+    }
+
+    public void setMeal_image(String meal_image) {
+        this.meal_image = meal_image;
+    }
+
+    @Override
+    public String toString() {
+        return "MealModel{" +
+                "meal_category='" + meal_category + '\'' +
+                ", meal_id='" + meal_id + '\'' +
+                ", meal_price='" + meal_price + '\'' +
+                ", meal_name='" + meal_name + '\'' +
+                ", meal_image='" + meal_image + '\'' +
+                '}';
     }
 }
