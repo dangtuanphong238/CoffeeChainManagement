@@ -56,7 +56,7 @@ public class CreateOwnerAccountActivity<eventListener> extends AppCompatActivity
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.it1:
-                        Public_func.clickItemMenu(CreateOwnerAccountActivity.this, TongDoanhThuActivity.class);
+                        Public_func.clickItemMenu(CreateOwnerAccountActivity.this, ActivityDoanhThu.class);
                         return true;
                     case R.id.danh_sach_cua_hang:
                         Public_func.clickItemMenu(CreateOwnerAccountActivity.this, ListCuaHangActivity.class);

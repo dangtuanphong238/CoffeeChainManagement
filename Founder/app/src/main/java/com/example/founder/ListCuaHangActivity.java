@@ -20,7 +20,6 @@ import com.example.founder.Interfaces.ItemClickListener;
 import com.example.founder.Public.Public_func;
 import com.example.founder.adapter.RecyclerViewAdapter;
 import com.example.founder.model.InforStore;
-import com.example.founder.model.Owner;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,12 +40,7 @@ public class ListCuaHangActivity extends AppCompatActivity implements ItemClickL
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
     DatabaseReference databaseReference;
-    Owner owner;
-
-
-    //Phong lam
     private ArrayList<InforStore> lstStore = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,40 +48,7 @@ public class ListCuaHangActivity extends AppCompatActivity implements ItemClickL
         anhXa();
 
 
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.setHasFixedSize(true);
-//        inforStores = new ArrayList<>();
-///*
-//        FirebaseRecyclerOptions<InforStore> options = new FirebaseRecyclerOptions.Builder<InforStore>()
-//                .setQuery(FirebaseDatabase.getInstance().getReference().child("OwnerManager").child("ThongTinCuaHang")
-//                        , InforStore.class)
-//                        .build();
-// */
-//        databaseReference = FirebaseDatabase.getInstance().getReference("FounderManager").child("ThongTinCuaHang");
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snap) {
-//                if (snap.exists()) {
-//                    for (DataSnapshot dataSnapshot : snap.getChildren()) {
-//                        InforStore inforStore = dataSnapshot.getValue(InforStore.class);
-//                        String tencuahang = inforStore.getTencuahang();
-//                        String diachi = inforStore.getDiachi();
-//                        String giayphep = inforStore.getGiayphepkinhdoanh();
-//                        String sdt = inforStore.getSdt();
-//                        InforStore inforStore1 = new InforStore(diachi,giayphep,sdt,tencuahang);
-//                        lstInforStore.add(inforStore1);
-//                        Toast.makeText(RecyclerViewLstCH.this, tencuahang , Toast.LENGTH_SHORT).show();
-//                        recyclerViewAdapter = new RecyclerViewAdapter(lstInforStore);
-//                        recyclerView.setAdapter(recyclerViewAdapter);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
+
         getData(lstStore);
         txtstorelist.setText("List Store");
         openMenu();
@@ -97,7 +58,7 @@ public class ListCuaHangActivity extends AppCompatActivity implements ItemClickL
                 switch (item.getItemId()) {
 
                     case R.id.it1:
-                        Public_func.clickItemMenu(ListCuaHangActivity.this, TongDoanhThuActivity.class);
+                        Public_func.clickItemMenu(ListCuaHangActivity.this, ActivityDoanhThu.class);
                         return true;
                     case R.id.danh_sach_cua_hang:
                         recreate();
@@ -122,31 +83,6 @@ public class ListCuaHangActivity extends AppCompatActivity implements ItemClickL
 
     }
 
-    //    private void getSizeListOnwer() //hàm này để lấy size của list nhânvieen để tự động sinh id theo list.size()
-//    {
-//        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-//        DatabaseReference reference = firebaseDatabase.getReference().child("OwnerManager").child("ThongTinCuaHang");
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists())
-//                {
-//                    lstInforStore.clear();
-//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                        InforStore inforStore = dataSnapshot.getValue(InforStore.class);
-//                        lstInforStore.add(inforStore);
-//                        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-//                        System.out.println("lstInforStore " + lstInforStore.size());
-//                    }
-//                }
-//
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
     private void openMenu() {
         imgMnu.setOnClickListener(new View.OnClickListener() {
             @Override
