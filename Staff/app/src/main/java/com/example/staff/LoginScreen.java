@@ -96,6 +96,7 @@ public class LoginScreen extends AppCompatActivity {
                 for (String owner : lstOwnerList) {
                     if (owner.equals(keyOwner)) {
                         saveOwnerIDToLocalStorage(keyOwner);
+                        System.out.println("keyOwner" +keyOwner);
                         database = FirebaseDatabase.getInstance();
                         myRef = database.getReference().child("OwnerManager").child(keyOwner).child("QuanLyNhanVien");
                         myRef.addValueEventListener(new ValueEventListener() {
@@ -146,7 +147,8 @@ public class LoginScreen extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                position = 0;
+                System.out.println("aaa" + position);
+                position = position +1;
                 idOwner = parent.getItemAtPosition(position).toString();
                 setOnClick();
                 sOwnerID = idOwner.split("\\s", 2);
