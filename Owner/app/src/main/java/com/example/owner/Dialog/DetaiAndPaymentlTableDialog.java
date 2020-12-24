@@ -347,6 +347,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
                 payment(listMealUsed);
                 getTien();
                 kiemtraDulieu();
+                getDataMonth();
                 break;
             default:
                 break;
@@ -416,28 +417,38 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
             }
         });
     }
-//    public void getDataMonth()
-//    {
-//        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-//        final DatabaseReference reference = firebaseDatabase.getReference("/FounderManager/" +
-//                "/QuanLyDoanhThu/"  + ownerID + "/" + year + "/" + month);
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.getValue() != null)
-//                {
-//                    for (DataSnapshot item : snapshot.getChildren())
-//                    {
-//                        System.out.println(item);
-//                    }
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
+    public void getDataMonth()
+    {
+        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        final DatabaseReference reference = firebaseDatabase.getReference("/FounderManager/" +
+                "/QuanLyDoanhThu/"  + ownerID + "/" + year + "/" + month +"/DoanhThuNgay/");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Sum> sums = new ArrayList<>();
+                if (snapshot.getValue() != null)
+                {
+                    for (DataSnapshot item : snapshot.getChildren())
+                    {
+                        Sum s = item.getValue(Sum.class);
+                        sums.add(s);
+                    }
+                    sumMoneyMonth(sums);
+                    System.out.println(sumMoneyMonth(sums) + "tiencuatao");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    public int sumMoneyMonth(ArrayList<Sum> list) {
+        int sum = 0;
+        for (int i = 0; i < list.size(); i++) {
+            sum +=Integer.parseInt(list.get(i).getSum());
+        }
+        return sum;
+    }
 }
