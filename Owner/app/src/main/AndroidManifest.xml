@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.DoanhThuTheoMonth"  android:screenOrientation="landscape"></activity>
+        <activity android:name=".Activity.AddComboActivity"></activity>
+        <activity
+            android:name=".Activity.DoanhThuTheoMonth"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Activity.DoanhThuActivity"
             android:screenOrientation="landscape" />

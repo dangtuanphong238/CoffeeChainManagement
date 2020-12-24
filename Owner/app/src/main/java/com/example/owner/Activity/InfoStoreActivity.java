@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -82,6 +83,7 @@ public class InfoStoreActivity extends AppCompatActivity {
 
 
     //header nav
+    Bitmap bitmapDecoded;
     private TextView nav_head_name_store, nav_head_address_store;
     private ImageView nav_head_avatar;
     @Override
@@ -89,6 +91,8 @@ public class InfoStoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_store);
         anhXa();
+        headerNav();
+
         txtTitleActivity.setText("Thông tin cửa hàng");
         openMenu();
         getOwnerIDFromLocalStorage();
@@ -153,17 +157,41 @@ public class InfoStoreActivity extends AppCompatActivity {
         setOnClick();
     }
 
-    private void headerNav(){
+    //header drawer:
+    private void headerNav() {
+        SharedPreferences ref = getSharedPreferences("bitmap_img", MODE_PRIVATE);
+
+        String bitmap = ref.getString("imagePreferance", "");
+        System.out.println(bitmap);
+        decodeBase64(bitmap);
         View headerView = navigationView.getHeaderView(0);
         nav_head_avatar = headerView.findViewById(R.id.nav_head_avatar);
-        if(bitmap != null)
-        {
-            nav_head_avatar.setImageBitmap(bitmap);
-        }
-        else {
+        if (bitmapDecoded != null) {
+            nav_head_avatar.setImageBitmap(bitmapDecoded);
+        } else {
             System.out.println("bitmapp null");
         }
     }
+
+    // method for base64 to bitmap
+    public void decodeBase64(String input) {
+        byte[] decodedByte = Base64.decode(input, 0);
+        bitmapDecoded = BitmapFactory
+                .decodeByteArray(decodedByte, 0, decodedByte.length);
+    }
+
+
+//    private void headerNav(){
+//        View headerView = navigationView.getHeaderView(0);
+//        nav_head_avatar = headerView.findViewById(R.id.nav_head_avatar);
+//        if(bitmap != null)
+//        {
+//            nav_head_avatar.setImageBitmap(bitmap);
+//        }
+//        else {
+//            System.out.println("bitmapp null");
+//        }
+//    }
 
     private void getDatabase() {
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -189,30 +217,31 @@ public class InfoStoreActivity extends AppCompatActivity {
                     Toast.makeText(InfoStoreActivity.this, "Chưa có thông tin về cửa hàng!", Toast.LENGTH_SHORT).show();
                 }
             });
-            //getImage
-            StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlychuoicoffee.appspot.com/FounderManager/ThongTinCuaHang/" + sOwnerID);
-            System.out.println("MstoreR " + mStorageRef.toString());
-            final File localFile = File.createTempFile("images","jpg");
-            mStorageRef.getFile(localFile)
-                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                            imgCuaHang.setImageBitmap(bitmap);
-                            headerNav();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(InfoStoreActivity.this, "Chưa cập nhật ảnh", Toast.LENGTH_SHORT).show();
-                    System.out.println("ex " + e.getMessage());
-                }
-            });
+//            //getImage
+//            StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlychuoicoffee.appspot.com/FounderManager/ThongTinCuaHang/" + sOwnerID);
+//            System.out.println("MstoreR " + mStorageRef.toString());
+//            final File localFile = File.createTempFile("images","jpg");
+//            mStorageRef.getFile(localFile)
+//                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+//                            bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+//                            imgCuaHang.setImageBitmap(bitmap);
+//                            headerNav();
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    Toast.makeText(InfoStoreActivity.this, "Chưa cập nhật ảnh", Toast.LENGTH_SHORT).show();
+//                    System.out.println("ex " + e.getMessage());
+//                }
+//            });
         }catch (Exception ex)
         {
             ex.getMessage();
         }
     }
+
 
     private void setOnClick() {
         btnLuuThongTin.setOnClickListener(new View.OnClickListener() {
