@@ -8,13 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.owner.Interface.ReturnValueArrayCombo;
 import com.example.owner.Model.MealModel;
 import com.example.owner.Models.Combo;
 import com.example.owner.R;
@@ -29,17 +32,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ListAddComboAdapter extends RecyclerView.Adapter<ListAddComboAdapter.MyViewHolder>{
-    ArrayList<Combo> list;
+    ArrayList<MealModel> list;
     Context context;
     String path;
+    ArrayList arrCombo = new ArrayList();
+    ReturnValueArrayCombo returnValueArrayCombo;
 
-    public ListAddComboAdapter() {
-    }
-
-    public ListAddComboAdapter(Context context, ArrayList<Combo> list, String path ) {
+    public ListAddComboAdapter(Context context, ArrayList<MealModel> list, String path , ReturnValueArrayCombo returnValueArrayCombo) {
         this.context = context;
         this.list = list;
         this.path = path;
+        this.returnValueArrayCombo = returnValueArrayCombo;
+    }
+
+
+//    public ListAddComboAdapter(Context context, ArrayList<Combo> list, String path ) {
+//        this.context = context;
+//        this.list = list;
+//        this.path = path;
+//    }
+
+    public ListAddComboAdapter() {
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -53,6 +66,9 @@ public class ListAddComboAdapter extends RecyclerView.Adapter<ListAddComboAdapte
             txtPriceProduct = itemView.findViewById(R.id.txtPriceProduct_Cb);
             imgProduct = itemView.findViewById(R.id.imgProduct_Cb);
             chkChoose = itemView.findViewById(R.id.chkbCheck_Cb);
+            this.setIsRecyclable(true);
+//            lưu state của item không bị biến mất khi scroll //Cách 1
+
         }
     }
 
@@ -93,11 +109,32 @@ public class ListAddComboAdapter extends RecyclerView.Adapter<ListAddComboAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Combo combo = list.get(position);
-        holder.txtNameProduct.setText(combo.getProduct_name());
-        holder.txtPriceProduct.setText(combo.getProduct_price());
-        setImage(holder,path,combo.getProduct_image());
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+        MealModel combo = list.get(position);
+        holder.txtNameProduct.setText(combo.getMeal_name());
+        holder.txtPriceProduct.setText(combo.getMeal_price());
+
+        //checkbox:
+        //in some cases, it will prevent unwanted situations
+        holder.chkChoose.setOnCheckedChangeListener(null);
+        //if true, your checkbox will be selected, else unselected
+        holder.chkChoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(holder.chkChoose.isChecked())
+                {
+                    list.get(position).setCheck(true);
+                    arrCombo.add(list.get(position).getMeal_name());
+                }
+                else {
+                    list.get(position).setCheck(false);
+                    arrCombo.remove(list.get(position).getMeal_name());
+                }
+                returnValueArrayCombo.saveArr(arrCombo);
+            }
+        });
+
+        setImage(holder,path,combo.getMeal_id());
     }
 
 

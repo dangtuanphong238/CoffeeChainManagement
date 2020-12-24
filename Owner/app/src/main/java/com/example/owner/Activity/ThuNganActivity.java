@@ -23,8 +23,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.owner.Adapter.ThuNganAdapter;
-import com.example.owner.Dialog.DetailTableDialog;
-import com.example.owner.Dialog.UpdateTableDialog;
 import com.example.owner.Global.Public_func;
 import com.example.owner.Interface.RecyclerviewClick;
 import com.example.owner.Model.AreaActiveModel;
@@ -39,7 +37,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class ThuNganActivity extends AppCompatActivity implements RecyclerviewClick {
@@ -178,8 +175,10 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
         super.onRestart();
         drawerLayout.closeDrawer(GravityCompat.START);
     }
-    ArrayList<AreaActiveModel> list = new ArrayList<>();
-    ArrayList<TableActiveModel> listTableActive = new ArrayList<>();
+
+    ArrayList<AreaActiveModel> listArea = new ArrayList<>();
+    ArrayList<TableActiveModel> listTable = new ArrayList<>();
+
     public void getDataFromBranchTableActive(String ownerID) {
         final String path = "OwnerManager/" + ownerID + "/TableActive";
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -187,11 +186,10 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                list.clear();
-                listTableActive.clear();
+                ArrayList<AreaActiveModel> list = new ArrayList<>();
                 try {
                     for (DataSnapshot data : snapshot.getChildren()) {
-
+                        ArrayList<TableActiveModel> listTableActive = new ArrayList<>();
                         for (DataSnapshot table : data.getChildren()) {
                             ArrayList<MealUsed> listUsed = new ArrayList<>();
                             DataSnapshot meal = table.child("Meal");
@@ -237,9 +235,6 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
         SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
         String ownerID = pref.getString(LoginActivity.OWNERID, null);
         String path = "OwnerManager/" + ownerID + "/TableActive";
-//        Toast.makeText(this,list.get(position).getNameArea()+"--"+listTableActive.get(position).getNameTable()+"",Toast.LENGTH_SHORT).show();
-//        DetailTableDialog dialog = new DetailTableDialog(this,path,ownerID,list.get(position).getNameArea(),listTableActive.get(position).getNameTable());
-//        dialog.show();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.example.owner.Activity;
 
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.owner.Dialog.DetailTableDialog;
 import com.example.owner.Dialog.OrderDialog;
 import com.example.owner.Dialog.UpdateTableDialog;
 import com.example.owner.Interface.RecyclerviewClick;
@@ -60,8 +58,8 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
     RecyclerView recyclerView;
     ArrayList<TableModel> listTable = new ArrayList<>();
     ListTableAdapter adapter;
-    String getLayout;
-    int roomName;
+    String nameRoom;
+    int keyRoom;
     String url = null;
 
     //Dev_Phong Changed:
@@ -82,22 +80,20 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
 //        layoutButton = findViewById(R.id.layoutButton);
         recyclerView = findViewById(R.id.rvListTable);
         Bundle bundle = getIntent().getExtras();
-        roomName = bundle.getInt(AreaManageActivity.KEY_ROOM);
-
-        txtTitle.setText(roomName + "");
-
-        getLayout = bundle.getString(AreaManageActivity.KEY_GET_LAYOUT);
+        keyRoom = bundle.getInt(AreaManageActivity.KEY_ROOM) ;
+        nameRoom = bundle.getString(AreaManageActivity.KEY_NAME_ROOM);
+        txtTitle.setText(nameRoom);
 
         SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
         String ownerID = pref.getString(LoginActivity.OWNERID, null);
         int areaID = 0;
-        if (roomName == PHONG_LANH) {
+        if (keyRoom == PHONG_LANH) {
             areaID = 1;
-        } else if (roomName == PHONG_VIP) {
+        } else if (keyRoom == PHONG_VIP) {
             areaID = 2;
-        } else if (roomName == PHONG_HOP) {
+        } else if (keyRoom == PHONG_HOP) {
             areaID = 3;
-        } else if (roomName == PHONG_THUONG) {
+        } else if (keyRoom == PHONG_THUONG) {
             areaID = 4;
         } else {
             areaID = 5;
@@ -177,7 +173,7 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
         SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
         String ownerID = pref.getString(LoginActivity.OWNERID, null);
         tableID = "Table" + (position + 1);
-//        DetailTableDialog dialog = new DetailTableDialog(this, url, ownerID, areaID, tableID);
+//        DetaiAndPaymentlTableDialog dialog = new DetaiAndPaymentlTableDialog(this, url, ownerID, areaID, tableID);
 //        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 //        dialog.show();
         String status = listTable.get(position).getTableStatus();
@@ -223,12 +219,6 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
         }
-//        ì {
-//            //Toast exception
-//            UpdateTableDialog dialog = new UpdateTableDialog(this, url, ownerID, areaID, tableID);
-//            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-//            dialog.show();
-//        }
     }
 
     public void backPressed() {

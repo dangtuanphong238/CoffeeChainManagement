@@ -34,7 +34,7 @@
                     android:id="@+id/imgMeal_image"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:background="@drawable/ic_image" />
+                    android:background="@drawable/noimage" />
             </LinearLayout>
 
             <LinearLayout
@@ -162,12 +162,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <ImageButton
-                    android:id="@+id/btnPlus"
-                    android:background="@drawable/ic_plus__1_"
+                    android:id="@+id/btnMinus"
+                    android:background="@drawable/ic_minus"
                     android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+" />
+                    android:text="-" />
 
                 <TextView
                     android:id="@+id/tvAmounts"
@@ -181,12 +181,12 @@
                     android:textColor="@color/black"/>
 
                 <ImageButton
-                    android:id="@+id/btnMinus"
-                    android:background="@drawable/ic_minus"
+                    android:id="@+id/btnPlus"
+                    android:background="@drawable/ic_plus__1_"
                     android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="-" />
+                    android:text="+" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -11,20 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.owner.Model.MealModel;
-import com.example.owner.Model.MealUsed;
 import com.example.owner.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class UpdateTableDialog extends Dialog implements View.OnClickListener {
     String url;
@@ -114,7 +106,7 @@ public class UpdateTableDialog extends Dialog implements View.OnClickListener {
     }
 
     public void payment(){
-        DetailTableDialog dialog = new DetailTableDialog(context,url,ownerID,areaID,tableID);
+        DetaiAndPaymentlTableDialog dialog = new DetaiAndPaymentlTableDialog(context,url,ownerID,areaID,tableID);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.show();
     }

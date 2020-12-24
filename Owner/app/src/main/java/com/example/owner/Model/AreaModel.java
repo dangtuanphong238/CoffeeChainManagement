@@ -3,13 +3,23 @@ package com.example.owner.Model;
 public class AreaModel {
     String name;
     String id;
+    String tables;
 
-    public AreaModel() {
-    }
-
-    public AreaModel(String name, String id) {
+    public AreaModel(String name, String id, String tables) {
         this.name = name;
         this.id = id;
+        this.tables = tables;
+    }
+
+    public String getTables() {
+        return tables;
+    }
+
+    public void setTables(String tables) {
+        this.tables = tables;
+    }
+
+    public AreaModel() {
     }
 
     public String getName() {
@@ -31,8 +41,9 @@ public class AreaModel {
     @Override
     public String toString() {
         return "AreaModel{" +
-                "roomName='" + name + '\'' +
-                ", imgRoom=" + id +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", tables='" + tables + '\'' +
                 '}';
     }
 }

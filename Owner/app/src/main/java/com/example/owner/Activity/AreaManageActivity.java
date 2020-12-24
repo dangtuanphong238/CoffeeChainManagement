@@ -182,7 +182,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.owner.Global.ParseTime;
 import com.example.owner.Global.Public_func;
 import com.example.owner.Interface.RecyclerviewClick;
 import com.example.owner.Model.AreaModel;
@@ -198,8 +197,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class AreaManageActivity extends AppCompatActivity implements RecyclerviewClick {
-    public static final String KEY_GET_LAYOUT = "KEY_GET_LAYOUT";
-    public static final String KEY_ROOM = "PHONG";
+    public static final String KEY_NAME_ROOM = "Phòng";
+    public static final String KEY_ROOM = "KEY_ROOM";
 //    public static final String KEY_ROOM_2="PHONG_VIP";
 //    public static final String KEY_ROOM_3="PHONG_HOP";
 //    public static final String KEY_ROOM_4="PHONG_KIN";
@@ -219,6 +218,7 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
     private TextView nav_head_name_store, nav_head_address_store;
     private ImageView nav_head_avatar;
 
+    Boolean checkFirstTime = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -285,6 +285,7 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
             }
         });
 
+        checkFirstTime();
     }
 
     //header drawer:
@@ -310,6 +311,7 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
                 .decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
+  //  public void setUpAreaAnd
 
     public void getDataAndShowAreaView() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -348,11 +350,75 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
 
     }
 
+    public void checkFirstTime(){
+        String path = "/OwnerManager/Owner4/QuanLyKhuVuc";
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference(path);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue() == null){
+                    checkFirstTime = true;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void setUpFirstTime(){
+        final ArrayList<AreaModel> listArea = new ArrayList<>();
+        //https://quanlychuoicoffee.firebaseio.com/FounderManager/QuanLyCuaHang/Owner5
+        SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
+        String ownerID = pref.getString(LoginActivity.OWNERID, null);
+        String path = "/FounderManager/QuanLyCuaHang/"+ownerID;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference(path);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot area : snapshot.getChildren()){
+                    String tables = area.child("soLuongBan").getValue()+"";
+                    String nameArea = area.child("tenKhuVuc").getValue()+"";
+                    String id = area.getKey().replace(" ","");
+                    AreaModel areaModel = new AreaModel(nameArea,id,tables);
+                    listArea.add(areaModel);
+                }
+                setUpBranchTable(listArea);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    public void setUpBranchTable(ArrayList<AreaModel> listArea){
+        String path = "/OwnerManager/Owner4/QuanLyBan";
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference(path);
+        for (int i =0;i<listArea.size();i++){
+            DatabaseReference branchArea = myRef.child(listArea.get(i).getId());
+            int tables = Integer.parseInt(listArea.get(i).getTables()+"");
+            for (int j =1;j<=tables;j++){
+                branchArea.child("Table"+j).child("tableID").setValue("TB"+j);
+                branchArea.child("Table"+j).child("tableStatus").setValue("0");
+            }
+        }
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
+        if (checkFirstTime){
+            setUpFirstTime();
+        }
         getDataAndShowAreaView();
-
     }
 
     private void anhXa() {
@@ -383,7 +449,7 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
         Intent intent = new Intent(this, RoomActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt(KEY_ROOM, position);
-        bundle.putString(KEY_GET_LAYOUT, "GET");
+        bundle.putString(KEY_NAME_ROOM, listArea.get(position).getName());
         intent.putExtras(bundle);
         startActivity(intent);
     }
