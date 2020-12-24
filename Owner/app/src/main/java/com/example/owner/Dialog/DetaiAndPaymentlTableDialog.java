@@ -23,6 +23,7 @@ import com.example.owner.Activity.RoomActivity;
 import com.example.owner.Adapter.DetailAndPaymentTableAdapter;
 import com.example.owner.Global.ParseTime;
 import com.example.owner.Model.BillModel;
+import com.example.owner.Model.DoanhThu;
 import com.example.owner.Model.DoanhThuMonth;
 import com.example.owner.Model.MealModel;
 import com.example.owner.Model.MealUsed;
@@ -50,13 +51,15 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
     String ownerID;
     String areaID;
     String tableID;
-    float tongtien;
+    int tongtien;
     Date date = new Date();
     ParseTime parseTime = new ParseTime(date.getTime());
     String year = parseTime.getYear();
     String month = "Thang" + parseTime.getMonth();
     String _date = "Ngay" + parseTime.getDate();
     String ngay = parseTime.getDate();
+    DoanhThu doanhThu;
+    ArrayList<Integer> doanhThus = new ArrayList<>();
 
     public DetaiAndPaymentlTableDialog(@NonNull Context context, String url, String ownerID, String areaID, String tableID) {
         super(context);
@@ -368,7 +371,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
                         {
                             FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
                             final DatabaseReference myRef1 = firebaseDatabase1.getReference("/FounderManager/" +
-                                    "/QuanLyDoanhThu/"  + ownerID + "/" + year + "/" + month + "/" + _date);
+                                    "/QuanLyDoanhThu/"  + ownerID + "/" + year + "/" + month + "/DoanhThuNgay/" + _date);
                             DoanhThuMonth doanhThuMonth = new DoanhThuMonth(ngay,sumtotal.getSum());
                             myRef1.setValue(doanhThuMonth);
                         }
@@ -392,14 +395,14 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
                 if (snapshot.exists())
                 {
                  String tien = snapshot.child("sumtotal").getValue().toString();
-                 tongtien = Float.parseFloat(tien) + Float.parseFloat(tvSumPrice.getText().toString());
+                 tongtien = Integer.parseInt(tien) + Integer.parseInt(tvSumPrice.getText().toString());
                 }
                 myRef.child("sumtotal").setValue(String.valueOf(tongtien)).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
                         final DatabaseReference myRef1 = firebaseDatabase1.getReference("/FounderManager/" +
-                                "/QuanLyDoanhThu/"  + ownerID + "/" + year + "/" + month + "/" + _date);
+                                "/QuanLyDoanhThu/"  + ownerID + "/" + year + "/" + month + "/DoanhThuNgay/" + _date);
                         DoanhThuMonth doanhThuMonth = new DoanhThuMonth(ngay,String.valueOf(tongtien));
                         myRef1.setValue(doanhThuMonth);
                     }
@@ -413,4 +416,28 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
             }
         });
     }
+//    public void getDataMonth()
+//    {
+//        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+//        final DatabaseReference reference = firebaseDatabase.getReference("/FounderManager/" +
+//                "/QuanLyDoanhThu/"  + ownerID + "/" + year + "/" + month);
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.getValue() != null)
+//                {
+//                    for (DataSnapshot item : snapshot.getChildren())
+//                    {
+//                        System.out.println(item);
+//                    }
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 }

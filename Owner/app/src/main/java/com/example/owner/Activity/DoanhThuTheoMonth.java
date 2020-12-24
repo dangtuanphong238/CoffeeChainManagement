@@ -89,7 +89,7 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
                     getSpinnerThang = "Thang"+ spinner.getItemAtPosition(position).toString();
                     Toast.makeText(DoanhThuTheoMonth.this, getSpinnerThang, Toast.LENGTH_SHORT).show();
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                    reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID).child(getSpinner).child(getSpinnerThang)
+                    reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID).child(getSpinner).child(getSpinnerThang).child("DoanhThuNgay")
                             .addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {

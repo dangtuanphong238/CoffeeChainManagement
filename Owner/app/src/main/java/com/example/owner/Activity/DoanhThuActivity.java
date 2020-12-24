@@ -96,7 +96,7 @@ public class DoanhThuActivity extends AppCompatActivity {
                     arrayListNam.clear();
                     for (DataSnapshot item : snapshot.getChildren())
                     {
-                        if (item.hasChildren())
+                        if (item.exists())
                         {
                             spinnerLocNam = item.getKey();
                             arrayListNam.add(spinnerLocNam);
@@ -114,7 +114,6 @@ public class DoanhThuActivity extends AppCompatActivity {
         });
 
     }
-
      private void setDuLieu() {
         try {
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -122,35 +121,42 @@ public class DoanhThuActivity extends AppCompatActivity {
                 public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                     getSpinner = spinner.getItemAtPosition(position).toString();
                     saveOwnerIDToLocalStorage(getSpinner);
-                    Toast.makeText(DoanhThuActivity.this, "Bạn chọn :" + getSpinner, Toast.LENGTH_SHORT).show();
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                     reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID).child(getSpinner)
                             .addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    ArrayList<Entry> entries = new ArrayList<Entry>();
-                                    if (snapshot.exists())
+                                    if (snapshot.getValue() != null)
                                     {
-                                        if (snapshot.hasChildren())
+                                        ArrayList<Entry> entries = new ArrayList<Entry>();
+                                        if (snapshot.exists())
                                         {
-                                            entries.clear();
-                                            for (DataSnapshot item : snapshot.getChildren())
+                                            if (snapshot.hasChildren())
                                             {
-                                                DoanhThu doanhThu = item.getValue(DoanhThu.class);
-                                                entries.add(new Entry(Integer.parseInt(doanhThu.month),Float.valueOf(doanhThu.total)));
+                                                entries.clear();
+                                                for (DataSnapshot item : snapshot.getChildren())
+                                                {
+                                                    DoanhThu doanhThu = item.getValue(DoanhThu.class);
+                                                    entries.add(new Entry(Integer.parseInt(doanhThu.month),Float.valueOf(doanhThu.total)));
+                                                }
+                                                showCharrt(entries);
                                             }
-                                            showCharrt(entries);
+                                            else
+                                            {
+                                                lineChart.clear();
+                                                lineChart.invalidate();
+                                            }
                                         }
                                         else
                                         {
-                                            lineChart.clear();
-                                            lineChart.invalidate();
+                                            Toast.makeText(DoanhThuActivity.this, "Chưa có dữ liệu", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                     else
                                     {
                                         Toast.makeText(DoanhThuActivity.this, "Chưa có dữ liệu", Toast.LENGTH_SHORT).show();
                                     }
+                                   
 
                                 }
 
