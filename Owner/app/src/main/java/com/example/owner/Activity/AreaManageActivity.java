@@ -254,7 +254,7 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
 
                     case R.id.itemDoanhThu:
                         //nho sua lai khi code xong1
-                       Public_func.clickLogout(AreaManageActivity.this, DoanhThuActivity.class);
+                       Public_func.clickLogout(AreaManageActivity.this, DoanhThuDate.class);
                         return true;
 
                     case R.id.itemInfoStore:

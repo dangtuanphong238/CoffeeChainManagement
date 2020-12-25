@@ -2,48 +2,32 @@ package com.example.owner.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Size;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.owner.Global.ParseTime;
-import com.example.owner.Global.Public_func;
 import com.example.owner.Model.DoanhThu;
 import com.example.owner.R;
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -62,16 +46,66 @@ public class DoanhThuActivity extends AppCompatActivity {
     ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
     LineData lineData;
     Button button;
+    Date date = new Date();
+    ParseTime parseTime = new ParseTime(date.getTime());
+    String year = parseTime.getYear();
+    String month = "Thang" + parseTime.getMonth();
+    String _date = "Ngay" + parseTime.getDate();
+    String thang = parseTime.getMonth();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doanh_thu);
         getOwnerIDFromLocalStorage();
         getAnhXa();
+        getDuLieuThang();
         setDuLieu();
         onClick();
     }
 
+    private void getDuLieuThang() {
+        getDataMonth();
+
+    }
+    public void getDataMonth()
+    {
+        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        final DatabaseReference reference = firebaseDatabase.getReference("/FounderManager/" +
+                "/QuanLyDoanhThu/"  + sOwnerID + "/" + year + "/" + month +"/DoanhThuNgay/");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Integer> arrayList = new ArrayList<>();
+                int total = 0;
+                if (snapshot.getValue() != null)
+                {
+                    for (DataSnapshot item : snapshot.getChildren())
+                    {
+                        int mangTien = Integer.parseInt(item.child("sumtotal").getValue().toString());
+                       arrayList.add(mangTien);
+                    }
+                    for (int num : arrayList)
+                    {
+                        total = total+num;
+                    }
+                     FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
+                     DatabaseReference reference1 = firebaseDatabase1.getReference("/FounderManager/" +
+                            "/QuanLyDoanhThu/"  + sOwnerID + "/" + year + "/" + month);
+                    reference1.child("total").setValue(String.valueOf(total));
+                    reference1.child("month").setValue(thang);
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Hôm nay chưa có doanh thu nào!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
     private void onClick() {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,7 +236,7 @@ public class DoanhThuActivity extends AppCompatActivity {
     }
 
     private void getAnhXa() {
-        lineChart = findViewById(R.id.chartNam);
+        lineChart = findViewById(R.id.chartDate);
           spinner = findViewById(R.id.locNam);
           button = findViewById(R.id.theothang);
     }
