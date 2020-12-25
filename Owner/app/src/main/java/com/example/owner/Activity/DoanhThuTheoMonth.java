@@ -59,7 +59,8 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID).child(getSpinner).addValueEventListener(new ValueEventListener() {
+        reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID)
+                .child(getSpinner).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists())
@@ -183,7 +184,8 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
             finish();
         }
     }
-    public void getSpinner() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
+    public void getSpinner() // Hàm này để lấy ownerID
+    // khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         System.out.println(sharedPreferences.getString(SPINNERID,"null"));

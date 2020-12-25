@@ -78,8 +78,6 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
-
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="15dp"
@@ -88,7 +86,7 @@
         android:layout_height="0dp"
         tools:ignore="MissingConstraints">
         <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/chartNam"
+            android:id="@+id/chartDate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
