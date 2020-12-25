@@ -110,7 +110,7 @@ public class ListAddComboAdapter extends RecyclerView.Adapter<ListAddComboAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
-        MealModel combo = list.get(position);
+        final MealModel combo = list.get(position);
         holder.txtNameProduct.setText(combo.getMeal_name());
         holder.txtPriceProduct.setText(combo.getMeal_price());
 
@@ -124,11 +124,13 @@ public class ListAddComboAdapter extends RecyclerView.Adapter<ListAddComboAdapte
                 if(holder.chkChoose.isChecked())
                 {
                     list.get(position).setCheck(true);
-                    arrCombo.add(list.get(position).getMeal_name());
+                    arrCombo.add(list.get(position).getMeal_price());
+//                    arrCombo.add(combo);
                 }
                 else {
                     list.get(position).setCheck(false);
-                    arrCombo.remove(list.get(position).getMeal_name());
+                    arrCombo.remove(list.get(position).getMeal_price());
+//                    arrCombo.remove(combo);
                 }
                 returnValueArrayCombo.saveArr(arrCombo);
             }
