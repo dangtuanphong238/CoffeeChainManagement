@@ -332,7 +332,11 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
                 dismiss();
                 break;
             case R.id.btnPayment:
-                payment(listMealUsed);
+                if (listMealUsed.size() != 0){
+                    payment(listMealUsed);
+                }else{
+                    Toast.makeText(context,"Bàn trống không thể thanh toán",Toast.LENGTH_SHORT).show();
+                }
                 break;
             default:
                 break;
