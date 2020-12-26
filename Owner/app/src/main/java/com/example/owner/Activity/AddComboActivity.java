@@ -144,46 +144,50 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
                     if (arrayList.isEmpty()) {
                         Toast.makeText(AddComboActivity.this, "Vui lòng chọn món", Toast.LENGTH_SHORT).show();
                     } else {
-                        final int price = tinhGiaCombo(arrayList, uuDai);
-                        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                        final DatabaseReference databaseReference = firebaseDatabase.getReference()
-                                .child("OwnerManager").child(ownerID).child("QuanLyCombo").child("combo" + lstCombo.size());
-                        storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(ownerID).child("QuanLyCombo").child("combo"+ lstCombo.size() + ".png");
-                        //Chuyen duoi file
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                        byte[] data = baos.toByteArray();
-                        storageReference.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                final Combo combo = new Combo("combo", "combo" + lstCombo.size(),price + "",
-                                        tenCombo,"combo" + lstCombo.size() + ".png",
-                                        meal_description, uuDai + "%", total_price_combo+"");
+                        if(!tenCombo.isEmpty() && !uuDai.isEmpty())
+                        {
+                            final int price = tinhGiaCombo(arrayList, uuDai);
+                            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                            final DatabaseReference databaseReference = firebaseDatabase.getReference()
+                                    .child("OwnerManager").child(ownerID).child("QuanLyCombo").child("combo" + lstCombo.size());
+                            storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(ownerID).child("QuanLyCombo").child("combo"+ lstCombo.size() + ".png");
+                            //Chuyen duoi file
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                            byte[] data = baos.toByteArray();
+                            storageReference.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    final Combo combo = new Combo("combo", "combo" + lstCombo.size(),price + "",
+                                            tenCombo,"combo" + lstCombo.size() + ".png",
+                                            meal_description, uuDai + "%", total_price_combo+"");
 
-                                databaseReference.setValue(combo).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(AddComboActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                                        clearInputFromUser();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(AddComboActivity.this, "Failure", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(AddComboActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                System.out.println(e.getMessage().toString());
-                            }
-                        });
+                                    databaseReference.setValue(combo).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(AddComboActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                                            clearInputFromUser();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(AddComboActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(AddComboActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    System.out.println(e.getMessage().toString());
+                                }
+                            });
+                        }
+                        else {
+                            Toast.makeText(AddComboActivity.this, "Vui lòng nhập đủ!", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
-                } else {
-                    Toast.makeText(AddComboActivity.this, "Vui lòng nhập đủ!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
