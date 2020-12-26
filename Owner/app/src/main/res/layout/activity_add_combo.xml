@@ -12,7 +12,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/normal10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +25,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -35,13 +36,17 @@
                     android:id="@+id/edtTenCombo"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/normal50dp"
-                    android:hint="Nhập tên combo..." />
+                    android:hint="Nhập tên combo..."
+                    android:paddingHorizontal="@dimen/normal10dp"
+                    android:layout_marginHorizontal="@dimen/normal5dp"
+                    android:background="@drawable/custom_edittext"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/normal10dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -52,7 +57,11 @@
                     android:id="@+id/edtUuDai"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/normal50dp"
-                    android:hint="Nhập % ưu đãi..." />
+                    android:hint="Nhập % ưu đãi..."
+                    android:inputType="number"
+                    android:paddingHorizontal="@dimen/normal10dp"
+                    android:layout_marginHorizontal="@dimen/normal5dp"
+                    android:background="@drawable/custom_edittext"/>
             </LinearLayout>
 
             <LinearLayout
@@ -95,25 +104,24 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        >
                         <ImageView
                             android:id="@+id/imgCombo"
+                            android:visibility="gone"
                             android:layout_width="150dp"
                             android:layout_height="150dp"
-                            android:visibility="gone"
-                            android:background="@drawable/ic_person_24"
                             android:layout_gravity="clip_horizontal"
                             />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
-
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginVertical="@dimen/normal10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -126,17 +134,16 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewCombo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5" />
+                    android:layout_height="500dp" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/btnTaoCombo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/normal10dp"
+                android:layout_marginBottom="@dimen/normal10dp"
                 android:background="@drawable/custom_button"
-                android:text="Tạo" />
+                android:text="Tạo Combo" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

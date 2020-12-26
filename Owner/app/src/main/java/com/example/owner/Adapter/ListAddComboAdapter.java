@@ -35,7 +35,8 @@ public class ListAddComboAdapter extends RecyclerView.Adapter<ListAddComboAdapte
     ArrayList<MealModel> list;
     Context context;
     String path;
-    ArrayList arrCombo = new ArrayList();
+//    ArrayList arrCombo = new ArrayList();
+    ArrayList<MealModel> arrCombo = new ArrayList<>();
     ReturnValueArrayCombo returnValueArrayCombo;
 
     public ListAddComboAdapter(Context context, ArrayList<MealModel> list, String path , ReturnValueArrayCombo returnValueArrayCombo) {
@@ -124,17 +125,18 @@ public class ListAddComboAdapter extends RecyclerView.Adapter<ListAddComboAdapte
                 if(holder.chkChoose.isChecked())
                 {
                     list.get(position).setCheck(true);
-                    arrCombo.add(list.get(position).getMeal_price());
-//                    arrCombo.add(combo);
+//                    arrCombo.add(list.get(position).getMeal_price());
+                    arrCombo.add(combo);
                 }
                 else {
                     list.get(position).setCheck(false);
-                    arrCombo.remove(list.get(position).getMeal_price());
-//                    arrCombo.remove(combo);
+//                    arrCombo.remove(list.get(position).getMeal_price());
+                    arrCombo.remove(combo);
                 }
-                returnValueArrayCombo.saveArr(arrCombo);
             }
         });
+
+        returnValueArrayCombo.saveArr(arrCombo);
 
         setImage(holder,path,combo.getMeal_id());
     }

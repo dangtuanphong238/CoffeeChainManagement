@@ -6,16 +6,21 @@ public class Combo {
     String meal_price;
     String meal_name;
     String meal_image;
-
+    String meal_description;
+    String meal_uu_dai;
+    String meal_price_total;
     public Combo() {
     }
 
-    public Combo(String meal_category, String meal_id, String meal_price, String meal_name, String meal_image) {
+    public Combo(String meal_category, String meal_id, String meal_price, String meal_name, String meal_image, String meal_description, String meal_uu_dai, String meal_price_total) {
         this.meal_category = meal_category;
         this.meal_id = meal_id;
         this.meal_price = meal_price;
         this.meal_name = meal_name;
         this.meal_image = meal_image;
+        this.meal_description = meal_description;
+        this.meal_uu_dai = meal_uu_dai;
+        this.meal_price_total = meal_price_total;
     }
 
     public String getMeal_category() {
@@ -56,5 +61,29 @@ public class Combo {
 
     public void setMeal_image(String meal_image) {
         this.meal_image = meal_image;
+    }
+
+    public String getMeal_description() {
+        return meal_description;
+    }
+
+    public void setMeal_description(String meal_description) {
+        this.meal_description = meal_description;
+    }
+
+    public String getMeal_uu_dai() {
+        return meal_uu_dai;
+    }
+
+    public void setMeal_uu_dai(String meal_uu_dai) {
+        this.meal_uu_dai = meal_uu_dai;
+    }
+
+    public String getMeal_price_total() {
+        return meal_price_total;
+    }
+
+    public void setMeal_price_total(String meal_price_total) {
+        this.meal_price_total = meal_price_total;
     }
 }
