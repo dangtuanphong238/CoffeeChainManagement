@@ -1,11 +1,11 @@
 package com.example.owner.Model;
 
 public class MealModel {
-    String meal_category;
-    String meal_id;
-    String meal_price;
-    String meal_name;
-    String meal_image;
+    private  String meal_category;
+    private String meal_id;
+    private String meal_price;
+    private String meal_name;
+    private String meal_image;
     private boolean check = false; // checkbox
 
     public boolean isCheck() {

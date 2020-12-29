@@ -76,8 +76,8 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string-array name="lsvDoanhThu">
+        <item>N/A</item>
         <item>Theo Ngày</item>
-        <item>Theo Tuần</item>
         <item>Theo Tháng</item>
         <item>Theo Năm</item>
     </string-array>

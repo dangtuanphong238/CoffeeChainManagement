@@ -92,8 +92,7 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
                         return true;
 
                     case R.id.itemDoanhThu:
-                       Public_func.clickLogout(ThuNganActivity.this, DoanhThuActivity.class);
-                        Toast.makeText(ThuNganActivity.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
+                        Public_func.clickLogout(ThuNganActivity.this, DoanhThuDate.class);
                         return true;
 
                     case R.id.itemInfoStore:

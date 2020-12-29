@@ -208,8 +208,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                         return true;
 
                     case R.id.itemDoanhThu:
-//                        Public_func.clickLogout(MealManageActivity.this, DoanhThuActivity.class);
-                        Toast.makeText(MealManageActivity.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
+                        Public_func.clickLogout(MealManageActivity.this, DoanhThuDate.class);
                         return true;
 
                     case R.id.itemInfoStore:

@@ -33,16 +33,16 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DoanhThuTheoMonth extends AppCompatActivity {
-
+    Date date = new Date();
+    ParseTime parseTime = new ParseTime(date.getTime());
+    String year = parseTime.getYear();
+    String month = "Thang" + parseTime.getMonth();
+    String _date = "Ngay" + parseTime.getDate();
+    String thang = parseTime.getMonth();
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
-    public static final String SPINNERID = "spinnerID";
-    private String sOwnerID, getSpinner;
+    public String sOwnerID;
     LineChart lineChart;
-    Spinner spinner;
-    private String spinnerLocThang, getSpinnerThang;
-    private ArrayList<String> arrayListThang = new ArrayList<String>();
-    private ArrayAdapter mArrayAdapter;
     private LineDataSet lineDataSet = new LineDataSet(null, null);
     ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
     LineData lineData;
@@ -52,45 +52,12 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
         setContentView(R.layout.activity_doanh_thu_theo_month);
         getAnhXa();
         getOwnerIDFromLocalStorage();
-        getSpinner();
         setDuLieu();
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID)
-                .child(getSpinner).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists())
-                {
-                    arrayListThang.clear();
-                    for (DataSnapshot item : snapshot.getChildren())
-                    {
-                        spinnerLocThang = item.child("month").getValue().toString();
-                        arrayListThang.add(spinnerLocThang);
-                    }
-                    mArrayAdapter = new ArrayAdapter(DoanhThuTheoMonth.this,R.layout.cus_spinner_dropdown,arrayListThang);
-                    spinner.setAdapter(mArrayAdapter);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
     private void setDuLieu() {
         try {
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                    getSpinnerThang = "Thang"+ spinner.getItemAtPosition(position).toString();
-                    Toast.makeText(DoanhThuTheoMonth.this, getSpinnerThang, Toast.LENGTH_SHORT).show();
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                    reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID).child(getSpinner).child(getSpinnerThang).child("DoanhThuNgay")
+                    reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID).child(year).child(month).child("DoanhThuNgay")
                             .addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -129,13 +96,6 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
                                     Toast.makeText(DoanhThuTheoMonth.this, "Chưa có dữ liệu", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                }
-            });
         }
         catch (Exception exception)
         {
@@ -144,9 +104,9 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
     }
 
     private void showChart(ArrayList<Entry> entries) {
-        int colorArray[] = new int[]{Color.RED,Color.BLACK,Color.BLUE,Color.YELLOW,Color.GREEN};
         lineDataSet.setValues(entries);
         lineDataSet.setLabel("Doanh Thu Hàng Ngày");
+        lineDataSet.setLabel("Đơn Vị : VND");
         lineDataSet.setDrawCircleHole(true);
         lineDataSet.setCircleColor( Color.YELLOW );
         lineDataSet.setColor(Color.RED);
@@ -156,7 +116,6 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
         lineDataSet.setCircleHoleRadius(3);
         lineDataSet.setValueTextSize(16);
         lineDataSet.setValueTextColor(Color.BLUE);
-        lineDataSet.enableDashedLine(1,3,0);
         iLineDataSets.clear();
         iLineDataSets.add(lineDataSet);
         lineData = new LineData(iLineDataSets);
@@ -166,7 +125,6 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
     }
 
     private void getAnhXa() {
-        spinner = findViewById(R.id.locThang);
         lineChart = findViewById(R.id.chartThang);
     }
 
@@ -179,16 +137,9 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         {
-            Intent intent = new Intent(DoanhThuTheoMonth.this, DoanhThuActivity.class);
+            Intent intent = new Intent(DoanhThuTheoMonth.this, DoanhThuDate.class);
             startActivity(intent);
             finish();
         }
-    }
-    public void getSpinner() // Hàm này để lấy ownerID
-    // khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
-    {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        System.out.println(sharedPreferences.getString(SPINNERID,"null"));
-        getSpinner = sharedPreferences.getString(SPINNERID,"null");
     }
 }

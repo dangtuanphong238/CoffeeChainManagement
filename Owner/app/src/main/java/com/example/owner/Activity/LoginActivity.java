@@ -240,7 +240,6 @@ public class LoginActivity extends AppCompatActivity {
             super.onBackPressed();
             return;
         }
-
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
 
