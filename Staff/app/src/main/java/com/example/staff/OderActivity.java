@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.staff.Adapter.ListMealAdapter;
 import com.example.staff.Model.MealModel;
@@ -56,8 +57,13 @@ public class OderActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 keySpinner = parent.getItemAtPosition(position).toString();
                 if (keySpinner.equals("Tất Cả")) {
-                    getDataSpiner();
-                } else {
+                    getDataSpinerCombo();
+                }
+                else if(keySpinner.equals("Combo")) {
+                    getDataSpinerCombo();
+                    Toast.makeText(OderActivity.this, "COmbo", Toast.LENGTH_SHORT).show();
+                }
+                else {
                     FillSpinner(keySpinner);
                 }
             }
@@ -135,6 +141,40 @@ public class OderActivity extends AppCompatActivity {
                 });
 
             }
+    private void getDataSpinerCombo() {
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("OwnerManager").child(sOwnerID).child("QuanLyCombo");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listMonAn.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.exists())
+                    {
+                        mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
+                                snapshot.child("meal _id").getValue() + "",
+                                snapshot.child("meal_price").getValue() + "",
+                                snapshot.child("meal_name").getValue() + "",
+                                snapshot.child("meal_image").getValue() + "");
+                        listMonAn.add(mealModel);
+                        System.out.println("listMon" + listMonAn);
+                    }
+
+                }
+                listMealAdapter = new ListMealAdapter(OderActivity.this, R.layout.custom_recycleview, listMonAn);
+                listMealAdapter.notifyDataSetChanged();
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                listView.setAdapter(listMealAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
     private void getDataName(final String keyName) {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("OwnerManager").child(sOwnerID).child("QuanLyMonAn");
@@ -145,7 +185,7 @@ public class OderActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if (snapshot.exists())
                     {
-                        MealModel mealModel = new MealModel(snapshot.child("meal_name").getValue() + "");
+//                        MealModel mealModel = new MealModel(snapshot.child("meal_name").getValue() + "");
                         if (mealModel.getMeal_name().equals(keyName)) {
                             listMonAn.add(mealModel);
                         }
@@ -170,8 +210,9 @@ public class OderActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MealModel mealMEAL = listMonAn.get(position);
                 Intent intent = new Intent(getApplicationContext(), CaiDatBill.class);
-                intent.putExtra("BILL", mealMEAL);
+//                intent.putExtra("BILL", mealMEAL);
                 startActivity(intent);
+                System.out.println("1111"+mealMEAL);
             }
         });
 

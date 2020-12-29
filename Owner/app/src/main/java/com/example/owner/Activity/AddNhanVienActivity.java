@@ -107,7 +107,7 @@ public class AddNhanVienActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemDoanhThu:
-//                        Public_func.clickLogout(AddNhanVienActivity.this, DoanhThuActivity.class);
+                    Public_func.clickLogout(AddNhanVienActivity.this, DoanhThuActivity.class);
                         Toast.makeText(AddNhanVienActivity.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
                         return true;
 

@@ -114,7 +114,10 @@ package com.example.owner.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -122,6 +125,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -163,13 +167,19 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
     private NavigationView navigationView;
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
-    private Button btnAddMeal;
+    private Button btnAddMeal, btnAddCombo;
+
+    //drawer header:
+    Bitmap bitmapDecoded;
+    private TextView nav_head_name_store, nav_head_address_store;
+    private ImageView nav_head_avatar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_manage);
         anhXa();
+        headerNav();
         txtTitleActivity.setText("Quản lý món");
         openMenu();
 
@@ -182,7 +192,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                         Public_func.clickItemMenu(MealManageActivity.this, AreaManageActivity.class);
                         return true;
                     case R.id.itemQLMon:
-                        drawerLayout.closeDrawer(GravityCompat.START);
+                        recreate();
                         return true;
                     case R.id.itemQLNV:
                         Public_func.clickItemMenu(MealManageActivity.this, StaffManageActivity.class);
@@ -205,18 +215,6 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                     case R.id.itemInfoStore:
                         Public_func.clickItemMenu(MealManageActivity.this, InfoStoreActivity.class);
                         return true;
-
-//                    case R.id.itemThemMon:
-//                        Public_func.clickItemMenu(MealManageActivity.this, AddMonActivity.class);
-//                        return true;
-//
-//                    case R.id.itemThemNV:
-//                        Public_func.clickItemMenu(MealManageActivity.this, AddNhanVienActivity.class);
-//                        return true;
-//
-//                    case R.id.itemSPKho:
-//                        Public_func.clickItemMenu(MealManageActivity.this, AddHangHoaActivity.class);
-//                        return true;
 
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
@@ -258,6 +256,37 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                 startActivity(intent);
             }
         });
+
+        btnAddCombo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MealManageActivity.this, AddComboActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    //header drawer:
+    private void headerNav() {
+        SharedPreferences ref = getSharedPreferences("bitmap_img", MODE_PRIVATE);
+
+        String bitmap = ref.getString("imagePreferance", "");
+        System.out.println(bitmap);
+        decodeBase64(bitmap);
+        View headerView = navigationView.getHeaderView(0);
+        nav_head_avatar = headerView.findViewById(R.id.nav_head_avatar);
+        if (bitmapDecoded != null) {
+            nav_head_avatar.setImageBitmap(bitmapDecoded);
+        } else {
+            System.out.println("bitmapp null");
+        }
+    }
+
+    // method for base64 to bitmap
+    public void decodeBase64(String input) {
+        byte[] decodedByte = Base64.decode(input, 0);
+        bitmapDecoded = BitmapFactory
+                .decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
     private void anhXa() {
@@ -268,6 +297,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
         txtTitleActivity = findViewById(R.id.txtTitle);
         btnAddMeal = findViewById(R.id.btnAddMeal);
         spnCategory = findViewById(R.id.spnCategory);
+        btnAddCombo = findViewById(R.id.btnAddCombo);
     }
 
     public void openMenu() {
@@ -320,13 +350,18 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
-                            snapshot.child("meal_id").getValue() + "",
-                            snapshot.child("meal_price").getValue() + "",
-                            snapshot.child("meal_name").getValue() + "",
-                            snapshot.child("meal_image").getValue() + "");
-                    list.add(mealModel);
+                try {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
+                                snapshot.child("meal_id").getValue() + "",
+                                snapshot.child("meal_price").getValue() + "",
+                                snapshot.child("meal_name").getValue() + "",
+                                snapshot.child("meal_image").getValue() + "");
+                        list.add(mealModel);
+                    }
+                } catch (Exception ex) {
+                    Log.w("PROBLEM", "get data from url " + path + " have problem");
+                    System.out.println("PROBLEM: " + "get data from url " + path + " have problem");
                 }
                 adapter = new ListMealAdapter(MealManageActivity.this, list, MealManageActivity.this, MealManageActivity.this, path);
                 adapter.notifyDataSetChanged();
@@ -355,15 +390,20 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
-                            snapshot.child("meal_id").getValue() + "",
-                            snapshot.child("meal_price").getValue() + "",
-                            snapshot.child("meal_name").getValue() + "",
-                            snapshot.child("meal_image").getValue() + "");
-                    if (mealModel.getMeal_category().equals(key)) {
-                        list.add(mealModel);
+                try {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
+                                snapshot.child("meal_id").getValue() + "",
+                                snapshot.child("meal_price").getValue() + "",
+                                snapshot.child("meal_name").getValue() + "",
+                                snapshot.child("meal_image").getValue() + "");
+                        if (mealModel.getMeal_category().equals(key)) {
+                            list.add(mealModel);
+                        }
                     }
+                } catch (Exception ex) {
+                    Log.w("PROBLEM", "get data from url " + path + " have problem");
+                    System.out.println("PROBLEM: " + "get data from url " + path + " have problem");
                 }
                 adapter = new ListMealAdapter(MealManageActivity.this, list, MealManageActivity.this, MealManageActivity.this, path);
                 adapter.notifyDataSetChanged();

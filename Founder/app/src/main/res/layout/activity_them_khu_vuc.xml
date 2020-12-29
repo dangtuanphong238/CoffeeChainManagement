@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main_drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FE9B53"
+    android:orientation="vertical"
+    tools:context=".ThemKhuVuc">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/txtTendangnhap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Tên đăng nhập:"
+                android:textColor="#767B97"
+                android:textSize="20dp"></TextView>
+
+            <EditText
+                android:id="@+id/edtTendangnhap"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/custom_edittext"
+                android:hint="enter your username"
+                android:paddingHorizontal="10dp"
+                android:paddingRight="20px"></EditText>
+
+            <TextView
+                android:id="@+id/txtMatkhau"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Mật Khẩu:"
+                android:textColor="#767B97"
+                android:textSize="20dp"></TextView>
+
+            <EditText
+                android:id="@+id/edtMatkhau"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/custom_edittext"
+                android:hint="enter your password"
+                android:paddingHorizontal="10dp"
+                android:paddingRight="20px"></EditText>
+
+            <TextView
+                android:id="@+id/txtSoKhuVuc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Số khu vực:"
+                android:textColor="#767B97"
+                android:textSize="20dp"></TextView>
+
+            <EditText
+                android:id="@+id/edtSoKhuVuc"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/custom_edittext"
+                android:hint="enter your area"
+                android:paddingHorizontal="10dp"
+                android:paddingRight="20px"
+                android:inputType="number"></EditText>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lvSoBan"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:visibility="gone"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+
+                <Button
+                    android:id="@+id/btnTaomoi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_button"
+                    android:gravity="center"
+                    android:padding="20px"
+                    android:text="Tạo Mới" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navDrawerMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/main_actions"></com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>

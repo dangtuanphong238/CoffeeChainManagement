@@ -58,7 +58,6 @@ public class ThongBaoScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thong_bao_screen);
         anhXa();
-
         txtTitleActivity.setText("Thông Báo");
         openMenu();
         getOwnerIDFromLocalStorage();
@@ -70,7 +69,7 @@ public class ThongBaoScreen extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.itemthongBao:
-                        recreate();
+                        Public_func.clickItemMenu(ThongBaoScreen.this, ChooseChat.class);
                         return true;
                     case R.id.itemKhuVuc:
                         Public_func.clickItemMenu(ThongBaoScreen.this, KhuVuc.class);
@@ -157,6 +156,7 @@ public class ThongBaoScreen extends AppCompatActivity {
 
     private void displayMessages(final ArrayList<Message> arrMessage)
     {
+        txtTitleActivity.setText("Chat with owner and everyone");
         recyclerView.setLayoutManager(new LinearLayoutManager(ThongBaoScreen.this));
         recyclerView.setHasFixedSize(true);
 //        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference("Message");
@@ -174,15 +174,15 @@ public class ThongBaoScreen extends AppCompatActivity {
                         String userID = dataSnapshot.child("userID").getValue().toString();
                         Message message = new Message(userID, messageText, messageTime);
                         arrMessage.add(message);
-                        System.out.println("message " + message.getMessageText());
+//                        System.out.println("message " + message.getMessageText());
                     }
-//                    messageAdapter = new MessageAdapter(arrMessage, sOwnerID, "Owner01");
-                    messageAdapter = new MessageAdapter(arrMessage);
+                    messageAdapter = new MessageAdapter(arrMessage, sOwnerID);
+//                    messageAdapter = new MessageAdapter(arrMessage);
                     recyclerView.setAdapter(messageAdapter);
                     recyclerView.post(new Runnable() {
                         @Override
                         public void run() {
-                            recyclerView.smoothScrollToPosition(messageAdapter.getItemCount());
+                            recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() -1);
                         }
                     });
 

@@ -1,48 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main_drawer"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".Activity.ThuNganActivity">
-   <LinearLayout
-       android:background="#FE9B58"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:orientation="vertical"
-       >
-       <include layout="@layout/toolbar"/>
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_weight="1"
-           android:gravity="center"
-           android:padding="@dimen/normal20dp">
-           <EditText
-               android:layout_width="match_parent"
-               android:layout_height="@dimen/normal50dp"
-               android:background="@drawable/custom_edittext"
-               android:drawableRight="@drawable/ic_search_24"
-               android:paddingEnd="@dimen/normal10dp"
-               android:hint="search"
-               android:paddingStart="@dimen/normal20dp"
-               />
-       </LinearLayout>
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_weight="6">
-           <include layout="@layout/layout_main_area_manage"/>
-       </LinearLayout>
 
-   </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FE9B58"
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/normal10dp"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvThuNgan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navDrawerMenu"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:id="@+id/navDrawerMenu"
         app:menu="@menu/main_actions"
-        />
+        app:headerLayout="@layout/nav_drawer_header_main"/>
 </androidx.drawerlayout.widget.DrawerLayout>

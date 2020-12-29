@@ -22,7 +22,7 @@
     <string name="tenhanghoa">"Tên hàng hóa : "</string>
     <string name="soluong">Số lượng :</string>
     <string-array name="spinner_category">
-       <item>Tất cả</item>
+        <item>Tất cả</item>
         <item>Bánh Ngọt</item>
         <item>Cafe</item>
         <item>Trà Sữa</item>
@@ -36,6 +36,7 @@
     <string name="sua">Sửa</string>
     <string name="capnhathanghoa">Cập Nhật</string>
     <string name="xoahanghoa">Xóa Hàng</string>
+    <string name="doanhthuNam">Doanh Thu Theo Năm</string>
 
     <string-array name="lstCaLam">
         <item>Sáng</item>

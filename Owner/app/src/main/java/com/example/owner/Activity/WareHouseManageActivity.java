@@ -108,7 +108,10 @@ package com.example.owner.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -116,6 +119,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -148,10 +152,11 @@ import java.util.ArrayList;
 
 
 public class WareHouseManageActivity extends AppCompatActivity {
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String OWNERID = "ownerID";
+
     public static final String SHARED_PREF = "sharedPref";
     public static final String SPINNERID = "spinnerID";
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String OWNERID = "ownerID";
     private String sOwnerID;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -164,16 +169,48 @@ public class WareHouseManageActivity extends AppCompatActivity {
     private String clickedCountryName;
     private Spinner spSort;
     private Button btnThem;
+
+    //header nav:
+    //drawer header:
+    Bitmap bitmapDecoded;
+    private TextView nav_head_name_store, nav_head_address_store;
+    private ImageView nav_head_avatar;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ware_house_manage);
         anhXa();
+        headerNav();
         txtTitleActivity.setText("Quản lý kho");
         getOwnerIDFromLocalStorage();
         openMenu();
         getMenu();
         setEnvent();
+    }
+
+
+    //header drawer:
+    private void headerNav() {
+        SharedPreferences ref = getSharedPreferences("bitmap_img", MODE_PRIVATE);
+
+        String bitmap = ref.getString("imagePreferance", "");
+        System.out.println(bitmap);
+        decodeBase64(bitmap);
+        View headerView = navigationView.getHeaderView(0);
+        nav_head_avatar = headerView.findViewById(R.id.nav_head_avatar);
+        if (bitmapDecoded != null) {
+            nav_head_avatar.setImageBitmap(bitmapDecoded);
+        } else {
+            System.out.println("bitmapp null");
+        }
+    }
+
+    // method for base64 to bitmap
+    public void decodeBase64(String input) {
+        byte[] decodedByte = Base64.decode(input, 0);
+        bitmapDecoded = BitmapFactory
+                .decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
     private void setEnvent() {
@@ -236,6 +273,16 @@ public class WareHouseManageActivity extends AppCompatActivity {
         });
 
     }
+
+    private void anhXa() {
+        spSort = findViewById(R.id.spnSort);
+        btnThem = findViewById(R.id.themhanghoa);
+        listViewKho = findViewById(R.id.lvDSSPKho);
+        drawerLayout = findViewById(R.id.activity_main_drawer);
+        navigationView = findViewById(R.id.navDrawerMenu);
+        btnMnu = findViewById(R.id.btnMnu);
+        txtTitleActivity = findViewById(R.id.txtTitle);
+    }
     public void getMenu()
     {
         //call function onClickItem
@@ -263,7 +310,7 @@ public class WareHouseManageActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemDoanhThu:
-//                        Public_func.clickLogout(WareHouseManageActivity.this, DoanhThuActivity.class);
+                        Public_func.clickLogout(WareHouseManageActivity.this, DoanhThuActivity.class);
                         Toast.makeText(WareHouseManageActivity.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
                         return true;
 
@@ -294,15 +341,6 @@ public class WareHouseManageActivity extends AppCompatActivity {
                 return true;
             }
         });
-    }
-    private void anhXa() {
-        spSort = findViewById(R.id.spnSort);
-        btnThem = findViewById(R.id.themhanghoa);
-        listViewKho = findViewById(R.id.lvDSSPKho);
-        drawerLayout = findViewById(R.id.activity_main_drawer);
-        navigationView = findViewById(R.id.navDrawerMenu);
-        btnMnu = findViewById(R.id.btnMnu);
-        txtTitleActivity = findViewById(R.id.txtTitle);
     }
     public void openMenu() {
         btnMnu.setOnClickListener(new View.OnClickListener() {

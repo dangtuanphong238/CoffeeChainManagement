@@ -86,6 +86,13 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/background_corner_grey"
                         android:text="Thêm Món"/>
+                    <Button
+                        android:id="@+id/btnAddCombo"
+                        android:layout_marginRight="@dimen/normal20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/background_corner_grey"
+                        android:text="Thêm Combo"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -98,6 +105,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         android:id="@+id/navDrawerMenu"
+        app:headerLayout="@layout/nav_drawer_header_main"
         app:menu="@menu/main_actions"
         />
 

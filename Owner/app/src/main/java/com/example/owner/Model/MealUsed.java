@@ -23,7 +23,7 @@ public class MealUsed {
     }
 
     public int getSumPrice(){
-        int price = Integer.parseInt(model.getMeal_price());
+        int price = Integer.parseInt(model.getMeal_price()+"");
         return  price*amount;
     }
 
