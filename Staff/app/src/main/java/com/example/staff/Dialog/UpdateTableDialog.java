@@ -2,6 +2,8 @@ package com.example.staff.Dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -12,11 +14,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.staff.InfDatBanTrc;
 import com.example.staff.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.internal.InternalTokenProvider;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class UpdateTableDialog extends Dialog implements View.OnClickListener {
     String url;
@@ -112,15 +118,10 @@ public class UpdateTableDialog extends Dialog implements View.OnClickListener {
     }
 
     public void Booking() {
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        String path = "OwnerManager/" + ownerID + "/QuanLyBan/" + areaID + "/" + tableID + "/tableStatus";
-        DatabaseReference myRef = firebaseDatabase.getReference(path);
-        myRef.setValue("1").addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(context, "Đặt chỗ thành công", Toast.LENGTH_SHORT).show();
-            }
-        });
+        Intent intent = new Intent(context, InfDatBanTrc.class);
+        intent.putExtra("AREAID",areaID);
+        intent.putExtra("TABLEID",tableID);
+        context.startActivity(intent);
     }
 
     public void reportError() {
@@ -147,7 +148,14 @@ public class UpdateTableDialog extends Dialog implements View.OnClickListener {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(context, "Xóa trạng thái thành công", Toast.LENGTH_SHORT).show();
+
+                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                String path = "OwnerManager/" + ownerID + "/QuanLyBanDatTruoc" +
+                        "/"+ areaID + "/" +tableID + "/ThongTinDatTruoc";
+                DatabaseReference myRef = firebaseDatabase.getReference(path);
+                myRef.removeValue();
             }
         });
     }
+
 }

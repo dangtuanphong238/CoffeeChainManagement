@@ -22,11 +22,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.staff.Adapter.KhuVucAdapter;
-import com.example.staff.Adapter.ListMealAdapter;
 import com.example.staff.Adapter.RecyclerviewClick;
 import com.example.staff.Global.Public_func;
 import com.example.staff.Model.KhuVucMD;
-import com.example.staff.Model.TableModel;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
