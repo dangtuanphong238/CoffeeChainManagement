@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/dialog_info_table"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#EA9547"
+    android:layout_gravity="center"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="400dp"
+        android:minWidth="300dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/tvTableName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:text="Bàn 1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:paddingHorizontal="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="6"
+                android:gravity="bottom"
+                android:padding="5dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nhập lỗi"></TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
+                android:orientation="horizontal"
+                >
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/custom_edittext"
+                    android:layout_weight="1"
+                    android:paddingHorizontal="10dp"
+                    android:id="@+id/edtInputMessage"
+                    />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_send_48"
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/btnSend"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_gravity="end"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/ic_cancel_24" />
+    </LinearLayout>
+</FrameLayout>

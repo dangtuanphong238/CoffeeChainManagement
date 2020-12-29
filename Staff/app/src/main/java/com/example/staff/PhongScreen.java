@@ -128,7 +128,7 @@ public final static int BLANK = 0;
 
     @Override
     public void onItemLongClick(int position) {
-        tableID = "Table0" + (position + 1);
+        tableID = "Table" + (position + 1);
         String status = lstPhong.get(position).getTableStatus();
         UpdateTableDialog dialog = new UpdateTableDialog(this, url, sOwnerID, title, tableID, status);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -140,14 +140,14 @@ public final static int BLANK = 0;
         if (lstPhong.get(position).getTableStatus().equals("0")) {
             //When table blank
             //Show menu
-            OrderDialog dialog = new OrderDialog(this, sOwnerID, title, "Table0" + lstPhong.get(position).getID());
+            OrderDialog dialog = new OrderDialog(this, sOwnerID, title, "Table" + lstPhong.get(position).getID());
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
         }
         if (lstPhong.get(position).getTableStatus().equals("1")) {
             //When booked
             //Show menu
-            OrderDialog dialog = new OrderDialog(this, sOwnerID, title, "Table0" + lstPhong.get(position).getID());
+            OrderDialog dialog = new OrderDialog(this, sOwnerID, title, "Table" + lstPhong.get(position).getID());
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
         }
@@ -155,14 +155,14 @@ public final static int BLANK = 0;
             //When Having
             //Show detail dialog(- payment dialog)
             //Show list meal already and amounts.
-            OrderDialog dialog = new OrderDialog(this, sOwnerID, title, "Table0" + lstPhong.get(position).getID());
+            OrderDialog dialog = new OrderDialog(this, sOwnerID, title, "Table" + lstPhong.get(position).getID());
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
         }
         if(lstPhong.get(position).getTableStatus().equals("3")){
             //When be error
             //Toast notification
-            UpdateTableDialog dialog = new UpdateTableDialog(this, url, sOwnerID, title, "Table0"+lstPhong.get(position).getID(), lstPhong.get(position).getTableStatus());
+            UpdateTableDialog dialog = new UpdateTableDialog(this, url, sOwnerID, title, "Table"+lstPhong.get(position).getID(), lstPhong.get(position).getTableStatus());
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
         }

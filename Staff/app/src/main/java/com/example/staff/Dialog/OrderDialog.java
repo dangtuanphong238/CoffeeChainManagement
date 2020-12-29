@@ -94,7 +94,11 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         if(keySpinner.equals("Tất Cả")){
             getMenu();
             System.out.println("1111"+ keySpinner);
-        }else {
+        }
+        else if(keySpinner.equals("Combo")){
+            getCombo();
+        }
+        else {
             FillSpinner(keySpinner);
             System.out.println("keu"+keySpinner);
         }
@@ -147,6 +151,38 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         //Read list meal used in dialog from branch TableActive
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         String path = "OwnerManager/" + ownerID + "/QuanLyMonAn";
+        final DatabaseReference myRef = database.getReference(path);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<MealModel> list = new ArrayList<>();
+                try {
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        MealModel model = data.getValue(MealModel.class);
+                        list.add(model);
+                    }
+                } catch (Exception ex) {
+                    Log.w("PROBLEM", "get data from branch table active have problem " + ex.getMessage());
+                    System.out.println("get data from branch table active have problem in url: " + myRef.toString());
+                }
+                final String path = "/OwnerManager/" + ownerID + "/QuanLyMonAn";
+                MenuOrderAdapter adapter = new MenuOrderAdapter(context, list, OrderDialog.this, path, OrderDialog.this);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                rvMenuOrder.setLayoutManager(linearLayoutManager);
+                rvMenuOrder.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("Error", error.getMessage());
+            }
+        });
+    }
+    public void getCombo() {
+        //Read list meal used in dialog from branch TableActive
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String path = "OwnerManager/" + ownerID + "/QuanLyCombo";
         final DatabaseReference myRef = database.getReference(path);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
