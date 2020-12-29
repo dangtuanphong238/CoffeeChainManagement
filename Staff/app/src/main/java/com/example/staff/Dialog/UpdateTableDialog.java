@@ -133,14 +133,9 @@ public class UpdateTableDialog extends Dialog implements View.OnClickListener {
 //                Toast.makeText(context,"Báo lỗi thành công",Toast.LENGTH_SHORT).show();
 //            }
 //        });
-        btnReport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Dialog_BaoLoi dialog_baoLoi = new Dialog_BaoLoi();
-                dialog_baoLoi.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                dialog_baoLoi.show();
-            }
-        });
+        Dialog_BaoLoi dialog_baoLoi = new Dialog_BaoLoi(context, url, ownerID, areaID, tableID,status);
+        dialog_baoLoi.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog_baoLoi.show();
 
     }
 
