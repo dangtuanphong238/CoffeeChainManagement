@@ -59,7 +59,8 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID).child(getSpinner).addValueEventListener(new ValueEventListener() {
+        reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID)
+                .child(getSpinner).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists())
@@ -89,7 +90,7 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
                     getSpinnerThang = "Thang"+ spinner.getItemAtPosition(position).toString();
                     Toast.makeText(DoanhThuTheoMonth.this, getSpinnerThang, Toast.LENGTH_SHORT).show();
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                    reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID).child(getSpinner).child(getSpinnerThang)
+                    reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID).child(getSpinner).child(getSpinnerThang).child("DoanhThuNgay")
                             .addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -101,8 +102,12 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
                                             entries.clear();
                                             for (DataSnapshot item : snapshot.getChildren())
                                             {
-                                                DoanhThuMonth monthThu = item.getValue(DoanhThuMonth.class);
-                                                entries.add(new Entry(Integer.parseInt(monthThu.date),Integer.parseInt(monthThu.sumtotal)));
+                                                for (DataSnapshot cart : item.getChildren()) {
+                                                    DoanhThuMonth doanhThuMonth = item.getValue(DoanhThuMonth.class);
+                                                    entries.add(new Entry(Integer.parseInt(doanhThuMonth.date)
+                                                            ,Integer.parseInt(doanhThuMonth.sumtotal)));
+                                                }
+
                                             }
                                             showChart(entries);
                                         }
@@ -174,12 +179,13 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         {
-            Intent intent = new Intent(DoanhThuTheoMonth.this, DoanhThu.class);
+            Intent intent = new Intent(DoanhThuTheoMonth.this, DoanhThuActivity.class);
             startActivity(intent);
             finish();
         }
     }
-    public void getSpinner() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
+    public void getSpinner() // Hàm này để lấy ownerID
+    // khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         System.out.println(sharedPreferences.getString(SPINNERID,"null"));

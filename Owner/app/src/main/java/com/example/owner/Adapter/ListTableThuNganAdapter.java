@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.owner.Dialog.DetaiAndPaymentlTableDialog;
 import com.example.owner.Interface.RecyclerviewClick;
 import com.example.owner.Model.TableActiveModel;
 import com.example.owner.R;
@@ -21,11 +23,17 @@ public class ListTableThuNganAdapter extends RecyclerView.Adapter<ListTableThuNg
     ArrayList<TableActiveModel> list;
     Context context;
     RecyclerviewClick recyclerviewClick;
+    String path;
+    String ownerID;
+    String areaID;
 
-    public ListTableThuNganAdapter(ArrayList<TableActiveModel> list, Context context, RecyclerviewClick recyclerviewClick) {
+    public ListTableThuNganAdapter(ArrayList<TableActiveModel> list, Context context, RecyclerviewClick recyclerviewClick, String ownerID, String areaID, String path) {
         this.list = list;
         this.context = context;
         this.recyclerviewClick = recyclerviewClick;
+        this.path = path;
+        this.ownerID = ownerID;
+        this.areaID = areaID;
         System.out.println("List table active"+list);
     }
 
@@ -39,8 +47,19 @@ public class ListTableThuNganAdapter extends RecyclerView.Adapter<ListTableThuNg
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String name = list.get(position).getNameTable().replace("Table","");
-        holder.tvTableName.setText(name);
+        final String tableID = list.get(position).getNameTable().replace("Table","");
+        final String _path = path+"/"+areaID;
+        holder.tvTableName.setText(tableID);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DetaiAndPaymentlTableDialog dialog = new DetaiAndPaymentlTableDialog(context,_path,ownerID,areaID,"Table"+tableID);
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                dialog.show();
+            }
+        });
+        //call detail dialog
+        //progress on click and onlong click nhu quan ly ban
     }
 
     @Override
@@ -57,14 +76,6 @@ public class ListTableThuNganAdapter extends RecyclerView.Adapter<ListTableThuNg
                 @Override
                 public void onClick(View v) {
                     recyclerviewClick.onItemClick(getAdapterPosition());
-                }
-            });
-
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    recyclerviewClick.onItemLongClick(getAdapterPosition());
-                    return true;
                 }
             });
         }

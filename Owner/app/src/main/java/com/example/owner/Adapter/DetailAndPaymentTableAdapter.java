@@ -26,12 +26,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DetailTableAdapter extends RecyclerView.Adapter<DetailTableAdapter.MyViewHolder> {
+public class DetailAndPaymentTableAdapter extends RecyclerView.Adapter<DetailAndPaymentTableAdapter.MyViewHolder> {
+
     ArrayList<MealUsed> list;
     Context context;
     String ownerID;
 
-    public DetailTableAdapter(ArrayList<MealUsed> list, Context context, String ownerID){
+    public DetailAndPaymentTableAdapter(ArrayList<MealUsed> list, Context context, String ownerID){
         this.context = context;
         this.list = list;
         this.ownerID = ownerID;
@@ -47,12 +48,12 @@ public class DetailTableAdapter extends RecyclerView.Adapter<DetailTableAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            MealUsed model = list.get(position);
-            holder.tvMeal_amount.setText(model.getAmount()+"");
-            holder.tvMeal_name.setText(model.getMealName());
-            holder.tvMeal_price.setText(model.getMealPrice());
-            String path = "OwnerManager/"+ownerID+"/QuanLyMonAn";
-            setImage(holder,path,model.getMealImage());
+        MealUsed model = list.get(position);
+        holder.tvMeal_amount.setText(model.getAmount()+"");
+        holder.tvMeal_name.setText(model.getMealName());
+        holder.tvMeal_price.setText(model.getMealPrice());
+        String path = "OwnerManager/"+ownerID+"/QuanLyMonAn";
+        setImage(holder,path,model.getMealImage());
     }
 
     public void setImage(final MyViewHolder holder, String path, String id_image) {

@@ -4,6 +4,7 @@ public class Combo {
     String product_name;
     String product_price;
     String product_image;
+    private boolean check = false; // checkbox
 
     public Combo() {
     }
@@ -12,6 +13,14 @@ public class Combo {
         this.product_name = product_name;
         this.product_price = product_price;
         this.product_image = product_image;
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
     }
 
     public String getProduct_name() {

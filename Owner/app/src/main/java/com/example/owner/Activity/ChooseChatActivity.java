@@ -62,7 +62,6 @@ public class ChooseChatActivity extends AppCompatActivity {
         txtTitleActivity.setText("Thông báo");
         getOwnerIDFromLocalStorage();
         GetData();
-
         openMenu();
         //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
