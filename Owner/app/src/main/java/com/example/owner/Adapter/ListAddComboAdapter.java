@@ -127,16 +127,22 @@ public class ListAddComboAdapter extends RecyclerView.Adapter<ListAddComboAdapte
                     list.get(position).setCheck(true);
 //                    arrCombo.add(list.get(position).getMeal_price());
                     arrCombo.add(combo);
+                    Log.d("A", "A"+ arrCombo.toString());
+
                 }
                 else {
                     list.get(position).setCheck(false);
 //                    arrCombo.remove(list.get(position).getMeal_price());
                     arrCombo.remove(combo);
+                    Log.d("A", "A"+ arrCombo.toString());
+
                 }
+                returnValueArrayCombo.saveArr(arrCombo);
+
             }
         });
 
-        returnValueArrayCombo.saveArr(arrCombo);
+//        returnValueArrayCombo.saveArr(arrCombo);
 
         setImage(holder,path,combo.getMeal_id());
     }
