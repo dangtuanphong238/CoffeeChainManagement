@@ -439,7 +439,6 @@ public class AddMonActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     @Override
