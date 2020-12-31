@@ -114,7 +114,6 @@ public class ComboManagerActivity extends AppCompatActivity implements ReturnVal
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 Toast.makeText(ComboManagerActivity.this, "Xóa Thành công!", Toast.LENGTH_SHORT).show();
-//                                finish();
                             }
                         });
                     }
