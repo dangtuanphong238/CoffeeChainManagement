@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ColorSpace;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,10 +61,11 @@ public class MenuOrderComboAdapter extends RecyclerView.Adapter<MenuOrderComboAd
         final ModelCombo mealmodel = list.get(position);
         holder.tvMealName.setText(mealmodel.getMeal_name());
         holder.tvMealPrice.setText(mealmodel.getMeal_price());
-        holder.tvMealCategory.setText(mealmodel.getMeal_category());
+//        holder.tvMealCategory.setText(mealmodel.getMeal_category());
         holder.tvDescription.setText(mealmodel.getMeal_description());
         holder.tvMealPriceTotal.setText(mealmodel.getMeal_price_total());
-        holder.tvMealUuDai.setText(mealmodel.getMeal_uu_dai());
+        holder.tvMealPriceTotal.setPaintFlags(holder.tvMealPriceTotal.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+//        holder.tvMealUuDai.setText(mealmodel.getMeal_uu_dai());
         setImage(holder,path,mealmodel.getMeal_id());
         holder.btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +152,6 @@ public class MenuOrderComboAdapter extends RecyclerView.Adapter<MenuOrderComboAd
             tvMealPrice = itemView.findViewById(R.id.tvMeal_price);
             tvMealCategory = itemView.findViewById(R.id.tvMeal_Category);
             tvMealPriceTotal = itemView.findViewById(R.id.tvMeal_price_total);
-            tvMealUuDai = itemView.findViewById(R.id.tvMeal_uudai);
             imgMeal = itemView.findViewById(R.id.imgMeal_image);
             tvDescription = itemView.findViewById(R.id.tvMeal_description);
             layoutChooseAmount = itemView.findViewById(R.id.layoutChooseAmount);

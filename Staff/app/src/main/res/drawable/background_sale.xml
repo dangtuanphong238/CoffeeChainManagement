@@ -1,21 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <shape>
-                    <solid android:color="#D60B0B"/>
-                    <size android:width="40dp" android:height="40dp"/>
-        </shape>
-    </item>
-</selector>
-
-    <!--    <?xml version="1.0" encoding="utf-8"?>-->
-    <!--<selector xmlns:android="http://schemas.android.com/apk/res/android">-->
-    <!--<item>-->
-    <!--    <shape>-->
-    <!--        <solid android:color="#D60B0B"/>-->
-    <!--        <corners android:radius="60dp"/>-->
-    <!--        <stroke android:width="3dp" android:color="#fff" />-->
-    <!--        <size android:width="40dp" android:height="40dp"/>-->
-    <!--    </shape>-->
-    <!--</item>-->
-    <!--</selector>-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="64dp"
+    android:height="64dp"
+    android:viewportWidth="600"
+    android:viewportHeight="600">
+    <path
+        android:name="diagonal_line"
+        android:pathData="M600, 1-600 , 600M"
+        android:strokeWidth="300"
+        android:strokeColor="#E91E63" />
+</vector>
