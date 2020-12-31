@@ -31,15 +31,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ListAddComboAdapter extends RecyclerView.Adapter<ListAddComboAdapter.MyViewHolder>{
+public class ListComboAdapter extends RecyclerView.Adapter<ListComboAdapter.MyViewHolder>{
     ArrayList<MealModel> list;
     Context context;
     String path;
-//    ArrayList arrCombo = new ArrayList();
+    //    ArrayList arrCombo = new ArrayList();
     ArrayList<MealModel> arrCombo = new ArrayList<>();
     ReturnValueArrayCombo returnValueArrayCombo;
 
-    public ListAddComboAdapter(Context context, ArrayList<MealModel> list, String path , ReturnValueArrayCombo returnValueArrayCombo) {
+    public ListComboAdapter(Context context, ArrayList<MealModel> list, String path , ReturnValueArrayCombo returnValueArrayCombo) {
         this.context = context;
         this.list = list;
         this.path = path;
@@ -53,7 +53,7 @@ public class ListAddComboAdapter extends RecyclerView.Adapter<ListAddComboAdapte
 //        this.path = path;
 //    }
 
-    public ListAddComboAdapter() {
+    public ListComboAdapter() {
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -73,7 +73,7 @@ public class ListAddComboAdapter extends RecyclerView.Adapter<ListAddComboAdapte
         }
     }
 
-    public void setImage(final ListAddComboAdapter.MyViewHolder holder, String path, String id_image) {
+    public void setImage(final ListComboAdapter.MyViewHolder holder, String path, String id_image) {
         try {
             final File localFile = File.createTempFile("images", "png");
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
@@ -103,10 +103,10 @@ public class ListAddComboAdapter extends RecyclerView.Adapter<ListAddComboAdapte
 
     @NonNull
     @Override
-    public ListAddComboAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ListComboAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         CardView cardView = (CardView) inflater.inflate(R.layout.cus_recyclerview_combo, parent, false);
-        return new ListAddComboAdapter.MyViewHolder(cardView);
+        return new ListComboAdapter.MyViewHolder(cardView);
     }
 
     @Override
@@ -140,9 +140,9 @@ public class ListAddComboAdapter extends RecyclerView.Adapter<ListAddComboAdapte
                 returnValueArrayCombo.saveArr(arrCombo);
 
             }
+
         });
 
-//        returnValueArrayCombo.saveArr(arrCombo);
 
         setImage(holder,path,combo.getMeal_id());
     }

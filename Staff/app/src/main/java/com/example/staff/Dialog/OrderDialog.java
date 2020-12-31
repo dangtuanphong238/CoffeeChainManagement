@@ -1,5 +1,6 @@
 package com.example.staff.Dialog;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -18,10 +19,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.staff.Adapter.MenuOrderAdapter;
+import com.example.staff.Adapter.MenuOrderComboAdapter;
 import com.example.staff.Adapter.RecyclerviewClick;
 import com.example.staff.Adapter.SendAmountsOrder;
 import com.example.staff.Model.MealModel;
 import com.example.staff.Model.MealUsed;
+import com.example.staff.Model.ModelCombo;
 import com.example.staff.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -182,23 +185,24 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
     public void getCombo() {
         //Read list meal used in dialog from branch TableActive
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        String path = "OwnerManager/" + ownerID + "/QuanLyCombo";
+        final String path = "OwnerManager/" + ownerID + "/QuanLyCombo";
         final DatabaseReference myRef = database.getReference(path);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<MealModel> list = new ArrayList<>();
+                ArrayList<ModelCombo> list = new ArrayList<>();
                 try {
                     for (DataSnapshot data : snapshot.getChildren()) {
-                        MealModel model = data.getValue(MealModel.class);
+                        ModelCombo model = data.getValue(ModelCombo.class);
                         list.add(model);
+                        System.out.println("list1" +  list.toString());
                     }
                 } catch (Exception ex) {
                     Log.w("PROBLEM", "get data from branch table active have problem " + ex.getMessage());
                     System.out.println("get data from branch table active have problem in url: " + myRef.toString());
                 }
-                final String path = "/OwnerManager/" + ownerID + "/QuanLyMonAn";
-                MenuOrderAdapter adapter = new MenuOrderAdapter(context, list, OrderDialog.this, path, OrderDialog.this);
+//                final String path = "/OwnerManager/" + ownerID + "/QuanLyMonAn";
+                MenuOrderComboAdapter adapter = new MenuOrderComboAdapter(context, list, OrderDialog.this, path, OrderDialog.this);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 rvMenuOrder.setLayoutManager(linearLayoutManager);
@@ -260,6 +264,53 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         tvSumPrice.setText(sumPrice + "");
         tvCart.setText(amountsProducts + "");
         checkAndUpdateForAddTable(mealModel, last_amount);
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void sendAmount(int times, ModelCombo modelCombo, int last_amounts) {
+        int sum_tempt = Integer.parseInt(modelCombo.getMeal_price());
+        if (times == 1) {
+            amountsProducts++;
+            sumPrice = sumPrice + sum_tempt;
+        } else if (times == -1) {
+            if (amountsProducts <= 0) {
+                amountsProducts = 0;
+            } else {
+                amountsProducts--;
+            }
+            if (sumPrice <= 0) {
+                sumPrice = 0;
+            } else {
+                sumPrice = sumPrice - sum_tempt;
+            }
+        } else if (times == 0) {
+            amountsProducts += 0;
+        }
+        tvSumPrice.setText(sumPrice + "");
+        tvCart.setText(amountsProducts + "");
+        checkAndUpdateForAddTable(modelCombo, last_amounts);
+    }
+
+    private void checkAndUpdateForAddTable(ModelCombo modelCombo, int last_amounts) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        MealUsed mealUsed = new MealUsed(last_amounts, modelCombo, timestamp.getTime() + "");
+        boolean flag = false;
+        if (listUsed.size() == 0) {
+            listUsed.add(mealUsed);
+        } else {
+            for (int i = 0; i < listUsed.size(); i++) {
+                if (listUsed.get(i).getMealID().equalsIgnoreCase(mealUsed.getMealID())) {
+                    listUsed.remove(listUsed.get(i));
+                    listUsed.add(mealUsed);
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag == false) {
+                listUsed.add(mealUsed);
+            }
+        }
     }
 
     public void checkAndUpdateForAddTable(MealModel meal, int used) {

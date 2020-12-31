@@ -1,38 +1,32 @@
-package com.example.owner.Models;
+package com.example.staff.Model;
 
-public class Combo {
+public class ModelCombo {
     String meal_category;
     String meal_id;
     String meal_price;
     String meal_name;
     String meal_image;
     String meal_description;
-    String meal_uu_dai;
     String meal_price_total;
-    private boolean check = false; // checkbox
+    String meal_uu_dai;
 
-    public Combo() {
+    public ModelCombo() {
     }
 
-    public Combo(String meal_category, String meal_id, String meal_price, String meal_name, String meal_image, String meal_description, String meal_uu_dai, String meal_price_total) {
+    public ModelCombo(String meal_category, String meal_id, String meal_price, String meal_name, String meal_image, String meal_description, String meal_price_total, String meal_uu_dai) {
         this.meal_category = meal_category;
         this.meal_id = meal_id;
         this.meal_price = meal_price;
         this.meal_name = meal_name;
         this.meal_image = meal_image;
         this.meal_description = meal_description;
-        this.meal_uu_dai = meal_uu_dai;
         this.meal_price_total = meal_price_total;
+        this.meal_uu_dai = meal_uu_dai;
     }
-
-//    public boolean isCheck() {
-//        return check;
-//    }
-
-    public void setCheck(boolean check) {
-        this.check = check;
+    public int getID() {
+        String meal_id = this.meal_id.replace("Meal","");
+        return Integer.parseInt(meal_id);
     }
-
     public String getMeal_category() {
         return meal_category;
     }
@@ -81,6 +75,14 @@ public class Combo {
         this.meal_description = meal_description;
     }
 
+    public String getMeal_price_total() {
+        return meal_price_total;
+    }
+
+    public void setMeal_price_total(String meal_price_total) {
+        this.meal_price_total = meal_price_total;
+    }
+
     public String getMeal_uu_dai() {
         return meal_uu_dai;
     }
@@ -89,11 +91,18 @@ public class Combo {
         this.meal_uu_dai = meal_uu_dai;
     }
 
-    public String getMeal_price_total() {
-        return meal_price_total;
-    }
-
-    public void setMeal_price_total(String meal_price_total) {
-        this.meal_price_total = meal_price_total;
+    @Override
+    public String toString() {
+        return "ModelCombo{" +
+                "meal_category='" + meal_category + '\'' +
+                ", meal_id='" + meal_id + '\'' +
+                ", meal_price='" + meal_price + '\'' +
+                ", meal_name='" + meal_name + '\'' +
+                ", meal_image='" + meal_image + '\'' +
+                ", meal_description='" + meal_description + '\'' +
+                ", meal_price_total='" + meal_price_total + '\'' +
+                ", meal_uu_dai='" + meal_uu_dai + '\'' +
+                '}';
     }
 }
+
