@@ -9,6 +9,8 @@ public class Combo {
     String meal_description;
     String meal_uu_dai;
     String meal_price_total;
+    private boolean check = false; // checkbox
+
     public Combo() {
     }
 
@@ -21,6 +23,14 @@ public class Combo {
         this.meal_description = meal_description;
         this.meal_uu_dai = meal_uu_dai;
         this.meal_price_total = meal_price_total;
+    }
+
+//    public boolean isCheck() {
+//        return check;
+//    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
     }
 
     public String getMeal_category() {
