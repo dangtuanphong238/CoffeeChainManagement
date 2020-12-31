@@ -1,6 +1,7 @@
 package com.example.owner.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,11 +21,14 @@ import com.example.owner.Adapter.ListComboAdapter;
 import com.example.owner.Interface.ReturnValueArrayCombo;
 import com.example.owner.Model.MealModel;
 import com.example.owner.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -97,6 +101,26 @@ public class ComboManagerActivity extends AppCompatActivity implements ReturnVal
         recyclerCombo.setAdapter(adapter);
     }
 
+    public void deleteCombo (final String comboID){
+        FirebaseStorage mStorage = FirebaseStorage.getInstance();
+        StorageReference mStorageRef = mStorage.getReference();
+        mStorageRef.child("/OwnerManager/"+ ownerID +"/QuanLyCombo/" + comboID + ".png").delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                        DatabaseReference reference = firebaseDatabase.getReference("OwnerManager");
+                        reference.child(ownerID).child("QuanLyCombo").child(comboID).removeValue(new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                Toast.makeText(ComboManagerActivity.this, "Xóa Thành công!", Toast.LENGTH_SHORT).show();
+//                                finish();
+                            }
+                        });
+                    }
+                });
+    }
+
     private void setOnClick() {
         btnCreateCombo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,11 +139,11 @@ public class ComboManagerActivity extends AppCompatActivity implements ReturnVal
                         switch (which){
                             case DialogInterface.BUTTON_POSITIVE:
                                 //Yes button clicked
-                                Toast.makeText(ComboManagerActivity.this, "Yes", Toast.LENGTH_SHORT).show();
                                 for(MealModel mealModel:list)
                                 {
                                     //func delete combo here:
-
+                                    deleteCombo(mealModel.getMeal_id());
+                                    Toast.makeText(ComboManagerActivity.this, "Success", Toast.LENGTH_SHORT).show();
                                 }
                                 break;
 
