@@ -272,6 +272,9 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
 //                    case R.id.itemSPKho:
 //                        Public_func.clickItemMenu(AreaManageActivity.this, AddHangHoaActivity.class);
 //                        return true;
+                    case R.id.itemQLCombo:
+                        Public_func.clickItemMenu(AreaManageActivity.this, ComboManagerActivity.class);
+                        return true;
 
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
