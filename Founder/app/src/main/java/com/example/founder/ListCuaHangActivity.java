@@ -64,7 +64,7 @@ public class ListCuaHangActivity extends AppCompatActivity implements ItemClickL
                         recreate();
                         return true;
                     case R.id.tao_tai_khoan_owner:
-                        Public_func.clickItemMenu(ListCuaHangActivity.this, CreateOwnerAccountActivity.class);
+                        Public_func.clickItemMenu(ListCuaHangActivity.this, ThemKhuVuc.class);
                         return true;
                     case R.id.thong_bao:
                         Public_func.clickItemMenu(ListCuaHangActivity.this, ChooseChatActivity.class);

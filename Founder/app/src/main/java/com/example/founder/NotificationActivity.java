@@ -76,7 +76,7 @@ public class NotificationActivity extends AppCompatActivity {
                         recreate();
                         return true;
                     case R.id.tao_tai_khoan_owner:
-                        Public_func.clickItemMenu(NotificationActivity.this, CreateOwnerAccountActivity.class);
+                        Public_func.clickItemMenu(NotificationActivity.this, ThemKhuVuc.class);
                         return true;
                     case R.id.thong_bao:
                         Public_func.clickItemMenu(NotificationActivity.this, ChooseChatActivity.class);

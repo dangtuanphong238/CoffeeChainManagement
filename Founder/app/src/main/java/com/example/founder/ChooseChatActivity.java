@@ -71,7 +71,7 @@ public class ChooseChatActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(ChooseChatActivity.this, ListCuaHangActivity.class);
                         return true;
                     case R.id.tao_tai_khoan_owner:
-                        Public_func.clickItemMenu(ChooseChatActivity.this, CreateOwnerAccountActivity.class);
+                        Public_func.clickItemMenu(ChooseChatActivity.this, ThemKhuVuc.class);
                         return true;
                     case R.id.thong_bao:
                         recreate();
