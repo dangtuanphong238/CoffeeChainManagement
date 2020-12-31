@@ -31,7 +31,7 @@
         android:orientation="vertical">
         <include layout="@layout/toolbar"/>
         <LinearLayout
-            android:background="#FE9B58"
+            android:background="#fff"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="8">
