@@ -20,11 +20,9 @@
         <activity android:name=".CreateOwnerAccountActivity" />
         <activity android:name=".TongDoanhThuActivity" />
         <activity android:name=".ListCuaHangActivity" />
-        <activity android:name=".LoginActivity">
-
-        </activity>
-        <activity android:name=".NotificationActivity"></activity>
-        <activity android:name=".ChooseChatActivity"></activity>
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".NotificationActivity" />
+        <activity android:name=".ChooseChatActivity" />
     </application>
 
 </manifest>
