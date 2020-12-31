@@ -3,9 +3,9 @@
     style="@style/dialog_info_table"
     android:layout_width="match_parent"
     android:layout_height="700dp"
-    android:background="@android:color/transparent"
+    android:background="#EA9547"
     android:layout_gravity="center"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:orientation="vertical"
-        android:background="@drawable/background_corner_white_dialog" >
+        android:background="#EA9547" >
         <LinearLayout
             android:layout_margin="5dp"
             android:gravity="center"

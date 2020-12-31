@@ -164,7 +164,6 @@ public class LoginActivity extends AppCompatActivity {
         byte[] b = baos.toByteArray();
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
 
-        Log.d("Image Log:", imageEncoded);
         SharedPreferences.Editor editor = getSharedPreferences("bitmap_img", MODE_PRIVATE).edit();
         editor.putString("imagePreferance", imageEncoded);
         editor.commit();
@@ -199,9 +198,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-         btnEye.setOnClickListener(new View.OnClickListener() {
-         @Override
-          public void onClick(View v) {
+        btnEye.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 togglePass();
 //             if(isShow == true){
 //                 btnEye.setImageResource(R.drawable.ic_un_eye);
@@ -215,9 +214,9 @@ public class LoginActivity extends AppCompatActivity {
 //                 edtPass.setTransformationMethod(new PasswordTransformationMethod());
 //
 //             }
-           }
+            }
         });
-     }
+    }
 
     private void saveOwnerIDToLocalStorage(String ownerKey){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
@@ -241,7 +240,6 @@ public class LoginActivity extends AppCompatActivity {
             super.onBackPressed();
             return;
         }
-
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
 

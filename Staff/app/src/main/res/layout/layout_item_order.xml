@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:elevation="10dp">
+    android:elevation="10dp"
+>
 
     <LinearLayout
         android:minWidth="290dp"
@@ -13,7 +14,9 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:paddingLeft="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/custom_item"
+>
 
 
         <LinearLayout
@@ -21,7 +24,8 @@
             android:layout_height="0dp"
             android:layout_weight="3"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
             <LinearLayout
                 android:layout_width="0dp"

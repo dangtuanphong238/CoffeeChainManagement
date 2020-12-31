@@ -7,4 +7,5 @@
     <dimen name="normal25dp">25dp</dimen>
     <dimen name="normal30dp">30dp</dimen>
     <dimen name="normal50dp">50dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

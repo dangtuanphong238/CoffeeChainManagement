@@ -3,7 +3,7 @@
     style="@style/dialog_info_table"
     android:layout_width="match_parent"
     android:layout_height="500dp"
-    android:background="@android:color/transparent"
+    android:background="#EA9547"
     android:layout_gravity="center"
     android:orientation="vertical" >
 
@@ -17,13 +17,13 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:orientation="vertical"
-        android:background="@drawable/background_corner_white_dialog" >
+        android:background="#EA9547">
         <LinearLayout
             android:layout_margin="5dp"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1.5">
             <TextView
                 android:id="@+id/tvTableName"
                 android:layout_width="wrap_content"
@@ -56,7 +56,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="20dp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:text="2000000"
                 android:background="@drawable/border_black_textview"
                 android:layout_height="match_parent"/>
@@ -65,7 +65,7 @@
                 android:layout_margin="5dp"
                 android:layout_width="0dp"
                 android:layout_weight="2"
-                android:text="Thanh toán"
+                android:text="Đã Thanh toán"
                 android:gravity="center"
                 android:background="@drawable/button_main_color"
                 android:layout_height="match_parent"/>

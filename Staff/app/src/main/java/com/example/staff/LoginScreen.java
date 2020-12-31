@@ -147,8 +147,8 @@ public class LoginScreen extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                position = position+1;
                 System.out.println("aaa" + position);
-                position = position +1;
                 idOwner = parent.getItemAtPosition(position).toString();
                 setOnClick();
                 sOwnerID = idOwner.split("\\s", 2);
