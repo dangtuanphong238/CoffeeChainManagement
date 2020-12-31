@@ -21,11 +21,13 @@ public class ListTableAdapter extends RecyclerView.Adapter<ListTableAdapter.MyVi
     RecyclerviewClick recyclerviewClick;
     ArrayList<TableModel> list;
     Context context;
+
     public ListTableAdapter(Context context, ArrayList<TableModel> list, RecyclerviewClick recyclerviewClick) {
         this.context = context;
         this.list = list;
         this.recyclerviewClick = recyclerviewClick;
     }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -39,7 +41,7 @@ public class ListTableAdapter extends RecyclerView.Adapter<ListTableAdapter.MyVi
         TableModel model = list.get(position);
         holder.tvTableName.setText("Bàn " + (position + 1));
         if (model.getTableStatus().equals((PhongScreen.ERROR + ""))) {
-            holder.imgTable.setBackgroundColor(0xFF000);
+            holder.imgTable.setBackgroundColor(0xFF000000);
         } else if (model.getTableStatus().equals(PhongScreen.BOOK + "")) {
             holder.imgTable.setBackgroundColor(0xFFCA62E4);
         } else if (model.getTableStatus().equals(PhongScreen.HAVING + "")) {
@@ -54,6 +56,7 @@ public class ListTableAdapter extends RecyclerView.Adapter<ListTableAdapter.MyVi
     public int getItemCount() {
         return list.size();
     }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imgTable;
@@ -72,7 +75,7 @@ public class ListTableAdapter extends RecyclerView.Adapter<ListTableAdapter.MyVi
             imgTable.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-recyclerviewClick.onItemLongClick(getAdapterPosition());
+                    recyclerviewClick.onItemLongClick(getAdapterPosition());
                     return true;
                 }
             });

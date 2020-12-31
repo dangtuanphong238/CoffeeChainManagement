@@ -62,7 +62,6 @@ public class ChooseChatActivity extends AppCompatActivity {
         txtTitleActivity.setText("Thông báo");
         getOwnerIDFromLocalStorage();
         GetData();
-
         openMenu();
         //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -90,8 +89,7 @@ public class ChooseChatActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemDoanhThu:
-                        Public_func.clickLogout(ChooseChatActivity.this, DoanhThuActivity.class);
-                        Toast.makeText(ChooseChatActivity.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
+                        Public_func.clickLogout(ChooseChatActivity.this, DoanhThuDate.class);
                         return true;
 
                     case R.id.itemInfoStore:

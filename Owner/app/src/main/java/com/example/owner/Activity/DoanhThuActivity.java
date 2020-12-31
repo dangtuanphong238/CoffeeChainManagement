@@ -2,66 +2,46 @@ package com.example.owner.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Size;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.owner.Global.ParseTime;
-import com.example.owner.Global.Public_func;
 import com.example.owner.Model.DoanhThu;
 import com.example.owner.R;
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class DoanhThuActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
-    public static final String SPINNERID = "spinnerID";
     private String sOwnerID;
-    Spinner spinner;
-    private String spinnerLocNam;
-    private String getSpinner;
-    private ArrayList<String> arrayListNam = new ArrayList<String>();
-    private ArrayAdapter mArrayAdapter;
     private LineChart lineChart;
     private LineDataSet lineDataSet = new LineDataSet(null, null);
     ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
     LineData lineData;
-    Button button;
+    Date date = new Date();
+    ParseTime parseTime = new ParseTime(date.getTime());
+    String year = parseTime.getYear();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,89 +49,44 @@ public class DoanhThuActivity extends AppCompatActivity {
         getOwnerIDFromLocalStorage();
         getAnhXa();
         setDuLieu();
-        onClick();
     }
-
-    private void onClick() {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),DoanhThuTheoMonth.class);
-                intent.putExtra("GETSPINNER", getSpinner);
-                startActivity(intent);
-                finish();
-            }
-        });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists())
-                {
-                    arrayListNam.clear();
-                    for (DataSnapshot item : snapshot.getChildren())
-                    {
-                        if (item.hasChildren())
-                        {
-                            spinnerLocNam = item.getKey();
-                            arrayListNam.add(spinnerLocNam);
-                        }
-                    }
-                    mArrayAdapter = new ArrayAdapter(DoanhThuActivity.this,R.layout.cus_spinner_dropdown,arrayListNam);
-                    spinner.setAdapter(mArrayAdapter);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
-
      private void setDuLieu() {
         try {
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                    getSpinner = spinner.getItemAtPosition(position).toString();
-                    saveOwnerIDToLocalStorage(getSpinner);
-                    Toast.makeText(DoanhThuActivity.this, "Bạn chọn :" + getSpinner, Toast.LENGTH_SHORT).show();
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                    reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID).child(getSpinner)
+                    reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID).child(year)
                             .addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    ArrayList<Entry> entries = new ArrayList<Entry>();
-                                    if (snapshot.exists())
+                                    if (snapshot.getValue() != null)
                                     {
-                                        if (snapshot.hasChildren())
+                                        ArrayList<Entry> entries = new ArrayList<Entry>();
+                                        if (snapshot.exists())
                                         {
-                                            entries.clear();
-                                            for (DataSnapshot item : snapshot.getChildren())
+                                            if (snapshot.hasChildren())
                                             {
-                                                DoanhThu doanhThu = item.getValue(DoanhThu.class);
-                                                entries.add(new Entry(Integer.parseInt(doanhThu.month),Float.valueOf(doanhThu.total)));
+                                                entries.clear();
+                                                for (DataSnapshot item : snapshot.getChildren())
+                                                {
+                                                    DoanhThu doanhThu = item.getValue(DoanhThu.class);
+                                                    entries.add(new Entry(Integer.parseInt(doanhThu.month),Float.valueOf(doanhThu.total)));
+                                                }
+                                                showCharrt(entries);
                                             }
-                                            showCharrt(entries);
+                                            else
+                                            {
+                                                lineChart.clear();
+                                                lineChart.invalidate();
+                                            }
                                         }
                                         else
                                         {
-                                            lineChart.clear();
-                                            lineChart.invalidate();
+                                            Toast.makeText(DoanhThuActivity.this, "Chưa có dữ liệu", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                     else
                                     {
                                         Toast.makeText(DoanhThuActivity.this, "Chưa có dữ liệu", Toast.LENGTH_SHORT).show();
                                     }
-
                                 }
 
                                 @Override
@@ -159,13 +94,6 @@ public class DoanhThuActivity extends AppCompatActivity {
                                     Toast.makeText(DoanhThuActivity.this, "Chưa có dữ liệu", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                }
-            });
         }
         catch (Exception exception)
         {
@@ -177,6 +105,7 @@ public class DoanhThuActivity extends AppCompatActivity {
         int colorArray[] = new int[]{Color.RED,Color.BLACK,Color.BLUE,Color.YELLOW,Color.GREEN};
         lineDataSet.setValues(entries);
         lineDataSet.setLabel("Doanh Thu Hàng Tháng");
+        lineDataSet.setLabel("Đơn Vị : VND");
         lineDataSet.setDrawCircleHole(true);
         lineDataSet.setCircleColor( Color.YELLOW );
         lineDataSet.setColors(colorArray);
@@ -196,9 +125,7 @@ public class DoanhThuActivity extends AppCompatActivity {
     }
 
     private void getAnhXa() {
-        lineChart = findViewById(R.id.chartNam);
-          spinner = findViewById(R.id.locNam);
-          button = findViewById(R.id.theothang);
+        lineChart = findViewById(R.id.chartDate);
     }
 
 
@@ -212,15 +139,9 @@ public class DoanhThuActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         {
-            Intent intent = new Intent(DoanhThuActivity.this, AreaManageActivity.class);
+            Intent intent = new Intent(DoanhThuActivity.this, DoanhThuDate.class);
             startActivity(intent);
             finish();
         }
-    }
-    private void saveOwnerIDToLocalStorage(String ownerKey){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(SPINNERID,ownerKey);
-        editor.apply();
     }
 }

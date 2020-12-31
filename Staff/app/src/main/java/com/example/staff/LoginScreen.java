@@ -43,6 +43,7 @@ public class LoginScreen extends AppCompatActivity {
     public static final String OWNERID = "ownerID";
     private String keyOwner;
     boolean isShow = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,22 +54,20 @@ public class LoginScreen extends AppCompatActivity {
         password = findViewById(R.id.edtpassword);
         database = FirebaseDatabase.getInstance();
         imageButton = findViewById(R.id.imgClickicons);
-        getListOwner();
+
         dataSpinner();
-        setOnClick();
+        getListOwner();
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(password.getText().toString().isEmpty()){
-                    password.setError("Please Enter Pass word");
-                }else{
-                    if(isShow == true){
+                if (password.getText().toString().isEmpty()) {
+                    password.setError("Please Enter Password");
+                } else {
+                    if (isShow == true) {
                         imageButton.setImageResource(R.drawable.ic_eye_24);
                         password.setTransformationMethod(null);
                         isShow = false;
-                    }
-                    else
-                    {
+                    } else {
                         isShow = true;
                         imageButton.setImageResource(R.drawable.ic_eye_24);
                         password.setTransformationMethod(new PasswordTransformationMethod());
@@ -93,12 +92,11 @@ public class LoginScreen extends AppCompatActivity {
 
 
     public void setOnClick() {
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
                 for (String owner : lstOwnerList) {
-                    if (owner.equals(keyOwner)){
+                    if (owner.equals(keyOwner)) {
                         saveOwnerIDToLocalStorage(keyOwner);
+                        System.out.println("keyOwner" +keyOwner);
                         database = FirebaseDatabase.getInstance();
                         myRef = database.getReference().child("OwnerManager").child(keyOwner).child("QuanLyNhanVien");
                         myRef.addValueEventListener(new ValueEventListener() {
@@ -119,8 +117,7 @@ public class LoginScreen extends AppCompatActivity {
                         setLoginUserPass();
                     }
                 }
-            }
-        });
+
     }
 
     private void dataSpinner() {
@@ -130,12 +127,14 @@ public class LoginScreen extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listOwner.clear();
-                for(DataSnapshot item : dataSnapshot.getChildren()){
-                    listOwner.add(item.getKey() + " - " +item.child("tencuahang").getValue(String.class));
+
+
+                for (DataSnapshot item : dataSnapshot.getChildren()) {
+                    listOwner.add(item.getKey() + " - " + item.child("tencuahang").getValue(String.class));
                     maCh = item.getKey();
                     System.out.println("1234" + listOwner);
                 }
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(LoginScreen.this,R.layout.style_spinner,listOwner);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(LoginScreen.this, R.layout.style_spinner, listOwner);
                 spinner.setAdapter(arrayAdapter);
             }
 
@@ -143,17 +142,20 @@ public class LoginScreen extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+
         });
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                position = position+1;
+                System.out.println("aaa" + position);
                 idOwner = parent.getItemAtPosition(position).toString();
-                sOwnerID = idOwner.split("\\s",2);
-                for(String key : sOwnerID)
-                {
-                    System.out.println( key);
+                setOnClick();
+                sOwnerID = idOwner.split("\\s", 2);
+                for (String key : sOwnerID) {
+                    System.out.println(key);
                 }
-                 keyOwner = sOwnerID[0];
+                keyOwner = sOwnerID[0];
             }
 
             @Override
@@ -164,28 +166,33 @@ public class LoginScreen extends AppCompatActivity {
     }
 
     private void setLoginUserPass() {
-        boolean isSuccess = false;
-        for (User user : lstUsers) {
-            if (user.user.equals(username.getText().toString()) && user.pass.equals(password.getText().toString())) {
-                isSuccess = true;
-                username.setError(null);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isSuccess = false;
+                for (User user : lstUsers) {
+                    if (user.user.equals(username.getText().toString()) && user.pass.equals(password.getText().toString())) {
+                        isSuccess = true;
+                        username.setError(null);
 //                username.setError(false);
-                SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("username", username.getText().toString());
-                editor.putString("password", password.getText().toString());
-                editor.putString("idkey", idOwner);
-                editor.putString("myId", user.getId());
-                editor.commit();
-                Intent intent = new Intent(LoginScreen.this, KhuVuc.class);
-                startActivity(intent);
-                finish();
-                Toast.makeText(this, "Đăng Nhập Thành Công!", Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("username", username.getText().toString());
+                        editor.putString("password", password.getText().toString());
+                        editor.putString("idkey", idOwner);
+                        editor.putString("myId", user.getId());
+                        editor.commit();
+                        Intent intent = new Intent(LoginScreen.this, KhuVuc.class);
+                        startActivity(intent);
+                        finish();
+                        Toast.makeText(LoginScreen.this, "Đăng Nhập Thành Công!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                if (isSuccess == false) {
+                    Toast.makeText(LoginScreen.this, "Đăng Nhập Thất Bại!", Toast.LENGTH_SHORT).show();
+                }
             }
-        }
-        if (isSuccess == false) {
-            Toast.makeText(LoginScreen.this, "Đăng Nhập Thất Bại!", Toast.LENGTH_SHORT).show();
-        }
+        });
     }
 
     private void getListOwner() {

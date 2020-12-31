@@ -107,8 +107,7 @@ public class AddNhanVienActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemDoanhThu:
-                    Public_func.clickLogout(AddNhanVienActivity.this, DoanhThuActivity.class);
-                        Toast.makeText(AddNhanVienActivity.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
+                        Public_func.clickLogout(AddNhanVienActivity.this, DoanhThuDate.class);
                         return true;
 
                     case R.id.itemInfoStore:
@@ -188,7 +187,8 @@ public class AddNhanVienActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 firebaseDatabase = FirebaseDatabase.getInstance();
-                databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID).child("QuanLyNhanVien").child("Staff" + lstStaff.size());
+                databaseReference = firebaseDatabase.getReference().child("OwnerManager")
+                        .child(sOwnerID).child("QuanLyNhanVien").child("Staff" + lstStaff.size());
                 final String tenNV = edtTenNV.getText().toString();
                 final String tenDangNhap = edtTenDangNhap.getText().toString();
                 final String matKhau = edtMatKhau.getText().toString();

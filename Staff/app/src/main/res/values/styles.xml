@@ -6,5 +6,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
+    <style name="dialog_info_table" parent="Theme.AppCompat.Light">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">500</item>
+        <item name="android:layout_height">500dp</item>
+    </style>
 </resources>

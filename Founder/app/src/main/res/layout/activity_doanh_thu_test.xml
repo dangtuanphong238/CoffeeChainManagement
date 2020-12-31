@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryred"
-            android:text="DOANH THU CỦA CỬA HÀNG THEO NĂM"
+            android:text="BIỂU ĐỒ DOANH THU CỦA CỬA HÀNG THEO NĂM"
             android:gravity="center"></TextView>
     </LinearLayout>
     <LinearLayout
@@ -82,7 +82,6 @@
             android:layout_weight="1">
             <Spinner
                 android:background="@color/cardview_shadow_start_color"
-
                 android:id="@+id/locNam"
                 android:gravity="right"
                 android:layout_marginLeft="20dp"

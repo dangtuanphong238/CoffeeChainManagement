@@ -1,15 +1,31 @@
 package com.example.owner.Model;
 
 public class MealModel {
-   String meal_category;
-   String meal_id;
-   String meal_price;
-   String meal_name;
-   String meal_image;
+    private  String meal_category;
+    private String meal_id;
+    private String meal_price;
+    private String meal_name;
+    private String meal_image;
+    private boolean check = false; // checkbox
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
 
     public MealModel() {
     }
 
+    //hàm này test model
+    public MealModel(String meal_category, String meal_id, String meal_price, String meal_name) {
+        this.meal_category = meal_category;
+        this.meal_id = meal_id;
+        this.meal_price = meal_price;
+        this.meal_name = meal_name;
+    }
     public MealModel(String meal_category, String meal_id, String meal_price, String meal_name, String meal_image) {
         this.meal_category = meal_category;
         this.meal_id = meal_id;
@@ -17,7 +33,6 @@ public class MealModel {
         this.meal_name = meal_name;
         this.meal_image = meal_image;
     }
-
     public int getID() {
         String meal_id = this.meal_id.replace("Meal","");
         return Integer.parseInt(meal_id);

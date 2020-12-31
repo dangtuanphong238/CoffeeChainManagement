@@ -14,6 +14,10 @@ public class BillModel {
     public BillModel() {
     }
 
+    public BillModel(String sum) {
+        Sum = sum;
+    }
+
     public BillModel(String ID, String area, String table, ArrayList<MealUsed> meal, String sum, String timeInput, String timeOutput) {
         this.ID = ID;
         this.Area = area;

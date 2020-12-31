@@ -8,11 +8,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.founder.model.DoanhThu;
 import com.github.mikephil.charting.charts.LineChart;
@@ -36,6 +38,8 @@ public class ActivityDoanhThu extends AppCompatActivity {
     Spinner spinner, spinnerCuaHang;
     private String spinnerLocNam, spinnerLocCuaHang;
     private String getSpinner, getSpinnerCuaHang;
+    private ImageButton imgMnu;
+    private DrawerLayout drawerLayout;
     private ArrayList<String> arrayListNam = new ArrayList<String>();
     private ArrayAdapter mArrayAdapter;
     private ArrayList<String> arrayListCuaHang = new ArrayList<String>();
@@ -50,10 +54,12 @@ public class ActivityDoanhThu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doanh_thu_test);
         getOwnerIDFromLocalStorage();
-       //khoa chuc nang nam đẻ chọn cửa hàng trước
+       //khoa chuc nang "Năm" để chọn cửa hàng trước
         getAnhXa();
         spinner.setEnabled(false);
         setDuLieu();
+
+
 
     }
 
@@ -227,7 +233,8 @@ public class ActivityDoanhThu extends AppCompatActivity {
         spinnerCuaHang = findViewById(R.id.locCuaHang);
         lineChart = findViewById(R.id.chartNam);
         spinner = findViewById(R.id.locNam);
-
+        drawerLayout = findViewById(R.id.activity_main_drawer);
+        imgMnu = findViewById(R.id.btnMnu);
 
     }
 

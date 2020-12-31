@@ -327,7 +327,7 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         status.child("tableStatus").setValue(RoomActivity.HAVING + "").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(context, "Order thanh cong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Order Thành Công", Toast.LENGTH_SHORT).show();
             }
         });
     }
