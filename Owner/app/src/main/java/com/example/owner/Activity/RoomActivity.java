@@ -47,6 +47,8 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
     public final static int BOOK = 1;
     public final static int HAVING = 2;
     public final static int ERROR = 3;
+    public final static int LOADINGBOOK = 4;
+    public final static int LOADINGERROR = 5;
 
     private final int PHONG_LANH = 0;
     private final int PHONG_VIP = 1;
@@ -216,6 +218,14 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
             //When be error
             //Toast notification
             UpdateTableDialog dialog = new UpdateTableDialog(this, url, ownerID, areaID, tableID, listTable.get(position).getTableStatus());
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.show();
+        }
+        if(listTable.get(position).getTableStatus().equals("4")){
+            //When Having
+            //Show detail dialog(- payment dialog)
+            //Show list meal already and amounts.
+            OrderDialog dialog = new OrderDialog(this,ownerID,areaID,"Table"+listTable.get(position).getID());
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
         }

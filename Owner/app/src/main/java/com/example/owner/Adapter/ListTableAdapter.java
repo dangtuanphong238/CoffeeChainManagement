@@ -1,6 +1,7 @@
 package com.example.owner.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,14 +42,22 @@ public class ListTableAdapter extends RecyclerView.Adapter<ListTableAdapter.MyVi
     public void onBindViewHolder(@NonNull ListTableAdapter.MyViewHolder holder, int position) {
         TableModel model = list.get(position);
         holder.tvTableName.setText("Bàn " + (position + 1));
-
         if (model.getTableStatus().equals((RoomActivity.ERROR + ""))) {
             holder.imgTable.setBackgroundColor(0xFF000000);
         } else if (model.getTableStatus().equals(RoomActivity.BOOK + "")) {
             holder.imgTable.setBackgroundColor(0xFFCA62E4);
         } else if (model.getTableStatus().equals(RoomActivity.HAVING + "")) {
             holder.imgTable.setBackgroundColor(0xFFE82929);
-        } else {
+        } else if (model.getTableStatus().equals(RoomActivity.LOADINGBOOK + ""))
+        {
+            holder.imgTable.setBackgroundColor(Color.GREEN);
+        }
+        else if (model.getTableStatus().equals(RoomActivity.LOADINGERROR + ""))
+        {
+            holder.imgTable.setBackgroundColor(Color.GRAY);
+        }
+        else
+        {
             //CASE: BLANK
             holder.imgTable.setBackgroundColor(0xFFFFFFFF);
         }
