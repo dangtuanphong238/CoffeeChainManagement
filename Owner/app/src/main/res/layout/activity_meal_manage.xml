@@ -11,91 +11,97 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#FE9B58">
+        android:orientation="vertical">
 
         <include layout="@layout/toolbar"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        <RelativeLayout
             android:layout_weight="8"
-            android:layout_margin="@dimen/normal10dp">
-<!--            //Noi Dung Phan MealManageActivity-->
+            android:layout_width="wrap_content"
+            android:layout_height="0dp">
+            <include layout="@layout/layout_background_view"/>
+
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/normal10dp">
+                <!--            //Noi Dung Phan MealManageActivity-->
                 <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textColor="#000"
-                        android:text="Danh sách:"
-                        android:textSize="@dimen/normal20dp"
-                        android:layout_height="wrap_content"/>
-                    <LinearLayout
-                        android:gravity="end"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content">
-                        <Spinner
-                            android:id="@+id/spnCategory"
-                            android:layout_width="match_parent"
-                            android:paddingRight="@dimen/normal10dp"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="@dimen/normal20dp"
-                    android:layout_weight="7"
-                    android:orientation="vertical">
-
+                    android:layout_height="match_parent">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="8">
-<!--                    //Add recyclerview in this-->
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textColor="#000"
+                            android:text="Danh sách:"
+                            android:textSize="@dimen/normal20dp"
+                            android:layout_height="wrap_content"/>
+                        <LinearLayout
+                            android:gravity="end"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content">
+                            <Spinner
+                                android:id="@+id/spnCategory"
+                                android:layout_width="match_parent"
+                                android:paddingRight="@dimen/normal10dp"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rvListMeal"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="@dimen/normal20dp"
+                        android:layout_weight="7"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="0dp"
+                            android:layout_weight="8">
+                            <!--                    //Add recyclerview in this-->
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvListMeal"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="@dimen/normal10dp"
+                        android:gravity="end"
+                        android:layout_weight="1">
+                        <Button
+                            android:id="@+id/btnAddMeal"
+                            android:layout_marginRight="@dimen/normal20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_corner_grey"
+                            android:text="Thêm Món"/>
+                        <Button
+                            android:id="@+id/btnAddCombo"
+                            android:layout_marginRight="@dimen/normal20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_corner_grey"
+                            android:text="Thêm Combo"/>
                     </LinearLayout>
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="@dimen/normal10dp"
-                    android:gravity="end"
-                    android:layout_weight="1">
-                    <Button
-                        android:id="@+id/btnAddMeal"
-                        android:layout_marginRight="@dimen/normal20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/background_corner_grey"
-                        android:text="Thêm Món"/>
-                    <Button
-                        android:id="@+id/btnAddCombo"
-                        android:layout_marginRight="@dimen/normal20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/background_corner_grey"
-                        android:text="Thêm Combo"/>
-                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+
+        </RelativeLayout>
     </LinearLayout>
 
     <!--    leftmenu-->

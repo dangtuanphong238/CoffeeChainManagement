@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     android:orientation="vertical"
-
+    android:padding="10dp"
     tools:context=".Activity.DoanhThuActivity">
 
     <LinearLayout
@@ -14,75 +13,83 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical">
+
         <TextView
+            android:id="@+id/tenNam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tenNam"
-            android:text="DOANH THU CỦA CỬA HÀNG"
-            android:textSize="20dp"
+            android:layout_marginVertical="10dp"
             android:gravity="center"
-          android:layout_marginVertical="10dp"
-            android:textColor="@color/black"
-            tools:ignore="Suspicious0dp">
-        </TextView>
+            android:text="DOANH THU CỦA CỬA HÀNG"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:textSize="20sp"></TextView>
+
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:ignore="Suspicious0dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical"
+                tools:ignore="Suspicious0dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
             </LinearLayout>
+
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:ignore="Suspicious0dp"
-                android:layout_weight="2">
-                <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-                    <TextView
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:textSize="16dp"
-                        android:textColor="@color/black"
-                        android:text="Năm"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                    </TextView>
-            </LinearLayout>
+                android:layout_weight="2"
+                android:orientation="vertical"
+                tools:ignore="Suspicious0dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Năm"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"></TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
                     <Spinner
-                        android:background="@color/colorAccent"
                         android:id="@+id/locNam"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"></Spinner>
+                        android:layout_height="match_parent"
+                        android:background="@color/colorAccent"></Spinner>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_weight="5"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="5"
         tools:ignore="MissingConstraints">
 
         <com.github.mikephil.charting.charts.LineChart
