@@ -77,66 +77,13 @@ public class AddNhanVienActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_nhan_vien);
         anhXa();
         initSpinner();
-        txtTitleActivity.setText("Thêm Nhân Viên");
-        openMenu();
+       // txtTitleActivity.setText("Thêm Nhân Viên");
+        //openMenu();
         getOwnerIDFromLocalStorage();
         getSizeListStaff(); //getSizeList
 
         //call function onClickItem
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.itemQLKV:
-                        Public_func.clickItemMenu(AddNhanVienActivity.this, AreaManageActivity.class);
-                        return true;
-                    case R.id.itemQLMon:
-                        Public_func.clickItemMenu(AddNhanVienActivity.this, MealManageActivity.class);
-                        return true;
-                    case R.id.itemQLNV:
-                        Public_func.clickItemMenu(AddNhanVienActivity.this, StaffManageActivity.class);
-                        return true;
-                    case R.id.itemQLKho:
-                        Public_func.clickItemMenu(AddNhanVienActivity.this, WareHouseManageActivity.class);
-                        return true;
-                    case R.id.itemThongBao:
-                        Public_func.clickItemMenu(AddNhanVienActivity.this, ChooseChatActivity.class);
-                        return true;
-                    case R.id.itemThuNgan:
-                        Public_func.clickItemMenu(AddNhanVienActivity.this, ThuNganActivity.class);
-                        return true;
 
-                    case R.id.itemDoanhThu:
-                        Public_func.clickLogout(AddNhanVienActivity.this, DoanhThuDate.class);
-                        return true;
-
-                    case R.id.itemInfoStore:
-                        Public_func.clickItemMenu(AddNhanVienActivity.this, InfoStoreActivity.class);
-                        return true;
-
-//                    case R.id.itemThemMon:
-//                        Public_func.clickItemMenu(AddNhanVienActivity.this, AddMonActivity.class);
-//                        return true;
-//
-//                    case R.id.itemThemNV:
-//                        recreate();
-//                        return true;
-//
-//                    case R.id.itemSPKho:
-//                        Public_func.clickItemMenu(AddNhanVienActivity.this, AddHangHoaActivity.class);
-//                        return true;
-
-                    case R.id.itemLogOut:
-                        SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.clear();
-                        editor.apply();
-                        Public_func.clickLogout(AddNhanVienActivity.this, LoginActivity.class);
-                        return true;
-                }
-                return true;
-            }
-        });
 
         setOnClick();
     }
@@ -292,7 +239,7 @@ public class AddNhanVienActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.activity_main_drawer);
         navigationView = findViewById(R.id.navDrawerMenu);
         btnMnu = findViewById(R.id.btnMnu);
-        txtTitleActivity = findViewById(R.id.txtTitle);
+        //txtTitleActivity = findViewById(R.id.txtTitle);
         btnThemNV = findViewById(R.id.btnThemNhanVien);
         edtTenNV = findViewById(R.id.edtTenNhanVien);
         edtTenDangNhap = findViewById(R.id.edtTenDangNhap);

@@ -10,4 +10,5 @@
         <item>Bánh Ngọt</item>
         <item>Nước Ngọt</item>
     </array>
+    <string name="strike_text"><strike>50000</strike></string>
 </resources>

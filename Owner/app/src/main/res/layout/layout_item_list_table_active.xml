@@ -4,20 +4,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
-        android:background="@color/main_color"
         android:orientation="vertical"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:background="@color/white"
+            android:background="#C019DD"
+            android:text="Area 1"
             android:id="@+id/tvAreaName"
-            android:padding="@dimen/normal20dp"
-            android:gravity="start"
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:layout_weight="1"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvListTableActive"

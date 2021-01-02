@@ -7,163 +7,174 @@
     android:layout_height="match_parent"
     tools:context=".Activity.StaffManageActivity">
 
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#FE9B58"
-        >
-        <include layout="@layout/toolbar"/>
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="8"
-            android:layout_margin="@dimen/normal10dp">
-<!--            //Noi Dung Phan StaffManageActivity-->
+        <include layout="@layout/toolbar" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/layout_background_view" />
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/normal10dp"
+                android:layout_weight="8">
+                <!--            //Noi Dung Phan StaffManageActivity-->
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.5"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ca làm: "
-                        android:textSize="18sp"
-                        android:layout_weight="1"
-                        android:layout_gravity="start|bottom"
-                        android:layout_marginRight="@dimen/normal20dp"
-                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start|bottom"
-                        android:text="Chức vụ: "
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|bottom"
+                            android:layout_marginRight="@dimen/normal20dp"
+                            android:layout_weight="1"
+                            android:text="Ca làm: "
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|bottom"
+                            android:layout_weight="1"
+                            android:text="Chức vụ: "
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:textSize="18sp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
                         <Spinner
-                            android:entries="@array/filterCaLam"
                             android:id="@+id/spnCaLam"
                             android:layout_width="150dp"
                             android:layout_height="@dimen/normal50dp"
-                            android:background="@drawable/background_spinner"
                             android:layout_gravity="start|bottom"
+                            android:layout_marginRight="@dimen/normal20dp"
                             android:layout_weight="1"
-                            android:layout_marginRight="@dimen/normal20dp"/>
+                            android:background="@drawable/background_spinner"
+                            android:entries="@array/filterCaLam" />
+
                         <Spinner
-                            android:entries="@array/filterChucVu"
                             android:id="@+id/spnOffice"
                             android:layout_width="150dp"
                             android:layout_height="@dimen/normal50dp"
-                            android:layout_weight="1"
                             android:layout_gravity="start|bottom"
-                            android:background="@drawable/background_spinner"/>
-                    </LinearLayout>
-
-                <LinearLayout
-                    android:background="@drawable/background_corner_grey"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="@dimen/normal20dp"
-                    android:layout_weight="7"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:gravity="center"
-                        android:layout_weight="1">
-                        <TextView
-                            android:gravity="center"
-                            android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="Tên Nhân Viên"
-                            android:textColor="#000"
-                            android:textSize="16sp"/>
-                        <LinearLayout
-                            android:layout_width="2dp"
-                            android:layout_height="match_parent"
-                            android:background="#000"/>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="SĐT"
-                            android:textColor="#000"
-                            android:textSize="16sp" />
-                        <LinearLayout
-                            android:layout_width="2dp"
-                            android:layout_height="match_parent"
-                            android:background="#000"/>
-                        <TextView
-                            android:gravity="center"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="Chức Năng"
-                            android:textColor="#000"
-                            android:textSize="16sp"/>
+                            android:background="@drawable/background_spinner"
+                            android:entries="@array/filterChucVu" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="8">
-<!--                        //Add RecyclerView in this-->
-                        <ListView
-                            android:id="@+id/lvNhanVien"
+                        android:layout_marginTop="@dimen/normal20dp"
+                        android:layout_weight="7"
+                        android:background="@drawable/background_corner_grey"
+                        android:orientation="vertical">
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-                        </ListView>
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Tên Nhân Viên"
+                                android:textColor="#000"
+                                android:textSize="16sp" />
+
+                            <LinearLayout
+                                android:layout_width="2dp"
+                                android:layout_height="match_parent"
+                                android:background="#000" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="SĐT"
+                                android:textColor="#000"
+                                android:textSize="16sp" />
+
+                            <LinearLayout
+                                android:layout_width="2dp"
+                                android:layout_height="match_parent"
+                                android:background="#000" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Chức Năng"
+                                android:textColor="#000"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="8">
+                            <!--                        //Add RecyclerView in this-->
+                            <ListView
+                                android:id="@+id/lvNhanVien"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"></ListView>
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="@dimen/normal10dp"
-                    android:gravity="end"
-                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="@dimen/normal10dp"
+                        android:layout_weight="1"
+                        android:gravity="end">
+
                         <Button
                             android:id="@+id/btnThemNV"
-                            android:layout_marginRight="@dimen/normal20dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/normal20dp"
                             android:background="@drawable/background_corner_grey"
-                            android:text="Thêm NV"/>
+                            android:text="Thêm NV" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 
     <!--    leftmenu-->
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navDrawerMenu"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:id="@+id/navDrawerMenu"
-        app:menu="@menu/main_actions"
         app:headerLayout="@layout/nav_drawer_header_main"
-        />
+        app:menu="@menu/main_actions" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -141,7 +141,9 @@ public class InfoStoreActivity extends AppCompatActivity {
 //                    case R.id.itemSPKho:
 //                        Public_func.clickItemMenu(InfoStoreActivity.this, AddHangHoaActivity.class);
 //                        return true;
-
+                    case R.id.itemQLCombo:
+                        Public_func.clickItemMenu(InfoStoreActivity.this, ComboManagerActivity.class);
+                        return true;
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
