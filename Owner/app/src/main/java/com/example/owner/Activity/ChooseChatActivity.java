@@ -96,18 +96,9 @@ public class ChooseChatActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(ChooseChatActivity.this, InfoStoreActivity.class);
                         return true;
 
-//                    case R.id.itemThemMon:
-//                        Public_func.clickItemMenu(ChooseChatActivity.this, AddMonActivity.class);
-//                        return true;
-//
-//                    case R.id.itemThemNV:
-//                        Public_func.clickItemMenu(ChooseChatActivity.this, AddNhanVienActivity.class);
-//                        return true;
-//
-//                    case R.id.itemSPKho:
-//                        Public_func.clickItemMenu(ChooseChatActivity.this, AddHangHoaActivity.class);
-//                        return true;
-
+                    case R.id.itemQLCombo:
+                        Public_func.clickItemMenu(ChooseChatActivity.this, ComboManagerActivity.class);
+                        return true;
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -127,14 +118,13 @@ public class ChooseChatActivity extends AppCompatActivity {
         SharedPreferences ref = getSharedPreferences("bitmap_img", MODE_PRIVATE);
 
         String bitmap = ref.getString("imagePreferance", "");
-        System.out.println(bitmap);
         decodeBase64(bitmap);
         View headerView = navigationView.getHeaderView(0);
         nav_head_avatar = headerView.findViewById(R.id.nav_head_avatar);
         if (bitmapDecoded != null) {
             nav_head_avatar.setImageBitmap(bitmapDecoded);
         } else {
-            System.out.println("bitmapp null");
+//            System.out.println("bitmapp null");
         }
     }
 
@@ -175,7 +165,6 @@ public class ChooseChatActivity extends AppCompatActivity {
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        System.out.println(sharedPreferences.getString(OWNERID,"null"));
         sOwnerID = sharedPreferences.getString(OWNERID,"null");
     }
 

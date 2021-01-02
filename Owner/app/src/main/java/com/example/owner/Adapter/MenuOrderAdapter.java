@@ -42,7 +42,6 @@ public class MenuOrderAdapter extends RecyclerView.Adapter<MenuOrderAdapter.MyVi
     public MenuOrderAdapter(Context context, ArrayList<MealModel> list, RecyclerviewClick recyclerviewClick, String path, SendAmountsOrder sendAmountsOrder) {
         this.context = context;
         this.list = list;
-        System.out.println("ListInMenuOrder" + list.toString());
         this.recyclerviewClick = recyclerviewClick;
         //this.sendDataAround = sendDataAround;
         this.path = path;
@@ -110,7 +109,6 @@ public class MenuOrderAdapter extends RecyclerView.Adapter<MenuOrderAdapter.MyVi
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
             //TODO: return value path image
             StorageReference riversRef = mStorageRef.child("/" + path + "/" + id_image + ".png");
-            System.out.println("TEST:" + riversRef.toString());
             riversRef.getFile(localFile)
                     .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override

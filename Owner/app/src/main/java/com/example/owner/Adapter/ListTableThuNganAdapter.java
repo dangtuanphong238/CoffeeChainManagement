@@ -34,7 +34,6 @@ public class ListTableThuNganAdapter extends RecyclerView.Adapter<ListTableThuNg
         this.path = path;
         this.ownerID = ownerID;
         this.areaID = areaID;
-        System.out.println("List table active"+list);
     }
 
     @NonNull

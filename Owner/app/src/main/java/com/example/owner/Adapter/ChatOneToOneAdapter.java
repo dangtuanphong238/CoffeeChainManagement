@@ -95,7 +95,6 @@ public class ChatOneToOneAdapter extends BaseAdapter {
 
         String path = "OwnerManager/"+ownerID+"/QuanLyNhanVien";
         setImage(viewHolder,path,staff.getImgName());
-        System.out.println("img _ " + staff.getImgName());
         return view;
     }
 

@@ -1,4 +1,3 @@
-
 package com.example.owner.Activity;
 
 import android.app.ProgressDialog;
@@ -47,8 +46,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class AddNhanVienActivity extends AppCompatActivity {
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
+
     private ImageButton btnMnu, btnChoose, btnCapture;
     private ImageView imgNhanVien;
 
@@ -78,75 +76,19 @@ public class AddNhanVienActivity extends AppCompatActivity {
         anhXa();
         initSpinner();
         txtTitleActivity.setText("Thêm Nhân Viên");
-        openMenu();
+        backPressed();
         getOwnerIDFromLocalStorage();
         getSizeListStaff(); //getSizeList
 
         //call function onClickItem
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.itemQLKV:
-                        Public_func.clickItemMenu(AddNhanVienActivity.this, AreaManageActivity.class);
-                        return true;
-                    case R.id.itemQLMon:
-                        Public_func.clickItemMenu(AddNhanVienActivity.this, MealManageActivity.class);
-                        return true;
-                    case R.id.itemQLNV:
-                        Public_func.clickItemMenu(AddNhanVienActivity.this, StaffManageActivity.class);
-                        return true;
-                    case R.id.itemQLKho:
-                        Public_func.clickItemMenu(AddNhanVienActivity.this, WareHouseManageActivity.class);
-                        return true;
-                    case R.id.itemThongBao:
-                        Public_func.clickItemMenu(AddNhanVienActivity.this, ChooseChatActivity.class);
-                        return true;
-                    case R.id.itemThuNgan:
-                        Public_func.clickItemMenu(AddNhanVienActivity.this, ThuNganActivity.class);
-                        return true;
-
-                    case R.id.itemDoanhThu:
-                        Public_func.clickLogout(AddNhanVienActivity.this, DoanhThuDate.class);
-                        return true;
-
-                    case R.id.itemInfoStore:
-                        Public_func.clickItemMenu(AddNhanVienActivity.this, InfoStoreActivity.class);
-                        return true;
-
-//                    case R.id.itemThemMon:
-//                        Public_func.clickItemMenu(AddNhanVienActivity.this, AddMonActivity.class);
-//                        return true;
-//
-//                    case R.id.itemThemNV:
-//                        recreate();
-//                        return true;
-//
-//                    case R.id.itemSPKho:
-//                        Public_func.clickItemMenu(AddNhanVienActivity.this, AddHangHoaActivity.class);
-//                        return true;
-
-                    case R.id.itemLogOut:
-                        SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.clear();
-                        editor.apply();
-                        Public_func.clickLogout(AddNhanVienActivity.this, LoginActivity.class);
-                        return true;
-                }
-                return true;
-            }
-        });
-
         setOnClick();
     }
 
-    private void initSpinner()
-    {
-        ArrayAdapter<String> adapterCaLam = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources().getStringArray(R.array.lstCaLam));
+    private void initSpinner() {
+        ArrayAdapter<String> adapterCaLam = new ArrayAdapter<>(this, R.layout.cus_spinner, getResources().getStringArray(R.array.lstCaLam));
         adapterCaLam.setDropDownViewResource(R.layout.cus_spinner_dropdown);
         spnLamTheoCa.setAdapter(adapterCaLam);
-        ArrayAdapter<String> adapterChucVu = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources().getStringArray(R.array.lstChucvu));
+        ArrayAdapter<String> adapterChucVu = new ArrayAdapter<>(this, R.layout.cus_spinner, getResources().getStringArray(R.array.lstChucvu));
         adapterChucVu.setDropDownViewResource(R.layout.cus_spinner_dropdown);
         spnChucVu.setAdapter(adapterChucVu);
     }
@@ -170,7 +112,7 @@ public class AddNhanVienActivity extends AppCompatActivity {
                 && data != null && data.getData() != null) {
             mImageUri = data.getData();
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),mImageUri);
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mImageUri);
                 imgNhanVien.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -218,7 +160,7 @@ public class AddNhanVienActivity extends AppCompatActivity {
                         storageReference.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Staff staff1 = new Staff("Staff" + lstStaff.size(), tenDangNhap, matKhau, tenNV, sdt, soCMND, chucVu, caLam,"Staff" + lstStaff.size() );
+                                Staff staff1 = new Staff("Staff" + lstStaff.size(), tenDangNhap, matKhau, tenNV, sdt, soCMND, chucVu, caLam, "Staff" + lstStaff.size());
 
                                 databaseReference.setValue(staff1);
                                 Toast.makeText(AddNhanVienActivity.this, "Cập nhật thông tin nhân viên thành công!", Toast.LENGTH_SHORT).show();
@@ -229,11 +171,9 @@ public class AddNhanVienActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(AddNhanVienActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                System.out.println(e.getMessage().toString());
                             }
                         });
-                    }
-                    else {
+                    } else {
                         Toast.makeText(AddNhanVienActivity.this, "Vui lòng nhập đủ các trường!", Toast.LENGTH_SHORT).show();
                     }
 
@@ -256,7 +196,7 @@ public class AddNhanVienActivity extends AppCompatActivity {
         });
     }
 
-    private void clearEditText(){
+    private void clearEditText() {
         edtTenNV.getText().clear();
         edtMatKhau.getText().clear();
         edtSDT.getText().clear();
@@ -277,7 +217,6 @@ public class AddNhanVienActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Staff staff1 = dataSnapshot.getValue(Staff.class);
                     lstStaff.add(staff1);
-                    System.out.println("lstStaff " + lstStaff.size());
                 }
             }
 
@@ -289,8 +228,6 @@ public class AddNhanVienActivity extends AppCompatActivity {
     }
 
     private void anhXa() {
-        drawerLayout = findViewById(R.id.activity_main_drawer);
-        navigationView = findViewById(R.id.navDrawerMenu);
         btnMnu = findViewById(R.id.btnMnu);
         txtTitleActivity = findViewById(R.id.txtTitle);
         btnThemNV = findViewById(R.id.btnThemNhanVien);
@@ -306,25 +243,20 @@ public class AddNhanVienActivity extends AppCompatActivity {
         imgNhanVien = findViewById(R.id.imgNhanVien);
     }
 
-    public void openMenu() {
+    public void backPressed() {
+        btnMnu.setImageResource(R.drawable.ic_back_24);
+
         btnMnu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
+                finish();
             }
         });
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        System.out.println(sharedPreferences.getString(OWNERID, "null"));
         sOwnerID = sharedPreferences.getString(OWNERID, "null");
     }
 }

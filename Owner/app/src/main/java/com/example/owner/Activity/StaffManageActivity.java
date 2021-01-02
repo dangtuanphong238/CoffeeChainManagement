@@ -1,136 +1,3 @@
-//package com.example.owner;
-//
-//import androidx.appcompat.app.AppCompatActivity;
-//import androidx.core.view.GravityCompat;
-//import androidx.drawerlayout.widget.DrawerLayout;
-//
-//import android.content.Context;
-//import android.content.Intent;
-//import android.os.Bundle;
-//import android.view.View;
-//import android.widget.ArrayAdapter;
-//import android.widget.ImageButton;
-//import android.widget.Spinner;
-//
-//
-//import java.util.ArrayList;
-//
-////TODO: Nhung dieu can lam khi coppy drawer menu
-////Nhung diem can chu y khi lay drawer menu
-////Tich hop layout voi include
-////Khai bao DrawerLayout
-////Sua ten lop trong phan intent
-////Cuoi cung coppy lai phan method trong vung chi dinh
-//
-//public class StaffManageActivity extends AppCompatActivity {
-//
-//    public final static String KEY_AreaManageActivity = AreaManageActivity.class.getSimpleName().trim();
-//    public final static String KEY_MealManageActivity = MealManageActivity.class.getSimpleName().trim();
-//    public final static String KEY_StaffManageActivity = StaffManageActivity.class.getSimpleName().trim();
-//    public final static String KEY_WareHouseManageActivity = WareHouseManageActivity.class.getSimpleName().trim();
-//    public final static String KEY_NotificationManageActivity = "NotificationManageActivity";
-//    public final static String KEY_CashierManageActivity = "CashierManageActivity";
-//    public final static String KEY_RevenueManageActivity = "RevenueManageActivity";
-//    public final static String KEY_InfoOfStoreActivity = "InfoOfStoreActivity";
-//    public final static String KEY_AddMealActivity = "AddMealActivity";
-//    public final static String KEY_AddStaffActivity = "InfoOfStoreActivity";
-//    public final static String KEY_AddProductActivity = "InfoOfStoreActivity";
-//
-//    DrawerLayout drawerLayout;
-//    Spinner spnOffice;
-//    ArrayList<String> listOffice;
-//    ArrayAdapter<String> adapter;
-//
-//    public void init(){
-//        drawerLayout = findViewById(R.id.activity_main_drawer);
-//        spnOffice = findViewById(R.id.spnOffice);
-//    }
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_staff_manage);
-//
-//        init();
-//        listOffice = new ArrayList<>();
-//        listOffice.add("A");
-//        listOffice.add("B");
-//        listOffice.add("C");
-//        adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line,listOffice );
-//        spnOffice.setAdapter(adapter);
-//    }
-//
-//    public void onClickMenu(View view) {
-//        openDrawer(drawerLayout);
-//    }
-//
-//    public static void openDrawer(DrawerLayout drawerLayout) {
-//        drawerLayout.openDrawer(GravityCompat.START);
-//    }
-//
-//    public void closeDrawer(DrawerLayout drawerLayout) {
-//        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-//            drawerLayout.closeDrawer(GravityCompat.START);
-//        }
-//    }
-//
-//    //TODO: activity la man hinh muon toi
-//    public void transformScreen(DrawerLayout drawerLayout, Class activity, String KEY_Activity){
-//        if (this.getLocalClassName().equals(KEY_Activity)) {
-//            closeDrawer(drawerLayout);
-//            recreate();
-//        } else {
-//            Intent intent = new Intent(this, activity.getClass());
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            closeDrawer(drawerLayout);
-//            startActivity(intent);
-//        }
-//    }
-//
-//    public void onClickAreaManager(View view) {
-//        transformScreen(drawerLayout,AreaManageActivity.class,KEY_AreaManageActivity);
-//    }
-//
-//    public void onClickMealManager(View view) {
-//        transformScreen(drawerLayout,MealManageActivity.class,KEY_MealManageActivity);
-//    }
-//
-//    public void onClickStaffManager(View view) {
-//        transformScreen(drawerLayout,StaffManageActivity.class,KEY_StaffManageActivity);
-//    }
-//
-//    public void onClickWareHouseManager(View view) {
-//        transformScreen(drawerLayout,WareHouseManageActivity.class,KEY_WareHouseManageActivity);
-//    }
-//
-//    //TODO: Moi nguoi coppy code chen vao dung chuc nang cua minh theo mau co san
-//    public void onClickNotification(View view) {
-//    }
-//
-//    public void onClickCashier(View view) {
-//    }
-//
-//    public void onClickRevenue(View view) {
-//    }
-//
-//    public void onClickInfoStore(View view) {
-//    }
-//
-//    public void onClickAddMeal(View view) {
-//    }
-//
-//    public void onClickAddStaff(View view) {
-//    }
-//
-//    public void onClickAddProduct(View view) {
-//    }
-//
-//    //Slacking
-//    public void onClickLogout(View view) {
-//        //TODO: doing ST
-//    }
-//}
-
 package com.example.owner.Activity;
 
 import android.content.Intent;
@@ -184,7 +51,6 @@ public class StaffManageActivity extends AppCompatActivity {
     private NhanVienAdapter nhanVienAdapter;
 
     //header drawer:
-
     Bitmap bitmapDecoded;
     private TextView nav_head_name_store, nav_head_address_store;
     private ImageView nav_head_avatar;
@@ -221,27 +87,15 @@ public class StaffManageActivity extends AppCompatActivity {
                     case R.id.itemThuNgan:
                         Public_func.clickItemMenu(StaffManageActivity.this, ThuNganActivity.class);
                         return true;
-
                     case R.id.itemDoanhThu:
                         Public_func.clickLogout(StaffManageActivity.this, DoanhThuDate.class);
                         return true;
-
                     case R.id.itemInfoStore:
                         Public_func.clickItemMenu(StaffManageActivity.this, InfoStoreActivity.class);
                         return true;
-
-//                    case R.id.itemThemMon:
-//                        Public_func.clickItemMenu(StaffManageActivity.this, AddMonActivity.class);
-//                        return true;
-//
-//                    case R.id.itemThemNV:
-//                        Public_func.clickItemMenu(StaffManageActivity.this, AddNhanVienActivity.class);
-//                        return true;
-//
-//                    case R.id.itemSPKho:
-//                        Public_func.clickItemMenu(StaffManageActivity.this, AddHangHoaActivity.class);
-//                        return true;
-
+                    case R.id.itemQLCombo:
+                        Public_func.clickItemMenu(StaffManageActivity.this, ComboManagerActivity.class);
+                        return true;
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -261,14 +115,13 @@ public class StaffManageActivity extends AppCompatActivity {
         SharedPreferences ref = getSharedPreferences("bitmap_img", MODE_PRIVATE);
 
         String bitmap = ref.getString("imagePreferance", "");
-        System.out.println(bitmap);
         decodeBase64(bitmap);
         View headerView = navigationView.getHeaderView(0);
         nav_head_avatar = headerView.findViewById(R.id.nav_head_avatar);
         if (bitmapDecoded != null) {
             nav_head_avatar.setImageBitmap(bitmapDecoded);
         } else {
-            System.out.println("bitmapp null");
+//            System.out.println("bitmapp null");
         }
     }
 
@@ -311,7 +164,6 @@ public class StaffManageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(StaffManageActivity.this, AddNhanVienActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -388,8 +240,6 @@ public class StaffManageActivity extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(DatabaseError error) {
-                    // Failed to read value
-//                Log.w(TAG, "Failed to read value.", error.toException());
                 }
             });
         } catch (Exception ex) {
@@ -421,7 +271,6 @@ public class StaffManageActivity extends AppCompatActivity {
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        System.out.println(sharedPreferences.getString(OWNERID, "null"));
         sOwnerID = sharedPreferences.getString(OWNERID, "null");
     }
 

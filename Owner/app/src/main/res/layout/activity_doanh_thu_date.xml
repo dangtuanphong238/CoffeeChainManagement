@@ -23,7 +23,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textSize="20dp"
-            android:textColor="#F3CD15">
+            android:textColor="@color/colorPrimary">
         </TextView>
     </LinearLayout>
     <LinearLayout
@@ -94,7 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.7"
-        android:background="@drawable/custom_messenger_right"
+        android:background="@drawable/new_background_gradient"
         android:gravity="center"
         android:orientation="horizontal">
 

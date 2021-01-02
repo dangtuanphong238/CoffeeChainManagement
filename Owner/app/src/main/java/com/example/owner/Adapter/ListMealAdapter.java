@@ -66,7 +66,6 @@ public class ListMealAdapter extends RecyclerView.Adapter<ListMealAdapter.MyView
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
             //TODO: return value path image
             StorageReference riversRef = mStorageRef.child("/"+path+"/"+id_image+".png");
-            System.out.println("TEST:"+riversRef.toString());
             riversRef.getFile(localFile)
                     .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override

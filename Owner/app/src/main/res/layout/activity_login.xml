@@ -1,76 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/normal20dp"
-    android:background="#FE9B58">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2">
-        <TextView
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/layout_background_view" />
+
+        <LinearLayout
+            android:padding="@dimen/normal20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="COFFEE MY FRIEND"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4"
-        android:orientation="vertical">
-        <EditText
-            android:id="@+id/edtUser"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:hint="username"
-            android:inputType="textPersonName"
-            android:drawableStart="@drawable/ic_person_24"
-            android:drawablePadding="12dp"
-            android:background="@drawable/custom_edittext"
-            android:layout_marginBottom="@dimen/normal20dp"
-            android:paddingHorizontal="@dimen/normal10dp"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:orientation="horizontal"
-            android:background="@drawable/custom_edittext">
-            <EditText
-                android:id="@+id/edtPass"
-                android:layout_width="0dp"
-                android:layout_weight="5"
-                android:layout_height="55dp"
-                android:hint="password"
-                android:inputType="textPassword"
-                android:drawableStart="@drawable/ic_key_24"
-                android:drawablePadding="12dp"
-                android:background="@drawable/custom_edittext"
-                android:paddingHorizontal="@dimen/normal10dp"
-                />
+            android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/btnEye"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|right"
-                android:layout_weight="0.8"
-                android:background="@drawable/custom_edittext"
-                android:src="@drawable/ic_eye_24" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="COFFEE MY FRIEND"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/edtUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginBottom="@dimen/normal20dp"
+                    android:background="@drawable/edit_text_main"
+                    android:drawableStart="@drawable/ic_person_24"
+                    android:drawablePadding="12dp"
+                    android:hint="username"
+                    android:inputType="textPersonName"
+                    android:paddingHorizontal="@dimen/normal10dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edtPass"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_weight="5"
+                        android:background="@drawable/edit_text_main"
+                        android:drawableStart="@drawable/ic_key_24"
+                        android:drawablePadding="12dp"
+                        android:hint="password"
+                        android:inputType="textPassword"
+                        android:paddingHorizontal="@dimen/normal10dp" />
+
+                    <ImageButton
+                        android:id="@+id/btnEye"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@id/edtPass"
+                        android:layout_marginTop="@dimen/normal15dp"
+                        android:layout_marginRight="@dimen/normal15dp"
+                        android:layout_weight="0.8"
+                        android:background="#fff"
+                        android:src="@drawable/ic_eye_24" />
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/btnLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/normal50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="@dimen/normal20dp"
+                    android:background="@drawable/background_corner_grey"
+                    android:text="Login"
+                    android:textAllCaps="false" />
+
+            </LinearLayout>
         </LinearLayout>
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/normal50dp"
-            android:layout_gravity="center"
-            android:text="Login"
-            android:textAllCaps="false"
-            android:background="@drawable/custom_button"
-            android:layout_marginVertical="@dimen/normal20dp"/>
+    </RelativeLayout>
 
-    </LinearLayout>
 </LinearLayout>

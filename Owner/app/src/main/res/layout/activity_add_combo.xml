@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FE9B58"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".Activity.AddComboActivity">
 
@@ -26,20 +26,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tên combo"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
                 <EditText
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
                     android:id="@+id/edtTenCombo"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/normal50dp"
                     android:hint="Nhập tên combo..."
                     android:paddingHorizontal="@dimen/normal10dp"
                     android:layout_marginHorizontal="@dimen/normal5dp"
-                    android:background="@drawable/custom_edittext"/>
+                    android:background="@drawable/edit_text_main"/>
             </LinearLayout>
 
             <LinearLayout
@@ -47,13 +43,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/normal10dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ưu đãi"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
                 <EditText
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
                     android:id="@+id/edtUuDai"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/normal50dp"
@@ -61,7 +53,7 @@
                     android:inputType="number"
                     android:paddingHorizontal="@dimen/normal10dp"
                     android:layout_marginHorizontal="@dimen/normal5dp"
-                    android:background="@drawable/custom_edittext"/>
+                    android:background="@drawable/edit_text_main"/>
             </LinearLayout>
 
             <LinearLayout
@@ -138,11 +130,13 @@
             </LinearLayout>
 
             <Button
+                android:layout_marginRight="20dp"
                 android:id="@+id/btnTaoCombo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/normal10dp"
-                android:background="@drawable/custom_button"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/background_corner_grey"
+                android:textColor="@color/black"
                 android:text="Tạo Combo" />
         </LinearLayout>
     </ScrollView>
