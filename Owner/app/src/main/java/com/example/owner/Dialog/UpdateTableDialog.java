@@ -65,14 +65,23 @@ public class UpdateTableDialog extends Dialog implements View.OnClickListener {
         btnUnBook.setOnClickListener(this);
         btnBook.setOnClickListener(this);
         btnPayment.setOnClickListener(this);
-        if (status.equals("3")){
+        if (status.equals("3") || status.equals("5")) {
             btnUnReport.setVisibility(View.VISIBLE);
             btnReport.setVisibility(View.GONE);
-        }else if (status.equals("1")){
+            btnBook.setVisibility(View.GONE);
+            btnPayment.setVisibility(View.GONE);
+        }
+        else if (status.equals("1") || status.equals("4")) {
             btnUnBook.setVisibility(View.VISIBLE);
             btnBook.setVisibility(View.GONE);
+            btnPayment.setVisibility(View.GONE);
+            btnReport.setVisibility(View.GONE);
         }
-        else{
+        else if (status.equals("0"))
+        {
+            btnPayment.setVisibility(View.GONE);
+        }
+        else {
             btnUnReport.setVisibility(View.GONE);
             btnUnBook.setVisibility(View.GONE);
         }
@@ -85,7 +94,7 @@ public class UpdateTableDialog extends Dialog implements View.OnClickListener {
                 dismiss();
                 break;
             case R.id.btnUnReport:
-                returnTableNormal();
+                XemThongTinBanLoi();
                 break;
             case R.id.btnReport:
                 reportError();
@@ -111,7 +120,8 @@ public class UpdateTableDialog extends Dialog implements View.OnClickListener {
         dialog.show();
     }
 
-    public void Booking(){
+    public void Booking()
+    {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         String path = "OwnerManager/"+ownerID+"/QuanLyBan/Area"+areaID+"/"+tableID+"/tableStatus";
         DatabaseReference myRef = firebaseDatabase.getReference(path);
@@ -145,5 +155,29 @@ public class UpdateTableDialog extends Dialog implements View.OnClickListener {
                 Toast.makeText(context,"Xóa trạng thái thành công",Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    public void HuyBaoLoi()
+    {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        String path = "OwnerManager/" + ownerID + "/QuanLyBan/" + areaID + "/" + tableID + "/tableStatus";
+        DatabaseReference myRef = firebaseDatabase.getReference(path);
+        myRef.setValue("0").addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(context, "Xóa trạng thái thành công", Toast.LENGTH_SHORT).show();
+                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                String path = "OwnerManager/" + ownerID + "/QuanLyBanLoi" +
+                        "/"+ areaID + "/" + tableID + "/ThongTinLoi";
+                DatabaseReference myRef = firebaseDatabase.getReference(path);
+                myRef.removeValue();
+            }
+        });
+    }
+    public void XemThongTinBanLoi()
+    {
+        Toast.makeText(context, areaID, Toast.LENGTH_SHORT).show();
+        AcceptTheErrorDialog dialog = new AcceptTheErrorDialog(context,url,ownerID,areaID,tableID);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
     }
 }

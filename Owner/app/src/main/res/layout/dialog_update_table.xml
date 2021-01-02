@@ -83,7 +83,7 @@
                 android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:text="Xóa Báo Lỗi"
+                android:text="Thông Tin Bàn Lỗi"
                 android:gravity="center"
                 android:background="@drawable/button_main_color"
                 android:layout_height="0dp"/>
