@@ -315,6 +315,9 @@ public class WareHouseManageActivity extends AppCompatActivity {
                     case R.id.itemInfoStore:
                         Public_func.clickItemMenu(WareHouseManageActivity.this, InfoStoreActivity.class);
                         return true;
+                    case R.id.itemQLCombo:
+                        Public_func.clickItemMenu(WareHouseManageActivity.this, ComboManagerActivity.class);
+                        return true;
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
