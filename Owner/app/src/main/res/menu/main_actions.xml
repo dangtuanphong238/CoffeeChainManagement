@@ -15,7 +15,12 @@
         android:title="Quản lý món"
         app:showAsAction="never"
         />
-
+    <item
+        android:id="@+id/itemQLCombo"
+        android:icon="@drawable/ic_meal_24"
+        android:title="Quản lý combo"
+        app:showAsAction="never"
+        />
     <item
         android:id="@+id/itemQLNV"
         android:icon="@drawable/ic_staff_manager_24"

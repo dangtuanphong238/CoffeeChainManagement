@@ -192,7 +192,7 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                         Public_func.clickItemMenu(MealManageActivity.this, AreaManageActivity.class);
                         return true;
                     case R.id.itemQLMon:
-                        recreate();
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
                     case R.id.itemQLNV:
                         Public_func.clickItemMenu(MealManageActivity.this, StaffManageActivity.class);
@@ -214,7 +214,9 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                     case R.id.itemInfoStore:
                         Public_func.clickItemMenu(MealManageActivity.this, InfoStoreActivity.class);
                         return true;
-
+                    case R.id.itemQLCombo:
+                        Public_func.clickItemMenu(MealManageActivity.this, ComboManagerActivity.class);
+                        return true;
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();

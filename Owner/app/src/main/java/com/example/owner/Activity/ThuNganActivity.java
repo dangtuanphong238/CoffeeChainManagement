@@ -110,7 +110,9 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
 //                    case R.id.itemSPKho:
 //                        Public_func.clickItemMenu(ThuNganActivity.this, AddHangHoaActivity.class);
 //                        return true;
-
+                    case R.id.itemQLCombo:
+                        Public_func.clickItemMenu(ThuNganActivity.this, ComboManagerActivity.class);
+                        return true;
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();

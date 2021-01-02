@@ -241,7 +241,9 @@ public class StaffManageActivity extends AppCompatActivity {
 //                    case R.id.itemSPKho:
 //                        Public_func.clickItemMenu(StaffManageActivity.this, AddHangHoaActivity.class);
 //                        return true;
-
+                    case R.id.itemQLCombo:
+                        Public_func.clickItemMenu(StaffManageActivity.this, ComboManagerActivity.class);
+                        return true;
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
