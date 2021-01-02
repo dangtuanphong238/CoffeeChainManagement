@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="end"
                     android:text="01-01-2020(00:0am)"
-                     />
+                    />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

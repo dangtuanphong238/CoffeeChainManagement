@@ -8,7 +8,7 @@
     android:background="#FE9B53"
     android:orientation="vertical"
     tools:context=".ThemKhuVuc">
-
+    <include layout="@layout/layout_background_view" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,7 +38,7 @@
                 android:id="@+id/edtTendangnhap"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="@drawable/custom_edittext"
+                android:background="@drawable/edit_text_main"
                 android:hint="enter your username"
                 android:paddingHorizontal="10dp"
                 android:paddingRight="20px"></EditText>
@@ -56,7 +56,7 @@
                 android:id="@+id/edtMatkhau"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="@drawable/custom_edittext"
+                android:background="@drawable/edit_text_main"
                 android:hint="enter your password"
                 android:paddingHorizontal="10dp"
                 android:paddingRight="20px"></EditText>
@@ -74,7 +74,7 @@
                 android:id="@+id/edtSoKhuVuc"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="@drawable/custom_edittext"
+                android:background="@drawable/edit_text_main"
                 android:hint="enter your area"
                 android:paddingHorizontal="10dp"
                 android:paddingRight="20px"

@@ -147,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
     private void anhXa(){
-        imgClick=findViewById(R.id.imgClickicons);
+        imgClick=findViewById(R.id.btnEye);
         btnLogin = findViewById(R.id.btnLogin);
         edtTaikhoan = findViewById(R.id.edttaikhoan);
         edtPassword = findViewById(R.id.edtpassword);
