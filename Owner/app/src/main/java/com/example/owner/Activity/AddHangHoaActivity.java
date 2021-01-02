@@ -147,8 +147,7 @@ public class AddHangHoaActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemDoanhThu:
-                      Public_func.clickLogout(AddHangHoaActivity.this, DoanhThuActivity.class);
-                        Toast.makeText(AddHangHoaActivity.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
+                        Public_func.clickLogout(AddHangHoaActivity.this, DoanhThuDate.class);
                         return true;
 
                     case R.id.itemInfoStore:

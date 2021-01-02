@@ -223,8 +223,7 @@ public class StaffManageActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemDoanhThu:
-                        Public_func.clickLogout(StaffManageActivity.this, DoanhThuActivity.class);
-                        Toast.makeText(StaffManageActivity.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
+                        Public_func.clickLogout(StaffManageActivity.this, DoanhThuDate.class);
                         return true;
 
                     case R.id.itemInfoStore:

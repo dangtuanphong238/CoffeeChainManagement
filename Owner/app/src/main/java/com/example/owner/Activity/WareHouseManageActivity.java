@@ -250,7 +250,6 @@ public class WareHouseManageActivity extends AppCompatActivity {
                         hangHoaAdapter.clear();
                         if (dataSnapshot.exists())
                         {
-                            //xoa du lieu tren listview
                             for (DataSnapshot data : dataSnapshot.getChildren())
                             {
                                 HangHoa danhSachHH = data.getValue(HangHoa.class);
@@ -310,26 +309,12 @@ public class WareHouseManageActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemDoanhThu:
-                        Public_func.clickLogout(WareHouseManageActivity.this, DoanhThuActivity.class);
-                        Toast.makeText(WareHouseManageActivity.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
+                        Public_func.clickLogout(WareHouseManageActivity.this, DoanhThuDate.class);
                         return true;
 
                     case R.id.itemInfoStore:
                         Public_func.clickItemMenu(WareHouseManageActivity.this, InfoStoreActivity.class);
                         return true;
-
-//                    case R.id.itemThemMon:
-//                        Public_func.clickItemMenu(WareHouseManageActivity.this, AddMonActivity.class);
-//                        return true;
-//
-//                    case R.id.itemThemNV:
-//                        Public_func.clickItemMenu(WareHouseManageActivity.this, AddNhanVienActivity.class);
-//                        return true;
-//
-//                    case R.id.itemSPKho:
-//                        Public_func.clickItemMenu(WareHouseManageActivity.this, AddHangHoaActivity.class);
-//                        return true;
-
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();

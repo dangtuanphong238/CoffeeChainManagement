@@ -2,22 +2,30 @@ package com.example.founder;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.founder.Public.Public_func;
 import com.example.founder.adapter.AddTableAdapter;
 import com.example.founder.model.Area;
 import com.example.founder.model.OnwerAccount;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +40,10 @@ public class ThemKhuVuc extends AppCompatActivity {
     private RecyclerView recyclerView;
     private EditText edtSoKhuVuc, edtUsername, edtPassword;
     private Button btnCreate;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private ImageButton imgMnu;
+    private TextView txtcreation;
     private ArrayList <OnwerAccount>lstOwnerAccount = new ArrayList<>();
 
     @Override
@@ -39,7 +51,36 @@ public class ThemKhuVuc extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_khu_vuc);
         anhXa();
+        txtcreation.setText("Tạo Tài Khoản");
+        openMenu();
         getSizeListOnwer();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.it1:
+                        Public_func.clickItemMenu(ThemKhuVuc.this, ActivityDoanhThu.class);
+                        return true;
+                    case R.id.danh_sach_cua_hang:
+                        Public_func.clickItemMenu(ThemKhuVuc.this, ListCuaHangActivity.class);
+                        return true;
+                    case R.id.tao_tai_khoan_owner:
+                        recreate();
+                        return true;
+                    case R.id.thong_bao:
+                        Public_func.clickItemMenu(ThemKhuVuc.this, ChooseChatActivity.class);
+                        return true;
+                    case R.id.log_out:
+                        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.apply();
+                        Public_func.clickLogout(ThemKhuVuc.this, LoginActivity.class);
+                        return true;
+                }
+                return true;
+            }
+        });
 
         adapter = new AddTableAdapter(ThemKhuVuc.this ,R.layout.cus_lv_them_ban ,arrList);
 
@@ -195,6 +236,22 @@ public class ThemKhuVuc extends AppCompatActivity {
         edtUsername = findViewById(R.id.edtTendangnhap);
         edtPassword = findViewById(R.id.edtMatkhau);
         btnCreate = findViewById(R.id.btnTaomoi);
+        txtcreation = findViewById(R.id.idtoolbar);
+        drawerLayout = findViewById(R.id.activity_main_drawer);
+        navigationView = findViewById(R.id.navDrawerMenu);
+        imgMnu = findViewById(R.id.btnMnu);
     }
-
+    public void openMenu() {
+        imgMnu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        drawerLayout.closeDrawer(GravityCompat.START);
+    }
 }

@@ -123,8 +123,7 @@ public class InfoStoreActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemDoanhThu:
-                        Public_func.clickLogout(InfoStoreActivity.this, DoanhThuActivity.class);
-                        Toast.makeText(InfoStoreActivity.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
+                       Public_func.clickLogout(InfoStoreActivity.this, DoanhThuDate.class);
                         return true;
 
                     case R.id.itemInfoStore:

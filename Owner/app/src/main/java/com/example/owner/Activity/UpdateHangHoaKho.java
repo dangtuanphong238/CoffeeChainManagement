@@ -112,64 +112,6 @@ public class UpdateHangHoaKho extends AppCompatActivity  {
             }
         });
     }
-//    private void getMenu()
-//    {
-//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                switch (item.getItemId()) {
-//                    case R.id.itemQLKV:
-//                        Public_func.clickItemMenu(UpdateHangHoaKho.this, AreaManageActivity.class);
-//                        return true;
-//                    case R.id.itemQLMon:
-//                        Public_func.clickItemMenu(UpdateHangHoaKho.this, MealManageActivity.class);
-//                        return true;
-//                    case R.id.itemQLNV:
-//                        Public_func.clickItemMenu(UpdateHangHoaKho.this, StaffManageActivity.class);
-//                        return true;
-//                    case R.id.itemQLKho:
-//                        Public_func.clickItemMenu(UpdateHangHoaKho.this, WareHouseManageActivity.class);
-//                        return true;
-//                    case R.id.itemThongBao:
-//                        Public_func.clickItemMenu(UpdateHangHoaKho.this, ChooseChatActivity.class);
-//                        return true;
-//                    case R.id.itemThuNgan:
-//                        Public_func.clickItemMenu(UpdateHangHoaKho.this, ThuNganActivity.class);
-//                        return true;
-//
-//                    case R.id.itemDoanhThu:
-////                        Public_func.clickLogout(AddHangHoaActivity.this, DoanhThuActivity.class);
-//                        Toast.makeText(UpdateHangHoaKho.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
-//                        return true;
-//
-//                    case R.id.itemInfoStore:
-//                        Public_func.clickItemMenu(UpdateHangHoaKho.this, InfoStoreActivity.class);
-//                        return true;
-//
-////                    case R.id.itemThemMon:
-////                        Public_func.clickItemMenu(UpdateHangHoaKho.this, AddMonActivity.class);
-////                        return true;
-////
-////                    case R.id.itemThemNV:
-////                        Public_func.clickItemMenu(UpdateHangHoaKho.this, AddNhanVienActivity.class);
-////                        return true;
-////
-////                    case R.id.itemSPKho:
-////                        recreate();
-////                        return true;
-//
-//                    case R.id.itemLogOut:
-//                        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
-//                        SharedPreferences.Editor editor = sharedPreferences.edit();
-//                        editor.clear();
-//                        editor.apply();
-//                        Public_func.clickLogout(UpdateHangHoaKho.this, LoginActivity.class);
-//                        return true;
-//                }
-//                return true;
-//            }
-//        });
-//    }
     private void anhXa() {
         btnCapNhat = findViewById(R.id.btnCapNhat);
         btnXoa = findViewById(R.id.btnXoaHang);

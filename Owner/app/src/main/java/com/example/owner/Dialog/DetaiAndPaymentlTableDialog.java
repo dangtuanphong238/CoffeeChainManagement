@@ -19,11 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.owner.Adapter.DetailAndPaymentTableAdapter;
 import com.example.owner.Global.ParseTime;
 import com.example.owner.Model.BillModel;
+import com.example.owner.Model.DoanhThuMonth;
 import com.example.owner.Model.MealModel;
 import com.example.owner.Model.MealUsed;
+import com.example.owner.Model.Sum;
 import com.example.owner.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,6 +46,13 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
     String ownerID;
     String areaID;
     String tableID;
+    int tongtien;
+    Date date = new Date();
+    ParseTime parseTime = new ParseTime(date.getTime());
+    String year = parseTime.getYear();
+    String month = "Thang" + parseTime.getMonth();
+    String _date = "Ngay" + parseTime.getDate();
+    String ngay = parseTime.getDate();
 
     public DetaiAndPaymentlTableDialog(@NonNull Context context, String url, String ownerID, String areaID, String tableID) {
         super(context);
@@ -51,7 +61,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
         this.ownerID = ownerID;
         this.areaID = areaID;
         this.tableID = tableID;
-        System.out.println("URL_DETAIL:"+url);
+        System.out.println("URL_DETAIL:" + url);
     }
 
     TextView tvTableName;
@@ -184,12 +194,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
     public void payment(final ArrayList<MealUsed> list) {
         //Read data from branch QuanLyHoaDon to check how much bill?
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        Date date = new Date();
-        ParseTime parseTime = new ParseTime(date.getTime());
-        String year = parseTime.getYear();
-        String month = "Thang" + parseTime.getMonth();
-        String _date = "Ngay" + parseTime.getDate();
-        final DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/QuanLyHoaDon/" + year + "/" + month + "/" + _date+"/Bills");
+        final DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/QuanLyHoaDon/" + year + "/" + month + "/" + _date + "/Bills");
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -207,7 +212,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
                     for (int i = 0; i < list.size(); i++) {
                         sum += list.get(i).getSumPrice();
                         DatabaseReference infoMeal = path.child("Meal").child(list.get(i).getMealID());
-                        infoMeal.child("amount").setValue(list.get(i).getAmount());
+                        infoMeal.child("amount").setValue(String.valueOf(list.get(i).getAmount()));
                         infoMeal.child("category").setValue(list.get(i).getMealCategory());
                         infoMeal.child("id").setValue(list.get(i).getMealID());
                         infoMeal.child("image").setValue(list.get(i).getMealImage());
@@ -217,8 +222,8 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
                     }
                     path.child("Sum").setValue(sum + "");
                 } else {
-                   ArrayList listBill = parseListBill(snapshot);
-                   setValueForBranchBill(listBill,myRef, list);
+                    ArrayList listBill = parseListBill(snapshot);
+                    setValueForBranchBill(listBill, myRef, list);
                 }
                 setUpTableAfterPayment();
             }
@@ -231,7 +236,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
     }
 
     //Only bill #2 onwards
-    public ArrayList<BillModel> parseListBill(DataSnapshot snapshot){
+    public ArrayList<BillModel> parseListBill(DataSnapshot snapshot) {
         ArrayList<BillModel> listBill = new ArrayList<>();
         for (DataSnapshot data : snapshot.getChildren()) {
             String ID = data.child("ID").getValue() + "";
@@ -248,7 +253,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
         return listBill;
     }
 
-    public ArrayList<MealUsed> parseListMealUsed(DataSnapshot data, ArrayList<MealUsed> listMealUsed){
+    public ArrayList<MealUsed> parseListMealUsed(DataSnapshot data, ArrayList<MealUsed> listMealUsed) {
         DataSnapshot meal = data.child("Meal");
         for (DataSnapshot dataSnapshot : meal.getChildren()) {
             String meal_id = dataSnapshot.child("id").getValue() + "";
@@ -267,7 +272,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
     }
 
     //Set value for bill #2 onwards
-    public void setValueForBranchBill(ArrayList<BillModel> listBill, DatabaseReference myRef, ArrayList<MealUsed> list){
+    public void setValueForBranchBill(ArrayList<BillModel> listBill, DatabaseReference myRef, ArrayList<MealUsed> list) {
         listBill = sortListAsASC(listBill);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         String bill_id = "";
@@ -284,7 +289,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
         for (int i = 0; i < list.size(); i++) {
             sum += list.get(i).getSumPrice();
             DatabaseReference infoMeal = path.child("Meal").child(list.get(i).getMealID());
-            infoMeal.child("amount").setValue(list.get(i).getAmount());
+            infoMeal.child("amount").setValue(String.valueOf(list.get(i).getAmount()));
             infoMeal.child("category").setValue(list.get(i).getMealCategory());
             infoMeal.child("id").setValue(list.get(i).getMealID());
             infoMeal.child("image").setValue(list.get(i).getMealImage());
@@ -332,15 +337,83 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
                 dismiss();
                 break;
             case R.id.btnPayment:
-                if (listMealUsed.size() != 0){
+                if (listMealUsed.size() != 0) {
                     payment(listMealUsed);
-                }else{
-                    Toast.makeText(context,"Bàn trống không thể thanh toán",Toast.LENGTH_SHORT).show();
+                    getTien();
+                } else {
+                    Toast.makeText(context, "Bàn trống không thể thanh toán", Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:
                 break;
         }
         dismiss();
+    }
+    public void getTien()
+    {
+        final Sum sumtotal = new Sum(tvSumPrice.getText().toString());
+        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = firebaseDatabase.getReference("/OwnerManager/" + ownerID
+                + "/QuanLyHoaDon/" + year + "/" + month + "/" + _date);
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue() == null)
+                {
+                    myRef.child("DoanhThuNgay").child("sumtotal").setValue(sumtotal.getSum())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid)
+                                {
+                                    FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
+                                    final DatabaseReference myRef1 = firebaseDatabase1.getReference("/FounderManager/" +
+                                            "/QuanLyDoanhThu/"  + ownerID + "/" + year + "/" + month + "/DoanhThuNgay/" + _date);
+                                    DoanhThuMonth doanhThuMonth = new DoanhThuMonth(ngay,sumtotal.getSum());
+                                    myRef1.setValue(doanhThuMonth);
+                                }
+                            });
+                }
+                else
+                {
+                    kiemtraDulieu();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    public void kiemtraDulieu()
+    {
+        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = firebaseDatabase.getReference("/OwnerManager/" + ownerID
+                + "/QuanLyHoaDon/" + year + "/" + month + "/" + _date + "/DoanhThuNgay");
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists())
+                {
+                    String tien = snapshot.child("sumtotal").getValue().toString();
+                    tongtien = Integer.parseInt(tien) + Integer.parseInt(tvSumPrice.getText().toString());
+                }
+                myRef.child("sumtotal").setValue(String.valueOf(tongtien)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
+                        final DatabaseReference myRef1 = firebaseDatabase1.getReference("/FounderManager/" +
+                                "/QuanLyDoanhThu/"  + ownerID + "/" + year + "/" + month + "/DoanhThuNgay/" + _date);
+                        DoanhThuMonth doanhThuMonth = new DoanhThuMonth(ngay,String.valueOf(tongtien));
+                        myRef1.setValue(doanhThuMonth);
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

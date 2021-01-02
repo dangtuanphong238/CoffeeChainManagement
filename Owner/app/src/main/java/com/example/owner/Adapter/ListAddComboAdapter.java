@@ -35,7 +35,8 @@ public class ListAddComboAdapter extends RecyclerView.Adapter<ListAddComboAdapte
     ArrayList<MealModel> list;
     Context context;
     String path;
-    ArrayList arrCombo = new ArrayList();
+//    ArrayList arrCombo = new ArrayList();
+    ArrayList<MealModel> arrCombo = new ArrayList<>();
     ReturnValueArrayCombo returnValueArrayCombo;
 
     public ListAddComboAdapter(Context context, ArrayList<MealModel> list, String path , ReturnValueArrayCombo returnValueArrayCombo) {
@@ -110,7 +111,7 @@ public class ListAddComboAdapter extends RecyclerView.Adapter<ListAddComboAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
-        MealModel combo = list.get(position);
+        final MealModel combo = list.get(position);
         holder.txtNameProduct.setText(combo.getMeal_name());
         holder.txtPriceProduct.setText(combo.getMeal_price());
 
@@ -124,15 +125,18 @@ public class ListAddComboAdapter extends RecyclerView.Adapter<ListAddComboAdapte
                 if(holder.chkChoose.isChecked())
                 {
                     list.get(position).setCheck(true);
-                    arrCombo.add(list.get(position).getMeal_name());
+//                    arrCombo.add(list.get(position).getMeal_price());
+                    arrCombo.add(combo);
                 }
                 else {
                     list.get(position).setCheck(false);
-                    arrCombo.remove(list.get(position).getMeal_name());
+//                    arrCombo.remove(list.get(position).getMeal_price());
+                    arrCombo.remove(combo);
                 }
-                returnValueArrayCombo.saveArr(arrCombo);
             }
         });
+
+        returnValueArrayCombo.saveArr(arrCombo);
 
         setImage(holder,path,combo.getMeal_id());
     }
