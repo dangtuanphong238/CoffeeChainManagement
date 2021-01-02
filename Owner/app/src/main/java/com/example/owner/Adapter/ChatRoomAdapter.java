@@ -33,7 +33,6 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.cus_list_chat_room,parent,false);
         View view1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.cus_list_chat_room_right,parent,false);
-        System.out.println("view type " + pos);
         if(myID.equals(listData.get(pos).getUserID()))
         {
             return new ViewHolder(view1);

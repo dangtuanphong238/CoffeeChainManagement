@@ -63,63 +63,6 @@ public class NotificationActivity extends AppCompatActivity {
         getOwnerIDFromLocalStorage();
         getChatTypeFromBundle();
         backPressed();
-        ////call function onClickItem
-//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                switch (item.getItemId()) {
-//                    case R.id.itemQLKV:
-//                        Public_func.clickItemMenu(NotificationActivity.this, AreaManageActivity.class);
-//                        return true;
-//                    case R.id.itemQLMon:
-//                        Public_func.clickItemMenu(NotificationActivity.this, MealManageActivity.class);
-//                        return true;
-//                    case R.id.itemQLNV:
-//                        Public_func.clickItemMenu(NotificationActivity.this, StaffManageActivity.class);
-//                        return true;
-//                    case R.id.itemQLKho:
-//                        Public_func.clickItemMenu(NotificationActivity.this, WareHouseManageActivity.class);
-//                        return true;
-//                    case R.id.itemThongBao:
-//                        Public_func.clickItemMenu(NotificationActivity.this, ChooseChatActivity.class);
-//                        return true;
-//                    case R.id.itemThuNgan:
-//                        Public_func.clickItemMenu(NotificationActivity.this, ThuNganActivity.class);
-//                        return true;
-//
-//                    case R.id.itemDoanhThu:
-////                        Public_func.clickLogout(NotificationActivity.this, DoanhThuActivity.class);
-//                        Toast.makeText(NotificationActivity.this, "Chức năng này đang được xây dựng", Toast.LENGTH_SHORT).show();
-//                        return true;
-//
-//                    case R.id.itemInfoStore:
-//                        Public_func.clickItemMenu(NotificationActivity.this, InfoStoreActivity.class);
-//                        return true;
-//
-//                    case R.id.itemThemMon:
-//                        Public_func.clickItemMenu(NotificationActivity.this, AddMonActivity.class);
-//                        return true;
-//
-//                    case R.id.itemThemNV:
-//                        Public_func.clickItemMenu(NotificationActivity.this, AddNhanVienActivity.class);
-//                        return true;
-//
-//                    case R.id.itemSPKho:
-//                        Public_func.clickItemMenu(NotificationActivity.this, AddHangHoaActivity.class);
-//                        return true;
-//
-//                    case R.id.itemLogOut:
-//                        SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
-//                        SharedPreferences.Editor editor = sharedPreferences.edit();
-//                        editor.clear();
-//                        editor.apply();
-//                        Public_func.clickLogout(NotificationActivity.this, LoginActivity.class);
-//                        return true;
-//                }
-//                return true;
-//            }
-//        });
-
         setOnClick();
     }
 
@@ -133,15 +76,6 @@ public class NotificationActivity extends AppCompatActivity {
         edtInputMessage = findViewById(R.id.edtInputMessage);
     }
 
-//    public void openMenu() {
-//        btnMnu.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                drawerLayout.openDrawer(GravityCompat.START);
-//            }
-//        });
-//    }
-
     public void backPressed() {
         btnMnu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,11 +84,6 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
     }
-//    @Override
-//    protected void onRestart() {
-//        super.onRestart();
-//        drawerLayout.closeDrawer(GravityCompat.START);
-//    }
 
     private void setOnClick() {
         if (chatType.equals("room")) {
@@ -184,7 +113,7 @@ public class NotificationActivity extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                System.out.println("Failed_message");
+//                                System.out.println("Failed_message");
                             }
                         });
                     }
@@ -218,7 +147,7 @@ public class NotificationActivity extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                System.out.println("Failed_message");
+//                                System.out.println("Failed_message");
                             }
                         });
                     }
@@ -252,7 +181,7 @@ public class NotificationActivity extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                System.out.println("Failed_message");
+//                                System.out.println("Failed_message");
                             }
                         });
                     }
@@ -263,7 +192,6 @@ public class NotificationActivity extends AppCompatActivity {
 
     public void getOwnerIDFromLocalStorage() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        System.out.println(sharedPreferences.getString(OWNERID, "null"));
         sOwnerID = sharedPreferences.getString(OWNERID, "null");
     }
 
@@ -300,7 +228,6 @@ public class NotificationActivity extends AppCompatActivity {
                                 String userID = dataSnapshot.child("userID").getValue().toString();
                                 Message message = new Message(userID, messageText, messageTime);
                                 arrMessage.add(message);
-                                System.out.println("message " + message.getMessageText());
                             }
                             chatRoomAdapter = new ChatRoomAdapter(arrMessage, sOwnerID);
                             recyclerView.setAdapter(chatRoomAdapter);
@@ -312,7 +239,6 @@ public class NotificationActivity extends AppCompatActivity {
                                 }
                             });
                             chatRoomAdapter.notifyDataSetChanged();
-                            System.out.println("size " + arrMessage.size());
                         }
                     }
 
@@ -340,7 +266,6 @@ public class NotificationActivity extends AppCompatActivity {
                         String userID = dataSnapshot.child("userID").getValue().toString();
                         Message message = new Message(userID, messageText, messageTime);
                         arrMessage.add(message);
-//                        System.out.println("message " + message.getMessageText());
                     }
                     chatRoomAdapter = new ChatRoomAdapter(arrMessage, sOwnerID);
                     recyclerView.setAdapter(chatRoomAdapter);
@@ -352,7 +277,6 @@ public class NotificationActivity extends AppCompatActivity {
                         }
                     });
                     chatRoomAdapter.notifyDataSetChanged();
-                    System.out.println("size " + arrMessage.size());
                 }
             }
 
@@ -380,7 +304,6 @@ public class NotificationActivity extends AppCompatActivity {
                         String userID = dataSnapshot.child("userID").getValue().toString();
                         Message message = new Message(userID, messageText, messageTime);
                         arrMessage.add(message);
-                        System.out.println("message " + message.getMessageText());
                     }
                     chatRoomAdapter = new ChatRoomAdapter(arrMessage, sOwnerID);
                     recyclerView.setAdapter(chatRoomAdapter);
@@ -392,7 +315,6 @@ public class NotificationActivity extends AppCompatActivity {
                         }
                     });
                     chatRoomAdapter.notifyDataSetChanged();
-                    System.out.println("size " + arrMessage.size());
                 }
             }
 

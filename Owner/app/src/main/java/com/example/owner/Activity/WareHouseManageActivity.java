@@ -195,14 +195,13 @@ public class WareHouseManageActivity extends AppCompatActivity {
         SharedPreferences ref = getSharedPreferences("bitmap_img", MODE_PRIVATE);
 
         String bitmap = ref.getString("imagePreferance", "");
-        System.out.println(bitmap);
         decodeBase64(bitmap);
         View headerView = navigationView.getHeaderView(0);
         nav_head_avatar = headerView.findViewById(R.id.nav_head_avatar);
         if (bitmapDecoded != null) {
             nav_head_avatar.setImageBitmap(bitmapDecoded);
         } else {
-            System.out.println("bitmapp null");
+//            System.out.println("bitmapp null");
         }
     }
 
@@ -219,7 +218,6 @@ public class WareHouseManageActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent  = new Intent(WareHouseManageActivity.this,AddHangHoaActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
     }
@@ -347,7 +345,6 @@ public class WareHouseManageActivity extends AppCompatActivity {
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        System.out.println(sharedPreferences.getString(OWNERID,"null"));
         sOwnerID = sharedPreferences.getString(OWNERID,"null");
     }
     private void saveOwnerIDToLocalStorage(String ownerKey){

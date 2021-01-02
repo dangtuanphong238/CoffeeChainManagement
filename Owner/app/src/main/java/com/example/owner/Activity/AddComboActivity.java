@@ -100,7 +100,6 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
                     }
                 } catch (Exception ex) {
                     Log.w("PROBLEM", "get data from url " + path + " have problem");
-                    System.out.println("PROBLEM: " + "get data from url " + path + " have problem");
                 }
                 adapter = new ListAddComboAdapter(AddComboActivity.this, list, path, AddComboActivity.this);
                 adapter.notifyDataSetChanged();
@@ -130,17 +129,10 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
         btnTaoCombo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //get data from user input:
-
-//                final String tenCombo = edtTenCombo.getText().toString();
-//                String uuDai = edtUuDai.getText().toString();
-//                final int price = tinhGiaCombo(arrayList,uuDai);
-//                Log.d("abc",price+"");
 
                 if (edtTenCombo.getText().toString() != "" && edtUuDai.getText().toString() != "" && bitmap != null) {
                     final String tenCombo = edtTenCombo.getText().toString();
                     final String uuDai = edtUuDai.getText().toString();
-//                    final int price = tinhGiaCombo(arrayList,uuDai);
                     if (arrayList.isEmpty()) {
                         Toast.makeText(AddComboActivity.this, "Vui lòng chọn món", Toast.LENGTH_SHORT).show();
                     } else {
@@ -179,7 +171,6 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Toast.makeText(AddComboActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    System.out.println(e.getMessage().toString());
                                 }
                             });
                         }
@@ -217,7 +208,6 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Combo combo = dataSnapshot.getValue(Combo.class);
                     lstCombo.add(combo);
-                    System.out.println("lstStaff " + lstCombo.size());
                 }
             }
 
@@ -268,12 +258,6 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
     }
 
     private int tinhGiaCombo(ArrayList<MealModel> arrayList, String uuDai) {
-//        int price = 0;
-//        for (int i = 0; i < arrayList.size(); i++) {
-//            price = Integer.parseInt(arrayList.get(i).toString()) + price;
-//        }
-//        int khuyenMai = price * Integer.parseInt(uuDai) / 100;
-//        return price - khuyenMai;
         int price = 0;
         int khuyenMai = 0;
         for (int i = 0; i < arrayList.size(); i++) {

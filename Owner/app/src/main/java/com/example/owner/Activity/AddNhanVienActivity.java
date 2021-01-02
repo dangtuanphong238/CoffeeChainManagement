@@ -1,4 +1,3 @@
-
 package com.example.owner.Activity;
 
 import android.app.ProgressDialog;
@@ -47,8 +46,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class AddNhanVienActivity extends AppCompatActivity {
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
+
     private ImageButton btnMnu, btnChoose, btnCapture;
     private ImageView imgNhanVien;
 
@@ -77,23 +75,20 @@ public class AddNhanVienActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_nhan_vien);
         anhXa();
         initSpinner();
-       // txtTitleActivity.setText("Thêm Nhân Viên");
-        //openMenu();
+        txtTitleActivity.setText("Thêm Nhân Viên");
+        backPressed();
         getOwnerIDFromLocalStorage();
         getSizeListStaff(); //getSizeList
 
         //call function onClickItem
-
-
         setOnClick();
     }
 
-    private void initSpinner()
-    {
-        ArrayAdapter<String> adapterCaLam = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources().getStringArray(R.array.lstCaLam));
+    private void initSpinner() {
+        ArrayAdapter<String> adapterCaLam = new ArrayAdapter<>(this, R.layout.cus_spinner, getResources().getStringArray(R.array.lstCaLam));
         adapterCaLam.setDropDownViewResource(R.layout.cus_spinner_dropdown);
         spnLamTheoCa.setAdapter(adapterCaLam);
-        ArrayAdapter<String> adapterChucVu = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources().getStringArray(R.array.lstChucvu));
+        ArrayAdapter<String> adapterChucVu = new ArrayAdapter<>(this, R.layout.cus_spinner, getResources().getStringArray(R.array.lstChucvu));
         adapterChucVu.setDropDownViewResource(R.layout.cus_spinner_dropdown);
         spnChucVu.setAdapter(adapterChucVu);
     }
@@ -117,7 +112,7 @@ public class AddNhanVienActivity extends AppCompatActivity {
                 && data != null && data.getData() != null) {
             mImageUri = data.getData();
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),mImageUri);
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mImageUri);
                 imgNhanVien.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -165,7 +160,7 @@ public class AddNhanVienActivity extends AppCompatActivity {
                         storageReference.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Staff staff1 = new Staff("Staff" + lstStaff.size(), tenDangNhap, matKhau, tenNV, sdt, soCMND, chucVu, caLam,"Staff" + lstStaff.size() );
+                                Staff staff1 = new Staff("Staff" + lstStaff.size(), tenDangNhap, matKhau, tenNV, sdt, soCMND, chucVu, caLam, "Staff" + lstStaff.size());
 
                                 databaseReference.setValue(staff1);
                                 Toast.makeText(AddNhanVienActivity.this, "Cập nhật thông tin nhân viên thành công!", Toast.LENGTH_SHORT).show();
@@ -176,11 +171,9 @@ public class AddNhanVienActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(AddNhanVienActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                System.out.println(e.getMessage().toString());
                             }
                         });
-                    }
-                    else {
+                    } else {
                         Toast.makeText(AddNhanVienActivity.this, "Vui lòng nhập đủ các trường!", Toast.LENGTH_SHORT).show();
                     }
 
@@ -203,7 +196,7 @@ public class AddNhanVienActivity extends AppCompatActivity {
         });
     }
 
-    private void clearEditText(){
+    private void clearEditText() {
         edtTenNV.getText().clear();
         edtMatKhau.getText().clear();
         edtSDT.getText().clear();
@@ -224,7 +217,6 @@ public class AddNhanVienActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Staff staff1 = dataSnapshot.getValue(Staff.class);
                     lstStaff.add(staff1);
-                    System.out.println("lstStaff " + lstStaff.size());
                 }
             }
 
@@ -236,10 +228,8 @@ public class AddNhanVienActivity extends AppCompatActivity {
     }
 
     private void anhXa() {
-        drawerLayout = findViewById(R.id.activity_main_drawer);
-        navigationView = findViewById(R.id.navDrawerMenu);
         btnMnu = findViewById(R.id.btnMnu);
-        //txtTitleActivity = findViewById(R.id.txtTitle);
+        txtTitleActivity = findViewById(R.id.txtTitle);
         btnThemNV = findViewById(R.id.btnThemNhanVien);
         edtTenNV = findViewById(R.id.edtTenNhanVien);
         edtTenDangNhap = findViewById(R.id.edtTenDangNhap);
@@ -253,25 +243,20 @@ public class AddNhanVienActivity extends AppCompatActivity {
         imgNhanVien = findViewById(R.id.imgNhanVien);
     }
 
-    public void openMenu() {
+    public void backPressed() {
+        btnMnu.setImageResource(R.drawable.ic_back_24);
+
         btnMnu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
+                finish();
             }
         });
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        System.out.println(sharedPreferences.getString(OWNERID, "null"));
         sOwnerID = sharedPreferences.getString(OWNERID, "null");
     }
 }

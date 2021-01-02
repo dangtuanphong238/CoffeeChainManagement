@@ -68,8 +68,6 @@ public class LoginActivity extends AppCompatActivity {
                     if(dataSnapshot.exists()){
                         Owner owner = dataSnapshot.getValue(Owner.class);
                         lstOwners.add(owner);
-//                        System.out.println(dataSnapshot.getKey());
-                        System.out.println("lst ownerABC" + owner.user);
                     }
                 }
             }
@@ -136,7 +134,6 @@ public class LoginActivity extends AppCompatActivity {
             });
             //getImage
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlychuoicoffee.appspot.com/FounderManager/ThongTinCuaHang/" + sOwnerID);
-            System.out.println("MstoreR " + mStorageRef.toString());
             final File localFile = File.createTempFile("images","jpg");
             mStorageRef.getFile(localFile)
                     .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
@@ -149,7 +146,6 @@ public class LoginActivity extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    System.out.println("ex " + e.getMessage());
                 }
             });
         }catch (Exception ex)
@@ -202,18 +198,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 togglePass();
-//             if(isShow == true){
-//                 btnEye.setImageResource(R.drawable.ic_un_eye);
-//                 edtPass.setTransformationMethod(null);
-//                 isShow = false;
-//             }
-//             else
-//             {
-//                 isShow = true;
-//                 btnEye.setImageResource(R.drawable.ic_eye_24);
-//                 edtPass.setTransformationMethod(new PasswordTransformationMethod());
-//
-//             }
             }
         });
     }

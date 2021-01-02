@@ -152,7 +152,6 @@ public class ComboManagerActivity extends AppCompatActivity implements ReturnVal
                     }
                 } catch (Exception ex) {
                     Log.w("PROBLEM", "get data from url " + "path" + " have problem");
-                    System.out.println("PROBLEM: " + "get data from url " + "path" + " have problem");
                 }
             }
 

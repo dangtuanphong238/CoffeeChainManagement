@@ -131,7 +131,6 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        System.out.println(sharedPreferences.getString(OWNERID,"null"));
         sOwnerID = sharedPreferences.getString(OWNERID,"null");
     }
     @Override
