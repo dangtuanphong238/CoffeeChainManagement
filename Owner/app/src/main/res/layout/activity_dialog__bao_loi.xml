@@ -4,10 +4,15 @@
     style="@style/dialog_info_table"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#EA9547"
     android:layout_gravity="center"
-    android:orientation="vertical" >
-
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_height="500dp"
+        android:layout_width="wrap_content"
+        android:minHeight="400dp"
+        android:minWidth="300dp">
+        <include layout="@layout/layout_background_view" />
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -57,7 +62,10 @@
                     android:layout_height="wrap_content"
                     android:text="Nhập lỗi"></TextView>
                 <TextView
-                    android:textSize="16dp"
+                    android:hint="Noii"
+                    android:padding="10dp"
+                    android:lines="10"
+                    android:textSize="20dp"
                     android:textColor="@color/black"
                     android:id="@+id/noidung"
                     android:layout_width="match_parent"

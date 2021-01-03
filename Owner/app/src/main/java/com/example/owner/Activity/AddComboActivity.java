@@ -217,7 +217,6 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Combo combo = dataSnapshot.getValue(Combo.class);
                     lstCombo.add(combo);
-                    System.out.println("lstStaff " + lstCombo.size());
                 }
             }
 

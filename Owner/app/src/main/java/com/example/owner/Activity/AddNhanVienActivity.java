@@ -176,7 +176,6 @@ public class AddNhanVienActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(AddNhanVienActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                System.out.println(e.getMessage().toString());
                             }
                         });
                     }
@@ -224,7 +223,6 @@ public class AddNhanVienActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Staff staff1 = dataSnapshot.getValue(Staff.class);
                     lstStaff.add(staff1);
-                    System.out.println("lstStaff " + lstStaff.size());
                 }
             }
 

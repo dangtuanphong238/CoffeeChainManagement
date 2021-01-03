@@ -129,7 +129,6 @@ public class ChooseChatActivity extends AppCompatActivity {
         SharedPreferences ref = getSharedPreferences("bitmap_img", MODE_PRIVATE);
 
         String bitmap = ref.getString("imagePreferance", "");
-        System.out.println(bitmap);
         decodeBase64(bitmap);
         View headerView = navigationView.getHeaderView(0);
         nav_head_avatar = headerView.findViewById(R.id.nav_head_avatar);
