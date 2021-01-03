@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -133,29 +134,33 @@ public class StaffManageActivity extends AppCompatActivity {
     }
 
     private void GetData() {
-
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
-        myRef.child(sOwnerID).child("QuanLyNhanVien").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    //xoa du lieu tren listview
-                    nhanVienAdapter.clear();
-                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        Staff arrStaff = data.getValue(Staff.class);
-                        arrStaff.setId(data.getKey());
-                        nhanVienAdapter.add(arrStaff);
-                        nhanVienAdapter.notifyDataSetChanged();
+        try {
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
+            myRef.child(sOwnerID).child("QuanLyNhanVien").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        //xoa du lieu tren listview
+                        nhanVienAdapter.clear();
+                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                            Staff arrStaff = data.getValue(Staff.class);
+                            arrStaff.setId(data.getKey());
+                            nhanVienAdapter.add(arrStaff);
+                            nhanVienAdapter.notifyDataSetChanged();
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(StaffManageActivity.this, "Load Data Failed!", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(StaffManageActivity.this, "Load Data Failed!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }catch (Exception ex){
+            ex.getMessage();
+        }
+
     }
 
     private void setOnClick() {

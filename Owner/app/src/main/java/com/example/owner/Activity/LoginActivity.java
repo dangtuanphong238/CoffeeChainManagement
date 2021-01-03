@@ -45,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
     private ImageButton btnEye;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
+    public static final String OWNERNAME = "ownerName";
+
     private boolean isShow = true;
 
 
@@ -173,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
                 for (Owner owner : lstOwners) {
                     if (owner.user.equals(edtUser.getText().toString()) && owner.pass.equals(edtPass.getText().toString())) {
                         isSuccess = true;
-                        saveOwnerIDToLocalStorage(owner.id);
+                        saveOwnerIDToLocalStorage(owner.id,owner.user);
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("username",edtUser.getText().toString());
@@ -202,10 +204,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void saveOwnerIDToLocalStorage(String ownerKey){
+    private void saveOwnerIDToLocalStorage(String ownerKey,String ownerName){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(OWNERID,ownerKey);
+        editor.putString(OWNERNAME,ownerName);
         editor.apply();
     }
 

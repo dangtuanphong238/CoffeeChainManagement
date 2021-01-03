@@ -95,20 +95,8 @@ public class ComboManagerActivity extends AppCompatActivity implements ReturnVal
 
                     case R.id.itemInfoStore:
                         Public_func.clickLogout(ComboManagerActivity.this, InfoStoreActivity.class);
-
                         return true;
-//
-//                    case R.id.itemThemMon:
-//                        Public_func.clickItemMenu(InfoStoreActivity.this, AddMonActivity.class);
-//                        return true;
-//
-//                    case R.id.itemThemNV:
-//                        Public_func.clickItemMenu(InfoStoreActivity.this, AddNhanVienActivity.class);
-//                        return true;
-//
-//                    case R.id.itemSPKho:
-//                        Public_func.clickItemMenu(InfoStoreActivity.this, AddHangHoaActivity.class);
-//                        return true;
+
                     case R.id.itemQLCombo:
                         drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
