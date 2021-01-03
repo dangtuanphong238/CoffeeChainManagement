@@ -79,10 +79,6 @@ public class DoanhThuDate extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String a = spinnerDoanhThu.getItemAtPosition(i).toString();
-                if (a.equals("N/A"))
-                {
-                    Toast.makeText(DoanhThuDate.this, "Bạn vui lòng chọn loại doanh thu muốn hiển thị", Toast.LENGTH_SHORT).show();
-                }
                 if (a.equals("Theo Ngày"))
                 {
                    tvNgay.setText(ngay+"/"+thang+"/"+year);
@@ -133,10 +129,6 @@ public class DoanhThuDate extends AppCompatActivity {
                                   .child("sumtotal").getValue().toString());
                           {
                               visitors.add(new PieEntry(total));
-                              // Description description  = new Description();
-                              // description.setText("Doanh Thu Ngày");
-                              // description.setTextSize(9f);
-                              //  pieChart.setDescription(description);
                               pieChart.animateY(1000, Easing.EaseInOutCubic);
                               PieDataSet pieDataSet = new PieDataSet(visitors, "Doanh Thu Ngày");
                               pieDataSet.setSliceSpace(3f);
@@ -149,16 +141,6 @@ public class DoanhThuDate extends AppCompatActivity {
 
                           }
                       }
-                      else
-                      {
-                          Toast.makeText(DoanhThuDate.this,
-                                  "Hôm nay chưa có bill thanh toán để cập nhật!", Toast.LENGTH_SHORT).show();
-                      }
-                    }
-                    else
-                    {
-                        Toast.makeText(DoanhThuDate.this,
-                                "Hôm nay chưa có bill thanh toán để cập nhật!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -270,10 +252,6 @@ public class DoanhThuDate extends AppCompatActivity {
                             "/QuanLyDoanhThu/" + sOwnerID + "/" + year + "/" + month);
                     reference1.child("total").setValue(String.valueOf(total));
                     reference1.child("month").setValue(thang);
-                }
-                else
-                    {
-                    Toast.makeText(getApplicationContext(), "Hôm nay chưa có doanh thu nào!", Toast.LENGTH_SHORT).show();
                 }
             }
 

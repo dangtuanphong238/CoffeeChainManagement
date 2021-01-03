@@ -4,14 +4,22 @@
     style="@style/dialog_info_table"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#EA9547"
     android:layout_gravity="center"
     android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_height="500dp"
+        android:layout_width="wrap_content"
+        android:minHeight="400dp"
+        android:minWidth="300dp">
+        <include layout="@layout/layout_background_view" />
+    </RelativeLayout>
     <LinearLayout
-        android:layout_marginVertical="20dp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:minHeight="400dp"
+        android:minWidth="300dp"
+        android:layout_marginVertical="20dp"
+        android:orientation="vertical">
         <TextView
             android:layout_marginVertical="10dp"
             android:layout_width="wrap_content"

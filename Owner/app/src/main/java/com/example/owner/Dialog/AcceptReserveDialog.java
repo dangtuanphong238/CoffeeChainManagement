@@ -121,7 +121,7 @@ public class AcceptReserveDialog extends Dialog {
                                         edtTenKH.setText("");
                                         edtSdtKH.setText("");
                                         edtTimeDB.setText("");
-                                        Toast.makeText(context, "Đặt trước thành công!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "Xác nhận Đặt Trước Thành Công!", Toast.LENGTH_SHORT).show();
                                         dismiss();
                                     }
                                 });

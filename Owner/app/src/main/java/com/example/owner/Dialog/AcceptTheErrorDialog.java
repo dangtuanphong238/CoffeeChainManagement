@@ -45,7 +45,6 @@ public class AcceptTheErrorDialog extends Dialog {
     private void getData() {
         try
         {
-
             String path = "OwnerManager/" + ownerID + "/QuanLyBanLoi/" +"Area"+ areaID + "/" + tableID + "/ThongTinLoi";
             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
             DatabaseReference myRef = firebaseDatabase.getReference(path);
@@ -97,7 +96,7 @@ public class AcceptTheErrorDialog extends Dialog {
         ngayloi = findViewById(R.id.ngayloi);
         btnCancel = findViewById(R.id.btnCancel);
         tvTableName = findViewById(R.id.tvTableName);
-        String nameTable = tableID.replace("Table", "Bàn");
+        String nameTable = tableID.replace("Table", "Bàn ");
         tvTableName.setText(nameTable);
     }
     private void setEnvent()
@@ -121,6 +120,7 @@ public class AcceptTheErrorDialog extends Dialog {
                         public void onComplete(@NonNull Task<Void> task) {
                             Toast.makeText(context,"Xác nhận bàn lỗi thành công",Toast.LENGTH_SHORT).show();
                             btnHuy.setEnabled(false);
+                            dismiss();
                         }
                     });
                 }catch(Exception exception
@@ -152,6 +152,7 @@ public class AcceptTheErrorDialog extends Dialog {
                                 }
                             });
                             btnXacNhan.setEnabled(false);
+                            dismiss();
                         }
                     });
                 }catch (Exception exception)
@@ -161,6 +162,5 @@ public class AcceptTheErrorDialog extends Dialog {
 
             }
         });
-
     }
 }
