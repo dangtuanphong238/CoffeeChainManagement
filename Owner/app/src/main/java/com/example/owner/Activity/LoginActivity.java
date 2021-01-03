@@ -126,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                     if(snapshot.exists()) {
                         Store store = snapshot.getValue(Store.class);
                         lstStore.add(store);
+                        saveInfoStoreToLocalStorage(store.getTencuahang(),store.getDiachi());
                     }
                 }
 
@@ -154,6 +155,13 @@ public class LoginActivity extends AppCompatActivity {
         {
             ex.getMessage();
         }
+    }
+
+    private void saveInfoStoreToLocalStorage(String nameStore, String addressStore) {
+        SharedPreferences.Editor editor = getSharedPreferences("datafile", MODE_PRIVATE).edit();
+        editor.putString("name_store", nameStore);
+        editor.putString("address_store", addressStore);
+        editor.commit();
     }
 
     private void saveImageToStogare(Bitmap image){

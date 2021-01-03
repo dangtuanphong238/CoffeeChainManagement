@@ -157,12 +157,25 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
 
     //header drawer:
     private void headerNav() {
+        //getImage:
         SharedPreferences ref = getSharedPreferences("bitmap_img", MODE_PRIVATE);
-
         String bitmap = ref.getString("imagePreferance", "");
         decodeBase64(bitmap);
+        //getInfo:
+        SharedPreferences refInfoStore = getSharedPreferences("datafile",MODE_PRIVATE);
+        String nameStore = refInfoStore.getString("name_store","");
+        String addressStore = refInfoStore.getString("address_store","");
+
+        //anhxa:
         View headerView = navigationView.getHeaderView(0);
         nav_head_avatar = headerView.findViewById(R.id.nav_head_avatar);
+        nav_head_name_store = headerView.findViewById(R.id.nav_head_name_store);
+        nav_head_address_store = headerView.findViewById(R.id.nav_head_address_store);
+
+        //setView:
+        nav_head_name_store.setText(nameStore);
+        nav_head_address_store.setText(addressStore);
+
         if (bitmapDecoded != null) {
             nav_head_avatar.setImageBitmap(bitmapDecoded);
         } else {
