@@ -80,7 +80,6 @@
             android:layout_marginVertical="30dp"
             android:orientation="horizontal">
             <Button
-
                 android:layout_marginHorizontal="50dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

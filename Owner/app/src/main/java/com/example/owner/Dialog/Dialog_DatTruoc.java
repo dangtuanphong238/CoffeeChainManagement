@@ -47,50 +47,16 @@ public class Dialog_DatTruoc extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_accept_reserve_dialog);
+        setContentView(R.layout.activity_dialog__dat_truoc);
         anhXa();
         btnXacNhan.setEnabled(true);
-        getData();
         setEvent();
-    }
-    private void getData() {
-        try
-        {
-            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-            String path = "OwnerManager/" + ownerID + "/QuanLyBanDatTruoc" +
-                    "/Area"+ areaID + "/" + tableID + "/ThongTinDatTruoc";
-            DatabaseReference myRef = firebaseDatabase.getReference(path);
-            myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.getValue() != null)
-                    {
-                        InforDatTruoc inforDatTruoc = snapshot.getValue(InforDatTruoc.class);
-                        TenKH = inforDatTruoc.getTenKH();
-                        SdtKH = inforDatTruoc.getSdtKH();
-                        TimeDB = inforDatTruoc.getTimeDB();
-                        edtTenKH.setText(TenKH);
-                        edtSdtKH.setText(SdtKH);
-                        edtTimeDB.setText(TimeDB);
-
-                    }
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-        catch (Exception exception)
-        {
-            exception.getMessage();
-        }
-
     }
     private void setEvent()
     {
         try {
-            tvTextlayout.setText(tableID);
+            String nameTable = tableID.replace("Table", "Bàn ");
+            tvTextlayout.setText(nameTable);
             btnXacNhan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

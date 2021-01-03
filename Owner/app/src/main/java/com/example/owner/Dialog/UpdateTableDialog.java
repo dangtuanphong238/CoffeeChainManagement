@@ -86,6 +86,7 @@ public class UpdateTableDialog extends Dialog implements View.OnClickListener {
         }
         else if (status.equals("1") || status.equals("4")) {
             btnUnBook.setVisibility(View.VISIBLE);
+            btnUnBook.setEnabled(true);
             //khóa đặt trước
             btnBook.setVisibility(View.GONE);
             btnBook.setEnabled(false);
