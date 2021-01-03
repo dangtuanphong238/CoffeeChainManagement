@@ -1,4 +1,4 @@
-package com.example.founder;
+package com.example.founder.Activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.founder.Public.Public_func;
+import com.example.founder.R;
 import com.example.founder.adapter.ChatOneToOneAdapter;
 import com.example.founder.adapter.ChatRoomAdapter;
 import com.example.founder.model.Message;
@@ -70,13 +71,13 @@ public class NotificationActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
 
                     case R.id.it1:
-                        Public_func.clickItemMenu(NotificationActivity.this, ActivityDoanhThu.class);
+                        Public_func.clickItemMenu(NotificationActivity.this, TongDoanhThuActivity.class);
                         return true;
                     case R.id.danh_sach_cua_hang:
                         recreate();
                         return true;
                     case R.id.tao_tai_khoan_owner:
-                        Public_func.clickItemMenu(NotificationActivity.this, ThemKhuVuc.class);
+                        Public_func.clickItemMenu(NotificationActivity.this, ThemTaiKhoanKhuVucActivity.class);
                         return true;
                     case R.id.thong_bao:
                         Public_func.clickItemMenu(NotificationActivity.this, ChooseChatActivity.class);

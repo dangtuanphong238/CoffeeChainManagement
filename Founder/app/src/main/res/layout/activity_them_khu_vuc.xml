@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#FE9B53"
     android:orientation="vertical"
-    tools:context=".ThemKhuVuc">
+    tools:context=".Activity.ThemTaiKhoanKhuVucActivity">
     <include layout="@layout/layout_background_view" />
     <LinearLayout
         android:layout_width="match_parent"

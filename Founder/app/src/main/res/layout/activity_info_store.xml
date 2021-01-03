@@ -5,7 +5,7 @@
     android:background="#FE9B53"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".InfoStoreActivity">
+    tools:context=".Activity.InfoStoreActivity">
 
 
     <LinearLayout
@@ -30,23 +30,23 @@
             android:paddingHorizontal="10dp"
             android:background="@drawable/custom_edittext"
             android:paddingRight="20px"></EditText>
-    <TextView
-        android:id="@+id/txtrsDiachi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:text="Địa Chỉ:"
-        android:textColor="#767B97"
-        android:textSize="20dp"></TextView>
-    <EditText
-        android:id="@+id/edtrsdiachi"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:gravity="center"
-        android:hint="Enter the address"
-        android:paddingHorizontal="10dp"
-        android:background="@drawable/custom_edittext"
-        android:paddingRight="20px"></EditText>
+        <TextView
+            android:id="@+id/txtrsDiachi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Địa Chỉ:"
+            android:textColor="#767B97"
+            android:textSize="20dp"></TextView>
+        <EditText
+            android:id="@+id/edtrsdiachi"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:hint="Enter the address"
+            android:paddingHorizontal="10dp"
+            android:background="@drawable/custom_edittext"
+            android:paddingRight="20px"></EditText>
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
