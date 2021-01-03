@@ -83,7 +83,6 @@
                     </LinearLayout>
 
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -93,8 +92,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="top|center">
-
+                        android:gravity="center">
                         <ImageView
                             android:layout_width="@dimen/normal25dp"
                             android:layout_height="@dimen/normal25dp"
@@ -110,7 +108,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="top|center"
+                        android:gravity="center"
                         android:paddingEnd="@dimen/normal20dp">
 
                         <ImageView
@@ -123,6 +121,56 @@
                             android:layout_height="wrap_content"
                             android:text=" Đang Trống" />
                     </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+
+                        android:layout_gravity="center"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_marginLeft="45dp"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:layout_width="@dimen/normal25dp"
+                            android:layout_height="@dimen/normal25dp"
+                            android:background="#1EED29"/>
+
+                        <TextView
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text=" Chờ xác nhận đặt trước" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginHorizontal="45dp"
+                        android:layout_gravity="center"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_marginLeft="35dp"
+                            android:layout_width="@dimen/normal25dp"
+                            android:layout_height="@dimen/normal25dp"
+                            android:background="#B5AEAE" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text=" Đang chờ xác nhận sửa chữa" />
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
