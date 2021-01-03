@@ -10,7 +10,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FE9B58"
         android:orientation="vertical">
 
         <LinearLayout
@@ -20,219 +19,224 @@
 
             <include layout="@layout/toolbar" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/normal5dp"
-                android:orientation="vertical">
+           <RelativeLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content">
+               <include layout="@layout/layout_background_view"/>
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginHorizontal="@dimen/normal5dp"
+                   android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ảnh nhân viên:"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16dp"/>
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Ảnh nhân viên:"
+                       android:textColor="@color/colorPrimary"
+                       android:textSize="16dp"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent">
 
-                    <ImageButton
-                        android:id="@+id/btnCapture"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_camera_24" />
+                       <ImageButton
+                           android:id="@+id/btnCapture"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@drawable/ic_camera_24" />
 
-                    <ImageButton
-                        android:id="@+id/btnChoose"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_photo_24" />
-                </LinearLayout>
+                       <ImageButton
+                           android:id="@+id/btnChoose"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@drawable/ic_photo_24" />
+                   </LinearLayout>
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="250dp"
-                    android:layout_height="250dp"
-                    app:cardCornerRadius="250dp"
-                    android:layout_gravity="center">
-                    <ImageView
-                        android:id="@+id/imgNhanVien"
-                        android:layout_width="250dp"
-                        android:layout_height="250dp"
-                        android:layout_gravity="center_horizontal"
-                        app:srcCompat="@drawable/noimage" />
-                </androidx.cardview.widget.CardView>
+                   <androidx.cardview.widget.CardView
+                       android:layout_width="250dp"
+                       android:layout_height="250dp"
+                       app:cardCornerRadius="250dp"
+                       android:layout_gravity="center">
+                       <ImageView
+                           android:id="@+id/imgNhanVien"
+                           android:layout_width="250dp"
+                           android:layout_height="250dp"
+                           android:layout_gravity="center_horizontal"
+                           app:srcCompat="@drawable/noimage" />
+                   </androidx.cardview.widget.CardView>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:paddingHorizontal="@dimen/normal10dp"
-                    android:text="@string/tennhanvien"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16dp"></TextView>
+                   <TextView
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="left"
+                       android:paddingHorizontal="@dimen/normal10dp"
+                       android:text="@string/tennhanvien"
+                       android:textColor="@color/colorPrimary"
+                       android:textSize="16dp"></TextView>
 
-                <EditText
-                    android:id="@+id/edtTenNhanVien"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/normal50dp"
-                    android:layout_marginHorizontal="@dimen/normal10dp"
-                    android:background="@drawable/custom_edittext"
-                    android:padding="@dimen/normal5dp"
-                    />
+                   <EditText
+                       android:id="@+id/edtTenNhanVien"
+                       android:layout_width="match_parent"
+                       android:layout_height="@dimen/normal50dp"
+                       android:layout_marginHorizontal="@dimen/normal10dp"
+                       android:background="@drawable/custom_edittext"
+                       android:padding="@dimen/normal5dp"
+                       />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:padding="@dimen/normal5dp"
-                    android:paddingHorizontal="@dimen/normal5dp"
-                    android:text="@string/chucvu"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16dp"></TextView>
+                   <TextView
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="left"
+                       android:padding="@dimen/normal5dp"
+                       android:paddingHorizontal="@dimen/normal5dp"
+                       android:text="@string/chucvu"
+                       android:textColor="@color/colorPrimary"
+                       android:textSize="16dp"></TextView>
 
-                <Spinner
-                    android:id="@+id/spnChucVu"
-                    android:entries="@array/lstChucvu"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/normal50dp"
-                    android:layout_marginHorizontal="@dimen/normal10dp"
-                    android:background="@drawable/custom_edittext"
-                    android:padding="@dimen/normal10dp"
-                    android:textAlignment="center"/>
+                   <Spinner
+                       android:id="@+id/spnChucVu"
+                       android:entries="@array/lstChucvu"
+                       android:layout_width="match_parent"
+                       android:layout_height="@dimen/normal50dp"
+                       android:layout_marginHorizontal="@dimen/normal10dp"
+                       android:background="@drawable/custom_edittext"
+                       android:padding="@dimen/normal10dp"
+                       android:textAlignment="center"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:paddingHorizontal="@dimen/normal10dp"
-                    android:text="@string/tendangnhap"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16dp"></TextView>
+                   <TextView
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="left"
+                       android:paddingHorizontal="@dimen/normal10dp"
+                       android:text="@string/tendangnhap"
+                       android:textColor="@color/colorPrimary"
+                       android:textSize="16dp"></TextView>
 
-                <EditText
-                    android:id="@+id/edtTenDangNhap"
-                    android:enabled="false"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/normal50dp"
-                    android:layout_marginHorizontal="@dimen/normal10dp"
-                    android:background="@drawable/custom_edittext"
-                    android:padding="@dimen/normal5dp"
-                    />
+                   <EditText
+                       android:id="@+id/edtTenDangNhap"
+                       android:enabled="false"
+                       android:layout_width="match_parent"
+                       android:layout_height="@dimen/normal50dp"
+                       android:layout_marginHorizontal="@dimen/normal10dp"
+                       android:background="@drawable/custom_edittext"
+                       android:padding="@dimen/normal5dp"
+                       />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:paddingHorizontal="@dimen/normal10dp"
-                    android:text="@string/matkhau"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16dp"></TextView>
+                   <TextView
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="left"
+                       android:paddingHorizontal="@dimen/normal10dp"
+                       android:text="@string/matkhau"
+                       android:textColor="@color/colorPrimary"
+                       android:textSize="16dp"></TextView>
 
-                <EditText
-                    android:id="@+id/edtMatKhau"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/normal50dp"
-                    android:layout_marginHorizontal="@dimen/normal10dp"
-                    android:background="@drawable/custom_edittext"
-                    android:padding="@dimen/normal5dp"
-                    />
+                   <EditText
+                       android:id="@+id/edtMatKhau"
+                       android:layout_width="match_parent"
+                       android:layout_height="@dimen/normal50dp"
+                       android:layout_marginHorizontal="@dimen/normal10dp"
+                       android:background="@drawable/custom_edittext"
+                       android:padding="@dimen/normal5dp"
+                       />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginVertical="@dimen/normal5dp"
-                    android:paddingHorizontal="@dimen/normal10dp"
-                    android:text="@string/sodienthoai"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16dp"></TextView>
+                   <TextView
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="left"
+                       android:layout_marginVertical="@dimen/normal5dp"
+                       android:paddingHorizontal="@dimen/normal10dp"
+                       android:text="@string/sodienthoai"
+                       android:textColor="@color/colorPrimary"
+                       android:textSize="16dp"></TextView>
 
-                <EditText
-                    android:id="@+id/edtSoDienThoai"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/normal50dp"
-                    android:layout_marginHorizontal="@dimen/normal10dp"
-                    android:background="@drawable/custom_edittext"
-                    android:padding="@dimen/normal5dp"
-                    />
+                   <EditText
+                       android:id="@+id/edtSoDienThoai"
+                       android:layout_width="match_parent"
+                       android:layout_height="@dimen/normal50dp"
+                       android:layout_marginHorizontal="@dimen/normal10dp"
+                       android:background="@drawable/custom_edittext"
+                       android:padding="@dimen/normal5dp"
+                       />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:paddingHorizontal="@dimen/normal10dp"
-                    android:text="@string/soCMND"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16dp"/>
+                   <TextView
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="left"
+                       android:paddingHorizontal="@dimen/normal10dp"
+                       android:text="@string/soCMND"
+                       android:textColor="@color/colorPrimary"
+                       android:textSize="16dp"/>
 
-                <EditText
-                    android:id="@+id/edtSoCMND"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/normal50dp"
-                    android:layout_marginHorizontal="@dimen/normal10dp"
-                    android:background="@drawable/custom_edittext"
-                    android:padding="@dimen/normal5dp"
-                    />
+                   <EditText
+                       android:id="@+id/edtSoCMND"
+                       android:layout_width="match_parent"
+                       android:layout_height="@dimen/normal50dp"
+                       android:layout_marginHorizontal="@dimen/normal10dp"
+                       android:background="@drawable/custom_edittext"
+                       android:padding="@dimen/normal5dp"
+                       />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:padding="@dimen/normal5dp"
-                    android:paddingHorizontal="@dimen/normal10dp"
-                    android:text="@string/lamtheoca"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16dp"/>
+                   <TextView
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="left"
+                       android:padding="@dimen/normal5dp"
+                       android:paddingHorizontal="@dimen/normal10dp"
+                       android:text="@string/lamtheoca"
+                       android:textColor="@color/colorPrimary"
+                       android:textSize="16dp"/>
 
-                <Spinner
-                    android:id="@+id/spnCaLam"
-                    android:entries="@array/lstCaLam"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/normal50dp"
-                    android:layout_marginHorizontal="@dimen/normal10dp"
-                    android:background="@drawable/custom_edittext"
-                    android:padding="@dimen/normal10dp"
-                    android:textAlignment="center"/>
+                   <Spinner
+                       android:id="@+id/spnCaLam"
+                       android:entries="@array/lstCaLam"
+                       android:layout_width="match_parent"
+                       android:layout_height="@dimen/normal50dp"
+                       android:layout_marginHorizontal="@dimen/normal10dp"
+                       android:background="@drawable/custom_edittext"
+                       android:padding="@dimen/normal10dp"
+                       android:textAlignment="center"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginVertical="@dimen/normal10dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center"
+                       android:layout_marginVertical="@dimen/normal10dp"
+                       android:gravity="center"
+                       android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/btnCapNhatNV"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:layout_marginHorizontal="@dimen/normal20dp"
-                        android:layout_marginVertical="@dimen/normal15dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/custom_button"
-                        android:drawableLeft="@android:drawable/ic_menu_edit"
-                        android:padding="@dimen/normal10dp"
-                        android:text="@string/capnhat"
-                        android:textSize="16dp"/>
+                       <Button
+                           android:id="@+id/btnCapNhatNV"
+                           android:layout_width="0dp"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="right"
+                           android:layout_marginHorizontal="@dimen/normal20dp"
+                           android:layout_marginVertical="@dimen/normal15dp"
+                           android:layout_weight="1"
+                           android:background="@drawable/custom_button"
+                           android:drawableLeft="@android:drawable/ic_menu_edit"
+                           android:padding="@dimen/normal10dp"
+                           android:text="@string/capnhat"
+                           android:textSize="16dp"/>
 
-                    <Button
-                        android:id="@+id/btnXoaNV"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:layout_marginHorizontal="@dimen/normal20dp"
-                        android:layout_marginVertical="@dimen/normal15dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/custom_button"
-                        android:drawableLeft="@android:drawable/ic_menu_delete"
-                        android:padding="@dimen/normal10dp"
-                        android:text="@string/xoa"
-                        android:textSize="16dp"/>
-                </LinearLayout>
-            </LinearLayout>
+                       <Button
+                           android:id="@+id/btnXoaNV"
+                           android:layout_width="0dp"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="right"
+                           android:layout_marginHorizontal="@dimen/normal20dp"
+                           android:layout_marginVertical="@dimen/normal15dp"
+                           android:layout_weight="1"
+                           android:background="@drawable/custom_button"
+                           android:drawableLeft="@android:drawable/ic_menu_delete"
+                           android:padding="@dimen/normal10dp"
+                           android:text="@string/xoa"
+                           android:textSize="16dp"/>
+                   </LinearLayout>
+               </LinearLayout>
 
+           </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 

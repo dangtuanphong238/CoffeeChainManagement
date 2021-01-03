@@ -342,7 +342,7 @@ public class UpdateStaff extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        drawerLayout.closeDrawer(GravityCompat.START);
+//        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login

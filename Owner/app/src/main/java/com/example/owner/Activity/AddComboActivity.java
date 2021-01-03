@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -60,6 +61,7 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
     private StorageReference storageReference;
     private int total_price_combo = 0;
     private ArrayList<Combo> lstCombo = new ArrayList<>();
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,8 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
         getSizeListStaff();
 
         txtTitleActivity.setText("Thêm combo");
+        btnTaoCombo.setEnabled(false);
+
         btnMnu.setImageResource(R.drawable.ic_back_24);
         backPressed();
         getDataForListMeal();
@@ -138,6 +142,10 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
                     } else {
                         if(!tenCombo.isEmpty() && !uuDai.isEmpty())
                         {
+                            dialog = new ProgressDialog(AddComboActivity.this);
+                            dialog.setMessage("Upload in progress");
+                            dialog.show();
+
                             final int price = tinhGiaCombo(arrayList, uuDai);
                             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                             final DatabaseReference databaseReference = firebaseDatabase.getReference()
@@ -157,8 +165,10 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
                                     databaseReference.setValue(combo).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Toast.makeText(AddComboActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(AddComboActivity.this, "Thêm Combo thành công!", Toast.LENGTH_SHORT).show();
                                             clearInputFromUser();
+                                            dialog.cancel();
+
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
@@ -179,6 +189,9 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
                         }
                     }
 
+                }
+                else {
+                    Toast.makeText(AddComboActivity.this, "Vui lòng nhập đủ các trường!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -290,8 +303,20 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
 
     @Override
     public void saveArr(ArrayList<MealModel> arrayList) {
-        Log.d("abc", arrayList.toString());
+//        Log.d("abc", arrayList.toString());
         this.arrayList = arrayList;
+        if(arrayList.size()>0)
+        {
+            btnTaoCombo.setEnabled(true);
+//            btnTaoCombo.setBackgroundResource(R.drawable.custom_button);
+
+        }
+        else {
+            btnTaoCombo.setEnabled(false);
+//            btnTaoCombo.setBackgroundResource(R.drawable.background_corner_grey);
+
+        }
+
     }
 
 

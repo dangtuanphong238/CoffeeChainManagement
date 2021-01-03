@@ -213,13 +213,13 @@ public class ComboManagerActivity extends AppCompatActivity implements ReturnVal
                                 {
                                     //func delete combo here:
                                     deleteCombo(mealModel.getMeal_id());
-                                    Toast.makeText(ComboManagerActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ComboManagerActivity.this, "Xóa Thành Công!", Toast.LENGTH_SHORT).show();
                                 }
                                 break;
 
                             case DialogInterface.BUTTON_NEGATIVE:
                                 //No button clicked
-                                Toast.makeText(ComboManagerActivity.this, "No", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(ComboManagerActivity.this, "No", Toast.LENGTH_SHORT).show();
                                 break;
                         }
                     }
@@ -279,7 +279,7 @@ public class ComboManagerActivity extends AppCompatActivity implements ReturnVal
     @Override
     public void saveArr(ArrayList<MealModel> arrayList) {
         this.list = arrayList;
-        Log.d("ABCD", arrayList.size()+"");
+//        Log.d("ABCD", arrayList.size()+"");
         if(arrayList.size()>0)
         {
             btnDeleteCombo.setEnabled(true);
