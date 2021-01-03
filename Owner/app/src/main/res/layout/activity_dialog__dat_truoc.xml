@@ -77,10 +77,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-           android:layout_marginVertical="30dp"
+            android:layout_marginVertical="30dp"
             android:orientation="horizontal">
             <Button
-                android:layout_marginHorizontal="5dp"
+
+                android:layout_marginHorizontal="50dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -90,19 +91,7 @@
                 android:gravity="center"
                 android:background="@drawable/custom_button"
                 android:text="Xác Nhận" />
-            <Button
-                android:layout_marginHorizontal="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/btnXacnhanDB"
-                android:padding="20px"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:background="@drawable/custom_button"
-                android:text="Hủy Đặt" />
         </LinearLayout>
-
     </LinearLayout>
     <LinearLayout
         android:layout_gravity="top|right"

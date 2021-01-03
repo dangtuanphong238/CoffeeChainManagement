@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,9 +23,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class AcceptReserveDialog extends Dialog {
+public class Dialog_DatTruoc extends Dialog {
     EditText edtTenKH,edtSdtKH,edtTimeDB;
-    Button btnXacNhan,btnHuy,btnCancel;
+    Button btnXacNhan,btnHuy;
     TextView tvTextlayout;
     String areaID;
     String tableID;
@@ -36,7 +35,7 @@ public class AcceptReserveDialog extends Dialog {
     Context context;
     String url;
     String ownerID;
-    public AcceptReserveDialog(Context context, String url, String ownerID, String areaID, String tableID)
+    public Dialog_DatTruoc(Context context, String url, String ownerID, String areaID, String tableID)
     {
         super(context);
         this.context = context;
@@ -48,11 +47,46 @@ public class AcceptReserveDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dialog__dat_truoc);
+        setContentView(R.layout.activity_accept_reserve_dialog);
         anhXa();
+        btnXacNhan.setEnabled(true);
+        getData();
         setEvent();
     }
+    private void getData() {
+        try
+        {
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            String path = "OwnerManager/" + ownerID + "/QuanLyBanDatTruoc" +
+                    "/Area"+ areaID + "/" + tableID + "/ThongTinDatTruoc";
+            DatabaseReference myRef = firebaseDatabase.getReference(path);
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.getValue() != null)
+                    {
+                        InforDatTruoc inforDatTruoc = snapshot.getValue(InforDatTruoc.class);
+                        TenKH = inforDatTruoc.getTenKH();
+                        SdtKH = inforDatTruoc.getSdtKH();
+                        TimeDB = inforDatTruoc.getTimeDB();
+                        edtTenKH.setText(TenKH);
+                        edtSdtKH.setText(SdtKH);
+                        edtTimeDB.setText(TimeDB);
 
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        catch (Exception exception)
+        {
+            exception.getMessage();
+        }
+
+    }
     private void setEvent()
     {
         try {
@@ -87,6 +121,7 @@ public class AcceptReserveDialog extends Dialog {
                                         edtSdtKH.setText("");
                                         edtTimeDB.setText("");
                                         Toast.makeText(context, "Đặt trước thành công!", Toast.LENGTH_SHORT).show();
+                                        btnXacNhan.setEnabled(false);
                                         dismiss();
                                     }
                                 });
@@ -99,37 +134,6 @@ public class AcceptReserveDialog extends Dialog {
             btnHuy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    try
-                    {
-                        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                        String path = "OwnerManager/"+ownerID+"/QuanLyBan/Area"+areaID+"/"+tableID+"/tableStatus";
-                        DatabaseReference myRef = firebaseDatabase.getReference(path);
-                        myRef.setValue("0").addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
-                                String path = "OwnerManager/"+ownerID+"/QuanLyBanDatTruoc/Area"+areaID+"/"+tableID+"/ThongTinDatTruoc";
-                                DatabaseReference myRef1 = firebaseDatabase1.getReference(path);
-                                myRef1.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(context,"Hủy đặt trước thành công",Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                                dismiss();
-                                btnXacNhan.setEnabled(false);
-                            }
-                        });
-                    }catch (Exception exception)
-                    {
-                        exception.getMessage();
-                    }
-
-                }
-            });
-            btnCancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
                     dismiss();
                 }
             });
@@ -140,10 +144,8 @@ public class AcceptReserveDialog extends Dialog {
         }
 
     }
-
     private void anhXa() {
-        btnCancel = findViewById(R.id.btnCancel);
-        btnHuy = findViewById(R.id.btnXacnhanDB);
+        btnHuy = findViewById(R.id.btnCancel);
         btnXacNhan = findViewById(R.id.btnXacNhan);
         edtTenKH = findViewById(R.id.edtrsTenKH);
         edtSdtKH = findViewById(R.id.edtrsSdtKH);
