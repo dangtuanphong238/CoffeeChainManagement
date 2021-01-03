@@ -196,6 +196,7 @@ public class InfoStoreActivity extends AppCompatActivity {
                         edtDiaChi.setText(store.getDiachi());
                         edtSoGiayPhep.setText(store.getGiayphepkinhdoanh());
                         edtSDT.setText(store.getSdt());
+                        getImageFromFireStore();
                     } else {
                         Toast.makeText(InfoStoreActivity.this, "Vui lòng cập nhật thông tin", Toast.LENGTH_SHORT).show();
                     }
@@ -208,6 +209,24 @@ public class InfoStoreActivity extends AppCompatActivity {
             });
         } catch (Exception ex) {
             ex.getMessage();
+        }
+    }
+
+    private void getImageFromFireStore() {
+
+        try {
+            storageReference = FirebaseStorage.getInstance().getReferenceFromUrl
+                    ("gs://quanlychuoicoffee.appspot.com/FounderManager/ThongTinCuaHang/" + sOwnerID);
+            final File localFile = File.createTempFile("images","png");
+            storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                    imgCuaHang.setImageBitmap(bitmap);
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
