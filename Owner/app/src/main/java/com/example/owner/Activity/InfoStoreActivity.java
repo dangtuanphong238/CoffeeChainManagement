@@ -86,6 +86,7 @@ public class InfoStoreActivity extends AppCompatActivity {
     Bitmap bitmapDecoded;
     private TextView nav_head_name_store, nav_head_address_store;
     private ImageView nav_head_avatar;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,8 +98,7 @@ public class InfoStoreActivity extends AppCompatActivity {
         openMenu();
         getOwnerIDFromLocalStorage();
         getDatabase();
-//        headerNav();
-                //call function onClickItem
+        //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -123,25 +123,16 @@ public class InfoStoreActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.itemDoanhThu:
-                       Public_func.clickLogout(InfoStoreActivity.this, DoanhThuDate.class);
+                        Public_func.clickLogout(InfoStoreActivity.this, DoanhThuDate.class);
                         return true;
 
                     case R.id.itemInfoStore:
                         drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
-//
-//                    case R.id.itemThemMon:
-//                        Public_func.clickItemMenu(InfoStoreActivity.this, AddMonActivity.class);
-//                        return true;
-//
-//                    case R.id.itemThemNV:
-//                        Public_func.clickItemMenu(InfoStoreActivity.this, AddNhanVienActivity.class);
-//                        return true;
-//
-//                    case R.id.itemSPKho:
-//                        Public_func.clickItemMenu(InfoStoreActivity.this, AddHangHoaActivity.class);
-//                        return true;
 
+                    case R.id.itemQLCombo:
+                        Public_func.clickItemMenu(InfoStoreActivity.this, ComboManagerActivity.class);
+                        return true;
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -158,17 +149,29 @@ public class InfoStoreActivity extends AppCompatActivity {
 
     //header drawer:
     private void headerNav() {
+        //getImage:
         SharedPreferences ref = getSharedPreferences("bitmap_img", MODE_PRIVATE);
-
         String bitmap = ref.getString("imagePreferance", "");
-        System.out.println(bitmap);
         decodeBase64(bitmap);
+        //getInfo:
+        SharedPreferences refInfoStore = getSharedPreferences("datafile",MODE_PRIVATE);
+        String nameStore = refInfoStore.getString("name_store","");
+        String addressStore = refInfoStore.getString("address_store","");
+
+        //anhxa:
         View headerView = navigationView.getHeaderView(0);
         nav_head_avatar = headerView.findViewById(R.id.nav_head_avatar);
+        nav_head_name_store = headerView.findViewById(R.id.nav_head_name_store);
+        nav_head_address_store = headerView.findViewById(R.id.nav_head_address_store);
+
+        //setView:
+        nav_head_name_store.setText(nameStore);
+        nav_head_address_store.setText(addressStore);
+
         if (bitmapDecoded != null) {
             nav_head_avatar.setImageBitmap(bitmapDecoded);
         } else {
-            System.out.println("bitmapp null");
+//            System.out.println("bitmapp null");
         }
     }
 
@@ -179,34 +182,22 @@ public class InfoStoreActivity extends AppCompatActivity {
                 .decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
-
-//    private void headerNav(){
-//        View headerView = navigationView.getHeaderView(0);
-//        nav_head_avatar = headerView.findViewById(R.id.nav_head_avatar);
-//        if(bitmap != null)
-//        {
-//            nav_head_avatar.setImageBitmap(bitmap);
-//        }
-//        else {
-//            System.out.println("bitmapp null");
-//        }
-//    }
-
     private void getDatabase() {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("FounderManager").child("ThongTinCuaHang").child(sOwnerID);
-        try{
+        try {
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.exists()){
+                    if (snapshot.exists()) {
                         Store store = snapshot.getValue(Store.class);
                         lstStore.add(store);
                         edtTenCH.setText(store.getTencuahang());
                         edtDiaChi.setText(store.getDiachi());
                         edtSoGiayPhep.setText(store.getGiayphepkinhdoanh());
                         edtSDT.setText(store.getSdt());
-                    }else {
+                        getImageFromFireStore();
+                    } else {
                         Toast.makeText(InfoStoreActivity.this, "Vui lòng cập nhật thông tin", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -216,28 +207,26 @@ public class InfoStoreActivity extends AppCompatActivity {
                     Toast.makeText(InfoStoreActivity.this, "Chưa có thông tin về cửa hàng!", Toast.LENGTH_SHORT).show();
                 }
             });
-//            //getImage
-//            StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlychuoicoffee.appspot.com/FounderManager/ThongTinCuaHang/" + sOwnerID);
-//            System.out.println("MstoreR " + mStorageRef.toString());
-//            final File localFile = File.createTempFile("images","jpg");
-//            mStorageRef.getFile(localFile)
-//                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-//                            bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-//                            imgCuaHang.setImageBitmap(bitmap);
-//                            headerNav();
-//                        }
-//                    }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception e) {
-//                    Toast.makeText(InfoStoreActivity.this, "Chưa cập nhật ảnh", Toast.LENGTH_SHORT).show();
-//                    System.out.println("ex " + e.getMessage());
-//                }
-//            });
-        }catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.getMessage();
+        }
+    }
+
+    private void getImageFromFireStore() {
+
+        try {
+            storageReference = FirebaseStorage.getInstance().getReferenceFromUrl
+                    ("gs://quanlychuoicoffee.appspot.com/FounderManager/ThongTinCuaHang/" + sOwnerID);
+            final File localFile = File.createTempFile("images","png");
+            storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                    imgCuaHang.setImageBitmap(bitmap);
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -257,7 +246,6 @@ public class InfoStoreActivity extends AppCompatActivity {
                     dialog = new ProgressDialog(InfoStoreActivity.this);
                     dialog.setMessage("Upload in progress");
                     dialog.show();
-//                    storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(sOwnerID).child("ThongTinCuaHang").child(sOwnerID);
                     storageReference = FirebaseStorage.getInstance().getReference().child("FounderManager").child("ThongTinCuaHang").child(sOwnerID);
 
                     //Chuyen duoi file
@@ -268,7 +256,6 @@ public class InfoStoreActivity extends AppCompatActivity {
                     storageReference.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            Store store = new Store(tenCH, diaChi, giayPhep, sdt, sOwnerID, "");
                             Store store = new Store(tenCH, diaChi, giayPhep, sdt, sOwnerID, "", sOwnerID);
 
                             databaseReference.setValue(store);
@@ -279,7 +266,6 @@ public class InfoStoreActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(InfoStoreActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                            System.out.println(e.getMessage().toString());
                         }
                     });
 
@@ -302,12 +288,6 @@ public class InfoStoreActivity extends AppCompatActivity {
         });
     }
 
-//    private String getFileExtension(Uri uri) {
-//        ContentResolver contentResolver = getContentResolver();
-//        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-//        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-//    }
-
     private void openFileChoose() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -327,7 +307,7 @@ public class InfoStoreActivity extends AppCompatActivity {
                 && data != null && data.getData() != null) {
             mImageUri = data.getData();
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),mImageUri);
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mImageUri);
                 imgCuaHang.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -342,7 +322,6 @@ public class InfoStoreActivity extends AppCompatActivity {
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        System.out.println(sharedPreferences.getString(OWNERID, "null"));
         sOwnerID = sharedPreferences.getString(OWNERID, "null");
     }
 

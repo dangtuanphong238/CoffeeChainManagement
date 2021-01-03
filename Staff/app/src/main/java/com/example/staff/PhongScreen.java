@@ -33,10 +33,12 @@ public class PhongScreen extends AppCompatActivity implements RecyclerviewClick 
     RecyclerView recyclerView;
 
 //    Ban ban = new Ban();
-public final static int BLANK = 0;
+    public final static int BLANK = 0;
     public final static int BOOK = 1;
     public final static int HAVING = 2;
     public final static int ERROR = 3;
+    public final static int LOADINGBOOK = 4;
+    public final static int LOADINGERROR = 5;
     TextView txtTenPhong;
     private FirebaseDatabase database;
     DatabaseReference databaseReference;
@@ -114,8 +116,6 @@ public final static int BLANK = 0;
         System.out.println(sharedPreferences.getString(OWNERID, "null"));
         sOwnerID = sharedPreferences.getString(OWNERID, "null");
     }
-
-
     @Override
     public void onItemClick(int position) {
 //        Intent intent = new Intent(PhongScreen.this,OderActivity.class);
@@ -135,8 +135,6 @@ public final static int BLANK = 0;
         dialog.show();
     }
     void checkTable(int position, String ownerID) {
-
-
         if (lstPhong.get(position).getTableStatus().equals("0")) {
             //When table blank
             //Show menu
@@ -163,6 +161,11 @@ public final static int BLANK = 0;
             //When be error
             //Toast notification
             UpdateTableDialog dialog = new UpdateTableDialog(this, url, sOwnerID, title, "Table"+lstPhong.get(position).getID(), lstPhong.get(position).getTableStatus());
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.show();
+        }
+        if(lstPhong.get(position).getTableStatus().equals("4")){
+            OrderDialog dialog = new OrderDialog(this, sOwnerID, title, "Table" + lstPhong.get(position).getID());
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
         }

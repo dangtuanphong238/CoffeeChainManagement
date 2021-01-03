@@ -10,193 +10,197 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FE9B58"
         android:orientation="vertical">
 
         <include layout="@layout/toolbar" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="50dp"
-            android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginVertical="5dp"
-                android:paddingHorizontal="@dimen/normal10dp"
-                android:text="@string/tenmonan"
-                android:textColor="@color/black"
-                android:textSize="20sp"></TextView>
-
-            <EditText
-                android:id="@+id/edtTenMonAn"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:layout_gravity="right"
-                android:gravity="start"
-                android:layout_marginHorizontal="@dimen/normal10dp"
-                android:layout_marginVertical="@dimen/normal5dp"
-                android:background="@drawable/background_corner_edittext"
-                android:paddingHorizontal="@dimen/normal20dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginVertical="@dimen/normal5dp"
-                android:paddingHorizontal="@dimen/normal10dp"
-                android:text="@string/phanloai"
-                android:textColor="@color/black"
-                android:textSize="20sp"></TextView>
+            <include layout="@layout/layout_background_view" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:textSize="@dimen/normal20dp"
-                    android:layout_height="match_parent"/>
-                <LinearLayout
-                    android:gravity="end|center_vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
-                    <Spinner
-                        android:id="@+id/spnCategory"
-                        android:layout_width="match_parent"
-                        android:paddingRight="@dimen/normal10dp"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_marginTop="50dp"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginVertical="@dimen/normal5dp"
-                android:paddingHorizontal="@dimen/normal10dp"
-                android:text="@string/gia"
-                android:textColor="@color/black"
-                android:textSize="20sp"></TextView>
+                <EditText
+                    android:hint="@string/tenmonan"
+                    android:id="@+id/edtTenMonAn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/normal50dp"
+                    android:layout_gravity="right"
+                    android:layout_marginHorizontal="@dimen/normal10dp"
+                    android:layout_marginVertical="@dimen/normal5dp"
+                    android:background="@drawable/edit_text_main"
+                    android:gravity="start"
+                    android:paddingHorizontal="@dimen/normal20dp" />
 
-            <EditText
-                android:id="@+id/edtGiaMonAn"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:layout_gravity="right"
-                android:gravity="left"
-                android:layout_marginHorizontal="@dimen/normal10dp"
-                android:layout_marginVertical="@dimen/normal5dp"
-                android:inputType="number"
-                android:background="@drawable/background_corner_edittext"
-                android:paddingHorizontal="@dimen/normal20dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginVertical="@dimen/normal5dp"
-                android:paddingHorizontal="@dimen/normal10dp"
-                android:text="@string/chonanh"
-                android:textColor="@color/black"
-                android:textSize="@dimen/normal20dp" />
-
-            <LinearLayout
-                android:layout_marginTop="@dimen/normal20dp"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginVertical="@dimen/normal5dp"
+                    android:paddingHorizontal="@dimen/normal10dp"
+                    android:text="@string/phanloai"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"></TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:layout_weight="2">
-                    <ImageView
-                        android:layout_gravity="center_horizontal"
-                        android:id="@+id/imgPictureMeal"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        app:srcCompat="@drawable/noimage"/>
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/normal20dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="end|center_vertical">
+
+                        <Spinner
+                            android:id="@+id/spnCategory"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:paddingRight="@dimen/normal10dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginVertical="@dimen/normal5dp"
+                    android:paddingHorizontal="@dimen/normal10dp"
+                    android:text="@string/gia"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"></TextView>
+
+                <EditText
+                    android:id="@+id/edtGiaMonAn"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:layout_marginHorizontal="@dimen/normal10dp"
+                    android:layout_marginVertical="@dimen/normal5dp"
+                    android:background="@drawable/background_corner_edittext"
+                    android:gravity="left"
+                    android:inputType="number"
+                    android:paddingHorizontal="@dimen/normal20dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginVertical="@dimen/normal5dp"
+                    android:paddingHorizontal="@dimen/normal10dp"
+                    android:text="@string/chonanh"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/normal20dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="@dimen/normal20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/imgPictureMeal"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_gravity="center_horizontal"
+                            app:srcCompat="@drawable/noimage" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/normal5dp"
+                        android:layout_weight="1"
+                        android:gravity="right">
+
+                        <ImageButton
+                            android:id="@+id/btnCamera"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_camera_24" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/normal5dp"
+                        android:layout_weight="1">
+
+                        <ImageButton
+                            android:id="@+id/btnGallery"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_photo_24" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_margin="@dimen/normal20dp"
                     android:gravity="right"
-                    android:layout_marginRight="@dimen/normal5dp"
-                    android:layout_weight="1">
-                    <ImageButton
-                        android:id="@+id/btnCamera"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/normal10dp">
+
+                    <Button
+                        android:id="@+id/btnAdd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_camera_24"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_marginLeft="@dimen/normal5dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <ImageButton
-                        android:id="@+id/btnGallery"
+                        android:layout_marginHorizontal="@dimen/normal5dp"
+                        android:background="@drawable/background_corner_grey"
+                        android:text="Thêm"
+                        android:visibility="visible"></Button>
+
+                    <Button
+                        android:id="@+id/btnUpdate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_photo_24"/>
+                        android:layout_marginHorizontal="@dimen/normal5dp"
+                        android:background="@drawable/background_corner_grey"
+                        android:text="@string/capnhat"
+                        android:visibility="gone"></Button>
+
+                    <Button
+                        android:id="@+id/btnRemove"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normal5dp"
+                        android:background="@drawable/background_corner_grey"
+                        android:text="@string/xoa"
+                        android:visibility="gone"></Button>
                 </LinearLayout>
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_margin="@dimen/normal20dp"
-                android:gravity="right"
-                android:orientation="horizontal"
-                android:padding="@dimen/normal10dp">
-
-                <Button
-                    android:id="@+id/btnAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/normal5dp"
-                    android:background="@drawable/custom_button"
-                    android:text="Thêm"
-                    android:visibility="visible"></Button>
-
-                <Button
-                    android:id="@+id/btnUpdate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/normal5dp"
-                    android:background="@drawable/custom_button"
-                    android:text="@string/capnhat"
-                    android:visibility="gone"></Button>
-
-                <Button
-                    android:id="@+id/btnRemove"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/normal5dp"
-                    android:background="@drawable/custom_button"
-                    android:text="@string/xoa"
-                    android:visibility="gone"></Button>
-            </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 
-<!--    <com.google.android.material.navigation.NavigationView-->
-<!--        android:id="@+id/navDrawerMenu"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_gravity="start"-->
-<!--        android:fitsSystemWindows="true"-->
-<!--        app:menu="@menu/main_actions"/>-->
+    <!--    <com.google.android.material.navigation.NavigationView-->
+    <!--        android:id="@+id/navDrawerMenu"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:layout_gravity="start"-->
+    <!--        android:fitsSystemWindows="true"-->
+    <!--        app:menu="@menu/main_actions"/>-->
 </androidx.drawerlayout.widget.DrawerLayout>

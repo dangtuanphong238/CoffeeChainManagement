@@ -1,4 +1,4 @@
-package com.example.founder;
+package com.example.founder.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.founder.Interfaces.ItemClickListener;
 import com.example.founder.Public.Public_func;
+import com.example.founder.R;
 import com.example.founder.adapter.RecyclerViewAdapter;
 import com.example.founder.model.InforStore;
 import com.google.android.material.navigation.NavigationView;
@@ -58,13 +59,13 @@ public class ListCuaHangActivity extends AppCompatActivity implements ItemClickL
                 switch (item.getItemId()) {
 
                     case R.id.it1:
-                        Public_func.clickItemMenu(ListCuaHangActivity.this, ActivityDoanhThu.class);
+                        Public_func.clickItemMenu(ListCuaHangActivity.this, TongDoanhThuActivity.class);
                         return true;
                     case R.id.danh_sach_cua_hang:
                         recreate();
                         return true;
                     case R.id.tao_tai_khoan_owner:
-                        Public_func.clickItemMenu(ListCuaHangActivity.this, ThemKhuVuc.class);
+                        Public_func.clickItemMenu(ListCuaHangActivity.this, ThemTaiKhoanKhuVucActivity.class);
                         return true;
                     case R.id.thong_bao:
                         Public_func.clickItemMenu(ListCuaHangActivity.this, ChooseChatActivity.class);

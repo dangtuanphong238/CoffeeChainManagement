@@ -9,22 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashScreen">
+        <activity android:name=".Activity.ManagerLocationOwnerActivity"></activity>
+        <activity android:name=".Activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".InfoStoreActivity" />
-        <activity android:name=".ActivityDoanhThu" android:screenOrientation="landscape"/>
-        <activity android:name=".ListCuaHangActivity" />
-        <activity android:name=".ThemKhuVuc" />
-        <activity android:name=".LoginActivity">
-
-        </activity>
-        <activity android:name=".NotificationActivity"></activity>
-        <activity android:name=".ChooseChatActivity"></activity>
+        <activity android:name=".Activity.InfoStoreActivity" />
+        <activity
+            android:name=".Activity.TongDoanhThuActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".Activity.ListCuaHangActivity" />
+        <activity android:name=".Activity.ThemTaiKhoanKhuVucActivity" />
+        <activity android:name=".Activity.LoginActivity"></activity>
+        <activity android:name=".Activity.NotificationActivity" />
+        <activity android:name=".Activity.ChooseChatActivity" />
     </application>
 
 </manifest>

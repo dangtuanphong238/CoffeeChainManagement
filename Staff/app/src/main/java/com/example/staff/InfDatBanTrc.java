@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.staff.Dialog.UpdateTableDialog;
 import com.example.staff.Model.InforDatTruoc;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,6 +25,7 @@ public class InfDatBanTrc extends AppCompatActivity {
     EditText edtTenKH,edtSdtKH,edtTimeDB;
     String sOwnerID;
     Button btnXacNhan;
+    TextView tvTextlayout;
     String areaID;
      String tableID;
     String status;
@@ -36,32 +39,27 @@ public class InfDatBanTrc extends AppCompatActivity {
         setContentView(R.layout.activity_inf_dat_ban_trc);
         anhXa();
         getOwnerIDFromLocalStorage();
+        btnXacNhan.setEnabled(true);
         setEvent();
     }
 
     private void setEvent()
     {
-        Intent intent = getIntent();
-        areaID = intent.getStringExtra("AREAID");
-        tableID = intent.getStringExtra("TABLEID");
-        status = intent.getStringExtra("STATUS");
-        TenKH = edtTenKH.getText().toString();
-        SdtKH = edtSdtKH.getText().toString();
-        TimeDB = edtTimeDB.getText().toString();
+       tvTextlayout.setText(tableID);
         btnXacNhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TenKH.equals("") && !SdtKH.equals("") && !TimeDB.equals(""))
+                if (edtTenKH.getText().toString().equals("") || edtSdtKH.getText().toString().equals("") ||
+                        edtTimeDB.getText().toString().equals(""))
                 {
                     Toast.makeText(InfDatBanTrc.this, "Bạn phải nhập thông tin!", Toast.LENGTH_SHORT).show();
-
                 }
                else
                    {
                        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                        String path = "OwnerManager/" + sOwnerID + "/QuanLyBan" + "/"+ areaID + "/" +tableID + "/tableStatus";
                        DatabaseReference myRef = firebaseDatabase.getReference(path);
-                       myRef.setValue("1").addOnCompleteListener(new OnCompleteListener<Void>() {
+                       myRef.setValue("4").addOnCompleteListener(new OnCompleteListener<Void>() {
                            @Override
                            public void onComplete(@NonNull Task<Void> task) {
                                InforDatTruoc infDatBanTrc = new InforDatTruoc(edtTenKH.getText().toString(),edtSdtKH.getText().toString()
@@ -73,7 +71,11 @@ public class InfDatBanTrc extends AppCompatActivity {
                             myRef1.setValue(infDatBanTrc).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
+                                    edtTenKH.setText("");
+                                    edtSdtKH.setText("");
+                                    edtTimeDB.setText("");
                                     Toast.makeText(InfDatBanTrc.this, "Đặt trước thành công!", Toast.LENGTH_SHORT).show();
+                                    btnXacNhan.setEnabled(false);
                                 }
                             });
                            }
@@ -88,8 +90,15 @@ public class InfDatBanTrc extends AppCompatActivity {
         btnXacNhan = findViewById(R.id.btnXacnhanDB);
         edtTenKH = findViewById(R.id.edtrsTenKH);
         edtSdtKH = findViewById(R.id.edtrsSdtKH);
+        tvTextlayout = findViewById(R.id.tablayout_id);
         edtTimeDB = findViewById(R.id.edtrsTimeDatBan);
-
+        Intent intent = getIntent();
+        areaID = intent.getStringExtra("AREAID");
+        tableID = intent.getStringExtra("TABLEID");
+        status = intent.getStringExtra("STATUS");
+        TenKH = edtTenKH.getText().toString();
+        SdtKH = edtSdtKH.getText().toString();
+        TimeDB = edtTimeDB.getText().toString();
         }
 
 

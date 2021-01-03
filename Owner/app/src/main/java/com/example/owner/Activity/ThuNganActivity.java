@@ -98,19 +98,9 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
                     case R.id.itemInfoStore:
                         Public_func.clickItemMenu(ThuNganActivity.this, InfoStoreActivity.class);
                         return true;
-
-//                    case R.id.itemThemMon:
-//                        Public_func.clickItemMenu(ThuNganActivity.this, AddMonActivity.class);
-//                        return true;
-//
-//                    case R.id.itemThemNV:
-//                        Public_func.clickItemMenu(ThuNganActivity.this, AddNhanVienActivity.class);
-//                        return true;
-//
-//                    case R.id.itemSPKho:
-//                        Public_func.clickItemMenu(ThuNganActivity.this, AddHangHoaActivity.class);
-//                        return true;
-
+                    case R.id.itemQLCombo:
+                        Public_func.clickItemMenu(ThuNganActivity.this, ComboManagerActivity.class);
+                        return true;
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -130,17 +120,29 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
 
     //header drawer:
     private void headerNav() {
+        //getImage:
         SharedPreferences ref = getSharedPreferences("bitmap_img", MODE_PRIVATE);
-
         String bitmap = ref.getString("imagePreferance", "");
-        System.out.println(bitmap);
         decodeBase64(bitmap);
+        //getInfo:
+        SharedPreferences refInfoStore = getSharedPreferences("datafile",MODE_PRIVATE);
+        String nameStore = refInfoStore.getString("name_store","");
+        String addressStore = refInfoStore.getString("address_store","");
+
+        //anhxa:
         View headerView = navigationView.getHeaderView(0);
         nav_head_avatar = headerView.findViewById(R.id.nav_head_avatar);
+        nav_head_name_store = headerView.findViewById(R.id.nav_head_name_store);
+        nav_head_address_store = headerView.findViewById(R.id.nav_head_address_store);
+
+        //setView:
+        nav_head_name_store.setText(nameStore);
+        nav_head_address_store.setText(addressStore);
+
         if (bitmapDecoded != null) {
             nav_head_avatar.setImageBitmap(bitmapDecoded);
         } else {
-            System.out.println("bitmapp null");
+//            System.out.println("bitmapp null");
         }
     }
 
@@ -212,7 +214,6 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
                     }
                 }catch (Exception ex){
                     Log.w("PROBLEM","get data from branch table active have problem");
-                    System.out.println("get data from branch table active have problem");
                 }
 
                 ThuNganAdapter adapter = new ThuNganAdapter( list, ThuNganActivity.this, ThuNganActivity.this,path);
@@ -224,7 +225,6 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println("ERROR Load data from branch table active");
             }
         });
     }

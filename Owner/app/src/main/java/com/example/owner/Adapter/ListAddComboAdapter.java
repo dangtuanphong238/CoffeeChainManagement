@@ -79,7 +79,6 @@ public class ListAddComboAdapter extends RecyclerView.Adapter<ListAddComboAdapte
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
             //TODO: return value path image
             StorageReference riversRef = mStorageRef.child("/"+path+"/"+id_image+".png");
-            System.out.println("TEST:"+riversRef.toString());
             riversRef.getFile(localFile)
                     .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override

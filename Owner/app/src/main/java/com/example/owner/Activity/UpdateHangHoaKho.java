@@ -140,13 +140,11 @@ public class UpdateHangHoaKho extends AppCompatActivity  {
     public void getSpinnerID() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF,MODE_PRIVATE);
-        System.out.println(sharedPreferences.getString(SPINNERID,"null"));
         spinnerID = sharedPreferences.getString(SPINNERID,"null");
     }
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        System.out.println(sharedPreferences.getString(OWNERID,"null"));
         sOwnerID = sharedPreferences.getString(OWNERID,"null");
     }
     public void backPressed() {

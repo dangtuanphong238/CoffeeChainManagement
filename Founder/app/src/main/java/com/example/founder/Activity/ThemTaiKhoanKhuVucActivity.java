@@ -1,4 +1,4 @@
-package com.example.founder;
+package com.example.founder.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.founder.Public.Public_func;
+import com.example.founder.R;
 import com.example.founder.adapter.AddTableAdapter;
 import com.example.founder.model.Area;
 import com.example.founder.model.OnwerAccount;
@@ -34,7 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ThemKhuVuc extends AppCompatActivity {
+public class ThemTaiKhoanKhuVucActivity extends AppCompatActivity {
     private AddTableAdapter adapter;
     private ArrayList arrList = new ArrayList();
     private RecyclerView recyclerView;
@@ -59,30 +60,30 @@ public class ThemKhuVuc extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.it1:
-                        Public_func.clickItemMenu(ThemKhuVuc.this, ActivityDoanhThu.class);
+                        Public_func.clickItemMenu(ThemTaiKhoanKhuVucActivity.this, TongDoanhThuActivity.class);
                         return true;
                     case R.id.danh_sach_cua_hang:
-                        Public_func.clickItemMenu(ThemKhuVuc.this, ListCuaHangActivity.class);
+                        Public_func.clickItemMenu(ThemTaiKhoanKhuVucActivity.this, ListCuaHangActivity.class);
                         return true;
                     case R.id.tao_tai_khoan_owner:
                         recreate();
                         return true;
                     case R.id.thong_bao:
-                        Public_func.clickItemMenu(ThemKhuVuc.this, ChooseChatActivity.class);
+                        Public_func.clickItemMenu(ThemTaiKhoanKhuVucActivity.this, ChooseChatActivity.class);
                         return true;
                     case R.id.log_out:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
-                        Public_func.clickLogout(ThemKhuVuc.this, LoginActivity.class);
+                        Public_func.clickLogout(ThemTaiKhoanKhuVucActivity.this, LoginActivity.class);
                         return true;
                 }
                 return true;
             }
         });
 
-        adapter = new AddTableAdapter(ThemKhuVuc.this ,R.layout.cus_lv_them_ban ,arrList);
+        adapter = new AddTableAdapter(ThemTaiKhoanKhuVucActivity.this ,R.layout.cus_lv_them_ban ,arrList);
 
         edtSoKhuVuc.addTextChangedListener(new TextWatcher() {
             @Override
@@ -130,7 +131,7 @@ public class ThemKhuVuc extends AppCompatActivity {
                 for (OnwerAccount onwerAccount : lstOwnerAccount) {
 
                     if (onwerAccount.user.equals(user)) {
-                        Toast.makeText(ThemKhuVuc.this, "Tài khoản đã tồn tại!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ThemTaiKhoanKhuVucActivity.this, "Tài khoản đã tồn tại!", Toast.LENGTH_SHORT).show();
                         isExist = true;
                     }
                 }
@@ -163,12 +164,12 @@ public class ThemKhuVuc extends AppCompatActivity {
                 @Override
                 public void onSuccess(Void aVoid) {
                     AddArea(arrayList);
-                    Toast.makeText(ThemKhuVuc.this, "Thêm Thành Công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ThemTaiKhoanKhuVucActivity.this, "Thêm Thành Công", Toast.LENGTH_SHORT).show();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(ThemKhuVuc.this, "Thêm Thất Bại", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ThemTaiKhoanKhuVucActivity.this, "Thêm Thất Bại", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -198,7 +199,7 @@ public class ThemKhuVuc extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(ThemKhuVuc.this, "Thêm Thất Bại", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ThemTaiKhoanKhuVucActivity.this, "Thêm Thất Bại", Toast.LENGTH_SHORT).show();
                 }
             });
 

@@ -31,7 +31,6 @@ public class ThuNganAdapter extends RecyclerView.Adapter<ThuNganAdapter.ViewHold
     public ThuNganAdapter(ArrayList<AreaActiveModel> list, Context context, RecyclerviewClick recyclerviewClick, String path) {
         this.list = list;
         this.context = context;
-        System.out.println("List Area active: "+list);
         this.recyclerviewClick = recyclerviewClick;
         this.path = path;
     }

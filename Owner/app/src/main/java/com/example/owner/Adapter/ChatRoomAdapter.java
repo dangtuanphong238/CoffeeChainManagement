@@ -1,5 +1,6 @@
 package com.example.owner.Adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +34,14 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.cus_list_chat_room,parent,false);
         View view1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.cus_list_chat_room_right,parent,false);
-        System.out.println("view type " + pos);
         if(myID.equals(listData.get(pos).getUserID()))
         {
+            Log.d("a", "0 "+ listData.get(pos).getUserID());
             return new ViewHolder(view1);
 
         }else {
+            Log.d("a", "1 "+ listData.get(pos).getUserID());
+
             return new ViewHolder(view);
         }
     }
@@ -64,7 +67,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ViewHo
         Message message = listData.get(position);
 //        holder.imgUser.setImageResource(R.drawable.noimage);
         holder.txtMessage.setText(message.getMessageText());
-        holder.txtUsername.setText(message.getUserID());
+        holder.txtUsername.setText(message.getUserID() + " - " + message.getUsername());
         holder.txtDatetime.setText(message.getMessageTime());
     }
 

@@ -67,7 +67,6 @@ public class UpdateStaff extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
-//    private ArrayList<Staff> lstStaff = new ArrayList<>();
     private ProgressDialog dialog;
 
     @Override
@@ -136,7 +135,7 @@ public class UpdateStaff extends AppCompatActivity {
         try {
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlychuoicoffee.appspot.com/OwnerManager/"
                     + sOwnerID + "/QuanLyNhanVien/" + staff.getImgName());
-            final File localFile = File.createTempFile("images","jpg");
+            final File localFile = File.createTempFile("images","png");
             mStorageRef.getFile(localFile)
                     .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override
@@ -166,17 +165,9 @@ public class UpdateStaff extends AppCompatActivity {
                 final String matKhau = edtMatKhau.getText().toString();
                 final String sdt = edtSDT.getText().toString();
                 final String soCMND = edtSoCMND.getText().toString();
-//                boolean isExist = false;
                 final String caLam = spnCaLam.getSelectedItem().toString();
                 final String chucVu = spnChucVu.getSelectedItem().toString();
-//                for (Staff staff : lstStaff) {
-//                    if (staff.user.equals(tenDangNhap)) {
-//                        Toast.makeText(UpdateStaff.this, "Tài khoản đã tồn tại!", Toast.LENGTH_SHORT).show();
-//                        isExist = true;
-//                    }
-//                }
 
-//                if (isExist == false) {
                     if (bitmap != null && !tenNV.isEmpty() && !tenDangNhap.isEmpty() && !matKhau.isEmpty() && !sdt.isEmpty() && !soCMND.isEmpty()) {
                         dialog = new ProgressDialog(UpdateStaff.this);
                         dialog.setMessage("Upload in progress");
@@ -201,7 +192,6 @@ public class UpdateStaff extends AppCompatActivity {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Toast.makeText(UpdateStaff.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    System.out.println(e.getMessage().toString());
                                 }
                             });
                         }catch (Exception ex)
@@ -280,27 +270,6 @@ public class UpdateStaff extends AppCompatActivity {
             }
         });
     }
-//    private void getSizeListStaff() //hàm này để lấy size của list nhânvieen để tự động sinh id theo list.size()
-//    {
-//        firebaseDatabase = FirebaseDatabase.getInstance();
-//        databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID);
-//        databaseReference.child("QuanLyNhanVien").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                lstStaff.clear();
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                    Staff staff1 = dataSnapshot.getValue(Staff.class);
-//                    lstStaff.add(staff1);
-//                    System.out.println("lstStaff " + lstStaff.size());
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
 
     private void openFileChoose() {
         Intent intent = new Intent();
@@ -373,13 +342,12 @@ public class UpdateStaff extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        drawerLayout.closeDrawer(GravityCompat.START);
+//        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        System.out.println(sharedPreferences.getString(OWNERID, "null"));
         sOwnerID = sharedPreferences.getString(OWNERID, "null");
     }
 }
