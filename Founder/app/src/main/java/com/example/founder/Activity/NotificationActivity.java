@@ -124,7 +124,8 @@ public class NotificationActivity extends AppCompatActivity {
                         String messageText = dataSnapshot.child("messageText").getValue().toString();
                         String messageTime = dataSnapshot.child("messageTime").getValue().toString();
                         String userID = dataSnapshot.child("userID").getValue().toString();
-                        Message message = new Message(userID, messageText, messageTime);
+                        String username = dataSnapshot.child("username").getValue().toString();
+                        Message message = new Message(userID, messageText, messageTime, username);
                         arrMessage.add(message);
 //                        System.out.println("message " + message.getMessageText());
                     }
@@ -165,8 +166,8 @@ public class NotificationActivity extends AppCompatActivity {
                         String messageText = dataSnapshot.child("messageText").getValue().toString();
                         String messageTime = dataSnapshot.child("messageTime").getValue().toString();
                         String userID = dataSnapshot.child("userID").getValue().toString();
-                        Message message = new Message(userID, messageText, messageTime);
-                        arrMessage.add(message);
+                        String username = dataSnapshot.child("username").getValue().toString();
+                        Message message = new Message(userID, messageText, messageTime, username);                        arrMessage.add(message);
                         System.out.println("message " + message.getMessageText());
                     }
                     chatRoomAdapter = new ChatRoomAdapter(arrMessage, founderID);
@@ -232,7 +233,7 @@ public class NotificationActivity extends AppCompatActivity {
                         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
-                        Message message = new Message(founderID, messageText, currentDate + " " + currentTime);
+                        Message message = new Message(founderID, messageText, currentDate + " " + currentTime,"Founder 0");
                         firebaseDatabase = FirebaseDatabase.getInstance();
                         databaseReference = firebaseDatabase.getReference();
                         databaseReference.child("FounderManager").child("FounderAccount").child(founderID).
@@ -267,7 +268,7 @@ public class NotificationActivity extends AppCompatActivity {
                         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
-                        Message message = new Message(founderID, messageText, currentDate + " " + currentTime);
+                        Message message = new Message(founderID, messageText, currentDate + " " + currentTime,"Founder 0");
                         firebaseDatabase = FirebaseDatabase.getInstance();
                         databaseReference = firebaseDatabase.getReference();
                         databaseReference.child("FounderManager").child("FounderAccount").child(founderID)
