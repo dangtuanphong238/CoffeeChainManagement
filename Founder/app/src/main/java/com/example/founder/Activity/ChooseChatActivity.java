@@ -1,4 +1,4 @@
-package com.example.founder;
+package com.example.founder.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +18,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.founder.Public.Public_func;
+import com.example.founder.R;
 import com.example.founder.adapter.ChatOneToOneAdapter;
 import com.example.founder.model.Owner;
 import com.google.android.material.navigation.NavigationView;
@@ -65,13 +66,13 @@ public class ChooseChatActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
 
                     case R.id.it1:
-                        Public_func.clickItemMenu(ChooseChatActivity.this, ActivityDoanhThu.class);
+                        Public_func.clickItemMenu(ChooseChatActivity.this, TongDoanhThuActivity.class);
                         return true;
                     case R.id.danh_sach_cua_hang:
                         Public_func.clickItemMenu(ChooseChatActivity.this, ListCuaHangActivity.class);
                         return true;
                     case R.id.tao_tai_khoan_owner:
-                        Public_func.clickItemMenu(ChooseChatActivity.this, ThemKhuVuc.class);
+                        Public_func.clickItemMenu(ChooseChatActivity.this, ThemTaiKhoanKhuVucActivity.class);
                         return true;
                     case R.id.thong_bao:
                         recreate();
