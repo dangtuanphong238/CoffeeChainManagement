@@ -45,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
     private ImageButton btnEye;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
+    public static final String OWNERNAME = "ownerName";
+
     private boolean isShow = true;
 
 
@@ -124,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                     if(snapshot.exists()) {
                         Store store = snapshot.getValue(Store.class);
                         lstStore.add(store);
+                        saveInfoStoreToLocalStorage(store.getTencuahang(),store.getDiachi());
                     }
                 }
 
@@ -134,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
             });
             //getImage
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlychuoicoffee.appspot.com/FounderManager/ThongTinCuaHang/" + sOwnerID);
-            final File localFile = File.createTempFile("images","jpg");
+            final File localFile = File.createTempFile("images","png");
             mStorageRef.getFile(localFile)
                     .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override
@@ -152,6 +155,13 @@ public class LoginActivity extends AppCompatActivity {
         {
             ex.getMessage();
         }
+    }
+
+    private void saveInfoStoreToLocalStorage(String nameStore, String addressStore) {
+        SharedPreferences.Editor editor = getSharedPreferences("datafile", MODE_PRIVATE).edit();
+        editor.putString("name_store", nameStore);
+        editor.putString("address_store", addressStore);
+        editor.commit();
     }
 
     private void saveImageToStogare(Bitmap image){
@@ -173,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
                 for (Owner owner : lstOwners) {
                     if (owner.user.equals(edtUser.getText().toString()) && owner.pass.equals(edtPass.getText().toString())) {
                         isSuccess = true;
-                        saveOwnerIDToLocalStorage(owner.id);
+                        saveOwnerIDToLocalStorage(owner.id,owner.user);
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("username",edtUser.getText().toString());
@@ -202,10 +212,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void saveOwnerIDToLocalStorage(String ownerKey){
+    private void saveOwnerIDToLocalStorage(String ownerKey,String ownerName){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(OWNERID,ownerKey);
+        editor.putString(OWNERNAME,ownerName);
         editor.apply();
     }
 

@@ -135,7 +135,7 @@ public class UpdateStaff extends AppCompatActivity {
         try {
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlychuoicoffee.appspot.com/OwnerManager/"
                     + sOwnerID + "/QuanLyNhanVien/" + staff.getImgName());
-            final File localFile = File.createTempFile("images","jpg");
+            final File localFile = File.createTempFile("images","png");
             mStorageRef.getFile(localFile)
                     .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override
@@ -342,7 +342,7 @@ public class UpdateStaff extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        drawerLayout.closeDrawer(GravityCompat.START);
+//        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login

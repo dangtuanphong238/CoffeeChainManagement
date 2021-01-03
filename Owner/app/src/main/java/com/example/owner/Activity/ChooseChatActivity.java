@@ -115,12 +115,25 @@ public class ChooseChatActivity extends AppCompatActivity {
     }
     //header drawer:
     private void headerNav() {
+        //getImage:
         SharedPreferences ref = getSharedPreferences("bitmap_img", MODE_PRIVATE);
-
         String bitmap = ref.getString("imagePreferance", "");
         decodeBase64(bitmap);
+        //getInfo:
+        SharedPreferences refInfoStore = getSharedPreferences("datafile",MODE_PRIVATE);
+        String nameStore = refInfoStore.getString("name_store","");
+        String addressStore = refInfoStore.getString("address_store","");
+
+        //anhxa:
         View headerView = navigationView.getHeaderView(0);
         nav_head_avatar = headerView.findViewById(R.id.nav_head_avatar);
+        nav_head_name_store = headerView.findViewById(R.id.nav_head_name_store);
+        nav_head_address_store = headerView.findViewById(R.id.nav_head_address_store);
+
+        //setView:
+        nav_head_name_store.setText(nameStore);
+        nav_head_address_store.setText(addressStore);
+
         if (bitmapDecoded != null) {
             nav_head_avatar.setImageBitmap(bitmapDecoded);
         } else {
@@ -136,30 +149,34 @@ public class ChooseChatActivity extends AppCompatActivity {
     }
 
     private void GetData() {
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
-        myRef.child(sOwnerID).child("QuanLyNhanVien").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists())
-                {
-                    for (DataSnapshot data : dataSnapshot.getChildren())
+        try {
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
+            myRef.child(sOwnerID).child("QuanLyNhanVien").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists())
                     {
-                        Staff staff = data.getValue(Staff.class);
-                        arrStaff.add(staff);
+                        for (DataSnapshot data : dataSnapshot.getChildren())
+                        {
+                            Staff staff = data.getValue(Staff.class);
+                            arrStaff.add(staff);
 
-                    }
+                        }
 //                    adapter = new ChatOneToOneAdapter(ChooseChatActivity.this ,R.layout.cus_listview_chat_staff ,arrStaff);
-                    adapter = new ChatOneToOneAdapter(ChooseChatActivity.this ,R.layout.cus_listview_chat_staff ,arrStaff,"Owner0");
+                        adapter = new ChatOneToOneAdapter(ChooseChatActivity.this ,R.layout.cus_listview_chat_staff ,arrStaff,"Owner0");
 
-                    lvStaff.setAdapter(adapter);
+                        lvStaff.setAdapter(adapter);
+                    }
                 }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(ChooseChatActivity.this, "Load Data Failed!", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(ChooseChatActivity.this, "Load Data Failed!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }catch (Exception ex){
+            ex.getMessage();
+        }
     }
 
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
