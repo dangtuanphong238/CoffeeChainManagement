@@ -1,4 +1,4 @@
-package com.example.staff;
+package com.example.staff.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,9 +14,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.staff.Global.Public_func;
+import com.example.staff.R;
 import com.google.android.material.navigation.NavigationView;
 
-public class ChooseChat extends AppCompatActivity {
+public class ChooseChatActivity extends AppCompatActivity {
     private NavigationView navigationView;
      private ImageButton btnMnu;
     private DrawerLayout drawerLayout;
@@ -35,14 +36,14 @@ public class ChooseChat extends AppCompatActivity {
                         recreate();
                         return true;
                     case R.id.itemKhuVuc:
-                        Public_func.clickItemMenu(ChooseChat.this, KhuVuc.class);
+                        Public_func.clickItemMenu(ChooseChatActivity.this, KhuVucActivity.class);
                         return true;
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
-                        Public_func.clickLogout(ChooseChat.this, LoginScreen.class);
+                        Public_func.clickLogout(ChooseChatActivity.this, LoginScreenActivity.class);
                         return true;
                 }
                 return true;
@@ -55,14 +56,14 @@ public class ChooseChat extends AppCompatActivity {
         btnChatWithOwnerAndEveryone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseChat.this, ThongBaoScreen.class);
+                Intent intent = new Intent(ChooseChatActivity.this, ChatRoomActivity.class);
                 startActivity(intent);
             }
         });
         btnChatWithOwner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseChat.this,Chatwithowner.class);
+                Intent intent = new Intent(ChooseChatActivity.this, ChatWithOwnerActivity.class);
                 startActivity(intent);
             }
         });

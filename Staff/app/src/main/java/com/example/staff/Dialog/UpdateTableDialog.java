@@ -14,9 +14,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.staff.InfDatBanTrc;
+import com.example.staff.Activity.InfDatBanTrc;
+import com.example.staff.Activity.InfDatBanTrcActivity;
+import com.example.staff.Activity.ThongTinDatTruocActivity;
 import com.example.staff.R;
-import com.example.staff.ThongTinDatTruocActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -129,7 +130,7 @@ public class UpdateTableDialog extends Dialog implements View.OnClickListener {
     }
 
     public void Booking() {
-        Intent intent = new Intent(context, InfDatBanTrc.class);
+        Intent intent = new Intent(context, InfDatBanTrcActivity.class);
         intent.putExtra("AREAID",areaID);
         intent.putExtra("TABLEID",tableID);
         context.startActivity(intent);

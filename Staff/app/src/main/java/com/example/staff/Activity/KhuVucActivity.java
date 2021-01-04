@@ -1,4 +1,4 @@
-package com.example.staff;
+package com.example.staff.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -22,9 +20,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.staff.Adapter.KhuVucAdapter;
-import com.example.staff.Adapter.RecyclerviewClick;
+import com.example.staff.Interface.RecyclerviewClick;
 import com.example.staff.Global.Public_func;
 import com.example.staff.Model.KhuVucMD;
+import com.example.staff.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,10 +32,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
-public class KhuVuc extends AppCompatActivity implements RecyclerviewClick {
+public class KhuVucActivity extends AppCompatActivity implements RecyclerviewClick {
     boolean doubleBackToExitPressedOnce = false;
     GridView gridView;
     RecyclerView recyclerView;
@@ -65,7 +62,7 @@ public class KhuVuc extends AppCompatActivity implements RecyclerviewClick {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.itemthongBao:
-                        Public_func.clickItemMenu(KhuVuc.this, ChooseChat.class);
+                        Public_func.clickItemMenu(KhuVucActivity.this, ChooseChatActivity.class);
                         return true;
                     case R.id.itemKhuVuc:
                         recreate();
@@ -75,7 +72,7 @@ public class KhuVuc extends AppCompatActivity implements RecyclerviewClick {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
-                        Public_func.clickLogout(KhuVuc.this, LoginScreen.class);
+                        Public_func.clickLogout(KhuVucActivity.this, LoginScreenActivity.class);
                         return true;
                 }
                 return true;
@@ -158,11 +155,11 @@ public class KhuVuc extends AppCompatActivity implements RecyclerviewClick {
                     listNameKV.add(dataSnapshot.child("name").getValue().toString());
                 }
 
-                adapter = new KhuVucAdapter(KhuVuc.this,lstKhuVuc,KhuVuc.this);
+                adapter = new KhuVucAdapter(KhuVucActivity.this,lstKhuVuc, KhuVucActivity.this);
                 adapter.notifyDataSetChanged();
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(KhuVuc.this,2);
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(KhuVucActivity.this,2);
                 recyclerView.setLayoutManager(gridLayoutManager);
                 recyclerView.setAdapter(adapter);
             }
@@ -228,7 +225,7 @@ public class KhuVuc extends AppCompatActivity implements RecyclerviewClick {
         String loaiPhong = listKeyKV.get(position).toString();
         String tenPhong = listNameKV.get(position).toString();
                     if (!loaiPhong.isEmpty()) {
-                        Intent intent = new Intent(KhuVuc.this, PhongScreen.class);
+                        Intent intent = new Intent(KhuVucActivity.this, PhongScreenActivity.class);
 //                    intent.putExtra("values", lstKhuVuc.toString());
                         Bundle bundle = new Bundle();
                         bundle.putString("values", loaiPhong);

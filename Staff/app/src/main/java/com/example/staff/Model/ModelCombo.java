@@ -13,7 +13,7 @@ public class ModelCombo {
     public ModelCombo() {
     }
 
-    public ModelCombo(String meal_category, String meal_id, String meal_price, String meal_name, String meal_image, String meal_description, String meal_price_total, String meal_uu_dai) {
+        public ModelCombo(String meal_category, String meal_id, String meal_price, String meal_name, String meal_image, String meal_description, String meal_price_total, String meal_uu_dai) {
         this.meal_category = meal_category;
         this.meal_id = meal_id;
         this.meal_price = meal_price;

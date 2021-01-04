@@ -40,7 +40,7 @@ public class ChooseChatActivity extends AppCompatActivity {
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
 
-    private Button btnChatRoom;
+//    private Button btnChatRoom;
     private ListView lvOwner;
     private ArrayList<Owner> arrOwner = new ArrayList<>();;
     private ChatOneToOneAdapter adapter;
@@ -118,16 +118,16 @@ public class ChooseChatActivity extends AppCompatActivity {
 
     }
     private void setOnClick(){
-        btnChatRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ChooseChatActivity.this, NotificationActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("chat_type", "room");
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+//        btnChatRoom.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(ChooseChatActivity.this, NotificationActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("chat_type", "room");
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//            }
+//        });
         lvOwner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -147,7 +147,7 @@ public class ChooseChatActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navDrawerMenu);
         btnMnu = findViewById(R.id.btnMnu);
         txtTitleActivity = findViewById(R.id.idtoolbar);
-        btnChatRoom = findViewById(R.id.btnChatRoom);
+//        btnChatRoom = findViewById(R.id.btnChatRoom);
         lvOwner = findViewById(R.id.lvOwner);
     }
 

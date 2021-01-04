@@ -1,10 +1,9 @@
-package com.example.staff.Global;
+package com.example.staff.Dialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ParseTime {
-
     Long time;
 
     public ParseTime(Long time) {

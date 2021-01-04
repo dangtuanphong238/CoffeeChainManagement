@@ -1,4 +1,4 @@
-package com.example.staff;
+package com.example.staff.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.staff.Model.InforDatTruoc;
+import com.example.staff.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -111,10 +112,10 @@ public class ThongTinDatTruocActivity extends AppCompatActivity {
                 String path = "OwnerManager/" + sOwnerID + "/QuanLyBanDatTruoc" +
                         "/"+ areaID + "/" +tableID + "/ThongTinDatTruoc";
                 DatabaseReference myRef1 = firebaseDatabase1.getReference(path);
-                        myRef1.child("sdtKH").setValue(edtSdtKH.getText().toString());
-                         myRef1.child("tenKH").setValue(edtTenKH.getText().toString());
-                         myRef1.child("timeDB").setValue(edtTimeDB.getText().toString());
-                        Toast.makeText(ThongTinDatTruocActivity.this, "Sửa Thông Tin Thành Công!", Toast.LENGTH_SHORT).show();
+                myRef1.child("sdtKH").setValue(edtSdtKH.getText().toString());
+                myRef1.child("tenKH").setValue(edtTenKH.getText().toString());
+                myRef1.child("timeDB").setValue(edtTimeDB.getText().toString());
+                Toast.makeText(ThongTinDatTruocActivity.this, "Sửa Thông Tin Thành Công!", Toast.LENGTH_SHORT).show();
             }
         });
     }

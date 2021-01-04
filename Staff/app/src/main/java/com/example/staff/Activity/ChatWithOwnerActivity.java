@@ -1,4 +1,4 @@
-package com.example.staff;
+package com.example.staff.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.example.staff.Adapter.MessageAdapter;
 import com.example.staff.Global.Public_func;
+import com.example.staff.Model.Message;
+import com.example.staff.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,12 +34,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class Chatwithowner extends AppCompatActivity {
+public class ChatWithOwnerActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
-    private String sMyId;
+    private String sMyId,sMyUsername;
 
     private RecyclerView recyclerView;
     private FloatingActionButton btnSend;
@@ -68,17 +70,17 @@ public class Chatwithowner extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.itemthongBao:
-                        Public_func.clickItemMenu(Chatwithowner.this, ChooseChat.class);
+                        Public_func.clickItemMenu(ChatWithOwnerActivity.this, ChooseChatActivity.class);
                         return true;
                     case R.id.itemKhuVuc:
-                        Public_func.clickItemMenu(Chatwithowner.this, KhuVuc.class);
+                        Public_func.clickItemMenu(ChatWithOwnerActivity.this, KhuVucActivity.class);
                         return true;
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
-                        Public_func.clickLogout(Chatwithowner.this, LoginScreen.class);
+                        Public_func.clickLogout(ChatWithOwnerActivity.this, LoginScreenActivity.class);
                         return true;
                 }
                 return true;
@@ -113,12 +115,13 @@ public class Chatwithowner extends AppCompatActivity {
     {
         SharedPreferences sharedPreferences1 = getSharedPreferences("datafile", MODE_PRIVATE);
         sMyId = sharedPreferences1.getString("myId",null);
+        sMyUsername = sharedPreferences1.getString("username",null);
         System.out.println("id111"+sMyId);
     }
     private void displayMessages(final ArrayList<Message> arrMessage)
     {
         txtTitleActivity.setText("Chat with owner");
-        recyclerView.setLayoutManager(new LinearLayoutManager(Chatwithowner.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(ChatWithOwnerActivity.this));
         recyclerView.setHasFixedSize(true);
 //        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference("Message");
         DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference();
@@ -133,7 +136,8 @@ public class Chatwithowner extends AppCompatActivity {
                         String messageText = dataSnapshot.child("messageText").getValue().toString();
                         String messageTime = dataSnapshot.child("messageTime").getValue().toString();
                         String userID = dataSnapshot.child("userID").getValue().toString();
-                        Message message = new Message(userID, messageText, messageTime);
+                        String username = dataSnapshot.child("username").getValue().toString();
+                        Message message = new Message(userID, messageText, messageTime,username);
                         arrMessage.add(message);
 //                        System.out.println("message " + message.getMessageText());
                     }
@@ -175,7 +179,7 @@ public class Chatwithowner extends AppCompatActivity {
                     String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                     String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
-                    Message message = new Message(sMyId, messageText, currentDate + " " + currentTime);
+                    Message message = new Message(sMyId, messageText, currentDate + " " + currentTime,sMyUsername);
                     firebaseDatabase = FirebaseDatabase.getInstance();
                     databaseReference = firebaseDatabase.getReference();
                     databaseReference.child("OwnerManager").child(sOwnerID).child("MessageStaff").child(sOwnerID+"|"+sMyId).push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {

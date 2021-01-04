@@ -6,7 +6,7 @@
     android:background="#FE9B53"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ThongTinDatTruocActivity">
+    tools:context=".Activity.ThongTinDatTruocActivity">
 
 
     <LinearLayout

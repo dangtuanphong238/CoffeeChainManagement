@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.staff.Model.ThongTinLoi;
-import com.example.staff.ParseTime;
 import com.example.staff.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -84,29 +83,29 @@ public class Dialog_BaoLoi extends Dialog {
         String path = "OwnerManager/" + "QuanLyBanLoi/"+ownerID +"/"+ areaID +"/" + tableID + "/ThongTinLoi";
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference(path);
-       myRef.addValueEventListener(new ValueEventListener() {
-           @Override
-           public void onDataChange(@NonNull DataSnapshot snapshot) {
-               if (snapshot.getValue() !=null)
-               {
-                   ThongTinLoi thongTinLoi = snapshot.getValue(ThongTinLoi.class);
-                   Toast.makeText(context, thongTinLoi.toString(), Toast.LENGTH_SHORT).show();
-                   noidung.setText(thongTinLoi.noidungloi);
-                   ngayloi.setText(thongTinLoi.ngaybaoloi);
-                   noidung.setVisibility(View.VISIBLE);
-                   ngayloi.setVisibility(View.VISIBLE);
-               }
-               else
-               {
-                   Toast.makeText(context, "Chưa có thông báo lỗi!", Toast.LENGTH_SHORT).show();
-               }
-           }
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue() !=null)
+                {
+                    ThongTinLoi thongTinLoi = snapshot.getValue(ThongTinLoi.class);
+                    Toast.makeText(context, thongTinLoi.toString(), Toast.LENGTH_SHORT).show();
+                    noidung.setText(thongTinLoi.noidungloi);
+                    ngayloi.setText(thongTinLoi.ngaybaoloi);
+                    noidung.setVisibility(View.VISIBLE);
+                    ngayloi.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    Toast.makeText(context, "Chưa có thông báo lỗi!", Toast.LENGTH_SHORT).show();
+                }
+            }
 
-           @Override
-           public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-           }
-       });
+            }
+        });
     }
 
     private void setEvent() {

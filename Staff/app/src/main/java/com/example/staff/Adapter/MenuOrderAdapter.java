@@ -16,6 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.staff.Interface.RecyclerviewClick;
+import com.example.staff.Interface.SendAmountsOrder;
+import com.example.staff.Interface.SendDataAround;
 import com.example.staff.Model.MealModel;
 import com.example.staff.R;
 import com.google.android.gms.tasks.OnFailureListener;

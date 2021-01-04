@@ -1,11 +1,9 @@
-package com.example.staff;
+package com.example.staff.Activity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,10 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.staff.Adapter.ListTableAdapter;
-import com.example.staff.Adapter.RecyclerviewClick;
+import com.example.staff.Interface.RecyclerviewClick;
 import com.example.staff.Dialog.OrderDialog;
 import com.example.staff.Dialog.UpdateTableDialog;
 import com.example.staff.Model.TableModel;
+import com.example.staff.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,12 +27,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class PhongScreen extends AppCompatActivity implements RecyclerviewClick {
+public class PhongScreenActivity extends AppCompatActivity implements RecyclerviewClick {
     Button btnBan1;
     RecyclerView recyclerView;
 
 //    Ban ban = new Ban();
-    public final static int BLANK = 0;
+public final static int BLANK = 0;
     public final static int BOOK = 1;
     public final static int HAVING = 2;
     public final static int ERROR = 3;
@@ -96,11 +95,11 @@ public class PhongScreen extends AppCompatActivity implements RecyclerviewClick 
                     TableModel tableModel = dataSnapshot.getValue(TableModel.class);
                     lstPhong.add(tableModel);
                 }
-                adapter = new ListTableAdapter(PhongScreen.this,sortListAsASC(lstPhong),PhongScreen.this);
+                adapter = new ListTableAdapter(PhongScreenActivity.this,sortListAsASC(lstPhong), PhongScreenActivity.this);
                 adapter.notifyDataSetChanged();
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(PhongScreen.this, 3);
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(PhongScreenActivity.this, 3);
                 recyclerView.setLayoutManager(gridLayoutManager);
                 recyclerView.setAdapter(adapter);
             }
@@ -116,6 +115,8 @@ public class PhongScreen extends AppCompatActivity implements RecyclerviewClick 
         System.out.println(sharedPreferences.getString(OWNERID, "null"));
         sOwnerID = sharedPreferences.getString(OWNERID, "null");
     }
+
+
     @Override
     public void onItemClick(int position) {
 //        Intent intent = new Intent(PhongScreen.this,OderActivity.class);
@@ -135,6 +136,8 @@ public class PhongScreen extends AppCompatActivity implements RecyclerviewClick 
         dialog.show();
     }
     void checkTable(int position, String ownerID) {
+
+
         if (lstPhong.get(position).getTableStatus().equals("0")) {
             //When table blank
             //Show menu

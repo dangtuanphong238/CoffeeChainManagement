@@ -8,7 +8,7 @@
     android:background="#FE9B58"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".ChiTietBan">
+    tools:context=".Activity.ChiTietBanActivity">
 
 
     <LinearLayout

@@ -48,15 +48,50 @@ public class AcceptReserveDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dialog__dat_truoc);
+        setContentView(R.layout.activity_accept_reserve_dialog);
         anhXa();
+        getData();
         setEvent();
     }
+    private void getData() {
+        try
+        {
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            String path = "OwnerManager/" + ownerID + "/QuanLyBanDatTruoc" +
+                    "/Area"+ areaID + "/" + tableID + "/ThongTinDatTruoc";
+            DatabaseReference myRef = firebaseDatabase.getReference(path);
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.getValue() != null)
+                    {
+                        InforDatTruoc inforDatTruoc = snapshot.getValue(InforDatTruoc.class);
+                        TenKH = inforDatTruoc.getTenKH();
+                        SdtKH = inforDatTruoc.getSdtKH();
+                        TimeDB = inforDatTruoc.getTimeDB();
+                        edtTenKH.setText(TenKH);
+                        edtSdtKH.setText(SdtKH);
+                        edtTimeDB.setText(TimeDB);
 
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        catch (Exception exception)
+        {
+            exception.getMessage();
+        }
+
+    }
     private void setEvent()
     {
         try {
-            tvTextlayout.setText(tableID);
+            String nameTable = tableID.replace("Table", "Bàn ");
+            tvTextlayout.setText(nameTable);
             btnXacNhan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -86,7 +121,7 @@ public class AcceptReserveDialog extends Dialog {
                                         edtTenKH.setText("");
                                         edtSdtKH.setText("");
                                         edtTimeDB.setText("");
-                                        Toast.makeText(context, "Đặt trước thành công!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "Xác nhận Đặt Trước Thành Công!", Toast.LENGTH_SHORT).show();
                                         dismiss();
                                     }
                                 });

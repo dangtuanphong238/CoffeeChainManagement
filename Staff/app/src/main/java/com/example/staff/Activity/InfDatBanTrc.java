@@ -1,4 +1,4 @@
-package com.example.staff;
+package com.example.staff.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.staff.Dialog.UpdateTableDialog;
 import com.example.staff.Model.InforDatTruoc;
+import com.example.staff.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +28,7 @@ public class InfDatBanTrc extends AppCompatActivity {
     Button btnXacNhan;
     TextView tvTextlayout;
     String areaID;
-     String tableID;
+    String tableID;
     String status;
     String TenKH;
     String SdtKH;
@@ -45,7 +46,7 @@ public class InfDatBanTrc extends AppCompatActivity {
 
     private void setEvent()
     {
-       tvTextlayout.setText(tableID);
+        tvTextlayout.setText(tableID);
         btnXacNhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,16 +55,16 @@ public class InfDatBanTrc extends AppCompatActivity {
                 {
                     Toast.makeText(InfDatBanTrc.this, "Bạn phải nhập thông tin!", Toast.LENGTH_SHORT).show();
                 }
-               else
-                   {
-                       FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                       String path = "OwnerManager/" + sOwnerID + "/QuanLyBan" + "/"+ areaID + "/" +tableID + "/tableStatus";
-                       DatabaseReference myRef = firebaseDatabase.getReference(path);
-                       myRef.setValue("4").addOnCompleteListener(new OnCompleteListener<Void>() {
-                           @Override
-                           public void onComplete(@NonNull Task<Void> task) {
-                               InforDatTruoc infDatBanTrc = new InforDatTruoc(edtTenKH.getText().toString(),edtSdtKH.getText().toString()
-                                       ,edtTimeDB.getText().toString());
+                else
+                {
+                    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                    String path = "OwnerManager/" + sOwnerID + "/QuanLyBan" + "/"+ areaID + "/" +tableID + "/tableStatus";
+                    DatabaseReference myRef = firebaseDatabase.getReference(path);
+                    myRef.setValue("4").addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            InforDatTruoc infDatBanTrc = new InforDatTruoc(edtTenKH.getText().toString(),edtSdtKH.getText().toString()
+                                    ,edtTimeDB.getText().toString());
                             FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
                             String path = "OwnerManager/" + sOwnerID + "/QuanLyBanDatTruoc" +
                                     "/"+ areaID + "/" +tableID + "/ThongTinDatTruoc";
@@ -78,10 +79,10 @@ public class InfDatBanTrc extends AppCompatActivity {
                                     btnXacNhan.setEnabled(false);
                                 }
                             });
-                           }
-                       });
+                        }
+                    });
 
-                   }
+                }
 
             }
         });
@@ -99,7 +100,7 @@ public class InfDatBanTrc extends AppCompatActivity {
         TenKH = edtTenKH.getText().toString();
         SdtKH = edtSdtKH.getText().toString();
         TimeDB = edtTimeDB.getText().toString();
-        }
+    }
 
 
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login

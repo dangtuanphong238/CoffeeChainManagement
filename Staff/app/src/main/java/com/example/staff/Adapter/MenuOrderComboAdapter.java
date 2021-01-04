@@ -1,10 +1,8 @@
 package com.example.staff.Adapter;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.ColorSpace;
 import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +16,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.staff.Interface.RecyclerviewClick;
+import com.example.staff.Interface.SendAmountsOrder;
 import com.example.staff.Model.ModelCombo;
 import com.example.staff.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,8 +26,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,15 +57,14 @@ public class MenuOrderComboAdapter extends RecyclerView.Adapter<MenuOrderComboAd
 
     @Override
     public void onBindViewHolder(@NonNull final MenuOrderComboAdapter.MyViewHolder holder, int position) {
-        final ModelCombo mealmodel = list.get(position);
-        holder.tvMealName.setText(mealmodel.getMeal_name());
-        holder.tvMealPrice.setText(mealmodel.getMeal_price());
-//        holder.tvMealCategory.setText(mealmodel.getMeal_category());
-        holder.tvDescription.setText(mealmodel.getMeal_description());
-        holder.tvMealPriceTotal.setText(mealmodel.getMeal_price_total());
-        holder.tvMealPriceTotal.setPaintFlags(holder.tvMealPriceTotal.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
-//        holder.tvMealUuDai.setText(mealmodel.getMeal_uu_dai());
-        setImage(holder,path,mealmodel.getMeal_id());
+        final ModelCombo modelCombo = list.get(position);
+        holder.tvMealName.setText(modelCombo.getMeal_name());
+        holder.tvMealPrice.setText(modelCombo.getMeal_price());
+        holder.tvMealCategory.setText(modelCombo.getMeal_category());
+        holder.tvDescription.setText(modelCombo.getMeal_description());
+        holder.tvMealPriceTotal.setText(modelCombo.getMeal_price_total());
+        holder.tvMealUuDai.setText(modelCombo.getMeal_uu_dai());
+        setImage(holder,path,modelCombo.getMeal_id());
         holder.btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,9 +72,9 @@ public class MenuOrderComboAdapter extends RecyclerView.Adapter<MenuOrderComboAd
                 i++;
                 holder.tvAmounts.setText(i+"");
                 int last_amounts = Integer.parseInt(holder.tvAmounts.getText().toString().trim());
-                int price = Integer.parseInt(mealmodel.getMeal_price());
+                int price = Integer.parseInt(modelCombo.getMeal_price());
                 holder.tvPrice.setText((last_amounts*price)+"");
-                sendAmountsOrder.sendAmount(1,mealmodel,0);
+                sendAmountsOrder.sendAmount(1,modelCombo,last_amounts);
             }
         });
         holder.btnMinus.setOnClickListener(new View.OnClickListener() {
@@ -86,14 +84,14 @@ public class MenuOrderComboAdapter extends RecyclerView.Adapter<MenuOrderComboAd
                 if (i<=0){
                     holder.tvAmounts.setText(0+"");
                     holder.tvPrice.setText(0+"");
-                    sendAmountsOrder.sendAmount(0,mealmodel,0);
+                    sendAmountsOrder.sendAmount(0,modelCombo,0);
                 }else{
                     i--;
                     holder.tvAmounts.setText(i+"");
                     int last_amounts = Integer.parseInt(holder.tvAmounts.getText().toString().trim());
-                    int price = Integer.parseInt(mealmodel.getMeal_price());
+                    int price = Integer.parseInt(modelCombo.getMeal_price());
                     holder.tvPrice.setText((last_amounts*price)+"");
-                    sendAmountsOrder.sendAmount(-1,mealmodel, last_amounts);
+                    sendAmountsOrder.sendAmount(-1,modelCombo, last_amounts);
                 }
             }
         });
@@ -152,6 +150,8 @@ public class MenuOrderComboAdapter extends RecyclerView.Adapter<MenuOrderComboAd
             tvMealPrice = itemView.findViewById(R.id.tvMeal_price);
             tvMealCategory = itemView.findViewById(R.id.tvMeal_Category);
             tvMealPriceTotal = itemView.findViewById(R.id.tvMeal_price_total);
+            tvMealPriceTotal.setPaintFlags(tvMealPriceTotal.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            tvMealUuDai = itemView.findViewById(R.id.tvMeal_uudai);
             imgMeal = itemView.findViewById(R.id.imgMeal_image);
             tvDescription = itemView.findViewById(R.id.tvMeal_description);
             layoutChooseAmount = itemView.findViewById(R.id.layoutChooseAmount);

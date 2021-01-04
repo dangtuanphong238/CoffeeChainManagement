@@ -1,4 +1,4 @@
-package com.example.staff;
+package com.example.staff.Activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.staff.Adapter.MessageAdapter;
 import com.example.staff.Global.Public_func;
+import com.example.staff.Model.Message;
+import com.example.staff.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,12 +34,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class ThongBaoScreen extends AppCompatActivity {
+public class ChatRoomActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
-    private String sMyId;
+    private String sMyId,sMyUsername;
 
     private RecyclerView recyclerView;
     private FloatingActionButton btnSend;
@@ -69,17 +71,17 @@ public class ThongBaoScreen extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.itemthongBao:
-                        Public_func.clickItemMenu(ThongBaoScreen.this, ChooseChat.class);
+                        Public_func.clickItemMenu(ChatRoomActivity.this, ChooseChatActivity.class);
                         return true;
                     case R.id.itemKhuVuc:
-                        Public_func.clickItemMenu(ThongBaoScreen.this, KhuVuc.class);
+                        Public_func.clickItemMenu(ChatRoomActivity.this, KhuVucActivity.class);
                         return true;
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
-                        Public_func.clickLogout(ThongBaoScreen.this, LoginScreen.class);
+                        Public_func.clickLogout(ChatRoomActivity.this, LoginScreenActivity.class);
                         return true;
                 }
                 return true;
@@ -114,6 +116,7 @@ public class ThongBaoScreen extends AppCompatActivity {
     {
         SharedPreferences sharedPreferences1 = getSharedPreferences("datafile", MODE_PRIVATE);
         sMyId = sharedPreferences1.getString("myId",null);
+        sMyUsername = sharedPreferences1.getString("username",null);
         System.out.println(sMyId);
     }
 
@@ -126,7 +129,7 @@ public class ThongBaoScreen extends AppCompatActivity {
                     String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                     String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
-                    Message message = new Message(sMyId, messageText, currentDate + " " + currentTime);
+                    Message message = new Message(sMyId, messageText, currentDate + " " + currentTime,sMyUsername);
                     firebaseDatabase = FirebaseDatabase.getInstance();
                     databaseReference = firebaseDatabase.getReference();
                     databaseReference.child("OwnerManager").child(sOwnerID).child("Message").push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -157,38 +160,40 @@ public class ThongBaoScreen extends AppCompatActivity {
     private void displayMessages(final ArrayList<Message> arrMessage)
     {
         txtTitleActivity.setText("Chat with owner and everyone");
-        recyclerView.setLayoutManager(new LinearLayoutManager(ThongBaoScreen.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(ChatRoomActivity.this));
         recyclerView.setHasFixedSize(true);
 //        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference("Message");
-        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference();
+        try {
+            DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference();
 
-        dbReference.child("OwnerManager").child(sOwnerID).child("Message").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    arrMessage.clear();
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+            dbReference.child("OwnerManager").child(sOwnerID).child("Message").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        arrMessage.clear();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
-                        String messageText = dataSnapshot.child("messageText").getValue().toString();
-                        String messageTime = dataSnapshot.child("messageTime").getValue().toString();
-                        String userID = dataSnapshot.child("userID").getValue().toString();
-                        Message message = new Message(userID, messageText, messageTime);
-                        arrMessage.add(message);
+                            String messageText = dataSnapshot.child("messageText").getValue().toString();
+                            String messageTime = dataSnapshot.child("messageTime").getValue().toString();
+                            String userID = dataSnapshot.child("userID").getValue().toString();
+                            String username = dataSnapshot.child("username").getValue().toString();
+                            Message message = new Message(userID, messageText, messageTime,username);
+                            arrMessage.add(message);
 //                        System.out.println("message " + message.getMessageText());
-                    }
-                    messageAdapter = new MessageAdapter(arrMessage, sOwnerID);
-//                    messageAdapter = new MessageAdapter(arrMessage);
-                    recyclerView.setAdapter(messageAdapter);
-                    recyclerView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() -1);
                         }
-                    });
+                        messageAdapter = new MessageAdapter(arrMessage, sOwnerID);
+//                    messageAdapter = new MessageAdapter(arrMessage);
+                        recyclerView.setAdapter(messageAdapter);
+                        recyclerView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() -1);
+                            }
+                        });
 
 
-                    messageAdapter.notifyDataSetChanged();
-                    System.out.println("size " + arrMessage.size());
+                        messageAdapter.notifyDataSetChanged();
+                        System.out.println("size " + arrMessage.size());
 //                    for (int i = 0; i < arrMessage.size(); i++)
 //                    {
 //                        messageAdapter = new MessageAdapter(arrMessage, sOwnerID, arrMessage.get(i).getUserID());
@@ -196,14 +201,18 @@ public class ThongBaoScreen extends AppCompatActivity {
 //                        messageAdapter.notifyDataSetChanged();
 //                    }
 
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+        }catch (Exception ex)
+        {
+            ex.getMessage();
+        }
     }
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {

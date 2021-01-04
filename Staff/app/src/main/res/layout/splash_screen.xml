@@ -6,6 +6,7 @@
     android:background="#FE9B58"
     android:gravity="center"
     >
+    <include layout="@layout/layout_background_view" />
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"

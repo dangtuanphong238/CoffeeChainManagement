@@ -53,6 +53,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
     String month = "Thang" + parseTime.getMonth();
     String _date = "Ngay" + parseTime.getDate();
     String ngay = parseTime.getDate();
+    String thang = parseTime.getMonth();
 
     public DetaiAndPaymentlTableDialog(@NonNull Context context, String url, String ownerID, String areaID, String tableID) {
         super(context);
@@ -376,6 +377,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
                 else
                 {
                     kiemtraDulieu();
+                    getDataMonth();
                 }
             }
             @Override
@@ -408,6 +410,37 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
                     }
                 });
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    public void getDataMonth() {
+        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        final DatabaseReference reference = firebaseDatabase.getReference("/FounderManager/" +
+                "/QuanLyDoanhThu/" + ownerID + "/" + year + "/" + month + "/DoanhThuNgay/");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Integer> arrayList = new ArrayList<>();
+                int total = 0;
+                if (snapshot.getValue() != null) {
+                    for (DataSnapshot item : snapshot.getChildren()) {
+                        int mangTien = Integer.parseInt(item.child("sumtotal").getValue().toString());
+                        arrayList.add(mangTien);
+                    }
+                    for (int num : arrayList) {
+                        total = total + num;
+                    }
+                    FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
+                    DatabaseReference reference1 = firebaseDatabase1.getReference("/FounderManager/" +
+                            "/QuanLyDoanhThu/" + ownerID + "/" + year + "/" + month);
+                    reference1.child("total").setValue(String.valueOf(total));
+                    reference1.child("month").setValue(thang);
+                }
             }
 
             @Override
