@@ -96,7 +96,7 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
 
                     case R.id.itemDoanhThu:
                         //nho sua lai khi code xong1
-                       Public_func.clickLogout(AreaManageActivity.this, DoanhThuDate.class);
+                        Public_func.clickLogout(AreaManageActivity.this, DoanhThuDate.class);
                         return true;
 
                     case R.id.itemInfoStore:
@@ -129,9 +129,9 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
         String bitmap = ref.getString("imagePreferance", "");
         decodeBase64(bitmap);
         //getInfo:
-        SharedPreferences refInfoStore = getSharedPreferences("datafile",MODE_PRIVATE);
-        String nameStore = refInfoStore.getString("name_store","");
-        String addressStore = refInfoStore.getString("address_store","");
+        SharedPreferences refInfoStore = getSharedPreferences("datafile", MODE_PRIVATE);
+        String nameStore = refInfoStore.getString("name_store", "");
+        String addressStore = refInfoStore.getString("address_store", "");
 
         //anhxa:
         View headerView = navigationView.getHeaderView(0);
@@ -157,7 +157,7 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
                 .decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
-  //  public void setUpAreaAnd
+    //  public void setUpAreaAnd
 
     public void getDataAndShowAreaView() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -195,18 +195,19 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
 
     }
 
-    public void checkFirstTime(){
+    public void checkFirstTime() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
         String ownerID = pref.getString(LoginActivity.OWNERID, null);
-        String path = "/OwnerManager/"+ownerID+"/QuanLyKhuVuc";
+        String path = "/OwnerManager/" + ownerID + "/QuanLyKhuVuc";
         final DatabaseReference myRef = database.getReference(path);
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue() == null){
-                    checkFirstTime = true;
+                if (snapshot.getValue() == null) {
+                    setUpFirstTime();
                 }
+                getDataAndShowAreaView();
             }
 
             @Override
@@ -216,22 +217,22 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
         });
     }
 
-    public void setUpFirstTime(){
+    public void setUpFirstTime() {
         final ArrayList<AreaModel> listArea = new ArrayList<>();
         //https://quanlychuoicoffee.firebaseio.com/FounderManager/QuanLyCuaHang/Owner5
         SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
         String ownerID = pref.getString(LoginActivity.OWNERID, null);
-        String path = "/FounderManager/QuanLyCuaHang/"+ownerID;
+        String path = "/FounderManager/QuanLyCuaHang/" + ownerID;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference(path);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot area : snapshot.getChildren()){
-                    String tables = area.child("soLuongBan").getValue()+"";
-                    String nameArea = area.child("tenKhuVuc").getValue()+"";
-                    String id = area.getKey().replace(" ","");
-                    AreaModel areaModel = new AreaModel(nameArea,id,tables);
+                for (DataSnapshot area : snapshot.getChildren()) {
+                    String tables = area.child("soLuongBan").getValue() + "";
+                    String nameArea = area.child("tenKhuVuc").getValue() + "";
+                    String id = area.getKey().replace(" ", "");
+                    AreaModel areaModel = new AreaModel(nameArea, id, tables);
                     listArea.add(areaModel);
                 }
                 setUpBranchTable(listArea);
@@ -245,16 +246,27 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
 
     }
 
-    public void setUpBranchTable(ArrayList<AreaModel> listArea){
-        String path = "/OwnerManager/Owner4/QuanLyBan";
+    public void setUpBranchTable(ArrayList<AreaModel> listArea) {
+        SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
+        String ownerID = pref.getString(LoginActivity.OWNERID, null);
+        String pathQLB = "/OwnerManager/" + ownerID + "/QuanLyBan";
+        String pathQLKV = "/OwnerManager/" + ownerID + "/QuanLyKhuVuc";
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference(path);
-        for (int i =0;i<listArea.size();i++){
+        final DatabaseReference myRef, myRef1;
+        myRef1 = database.getReference(pathQLKV);
+        for (int i = 0; i < listArea.size(); i++) {
+            DatabaseReference branchArea = myRef1.child(listArea.get(i).getId());
+            branchArea.child("id").setValue(listArea.get(i).getId());
+            branchArea.child("name").setValue(listArea.get(i).getName());
+            branchArea.child("tables").setValue(listArea.get(i).getTables());
+        }
+        myRef = database.getReference(pathQLB);
+        for (int i = 0; i < listArea.size(); i++) {
             DatabaseReference branchArea = myRef.child(listArea.get(i).getId());
-            int tables = Integer.parseInt(listArea.get(i).getTables()+"");
-            for (int j =1;j<=tables;j++){
-                branchArea.child("Table"+j).child("tableID").setValue("TB"+j);
-                branchArea.child("Table"+j).child("tableStatus").setValue("0");
+            int tables = Integer.parseInt(listArea.get(i).getTables() + "");
+            for (int j = 1; j <= tables; j++) {
+                branchArea.child("Table" + j).child("tableID").setValue("TB" + j);
+                branchArea.child("Table" + j).child("tableStatus").setValue("0");
             }
         }
     }
@@ -262,10 +274,7 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
     @Override
     protected void onStart() {
         super.onStart();
-        if (checkFirstTime){
-            setUpFirstTime();
-        }
-        getDataAndShowAreaView();
+
     }
 
     private void anhXa() {
@@ -323,7 +332,7 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
 
             }
         }, 2000);
