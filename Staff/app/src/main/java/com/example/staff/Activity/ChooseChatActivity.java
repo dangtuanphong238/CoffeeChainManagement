@@ -56,14 +56,14 @@ public class ChooseChatActivity extends AppCompatActivity {
         btnChatWithOwnerAndEveryone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseChatActivity.this, ThongBaoScreenActivity.class);
+                Intent intent = new Intent(ChooseChatActivity.this, ChatRoomActivity.class);
                 startActivity(intent);
             }
         });
         btnChatWithOwner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseChatActivity.this, ChatwithownerActivity.class);
+                Intent intent = new Intent(ChooseChatActivity.this, ChatWithOwnerActivity.class);
                 startActivity(intent);
             }
         });

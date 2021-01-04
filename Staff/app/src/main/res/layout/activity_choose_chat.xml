@@ -22,7 +22,7 @@
                 android:id="@+id/btnChatWithOwnerAndEveryone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chat with owner and everyone"
+                android:text="Chat room"
                 android:background="@drawable/custom_button"
                 android:drawableLeft="@drawable/ic_chat_24"
                 android:drawablePadding="10dp"

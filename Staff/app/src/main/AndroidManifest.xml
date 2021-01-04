@@ -14,10 +14,10 @@
         <activity android:name=".Activity.InfDatBanTrcActivity" />
         <activity android:name=".Dialog.Dialog_BaoLoi" />
         <activity android:name=".Activity.BillScreenActivity" />
-        <activity android:name=".Activity.ChatwithownerActivity" />
+        <activity android:name=".Activity.ChatWithOwnerActivity" />
         <activity android:name=".Activity.ChooseChatActivity" />
         <activity android:name=".Activity.CaiDatBillActivity" />
-        <activity android:name=".Activity.ThongBaoScreenActivity" />
+        <activity android:name=".Activity.ChatRoomActivity" />
         <activity android:name=".Activity.DatMonActivity" />
         <activity android:name=".Activity.OderActivityActivity" />
         <activity android:name=".Activity.ChiTietBanActivity" />

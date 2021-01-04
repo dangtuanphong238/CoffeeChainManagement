@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.staff.Activity.Message;
+import com.example.staff.Model.Message;
 import com.example.staff.R;
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         Message message = listData.get(position);
 //        holder.imgUser.setImageResource(R.drawable.noimage);
         holder.txtMessage.setText(message.getMessageText());
-        holder.txtUsername.setText(message.getUserID());
+        holder.txtUsername.setText(message.getUserID() + " - " + message.getUsername());
         holder.txtDatetime.setText(message.getMessageTime());
     }
 
