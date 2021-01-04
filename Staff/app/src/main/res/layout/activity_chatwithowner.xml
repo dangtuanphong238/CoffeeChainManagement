@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main_drawer"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Chatwithowner">
+    tools:context=".Activity.ChatwithownerActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

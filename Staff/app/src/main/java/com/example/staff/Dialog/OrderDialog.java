@@ -20,8 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.staff.Adapter.MenuOrderAdapter;
 import com.example.staff.Adapter.MenuOrderComboAdapter;
-import com.example.staff.Adapter.RecyclerviewClick;
-import com.example.staff.Adapter.SendAmountsOrder;
+import com.example.staff.Interface.RecyclerviewClick;
+import com.example.staff.Interface.SendAmountsOrder;
+import com.example.staff.Model.MealComboUsed;
 import com.example.staff.Model.MealModel;
 import com.example.staff.Model.MealUsed;
 import com.example.staff.Model.ModelCombo;
@@ -33,7 +34,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Modifier;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -41,6 +41,7 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
     int sumPrice = 0;
     int amountsProducts = 0;
     ArrayList<MealUsed> listUsed = new ArrayList<>();
+    ArrayList<MealComboUsed> listComboUser = new ArrayList<>();
 
     Context context;
     String ownerID;
@@ -225,6 +226,7 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
                 break;
             case R.id.btnPayment:
                 orderMeal();
+                orderMealCombo();
             default:
                 break;
         }
@@ -294,21 +296,21 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
 
     private void checkAndUpdateForAddTable(ModelCombo modelCombo, int last_amounts) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        MealUsed mealUsed = new MealUsed(last_amounts, modelCombo, timestamp.getTime() + "");
+        MealComboUsed mealComboUsed = new MealComboUsed(last_amounts,modelCombo,timestamp.getTime() + "");
         boolean flag = false;
-        if (listUsed.size() == 0) {
-            listUsed.add(mealUsed);
+        if (listComboUser.size() == 0) {
+            listComboUser.add(mealComboUsed);
         } else {
             for (int i = 0; i < listUsed.size(); i++) {
-                if (listUsed.get(i).getMealID().equalsIgnoreCase(mealUsed.getMealID())) {
-                    listUsed.remove(listUsed.get(i));
-                    listUsed.add(mealUsed);
+                if (listComboUser.get(i).getMealID().equalsIgnoreCase(mealComboUsed.getMealID())) {
+                    listComboUser.remove(listComboUser.get(i));
+                    listComboUser.add(mealComboUsed);
                     flag = true;
                     break;
                 }
             }
             if (flag == false) {
-                listUsed.add(mealUsed);
+                listComboUser.add(mealComboUsed);
             }
         }
     }
@@ -339,7 +341,6 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             String path = "OwnerManager/" + ownerID + "/TableActive/" + areaID + "/" + tableID + "/Meal";
             String manageTable = "OwnerManager/" + ownerID + "/QuanLyBan/" + areaID + "/" + tableID;
-            System.out.println("area"+areaID);
             DatabaseReference myRef = database.getReference(path);
             for (int i = 0; i < listUsed.size(); i++) {
                 DatabaseReference root = myRef.child(listUsed.get(i).getMealID());
@@ -358,8 +359,32 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
                     Toast.makeText(context,"Order thành công",Toast.LENGTH_SHORT).show();
                 }
             });
-        }else {
-            Toast.makeText(context,"Vui lòng chọn món để order",Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void orderMealCombo() {
+        if (listComboUser.size()>0){
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            String path = "OwnerManager/" + ownerID + "/TableActive/" + areaID + "/" + tableID + "/Meal";
+            String manageTable = "OwnerManager/" + ownerID + "/QuanLyBan/" + areaID + "/" + tableID;
+            System.out.println("area11"+areaID);
+            DatabaseReference myRef = database.getReference(path);
+            for (int i = 0; i < listComboUser.size(); i++) {
+                DatabaseReference root = myRef.child(listComboUser.get(i).getMealID());
+                root.child("amount").setValue(listComboUser.get(i).getAmount());
+                root.child("category").setValue(listComboUser.get(i).getMealCategory());
+                root.child("id").setValue(listComboUser.get(i).getMealID());
+                root.child("image").setValue(listComboUser.get(i).getMealImage());
+                root.child("name").setValue(listComboUser.get(i).getMealName());
+                root.child("price").setValue(listComboUser.get(i).getMealPrice());
+                root.child("timeInput").setValue(listComboUser.get(i).getTimeInput());
+            }
+            DatabaseReference status = database.getReference(manageTable);
+            status.child("tableStatus").setValue("2").addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(context,"Order thành công",Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 

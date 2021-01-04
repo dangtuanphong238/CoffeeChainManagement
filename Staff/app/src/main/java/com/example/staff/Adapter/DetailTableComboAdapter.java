@@ -15,7 +15,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.staff.Model.MealComboUsed;
-import com.example.staff.Model.MealUsed;
 import com.example.staff.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,36 +26,28 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DetailTableAdapter extends RecyclerView.Adapter<DetailTableAdapter.MyViewHolder> {
-    ArrayList<MealUsed> list;
+public class DetailTableComboAdapter extends RecyclerView.Adapter<DetailTableComboAdapter.MyViewHolder> {
+    ArrayList<MealComboUsed> list;
     Context context;
     String ownerID;
-
-    public DetailTableAdapter(ArrayList<MealUsed> list, Context context, String ownerID){
-        this.context = context;
-        this.list = list;
-        this.ownerID = ownerID;
-    }
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        CardView cardView = (CardView) inflater.inflate(R.layout.layout_item_detail_table, parent, false);
+        CardView cardView = (CardView) inflater.inflate(R.layout.layout_item_detail_table,parent,false);
         return new MyViewHolder(cardView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        MealUsed model = list.get(position);
+        MealComboUsed model = list.get(position);
         holder.tvMeal_amount.setText(model.getAmount()+"");
         holder.tvMeal_name.setText(model.getMealName());
         holder.tvMeal_price.setText(model.getMealPrice());
         String path = "OwnerManager/"+ownerID+"/QuanLyMonAn";
         setImage(holder,path,model.getMealImage());
     }
-
-    public void setImage(final MyViewHolder holder, String path, String id_image) {
+    public void setImage(final DetailTableComboAdapter.MyViewHolder holder, String path, String id_image) {
         try {
             final File localFile = File.createTempFile("images", "png");
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
@@ -84,7 +75,6 @@ public class DetailTableAdapter extends RecyclerView.Adapter<DetailTableAdapter.
             e.printStackTrace();
         }
     }
-
     @Override
     public int getItemCount() {
         return list.size();

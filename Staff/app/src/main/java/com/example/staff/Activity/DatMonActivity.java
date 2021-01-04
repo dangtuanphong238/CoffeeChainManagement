@@ -1,4 +1,4 @@
-package com.example.staff;
+package com.example.staff.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-public class DatMon extends AppCompatActivity {
+import com.example.staff.R;
+
+public class DatMonActivity extends AppCompatActivity {
     ImageView imgExit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +19,7 @@ public class DatMon extends AppCompatActivity {
         imgExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DatMon.this, ChiTietBan.class));
+                startActivity(new Intent(DatMonActivity.this, ChiTietBanActivity.class));
             }
         });
     }

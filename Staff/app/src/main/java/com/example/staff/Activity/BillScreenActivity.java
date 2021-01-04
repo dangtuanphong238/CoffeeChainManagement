@@ -1,10 +1,12 @@
-package com.example.staff;
+package com.example.staff.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class BillScreen extends AppCompatActivity {
+import com.example.staff.R;
+
+public class BillScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

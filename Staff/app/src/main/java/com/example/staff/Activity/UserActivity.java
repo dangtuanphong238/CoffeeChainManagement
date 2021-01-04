@@ -1,16 +1,16 @@
-package com.example.staff;
+package com.example.staff.Activity;
 
-public class User {
+public class UserActivity {
 
     public String user;
     public String pass;
     public String id;
-    public User(String id, String user, String pass) {
+    public UserActivity(String id, String user, String pass) {
         this.user = user;
         this.pass = pass;
         this.id = id;
     }
-    public User(){}
+    public UserActivity(){}
 
     public String getId() {
         return id;

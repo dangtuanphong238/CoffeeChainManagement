@@ -1,4 +1,4 @@
-package com.example.staff;
+package com.example.staff.Activity;
 
 public class Message {
     public String userID;

@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.staff.DatMon;
+import com.example.staff.Activity.DatMonActivity;
 import com.example.staff.Model.MonAnModel;
 import com.example.staff.Adapter.MonAnAdapter;
 import com.example.staff.R;
@@ -66,7 +66,7 @@ public class CoffeeProductFragment extends Fragment {
         coffeerecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                Intent intent = new Intent(getActivity(), DatMon.class);
+                Intent intent = new Intent(getActivity(), DatMonActivity.class);
                 startActivity(intent);
                 return false;
             }

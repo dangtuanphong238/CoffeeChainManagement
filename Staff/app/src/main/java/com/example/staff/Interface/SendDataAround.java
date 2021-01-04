@@ -1,4 +1,4 @@
-package com.example.staff.Adapter;
+package com.example.staff.Interface;
 
 import com.example.staff.Model.MealModel;
 

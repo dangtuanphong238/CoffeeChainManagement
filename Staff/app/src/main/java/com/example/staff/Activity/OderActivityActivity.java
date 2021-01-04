@@ -1,10 +1,9 @@
-package com.example.staff;
+package com.example.staff.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.staff.Adapter.ListMealAdapter;
 import com.example.staff.Model.MealModel;
+import com.example.staff.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
-public class OderActivity extends AppCompatActivity {
+public class OderActivityActivity extends AppCompatActivity {
     public static final String KEY_UPDATE = "UPDATE_ITEM";
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
@@ -61,7 +61,7 @@ public class OderActivity extends AppCompatActivity {
                 }
                 else if(keySpinner.equals("Combo")) {
                     getDataSpinerCombo();
-                    Toast.makeText(OderActivity.this, "COmbo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OderActivityActivity.this, "COmbo", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     FillSpinner(keySpinner);
@@ -96,7 +96,7 @@ public class OderActivity extends AppCompatActivity {
                                 }
                             }
                         }
-                        listMealAdapter = new ListMealAdapter(OderActivity.this, R.layout.custom_recycleview, listMonAn);
+                        listMealAdapter = new ListMealAdapter(OderActivityActivity.this, R.layout.custom_recycleview, listMonAn);
                         listMealAdapter.notifyDataSetChanged();
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -127,7 +127,7 @@ public class OderActivity extends AppCompatActivity {
                             }
 
                         }
-                        listMealAdapter = new ListMealAdapter(OderActivity.this, R.layout.custom_recycleview, listMonAn);
+                        listMealAdapter = new ListMealAdapter(OderActivityActivity.this, R.layout.custom_recycleview, listMonAn);
                         listMealAdapter.notifyDataSetChanged();
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -161,7 +161,7 @@ public class OderActivity extends AppCompatActivity {
                     }
 
                 }
-                listMealAdapter = new ListMealAdapter(OderActivity.this, R.layout.custom_recycleview, listMonAn);
+                listMealAdapter = new ListMealAdapter(OderActivityActivity.this, R.layout.custom_recycleview, listMonAn);
                 listMealAdapter.notifyDataSetChanged();
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -191,7 +191,7 @@ public class OderActivity extends AppCompatActivity {
                         }
                     }
                 }
-                listMealAdapter = new ListMealAdapter(OderActivity.this, R.layout.custom_recycleview, listMonAn);
+                listMealAdapter = new ListMealAdapter(OderActivityActivity.this, R.layout.custom_recycleview, listMonAn);
                 listMealAdapter.notifyDataSetChanged();
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -209,7 +209,7 @@ public class OderActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MealModel mealMEAL = listMonAn.get(position);
-                Intent intent = new Intent(getApplicationContext(), CaiDatBill.class);
+                Intent intent = new Intent(getApplicationContext(), CaiDatBillActivity.class);
 //                intent.putExtra("BILL", mealMEAL);
                 startActivity(intent);
                 System.out.println("1111"+mealMEAL);

@@ -1,4 +1,4 @@
-package com.example.staff.Adapter;
+package com.example.staff.Interface;
 
 public interface RecyclerviewClick {
     void onItemClick(int position);
