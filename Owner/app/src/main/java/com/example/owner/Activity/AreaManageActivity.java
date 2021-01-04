@@ -196,8 +196,10 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
     }
 
     public void checkFirstTime(){
-        String path = "/OwnerManager/Owner4/QuanLyKhuVuc";
         FirebaseDatabase database = FirebaseDatabase.getInstance();
+        SharedPreferences pref = getSharedPreferences(LoginActivity.SHARED_PREFS, MODE_PRIVATE);
+        String ownerID = pref.getString(LoginActivity.OWNERID, null);
+        String path = "/OwnerManager/"+ownerID+"/QuanLyKhuVuc";
         final DatabaseReference myRef = database.getReference(path);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override

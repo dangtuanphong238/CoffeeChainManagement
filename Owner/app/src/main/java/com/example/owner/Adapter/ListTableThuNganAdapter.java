@@ -52,6 +52,7 @@ public class ListTableThuNganAdapter extends RecyclerView.Adapter<ListTableThuNg
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                areaID = areaID.replace("Area","");
                 DetaiAndPaymentlTableDialog dialog = new DetaiAndPaymentlTableDialog(context,_path,ownerID,areaID,"Table"+tableID);
                 dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 dialog.show();
