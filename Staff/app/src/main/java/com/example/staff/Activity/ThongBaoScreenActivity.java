@@ -1,11 +1,4 @@
-package com.example.staff;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.example.staff.Activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,8 +8,16 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.staff.Adapter.MessageAdapter;
 import com.example.staff.Global.Public_func;
+import com.example.staff.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class Chatwithowner extends AppCompatActivity {
+public class ThongBaoScreenActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ImageButton btnMnu;
@@ -52,10 +53,11 @@ public class Chatwithowner extends AppCompatActivity {
     private String sOwnerID;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chatwithowner);
+        setContentView(R.layout.activity_thong_bao_screen);
         anhXa();
         txtTitleActivity.setText("Thông Báo");
         openMenu();
@@ -68,17 +70,17 @@ public class Chatwithowner extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.itemthongBao:
-                        Public_func.clickItemMenu(Chatwithowner.this, ChooseChat.class);
+                        Public_func.clickItemMenu(ThongBaoScreenActivity.this, ChooseChatActivity.class);
                         return true;
                     case R.id.itemKhuVuc:
-                        Public_func.clickItemMenu(Chatwithowner.this, KhuVuc.class);
+                        Public_func.clickItemMenu(ThongBaoScreenActivity.this, KhuVucActivity.class);
                         return true;
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
-                        Public_func.clickLogout(Chatwithowner.this, LoginScreen.class);
+                        Public_func.clickLogout(ThongBaoScreenActivity.this, LoginScreenActivity.class);
                         return true;
                 }
                 return true;
@@ -113,17 +115,55 @@ public class Chatwithowner extends AppCompatActivity {
     {
         SharedPreferences sharedPreferences1 = getSharedPreferences("datafile", MODE_PRIVATE);
         sMyId = sharedPreferences1.getString("myId",null);
-        System.out.println("id111"+sMyId);
+        System.out.println(sMyId);
     }
+
+    private void setOnClick(){
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String messageText = edtInputMessage.getText().toString();
+                if (!messageText.isEmpty()) {
+                    String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                    String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+
+                    Message message = new Message(sMyId, messageText, currentDate + " " + currentTime);
+                    firebaseDatabase = FirebaseDatabase.getInstance();
+                    databaseReference = firebaseDatabase.getReference();
+                    databaseReference.child("OwnerManager").child(sOwnerID).child("Message").push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            edtInputMessage.setText(null);
+                            recyclerView.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // Call smooth scroll
+                                    recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            System.out.println("Failed_message");
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
+
     private void displayMessages(final ArrayList<Message> arrMessage)
     {
-        txtTitleActivity.setText("Chat with owner");
-        recyclerView.setLayoutManager(new LinearLayoutManager(Chatwithowner.this));
+        txtTitleActivity.setText("Chat with owner and everyone");
+        recyclerView.setLayoutManager(new LinearLayoutManager(ThongBaoScreenActivity.this));
         recyclerView.setHasFixedSize(true);
 //        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference("Message");
         DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference();
 
-        dbReference.child("OwnerManager").child(sOwnerID).child("MessageStaff").child(sOwnerID+"|"+sMyId).addValueEventListener(new ValueEventListener() {
+        dbReference.child("OwnerManager").child(sOwnerID).child("Message").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -163,40 +203,6 @@ public class Chatwithowner extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
-    }
-    private void setOnClick(){
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String messageText = edtInputMessage.getText().toString();
-                if (!messageText.isEmpty()) {
-                    String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-                    String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
-
-                    Message message = new Message(sMyId, messageText, currentDate + " " + currentTime);
-                    firebaseDatabase = FirebaseDatabase.getInstance();
-                    databaseReference = firebaseDatabase.getReference();
-                    databaseReference.child("OwnerManager").child(sOwnerID).child("MessageStaff").child(sOwnerID+"|"+sMyId).push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            edtInputMessage.setText(null);
-                            recyclerView.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    // Call smooth scroll
-                                    recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
-                                }
-                            });
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            System.out.println("Failed_message");
-                        }
-                    });
-                }
             }
         });
     }

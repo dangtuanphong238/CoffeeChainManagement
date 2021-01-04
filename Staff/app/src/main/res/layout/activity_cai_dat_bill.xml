@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FE9B58"
     android:orientation="vertical"
-    tools:context=".CaiDatBill">
+    tools:context=".Activity.CaiDatBillActivity">
 
 
     <LinearLayout

@@ -1,16 +1,16 @@
-package com.example.staff;
+package com.example.staff.Activity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ParseTime {
+public class ParseTimeActivity {
     Long time;
 
-    public ParseTime(Long time) {
+    public ParseTimeActivity(Long time) {
         this.time = time;
     }
 
-    public ParseTime(String time) {
+    public ParseTimeActivity(String time) {
         this.time = Long.parseLong(time);
     }
 

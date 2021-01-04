@@ -1,7 +1,6 @@
 package com.example.staff.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.staff.Interface.RecyclerviewClick;
 import com.example.staff.Model.TableModel;
-import com.example.staff.PhongScreen;
+import com.example.staff.Activity.PhongScreenActivity;
 import com.example.staff.R;
 
 import java.util.ArrayList;
@@ -41,22 +41,13 @@ public class ListTableAdapter extends RecyclerView.Adapter<ListTableAdapter.MyVi
     public void onBindViewHolder(@NonNull ListTableAdapter.MyViewHolder holder, int position) {
         TableModel model = list.get(position);
         holder.tvTableName.setText("Bàn " + (position + 1));
-        if (model.getTableStatus().equals((PhongScreen.ERROR + ""))) {
+        if (model.getTableStatus().equals((PhongScreenActivity.ERROR + ""))) {
             holder.imgTable.setBackgroundColor(0xFF000000);
-        } else if (model.getTableStatus().equals(PhongScreen.BOOK + "")) {
+        } else if (model.getTableStatus().equals(PhongScreenActivity.BOOK + "")) {
             holder.imgTable.setBackgroundColor(0xFFCA62E4);
-        } else if (model.getTableStatus().equals(PhongScreen.HAVING + "")) {
+        } else if (model.getTableStatus().equals(PhongScreenActivity.HAVING + "")) {
             holder.imgTable.setBackgroundColor(0xFFE82929);
-        } else if (model.getTableStatus().equals(PhongScreen.LOADINGBOOK + ""))
-        {
-            holder.imgTable.setBackgroundColor(Color.GREEN);
-        }
-        else if (model.getTableStatus().equals(PhongScreen.LOADINGERROR + ""))
-        {
-            holder.imgTable.setBackgroundColor(Color.GRAY);
-        }
-        else
-        {
+        } else {
             //CASE: BLANK
             holder.imgTable.setBackgroundColor(0xFFFFFFFF);
         }

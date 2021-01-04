@@ -1,8 +1,7 @@
-package com.example.staff;
+package com.example.staff.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -17,7 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.textfield.TextInputLayout;
+import com.example.staff.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,12 +25,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class LoginScreen extends AppCompatActivity {
+public class LoginScreenActivity extends AppCompatActivity {
     Spinner spinner;
     Button btnLogin;
     EditText username, password;
     ImageButton imageButton;
-    private ArrayList<User> lstUsers = new ArrayList<>();
+    private ArrayList<UserActivity> lstUserActivities = new ArrayList<>();
     private ArrayList<String> lstOwnerList = new ArrayList<>();
     private ArrayList<String> listOwner = new ArrayList<>();
     private FirebaseDatabase database;
@@ -54,7 +53,6 @@ public class LoginScreen extends AppCompatActivity {
         password = findViewById(R.id.edtpassword);
         database = FirebaseDatabase.getInstance();
         imageButton = findViewById(R.id.imgClickicons);
-
         dataSpinner();
         getListOwner();
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -81,9 +79,9 @@ public class LoginScreen extends AppCompatActivity {
         if (sharedPreferences.contains("username") && sharedPreferences.contains("password") && sharedPreferences.contains("idkey")) {
             username.setText(sharedPreferences.getString("username", ""));
             password.setText(sharedPreferences.getString("password", ""));
-            User user = new User();
-            user.setUser(username.getText().toString());
-            Intent intent = new Intent(LoginScreen.this, KhuVuc.class);
+            UserActivity userActivity = new UserActivity();
+            userActivity.setUser(username.getText().toString());
+            Intent intent = new Intent(LoginScreenActivity.this, KhuVucActivity.class);
             startActivity(intent);
             Toast.makeText(this, "Đăng nhập thành công !", Toast.LENGTH_SHORT).show();
             finish();
@@ -91,21 +89,20 @@ public class LoginScreen extends AppCompatActivity {
     }
 
 
-    public void setOnClick() {
-
+    public void dataStaff() {
                 for (String owner : lstOwnerList) {
                     if (owner.equals(keyOwner)) {
                         saveOwnerIDToLocalStorage(keyOwner);
-                        System.out.println("keyOwner" +keyOwner);
+                        System.out.println("keyOwner111    " +keyOwner);
                         database = FirebaseDatabase.getInstance();
-                        myRef = database.getReference().child("OwnerManager").child(keyOwner).child("QuanLyNhanVien");
+                        myRef = database.getReference().child("OwnerManager").child(maCh).child("QuanLyNhanVien");
                         myRef.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                    User user = dataSnapshot.getValue(User.class);
-                                    System.out.println(user.user + " " + user.pass + " ");
-                                    lstUsers.add(user);
+                                    UserActivity userActivity = dataSnapshot.getValue(UserActivity.class);
+                                    System.out.println(userActivity.user + " " + userActivity.pass + " ");
+                                    lstUserActivities.add(userActivity);
                                 }
                             }
 
@@ -127,14 +124,13 @@ public class LoginScreen extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listOwner.clear();
-
-
+                dataStaff();
                 for (DataSnapshot item : dataSnapshot.getChildren()) {
                     listOwner.add(item.getKey() + " - " + item.child("tencuahang").getValue(String.class));
                     maCh = item.getKey();
                     System.out.println("1234" + listOwner);
                 }
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(LoginScreen.this, R.layout.style_spinner, listOwner);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(LoginScreenActivity.this, R.layout.style_spinner, listOwner);
                 spinner.setAdapter(arrayAdapter);
             }
 
@@ -147,15 +143,16 @@ public class LoginScreen extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                position = position+1;
-                System.out.println("aaa" + position);
+                dataStaff();
                 idOwner = parent.getItemAtPosition(position).toString();
-                setOnClick();
+                System.out.println("pôppopop" + position);
                 sOwnerID = idOwner.split("\\s", 2);
                 for (String key : sOwnerID) {
-                    System.out.println(key);
+                    key = sOwnerID[0];
+                    keyOwner = key;
+                    dataStaff();
                 }
-                keyOwner = sOwnerID[0];
+                Toast.makeText(LoginScreenActivity.this, keyOwner, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -163,6 +160,7 @@ public class LoginScreen extends AppCompatActivity {
 
             }
         });
+
     }
 
     private void setLoginUserPass() {
@@ -170,8 +168,8 @@ public class LoginScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean isSuccess = false;
-                for (User user : lstUsers) {
-                    if (user.user.equals(username.getText().toString()) && user.pass.equals(password.getText().toString())) {
+                for (UserActivity userActivity : lstUserActivities) {
+                    if (userActivity.user.equals(username.getText().toString()) && userActivity.pass.equals(password.getText().toString())) {
                         isSuccess = true;
                         username.setError(null);
 //                username.setError(false);
@@ -180,16 +178,16 @@ public class LoginScreen extends AppCompatActivity {
                         editor.putString("username", username.getText().toString());
                         editor.putString("password", password.getText().toString());
                         editor.putString("idkey", idOwner);
-                        editor.putString("myId", user.getId());
+                        editor.putString("myId", userActivity.getId());
                         editor.commit();
-                        Intent intent = new Intent(LoginScreen.this, KhuVuc.class);
+                        Intent intent = new Intent(LoginScreenActivity.this, KhuVucActivity.class);
                         startActivity(intent);
                         finish();
-                        Toast.makeText(LoginScreen.this, "Đăng Nhập Thành Công!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginScreenActivity.this, "Đăng Nhập Thành Công!", Toast.LENGTH_SHORT).show();
                     }
                 }
                 if (isSuccess == false) {
-                    Toast.makeText(LoginScreen.this, "Đăng Nhập Thất Bại!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginScreenActivity.this, "Đăng Nhập Thất Bại!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -217,7 +215,7 @@ public class LoginScreen extends AppCompatActivity {
     private void saveOwnerIDToLocalStorage(String ownerKey) {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(OWNERID, ownerKey);
+        editor.putString(OWNERID, keyOwner);
         editor.apply();
     }
 }

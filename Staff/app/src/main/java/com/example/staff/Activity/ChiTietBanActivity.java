@@ -1,4 +1,4 @@
-package com.example.staff;
+package com.example.staff.Activity;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -17,12 +17,13 @@ import com.example.staff.Fragment.AllProductFragment;
 import com.example.staff.Fragment.CoffeeProductFragment;
 import com.example.staff.Fragment.TraSuaProductFragment;
 import com.example.staff.Model.MonAnModel;
+import com.example.staff.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 
-public class ChiTietBan extends AppCompatActivity {
+public class ChiTietBanActivity extends AppCompatActivity {
     RecyclerView rcChiTiet, rcChiTiet1;
     ArrayList<MonAnModel> listMonAnModel;
     MonAnAdapter monAnAdapter;

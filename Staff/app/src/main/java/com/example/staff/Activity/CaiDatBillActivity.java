@@ -1,10 +1,8 @@
-package com.example.staff;
+package com.example.staff.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,8 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.staff.Model.MealModel;
+import com.example.staff.R;
 
-public class CaiDatBill extends AppCompatActivity {
+public class CaiDatBillActivity extends AppCompatActivity {
     ImageView imageViewUp, imageViewDown, imageViewClose;
     EditText soluongMon;
     TextView tenmon, giamon, tongtien;
@@ -36,7 +35,7 @@ public class CaiDatBill extends AppCompatActivity {
 
     private void setEvent() {
         if (soluong == 100) {
-            Toast.makeText(CaiDatBill.this, "Không được quá 99", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CaiDatBillActivity.this, "Không được quá 99", Toast.LENGTH_SHORT).show();
         } else {
             imageViewUp.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -51,7 +50,7 @@ public class CaiDatBill extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (soluong == 1 || soluong < 1) {
-                    Toast.makeText(CaiDatBill.this, "Tối thiểu phải là một", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CaiDatBillActivity.this, "Tối thiểu phải là một", Toast.LENGTH_SHORT).show();
                 } else {
                     soluong--;
                     soluongMon.setText(String.valueOf(soluong));
@@ -62,7 +61,7 @@ public class CaiDatBill extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CaiDatBill.this,BillScreen.class);
+                Intent intent = new Intent(CaiDatBillActivity.this, BillScreenActivity.class);
                 startActivity(intent);
             }
         });

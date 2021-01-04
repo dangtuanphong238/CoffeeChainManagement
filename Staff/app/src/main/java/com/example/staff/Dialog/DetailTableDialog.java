@@ -19,10 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.staff.Adapter.DetailTableAdapter;
 import com.example.staff.Model.BillModel;
 import com.example.staff.Model.DoanhThuMonth;
+import com.example.staff.Model.MealComboUsed;
 import com.example.staff.Model.MealModel;
 import com.example.staff.Model.MealUsed;
 import com.example.staff.Model.Sum;
-import com.example.staff.ParseTime;
+import com.example.staff.Activity.ParseTimeActivity;
 import com.example.staff.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,7 +35,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.sql.SQLOutput;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,11 +49,11 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
     String tableID;
     int tongtien;
     Date date = new Date();
-    ParseTime parseTime = new ParseTime(date.getTime());
-    String year = parseTime.getYear();
-    String month = "Thang" + parseTime.getMonth();
-    String _date = "Ngay" + parseTime.getDate();
-    String ngay = parseTime.getDate();
+    ParseTimeActivity parseTimeActivity = new ParseTimeActivity(date.getTime());
+    String year = parseTimeActivity.getYear();
+    String month = "Thang" + parseTimeActivity.getMonth();
+    String _date = "Ngay" + parseTimeActivity.getDate();
+    String ngay = parseTimeActivity.getDate();
 
     public DetailTableDialog(@NonNull Context context, String url, String ownerID, String areaID, String tableID) {
         super(context);
@@ -83,6 +83,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
         btnPay = findViewById(R.id.btnPayment);
         btnCancel = findViewById(R.id.btnCancel);
         getDataOfTable();
+//        getDataOfTableCombo();
         btnCancel.setOnClickListener(this);
         String name = tableID.replace("Table", "Bàn ");
         tvTableName.setText(name);
@@ -96,7 +97,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
     }
 
     ArrayList<MealUsed> list = new ArrayList<>();
-
+    ArrayList<MealComboUsed> listCombo = new ArrayList<>();
     public void getDataOfTable() {
         //Read list meal used in dialog from branch TableActive
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -143,7 +144,55 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
             }
         });
     }
-
+//    public void getDataOfTableCombo() {
+//        //Read list meal used in dialog from branch TableActive
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference().child("OwnerManager").child(ownerID).child("TableActive").child(areaID).child(tableID).child("Meal");
+////        String path = url + "/" + tableID + "/Meal";
+////        final DatabaseReference myRef = database.getReference();
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                try {
+//                    for (DataSnapshot data : snapshot.getChildren()) {
+//                        ModelCombo modelCombo = new ModelCombo(
+//                                data.child("category").getValue() + "",
+//                                data.child("id").getValue() + "",
+//                                data.child("price").getValue() + "",
+//                                data.child("name").getValue() + "",
+//                                data.child("image").getValue() + "",
+//                                data.child("description").getValue()+"",
+//                                data.child("price").getValue()+"",
+//                                data.child("uudai").getValue()+"");
+//                        String amount_tempt = (data.child("amount").getValue() + "");
+//                        String timeInput = (data.child("timeInput").getValue() + "");
+//                        int amount = 0;
+//                        if (!amount_tempt.equals("null")) {
+//                            amount = Integer.parseInt(amount_tempt);
+//                        }
+//                        MealComboUsed mealComboUsed = new MealComboUsed(amount, modelCombo, timeInput);
+//                        listCombo.add(mealComboUsed);
+//                    }
+//                    DetailTableAdapter adapter = new DetailTableAdapter(list, context, ownerID);
+//                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+//                    linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//                    rvMealUsed.setLayoutManager(linearLayoutManager);
+//                    rvMealUsed.setAdapter(adapter);
+//                    tvSumPrice.setText(sumMoney(list) + "");
+//                } catch (Exception ex) {
+////                    Log.w("PROBLEM", "get data from url " + myRef.toString() + " have problem");
+////                    System.out.println("PROBLEM: " + "get data from url " + myRef.toString() + " have problem");
+//                }
+//            }
+//
+//            @SuppressLint("LongLogTag")
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.w("PROBLEM", error.getMessage());
+//                Log.w("Read list meal in dialog Error", error.getMessage());
+//            }
+//        });
+//    }
     public int sumMoney(ArrayList<MealUsed> list) {
         int sum = 0;
         for (int i = 0; i < list.size(); i++) {
@@ -153,6 +202,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
     }
 
     ArrayList<MealUsed> listMealUsed = new ArrayList<>();
+    ArrayList<MealComboUsed> listMealUsedCombo = new ArrayList<>();
 
     public void createBill() {
         //Read data from branch Table_Active
@@ -237,6 +287,50 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
             }
         });
     }
+    public void paymentCombo(final ArrayList<MealComboUsed> listCombo) {
+        //Read data from branch QuanLyHoaDon to check how much bill?
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/QuanLyHoaDon/" + year + "/" + month + "/" + _date + "/Bills");
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                String bill_id = "";
+                if (snapshot.getValue() == null) {
+                    bill_id = "Bill1";
+                    DatabaseReference path = myRef.child(bill_id);
+                    path.child("ID").setValue(bill_id);
+                    path.child("Area").setValue(ownerID);
+                    path.child("Table").setValue(tableID);
+                    path.child("TimeOutput").setValue(timestamp.getTime() + "");
+                    path.child("TimeInput").setValue(list.get(0).getTimeInput());
+                    int sum = 0;
+                    for (int i = 0; i < listCombo.size(); i++) {
+                        sum += list.get(i).getSumPrice();
+                        DatabaseReference infoMeal = path.child("Meal").child(listCombo.get(i).getMealID());
+                        infoMeal.child("amount").setValue(String.valueOf(listCombo.get(i).getAmount()));
+                        infoMeal.child("category").setValue(listCombo.get(i).getMealCategory());
+                        infoMeal.child("id").setValue(listCombo.get(i).getMealID());
+                        infoMeal.child("image").setValue(listCombo.get(i).getMealImage());
+                        infoMeal.child("name").setValue(listCombo.get(i).getMealName());
+                        infoMeal.child("price").setValue(listCombo.get(i).getMealPrice());
+                        infoMeal.child("timeInput").setValue(listCombo.get(i).getTimeInput());
+                    }
+                    path.child("Sum").setValue(sum + "");
+                } else {
+                    ArrayList listBill = parseListBill(snapshot);
+                    setValueForBranchBillCombo(listBill, myRef, listCombo);
+
+                }
+                setUpTableAfterPayment();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("Write Bill Error", error.getMessage());
+            }
+        });
+    }
 
     //Only bill #2 onwards
     public ArrayList<BillModel> parseListBill(DataSnapshot snapshot) {
@@ -302,6 +396,33 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
         }
         path.child("Sum").setValue(sum + "");
     }
+    public void setValueForBranchBillCombo(ArrayList<BillModel> listBill, DatabaseReference myRef, ArrayList<MealComboUsed> listCombo) {
+        listBill = sortListAsASC(listBill);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String bill_id = "";
+        bill_id = "Bill" + (listBill.get(listBill.size() - 1).get_ID() + 1);
+
+        DatabaseReference path = myRef.child(bill_id);
+        path.child("ID").setValue(bill_id);
+        path.child("Area").setValue(ownerID);
+        path.child("Table").setValue(tableID);
+        path.child("TimeOutput").setValue(timestamp.getTime() + "");
+        path.child("TimeInput").setValue(listCombo.get(0).getTimeInput());
+        int sum = 0;
+        //Write list meal in bill
+        for (int i = 0; i < list.size(); i++) {
+            sum += listCombo.get(i).getSumPrice();
+            DatabaseReference infoMeal = path.child("Meal").child(list.get(i).getMealID());
+            infoMeal.child("amount").setValue(String.valueOf(list.get(i).getAmount()));
+            infoMeal.child("category").setValue(listCombo.get(i).getMealCategory());
+            infoMeal.child("id").setValue(listCombo.get(i).getMealID());
+            infoMeal.child("image").setValue(listCombo.get(i).getMealImage());
+            infoMeal.child("name").setValue(listCombo.get(i).getMealName());
+            infoMeal.child("price").setValue(listCombo.get(i).getMealPrice());
+            infoMeal.child("timeInput").setValue(listCombo.get(i).getTimeInput());
+        }
+        path.child("Sum").setValue(sum + "");
+    }
 
     ArrayList<BillModel> sortListAsASC(ArrayList<BillModel> list) {
         ArrayList<BillModel> array = list;
@@ -344,7 +465,11 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
                 if (listMealUsed.size() != 0) {
                     payment(listMealUsed);
                     getTien();
-                } else {
+                } else if(listMealUsedCombo.size() !=0){
+                    paymentCombo(listMealUsedCombo);
+                    getTien();
+                }
+                else {
                     Toast.makeText(context, "Bàn trống không thể thanh toán", Toast.LENGTH_SHORT).show();
                 }
                 break;

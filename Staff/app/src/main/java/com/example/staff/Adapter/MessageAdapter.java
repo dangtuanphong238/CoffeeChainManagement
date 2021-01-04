@@ -10,10 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.staff.Message;
+import com.example.staff.Activity.Message;
 import com.example.staff.R;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder>{
