@@ -36,6 +36,8 @@ public final static int BLANK = 0;
     public final static int BOOK = 1;
     public final static int HAVING = 2;
     public final static int ERROR = 3;
+    public final static int LOADINGBOOK = 4;
+    public final static int LOADINGERROR = 5;
     TextView txtTenPhong;
     private FirebaseDatabase database;
     DatabaseReference databaseReference;
@@ -162,6 +164,11 @@ public final static int BLANK = 0;
             //When be error
             //Toast notification
             UpdateTableDialog dialog = new UpdateTableDialog(this, url, sOwnerID, title, "Table"+lstPhong.get(position).getID(), lstPhong.get(position).getTableStatus());
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.show();
+        }
+        if(lstPhong.get(position).getTableStatus().equals("4")){
+            OrderDialog dialog = new OrderDialog(this, sOwnerID, title, "Table" + lstPhong.get(position).getID());
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
         }

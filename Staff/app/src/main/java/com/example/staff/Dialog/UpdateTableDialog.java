@@ -3,6 +3,7 @@ package com.example.staff.Dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -13,12 +14,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.staff.Activity.InfDatBanTrc;
 import com.example.staff.Activity.InfDatBanTrcActivity;
+import com.example.staff.Activity.ThongTinDatTruocActivity;
 import com.example.staff.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.internal.InternalTokenProvider;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class UpdateTableDialog extends Dialog implements View.OnClickListener {
     String url;
@@ -68,13 +74,23 @@ public class UpdateTableDialog extends Dialog implements View.OnClickListener {
         btnUnBook.setOnClickListener(this);
         btnBook.setOnClickListener(this);
         btnPayment.setOnClickListener(this);
-        if (status.equals("3")) {
+        if (status.equals("3") || status.equals("5")) {
             btnUnReport.setVisibility(View.VISIBLE);
             btnReport.setVisibility(View.GONE);
-        } else if (status.equals("1")) {
+            btnBook.setVisibility(View.GONE);
+            btnPayment.setVisibility(View.GONE);
+        }
+        else if (status.equals("1") || status.equals("4")) {
             btnUnBook.setVisibility(View.VISIBLE);
             btnBook.setVisibility(View.GONE);
-        } else {
+            btnPayment.setVisibility(View.GONE);
+            btnReport.setVisibility(View.GONE);
+        }
+        else if (status.equals("0"))
+        {
+            btnPayment.setVisibility(View.GONE);
+        }
+        else {
             btnUnReport.setVisibility(View.GONE);
             btnUnBook.setVisibility(View.GONE);
         }
@@ -87,7 +103,7 @@ public class UpdateTableDialog extends Dialog implements View.OnClickListener {
                 dismiss();
                 break;
             case R.id.btnUnReport:
-                returnTableNormal();
+                HuyBaoLoi();
                 break;
             case R.id.btnReport:
                 reportError();
@@ -131,12 +147,16 @@ public class UpdateTableDialog extends Dialog implements View.OnClickListener {
 //            }
 //        });
         Dialog_BaoLoi dialog_baoLoi = new Dialog_BaoLoi(context, url, ownerID, areaID, tableID,status);
-        dialog_baoLoi.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog_baoLoi.show();
-
     }
 
     public void returnTableNormal() {
+        Intent intent = new Intent(context, ThongTinDatTruocActivity.class);
+        intent.putExtra("AREAID",areaID);
+        intent.putExtra("TABLEID",tableID);
+        context.startActivity(intent);
+    }
+    public void HuyBaoLoi() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         String path = "OwnerManager/" + ownerID + "/QuanLyBan/" + areaID + "/" + tableID + "/tableStatus";
         DatabaseReference myRef = firebaseDatabase.getReference(path);
@@ -144,14 +164,12 @@ public class UpdateTableDialog extends Dialog implements View.OnClickListener {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(context, "Xóa trạng thái thành công", Toast.LENGTH_SHORT).show();
-
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                String path = "OwnerManager/" + ownerID + "/QuanLyBanDatTruoc" +
-                        "/"+ areaID + "/" +tableID + "/ThongTinDatTruoc";
+                String path = "OwnerManager/" + ownerID + "/QuanLyBanLoi" +
+                        "/"+ areaID + "/" + tableID + "/ThongTinLoi";
                 DatabaseReference myRef = firebaseDatabase.getReference(path);
                 myRef.removeValue();
             }
         });
     }
-
 }

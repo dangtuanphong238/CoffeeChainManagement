@@ -95,7 +95,7 @@ public class LoginScreenActivity extends AppCompatActivity {
                         saveOwnerIDToLocalStorage(keyOwner);
                         System.out.println("keyOwner111    " +keyOwner);
                         database = FirebaseDatabase.getInstance();
-                        myRef = database.getReference().child("OwnerManager").child(maCh).child("QuanLyNhanVien");
+                        myRef = database.getReference().child("OwnerManager").child(keyOwner).child("QuanLyNhanVien");
                         myRef.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {

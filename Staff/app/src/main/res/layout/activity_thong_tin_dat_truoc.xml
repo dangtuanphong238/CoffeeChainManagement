@@ -6,7 +6,7 @@
     android:background="#FE9B53"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activity.InfDatBanTrcActivity">
+    tools:context=".Activity.ThongTinDatTruocActivity">
 
 
     <LinearLayout
@@ -82,7 +82,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
-
+        <Button
+            android:layout_marginHorizontal="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/btnSua"
+            android:padding="20px"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/custom_button"
+            android:text="Sửa" />
         <Button
             android:layout_marginHorizontal="5dp"
             android:layout_width="match_parent"
@@ -93,7 +103,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:background="@drawable/custom_button"
-            android:text="Xác Nhận Đặt Bàn" />
+            android:text="Hủy Đặt" />
     </LinearLayout>
 
 
