@@ -24,25 +24,31 @@
             android:orientation="vertical"
             android:layout_weight="2"
             android:gravity="center|start">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1x Chocolate Freeze"
-                android:textStyle="bold"/>
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="100% Đường, 100% Đá, Size M"/>
+                android:text="100% Đường, 100% Đá, Size M"
+                android:textSize="14sp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="65.000đ"/>
+                android:text="65.000đ"
+                android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
