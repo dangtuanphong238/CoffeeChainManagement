@@ -12,41 +12,54 @@
        android:orientation="vertical"
        android:background="#FE9B58">
        <include layout="@layout/toolbar"/>
+
+       <RelativeLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+
+       <include layout="@layout/layout_background_view" />
+
        <LinearLayout
            android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_weight="4"
+           android:layout_height="match_parent"
            android:orientation="vertical">
-           <androidx.recyclerview.widget.RecyclerView
-               android:id="@+id/recyclerViewChat"
+           <LinearLayout
                android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:background="#fff"/>
-       </LinearLayout>
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_weight="0.5"
-           android:gravity="center"
-           android:orientation="horizontal"
-           android:paddingHorizontal="@dimen/normal5dp"
-           android:background="#fff">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/normal50dp"
-                android:background="@drawable/custom_edittext"
-                android:layout_weight="1"
-                android:paddingHorizontal="@dimen/normal20dp"
-                android:id="@+id/edtInputMessage"
-                />
-           <com.google.android.material.floatingactionbutton.FloatingActionButton
+               android:layout_height="0dp"
+               android:layout_weight="4"
+               android:orientation="vertical">
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/recyclerViewChat"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   />
+           </LinearLayout>
+           <LinearLayout
                android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-                android:src="@drawable/ic_send_48"
-               android:layout_marginStart="@dimen/normal5dp"
-               android:id="@+id/btnSend"
-               />
+               android:layout_height="0dp"
+               android:layout_weight="0.5"
+               android:gravity="center"
+               android:orientation="horizontal"
+               android:paddingHorizontal="@dimen/normal5dp"
+               android:background="#fff">
+               <EditText
+                   android:layout_width="match_parent"
+                   android:layout_height="@dimen/normal50dp"
+                   android:background="@drawable/custom_edittext"
+                   android:layout_weight="1"
+                   android:paddingHorizontal="@dimen/normal20dp"
+                   android:id="@+id/edtInputMessage"
+                   />
+               <com.google.android.material.floatingactionbutton.FloatingActionButton
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/ic_send_48"
+                   android:layout_marginStart="@dimen/normal5dp"
+                   android:id="@+id/btnSend"
+                   />
+           </LinearLayout>
        </LinearLayout>
+       </RelativeLayout>
    </LinearLayout>
     <!--    leftmenu-->
 <!--    <com.google.android.material.navigation.NavigationView-->

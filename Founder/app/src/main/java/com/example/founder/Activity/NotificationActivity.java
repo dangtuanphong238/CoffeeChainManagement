@@ -1,4 +1,4 @@
-package com.example.founder;
+package com.example.founder.Activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.founder.Public.Public_func;
+import com.example.founder.R;
 import com.example.founder.adapter.ChatOneToOneAdapter;
 import com.example.founder.adapter.ChatRoomAdapter;
 import com.example.founder.model.Message;
@@ -36,8 +37,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class NotificationActivity extends AppCompatActivity {
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
+//    private DrawerLayout drawerLayout;
+//    private NavigationView navigationView;
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
 
@@ -60,38 +61,40 @@ public class NotificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thong_bao);
         anhXa();
+        btnMnu.setImageResource(R.drawable.ic_back_24);
+
         getFounderIDFromLocalStorage();
         getChatTypeFromBundle();
         openMenu();
         //call function onClickItem
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-
-                    case R.id.it1:
-                        Public_func.clickItemMenu(NotificationActivity.this, ActivityDoanhThu.class);
-                        return true;
-                    case R.id.danh_sach_cua_hang:
-                        recreate();
-                        return true;
-                    case R.id.tao_tai_khoan_owner:
-                        Public_func.clickItemMenu(NotificationActivity.this, ThemKhuVuc.class);
-                        return true;
-                    case R.id.thong_bao:
-                        Public_func.clickItemMenu(NotificationActivity.this, ChooseChatActivity.class);
-                        return true;
-                    case R.id.log_out:
-                        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.clear();
-                        editor.apply();
-                        Public_func.clickLogout(NotificationActivity.this, LoginActivity.class);
-                        return true;
-                }
-                return true;
-            }
-        });
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                switch (item.getItemId()) {
+//
+//                    case R.id.it1:
+//                        Public_func.clickItemMenu(NotificationActivity.this, TongDoanhThuActivity.class);
+//                        return true;
+//                    case R.id.danh_sach_cua_hang:
+//                        recreate();
+//                        return true;
+//                    case R.id.tao_tai_khoan_owner:
+//                        Public_func.clickItemMenu(NotificationActivity.this, ThemTaiKhoanKhuVucActivity.class);
+//                        return true;
+//                    case R.id.thong_bao:
+//                        Public_func.clickItemMenu(NotificationActivity.this, ChooseChatActivity.class);
+//                        return true;
+//                    case R.id.log_out:
+//                        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+//                        SharedPreferences.Editor editor = sharedPreferences.edit();
+//                        editor.clear();
+//                        editor.apply();
+//                        Public_func.clickLogout(NotificationActivity.this, LoginActivity.class);
+//                        return true;
+//                }
+//                return true;
+//            }
+//        });
         setOnClick();
     }
 
@@ -123,7 +126,8 @@ public class NotificationActivity extends AppCompatActivity {
                         String messageText = dataSnapshot.child("messageText").getValue().toString();
                         String messageTime = dataSnapshot.child("messageTime").getValue().toString();
                         String userID = dataSnapshot.child("userID").getValue().toString();
-                        Message message = new Message(userID, messageText, messageTime);
+                        String username = dataSnapshot.child("username").getValue().toString();
+                        Message message = new Message(userID, messageText, messageTime, username);
                         arrMessage.add(message);
 //                        System.out.println("message " + message.getMessageText());
                     }
@@ -164,8 +168,8 @@ public class NotificationActivity extends AppCompatActivity {
                         String messageText = dataSnapshot.child("messageText").getValue().toString();
                         String messageTime = dataSnapshot.child("messageTime").getValue().toString();
                         String userID = dataSnapshot.child("userID").getValue().toString();
-                        Message message = new Message(userID, messageText, messageTime);
-                        arrMessage.add(message);
+                        String username = dataSnapshot.child("username").getValue().toString();
+                        Message message = new Message(userID, messageText, messageTime, username);                        arrMessage.add(message);
                         System.out.println("message " + message.getMessageText());
                     }
                     chatRoomAdapter = new ChatRoomAdapter(arrMessage, founderID);
@@ -190,8 +194,8 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
     private void anhXa() {
-        drawerLayout = findViewById(R.id.activity_main_drawer);
-        navigationView = findViewById(R.id.navDrawerMenu);
+//        drawerLayout = findViewById(R.id.activity_main_drawer);
+//        navigationView = findViewById(R.id.navDrawerMenu);
         btnMnu = findViewById(R.id.btnMnu);
         txtTitleActivity = findViewById(R.id.idtoolbar);
         recyclerView = findViewById(R.id.recyclerViewChat);
@@ -203,7 +207,8 @@ public class NotificationActivity extends AppCompatActivity {
         btnMnu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
+//                drawerLayout.openDrawer(GravityCompat.START);
+                finish();
             }
         });
     }
@@ -211,7 +216,7 @@ public class NotificationActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        drawerLayout.closeDrawer(GravityCompat.START);
+//        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     public void getFounderIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
@@ -231,7 +236,7 @@ public class NotificationActivity extends AppCompatActivity {
                         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
-                        Message message = new Message(founderID, messageText, currentDate + " " + currentTime);
+                        Message message = new Message(founderID, messageText, currentDate + " " + currentTime,"Founder 0");
                         firebaseDatabase = FirebaseDatabase.getInstance();
                         databaseReference = firebaseDatabase.getReference();
                         databaseReference.child("FounderManager").child("FounderAccount").child(founderID).
@@ -266,7 +271,7 @@ public class NotificationActivity extends AppCompatActivity {
                         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
-                        Message message = new Message(founderID, messageText, currentDate + " " + currentTime);
+                        Message message = new Message(founderID, messageText, currentDate + " " + currentTime,"Founder 0");
                         firebaseDatabase = FirebaseDatabase.getInstance();
                         databaseReference = firebaseDatabase.getReference();
                         databaseReference.child("FounderManager").child("FounderAccount").child(founderID)

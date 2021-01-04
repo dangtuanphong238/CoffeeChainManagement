@@ -2,6 +2,7 @@ package com.example.owner.Global;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -21,6 +22,12 @@ public class Public_func {
     public static void clickLogout(Activity activity, Class aClass){
         Intent intent = new Intent(activity, aClass);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        SharedPreferences sharedPreferences = activity.getApplicationContext().getSharedPreferences("bitmap_img", activity.getApplicationContext().MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
         activity.startActivity(intent);
         activity.finish();
     }

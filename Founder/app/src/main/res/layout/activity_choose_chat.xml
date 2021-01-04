@@ -5,51 +5,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main_drawer"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ChooseChatActivity">
+    tools:context=".Activity.ChooseChatActivity">
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#FE9B58">
-        <include layout="@layout/toolbar"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/layout_background_view" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
-                <Button
-                    android:id="@+id/btnChatRoom"
-                    android:background="@drawable/custom_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_chat_24"
-                    android:drawablePadding="10dp"
-                    android:text="Chat to all Owner"
-                    android:padding="10dp"
-                    android:textAllCaps="false"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Or"
-                    android:layout_marginVertical="10dp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="6">
-                <ListView
-                    android:id="@+id/lvOwner"
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:gravity="center"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <Button-->
+<!--                        android:id="@+id/btnChatRoom"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginRight="@dimen/normal10dp"-->
+<!--                        android:background="@drawable/custom_button"-->
+<!--                        android:drawableLeft="@drawable/ic_chat_24"-->
+<!--                        android:drawablePadding="@dimen/normal10dp"-->
+<!--                        android:padding="@dimen/normal10dp"-->
+<!--                        android:text="Chat to all Owner"-->
+<!--                        android:textAllCaps="false" />-->
+
+
+<!--                </LinearLayout>-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginVertical="@dimen/normal10dp"-->
+<!--                    android:text="Or" />-->
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="0dp"
+                    android:layout_weight="6">
+
+                    <ListView
+                        android:id="@+id/lvOwner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
+
     <!--    leftmenu-->
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"

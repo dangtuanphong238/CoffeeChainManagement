@@ -38,8 +38,6 @@ import java.util.ArrayList;
 
 public class AddHangHoaActivity extends AppCompatActivity {
     private Spinner spinnerPL;
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
     private EditText txtTenHangHoa, txtsoluong;
@@ -56,10 +54,9 @@ public class AddHangHoaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_san_pham_kho);
         anhXa();
         txtTitleActivity.setText("Thêm Hàng Hóa");
+        btnMnu.setImageResource(R.drawable.ic_back_24);
+        backPressed();
         getOwnerIDFromLocalStorage();
-        openMenu();
-        //call function onClickItem
-        getMenu();
         initSpinner();
         setEvent();
     }
@@ -120,92 +117,29 @@ public class AddHangHoaActivity extends AppCompatActivity {
         });
     }
 
-
-    private void getMenu()
-    {
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.itemQLKV:
-                        Public_func.clickItemMenu(AddHangHoaActivity.this, AreaManageActivity.class);
-                        return true;
-                    case R.id.itemQLMon:
-                        Public_func.clickItemMenu(AddHangHoaActivity.this, MealManageActivity.class);
-                        return true;
-                    case R.id.itemQLNV:
-                        Public_func.clickItemMenu(AddHangHoaActivity.this, StaffManageActivity.class);
-                        return true;
-                    case R.id.itemQLKho:
-                        Public_func.clickItemMenu(AddHangHoaActivity.this, WareHouseManageActivity.class);
-                        return true;
-                    case R.id.itemThongBao:
-                        Public_func.clickItemMenu(AddHangHoaActivity.this, ChooseChatActivity.class);
-                        return true;
-                    case R.id.itemThuNgan:
-                        Public_func.clickItemMenu(AddHangHoaActivity.this, ThuNganActivity.class);
-                        return true;
-
-                    case R.id.itemDoanhThu:
-                        Public_func.clickLogout(AddHangHoaActivity.this, DoanhThuDate.class);
-                        return true;
-
-                    case R.id.itemInfoStore:
-                        Public_func.clickItemMenu(AddHangHoaActivity.this, InfoStoreActivity.class);
-                        return true;
-
-//                    case R.id.itemThemMon:
-//                        Public_func.clickItemMenu(AddHangHoaActivity.this, AddMonActivity.class);
-//                        return true;
-//
-//                    case R.id.itemThemNV:
-//                        Public_func.clickItemMenu(AddHangHoaActivity.this, AddNhanVienActivity.class);
-//                        return true;
-//
-//                    case R.id.itemSPKho:
-//                        recreate();
-//                        return true;
-
-                    case R.id.itemLogOut:
-                        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.clear();
-                        editor.apply();
-                        Public_func.clickLogout(AddHangHoaActivity.this, LoginActivity.class);
-                        return true;
-                }
-                return true;
-            }
-        });
-    }
     private void anhXa() {
         buttonThem = findViewById(R.id.btnThemHangHoa);
         spinnerPL = findViewById(R.id.SpinnerPL);
         txtTenHangHoa = findViewById(R.id.edtTenHangHoa);
         txtsoluong = findViewById(R.id.edtSoLuong);
-        drawerLayout = findViewById(R.id.activity_main_drawer);
-        navigationView = findViewById(R.id.navDrawerMenu);
         btnMnu = findViewById(R.id.btnMnu);
         txtTitleActivity = findViewById(R.id.txtTitle);
     }
-    public void openMenu() {
-        btnMnu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-    }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        drawerLayout.closeDrawer(GravityCompat.START);
-    }
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         System.out.println(sharedPreferences.getString(OWNERID,"null"));
         sOwnerID = sharedPreferences.getString(OWNERID,"null");
+    }
+
+    public void backPressed() {
+        btnMnu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+
+            }
+        });
     }
 }

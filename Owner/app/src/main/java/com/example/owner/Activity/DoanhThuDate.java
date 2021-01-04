@@ -70,7 +70,6 @@ public class DoanhThuDate extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        getDataMonth();
     }
 
     private void setEvent() {
@@ -79,10 +78,6 @@ public class DoanhThuDate extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String a = spinnerDoanhThu.getItemAtPosition(i).toString();
-                if (a.equals("N/A"))
-                {
-                    Toast.makeText(DoanhThuDate.this, "Bạn vui lòng chọn loại doanh thu muốn hiển thị", Toast.LENGTH_SHORT).show();
-                }
                 if (a.equals("Theo Ngày"))
                 {
                    tvNgay.setText(ngay+"/"+thang+"/"+year);
@@ -120,23 +115,14 @@ public class DoanhThuDate extends AppCompatActivity {
             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
             final DatabaseReference reference = firebaseDatabase.getReference();
             reference.child("FounderManager").child("QuanLyDoanhThu").child(sOwnerID).child(year)
-                    .child(month).addValueEventListener(new ValueEventListener() {
+                    .child(month).child("DoanhThuNgay").child(_date)
+                    .child("sumtotal").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getValue() != null)
                     {
-                        DoanhThu doanhThuMonth = snapshot.getValue(DoanhThu.class);
-                        visitors.add(new PieEntry(Integer.parseInt(doanhThuMonth.total)));
-                      if (snapshot.child("DoanhThuNgay").child(_date)
-                              .child("sumtotal").getValue() != null) {
-                          int total = Integer.parseInt(snapshot.child("DoanhThuNgay").child(_date)
-                                  .child("sumtotal").getValue().toString());
                           {
-                              visitors.add(new PieEntry(total));
-                              // Description description  = new Description();
-                              // description.setText("Doanh Thu Ngày");
-                              // description.setTextSize(9f);
-                              //  pieChart.setDescription(description);
+                              visitors.add(new PieEntry(Integer.parseInt(snapshot.getValue().toString())));
                               pieChart.animateY(1000, Easing.EaseInOutCubic);
                               PieDataSet pieDataSet = new PieDataSet(visitors, "Doanh Thu Ngày");
                               pieDataSet.setSliceSpace(3f);
@@ -146,25 +132,11 @@ public class DoanhThuDate extends AppCompatActivity {
                               data.setValueTextSize(12f);
                               data.setValueTextColor(Color.WHITE);
                               pieChart.setData(data);
-
                           }
                       }
-                      else
-                      {
-                          Toast.makeText(DoanhThuDate.this,
-                                  "Hôm nay chưa có bill thanh toán để cập nhật!", Toast.LENGTH_SHORT).show();
-                      }
                     }
-                    else
-                    {
-                        Toast.makeText(DoanhThuDate.this,
-                                "Hôm nay chưa có bill thanh toán để cập nhật!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
                 }
             });
     }
@@ -181,7 +153,6 @@ public class DoanhThuDate extends AppCompatActivity {
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        System.out.println(sharedPreferences.getString(OWNERID, "null"));
         sOwnerID = sharedPreferences.getString(OWNERID, "null");
     }
     public void listViewDoanhThu()
@@ -249,41 +220,7 @@ public class DoanhThuDate extends AppCompatActivity {
             ex.getMessage();
         }
     }
-    public void getDataMonth() {
-        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference reference = firebaseDatabase.getReference("/FounderManager/" +
-                "/QuanLyDoanhThu/" + sOwnerID + "/" + year + "/" + month + "/DoanhThuNgay/");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Integer> arrayList = new ArrayList<>();
-                int total = 0;
-                if (snapshot.getValue() != null) {
-                    for (DataSnapshot item : snapshot.getChildren()) {
-                        int mangTien = Integer.parseInt(item.child("sumtotal").getValue().toString());
-                        arrayList.add(mangTien);
-                    }
-                    for (int num : arrayList) {
-                        total = total + num;
-                    }
-                    FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
-                    DatabaseReference reference1 = firebaseDatabase1.getReference("/FounderManager/" +
-                            "/QuanLyDoanhThu/" + sOwnerID + "/" + year + "/" + month);
-                    reference1.child("total").setValue(String.valueOf(total));
-                    reference1.child("month").setValue(thang);
-                }
-                else
-                    {
-                    Toast.makeText(getApplicationContext(), "Hôm nay chưa có doanh thu nào!", Toast.LENGTH_SHORT).show();
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
     @Override
     public void onBackPressed() {

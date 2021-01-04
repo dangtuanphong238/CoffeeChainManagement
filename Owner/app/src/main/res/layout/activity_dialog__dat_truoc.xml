@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/dialog_info_table"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:minWidth="300dp"
+        android:minHeight="400dp">
+        <include layout="@layout/layout_background_view" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="400dp"
+        android:minWidth="300dp"
+        android:layout_marginVertical="20dp"
+        android:orientation="vertical"
+       >
+        <TextView
+            android:layout_marginVertical="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="Bàn 1"
+            android:id="@+id/tablayout_id"
+            android:textColor="@color/black"
+            android:textSize="30dp"></TextView>
+        <TextView
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Tên KH:"
+            android:textColor="#767B97"
+            android:textSize="20dp"></TextView>
+        <EditText
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/edtrsTenKH"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:paddingHorizontal="10dp"
+            android:background="@drawable/custom_edittext"
+            android:paddingRight="20px"></EditText>
+        <TextView
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Số Điện Thoại KH:"
+            android:textColor="#767B97"
+            android:textSize="20dp"></TextView>
+        <EditText
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/edtrsSdtKH"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:paddingHorizontal="10dp"
+            android:background="@drawable/custom_edittext"
+            android:paddingRight="20px"></EditText>
+        <TextView
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Thời Gian Đặt Bàn:"
+            android:textColor="#767B97"
+            android:textSize="20dp"></TextView>
+
+        <EditText
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/edtrsTimeDatBan"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/custom_edittext"
+            android:gravity="center"
+            android:paddingHorizontal="10dp"
+            android:paddingRight="20px"></EditText>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="30dp"
+            android:orientation="horizontal">
+            <Button
+                android:layout_marginHorizontal="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/btnXacNhan"
+                android:padding="20px"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/custom_button"
+                android:text="Xác Nhận" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_gravity="top|right"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/ic_cancel" />
+    </LinearLayout>
+</FrameLayout>

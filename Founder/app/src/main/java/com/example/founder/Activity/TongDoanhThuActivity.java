@@ -1,4 +1,4 @@
-package com.example.founder;
+package com.example.founder.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.founder.R;
 import com.example.founder.model.DoanhThu;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -30,7 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ActivityDoanhThu extends AppCompatActivity {
+public class TongDoanhThuActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
     public static final String SPINNERID = "spinnerID";
@@ -83,7 +84,7 @@ public class ActivityDoanhThu extends AppCompatActivity {
                             arrayListCuaHang.add(spinnerLocCuaHang);
                         }
                     }
-                    mArrayAdapterCuaHang = new ArrayAdapter(ActivityDoanhThu.this,R.layout.custom_spinner,arrayListCuaHang);
+                    mArrayAdapterCuaHang = new ArrayAdapter(TongDoanhThuActivity.this,R.layout.custom_spinner,arrayListCuaHang);
                     spinnerCuaHang.setAdapter(mArrayAdapterCuaHang);
                 }
             }
@@ -118,7 +119,7 @@ public class ActivityDoanhThu extends AppCompatActivity {
                                         }
                                     }
                                 }
-                                mArrayAdapter = new ArrayAdapter(ActivityDoanhThu.this,R.layout.custom_spinner,arrayListNam);
+                                mArrayAdapter = new ArrayAdapter(TongDoanhThuActivity.this,R.layout.custom_spinner,arrayListNam);
                                 spinner.setAdapter(mArrayAdapter);
                             }
                         }
@@ -183,14 +184,14 @@ public class ActivityDoanhThu extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        Toast.makeText(ActivityDoanhThu.this, "Chưa có dữ liệu", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(TongDoanhThuActivity.this, "Chưa có dữ liệu", Toast.LENGTH_SHORT).show();
                                     }
 
                                 }
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
-                                    Toast.makeText(ActivityDoanhThu.this, "Chưa có dữ liệu", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(TongDoanhThuActivity.this, "Chưa có dữ liệu", Toast.LENGTH_SHORT).show();
                                 }
                             });
                 }
@@ -249,7 +250,7 @@ public class ActivityDoanhThu extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         {
-            Intent intent = new Intent(ActivityDoanhThu.this, ListCuaHangActivity.class);
+            Intent intent = new Intent(TongDoanhThuActivity.this, ListCuaHangActivity.class);
             startActivity(intent);
             finish();
         }

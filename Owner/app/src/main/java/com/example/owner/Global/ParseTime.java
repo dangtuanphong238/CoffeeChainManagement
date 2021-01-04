@@ -58,7 +58,6 @@ public class ParseTime {
     //Value return Eg:28/11/2020
     public String getDateWithConverse() {
         Date date = new Date(time);
-        System.out.println("DATE:" + date.toString());
         SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
         String stringDate = DateFor.format(date);
         return stringDate;

@@ -1,161 +1,3 @@
-//import com.example.owner.R;
-//package com.example.owner;
-//
-//import androidx.appcompat.app.AppCompatActivity;
-//import androidx.core.view.GravityCompat;
-//import androidx.drawerlayout.widget.DrawerLayout;
-//
-//import android.app.Activity;
-//import android.content.Intent;
-//import android.os.Bundle;
-//import android.view.View;
-//import android.widget.ImageButton;
-//import android.widget.LinearLayout;
-//
-////TODO: Nhung dieu can lam khi coppy drawer menu
-////Nhung diem can chu y khi lay drawer menu
-////Tich hop layout voi include
-////Khai bao DrawerLayout
-////Sua ten lop trong phan intent
-////Cuoi cung coppy lai phan method trong vung chi dinh
-//
-//
-//public class AreaManageActivity extends AppCompatActivity {
-//
-//    public final static String KEY_AreaManageActivity = AreaManageActivity.class.getSimpleName().trim();
-//    public final static String KEY_MealManageActivity = MealManageActivity.class.getSimpleName().trim();
-//    public final static String KEY_StaffManageActivity = StaffManageActivity.class.getSimpleName().trim();
-//    public final static String KEY_WareHouseManageActivity = WareHouseManageActivity.class.getSimpleName().trim();
-//    public final static String KEY_NotificationManageActivity = "NotificationManageActivity";
-//    public final static String KEY_CashierManageActivity = "CashierManageActivity";
-//    public final static String KEY_RevenueManageActivity = "RevenueManageActivity";
-//    public final static String KEY_InfoOfStoreActivity = "InfoOfStoreActivity";
-//    public final static String KEY_AddMealActivity = "AddMealActivity";
-//    public final static String KEY_AddStaffActivity = "InfoOfStoreActivity";
-//    public final static String KEY_AddProductActivity = "InfoOfStoreActivity";
-//
-//    DrawerLayout drawerLayout;
-//    ImageButton btnRoom1, btnRoom2, btnRoom3, btnRoom4;
-//
-//    private void init(){
-//        drawerLayout = findViewById(R.id.drawerMenu);
-//        btnRoom1 = findViewById(R.id.btnRoom1);
-//        btnRoom2 = findViewById(R.id.btnRoom2);
-//        btnRoom3 = findViewById(R.id.btnRoom3);
-//        btnRoom4 = findViewById(R.id.btnRoom4);
-//        btnRoom1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                goToRoomScreen(RoomScreen.class);
-//            }
-//        });
-//        btnRoom2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                goToRoomScreen(RoomScreen.class);
-//            }
-//        });
-//        btnRoom3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                goToRoomScreen(RoomScreen.class);
-//            }
-//        });
-//        btnRoom4.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                goToRoomScreen(RoomScreen.class);
-//            }
-//        });
-//    }
-//
-//    public void goToRoomScreen(Class<?> ad){
-//        Intent intent = new Intent(AreaManageActivity.this,ad);
-//        startActivity(intent);
-//    }
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_area_manage);
-//        init();
-//    }
-//
-//    public void onClickMenu(View view) {
-//        openDrawer(drawerLayout);
-//    }
-//
-//    public static void openDrawer(DrawerLayout drawerLayout) {
-//        drawerLayout.openDrawer(GravityCompat.START);
-//    }
-//
-//    public void closeDrawer(DrawerLayout drawerLayout) {
-//        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-//            drawerLayout.closeDrawer(GravityCompat.START);
-//        }
-//    }
-//
-//
-//    public void transformScreen(DrawerLayout drawerLayout, Intent intent, String KEY_Activity) {
-//        if (this.getLocalClassName().equals(KEY_Activity)) {
-//            closeDrawer(drawerLayout);
-//            recreate();
-//        } else {
-//            //TODO: Sua lai man
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            closeDrawer(drawerLayout);
-//            startActivity(intent);
-//        }
-//    }
-//
-//    public void onClickAreaManager(View view) {
-//        Intent intent = new Intent(this, AreaManageActivity.class);
-//        transformScreen(drawerLayout, intent, KEY_AreaManageActivity);
-//    }
-//
-//    public void onClickMealManager(View view) {
-//        Intent intent = new Intent(this, MealManageActivity.class);
-//        transformScreen(drawerLayout, intent, KEY_MealManageActivity);
-//    }
-//
-//    public void onClickStaffManager(View view) {
-//        Intent intent = new Intent(this, StaffManageActivity.class);
-//        transformScreen(drawerLayout, intent, KEY_StaffManageActivity);
-//    }
-//
-//    public void onClickWareHouseManager(View view) {
-//        Intent intent = new Intent(this, WareHouseManageActivity.class);
-//        transformScreen(drawerLayout, intent, KEY_WareHouseManageActivity);
-//    }
-//
-//    //TODO: Moi nguoi coppy code chen vao dung chuc nang cua minh theo mau co san
-//    public void onClickNotification(View view) {
-//    }
-//
-//    public void onClickCashier(View view) {
-//    }
-//
-//    public void onClickRevenue(View view) {
-//    }
-//
-//    public void onClickInfoStore(View view) {
-//    }
-//
-//    public void onClickAddMeal(View view) {
-//    }
-//
-//    public void onClickAddStaff(View view) {
-//    }
-//
-//    public void onClickAddProduct(View view) {
-//    }
-//
-//    //Slacking
-//    public void onClickLogout(View view) {
-//        //TODO: doing ST
-//    }
-//}
-
 package com.example.owner.Activity;
 
 import android.content.Intent;
@@ -261,17 +103,6 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
                         Public_func.clickItemMenu(AreaManageActivity.this, InfoStoreActivity.class);
                         return true;
 
-//                    case R.id.itemThemMon:
-//                        Public_func.clickItemMenu(AreaManageActivity.this, AddMonActivity.class);
-//                        return true;
-//
-//                    case R.id.itemThemNV:
-//                        Public_func.clickItemMenu(AreaManageActivity.this, AddNhanVienActivity.class);
-//                        return true;
-//
-//                    case R.id.itemSPKho:
-//                        Public_func.clickItemMenu(AreaManageActivity.this, AddHangHoaActivity.class);
-//                        return true;
                     case R.id.itemQLCombo:
                         Public_func.clickItemMenu(AreaManageActivity.this, ComboManagerActivity.class);
                         return true;
@@ -293,17 +124,29 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
 
     //header drawer:
     private void headerNav() {
+        //getImage:
         SharedPreferences ref = getSharedPreferences("bitmap_img", MODE_PRIVATE);
-
         String bitmap = ref.getString("imagePreferance", "");
-        System.out.println(bitmap);
         decodeBase64(bitmap);
+        //getInfo:
+        SharedPreferences refInfoStore = getSharedPreferences("datafile",MODE_PRIVATE);
+        String nameStore = refInfoStore.getString("name_store","");
+        String addressStore = refInfoStore.getString("address_store","");
+
+        //anhxa:
         View headerView = navigationView.getHeaderView(0);
         nav_head_avatar = headerView.findViewById(R.id.nav_head_avatar);
+        nav_head_name_store = headerView.findViewById(R.id.nav_head_name_store);
+        nav_head_address_store = headerView.findViewById(R.id.nav_head_address_store);
+
+        //setView:
+        nav_head_name_store.setText(nameStore);
+        nav_head_address_store.setText(addressStore);
+
         if (bitmapDecoded != null) {
             nav_head_avatar.setImageBitmap(bitmapDecoded);
         } else {
-            System.out.println("bitmapp null");
+//            System.out.println("bitmapp null");
         }
     }
 
@@ -333,7 +176,6 @@ public class AreaManageActivity extends AppCompatActivity implements Recyclervie
                     }
                 } catch (Exception ex) {
                     Log.w("PROBLEM", "get data from url " + url + " have problem");
-                    System.out.println("PROBLEM: " + "get data from url " + url + " have problem");
                 }
                 listAreaAdapter = new ListAreaAdapter(AreaManageActivity.this, listArea, AreaManageActivity.this);
                 listAreaAdapter.notifyDataSetChanged();

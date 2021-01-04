@@ -1,4 +1,4 @@
-package com.example.founder;
+package com.example.founder.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +18,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.founder.Public.Public_func;
+import com.example.founder.R;
 import com.example.founder.adapter.ChatOneToOneAdapter;
 import com.example.founder.model.Owner;
 import com.google.android.material.navigation.NavigationView;
@@ -39,7 +40,7 @@ public class ChooseChatActivity extends AppCompatActivity {
     private ImageButton btnMnu;
     private TextView txtTitleActivity;
 
-    private Button btnChatRoom;
+//    private Button btnChatRoom;
     private ListView lvOwner;
     private ArrayList<Owner> arrOwner = new ArrayList<>();;
     private ChatOneToOneAdapter adapter;
@@ -65,13 +66,13 @@ public class ChooseChatActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
 
                     case R.id.it1:
-                        Public_func.clickItemMenu(ChooseChatActivity.this, ActivityDoanhThu.class);
+                        Public_func.clickItemMenu(ChooseChatActivity.this, TongDoanhThuActivity.class);
                         return true;
                     case R.id.danh_sach_cua_hang:
                         Public_func.clickItemMenu(ChooseChatActivity.this, ListCuaHangActivity.class);
                         return true;
                     case R.id.tao_tai_khoan_owner:
-                        Public_func.clickItemMenu(ChooseChatActivity.this, ThemKhuVuc.class);
+                        Public_func.clickItemMenu(ChooseChatActivity.this, ThemTaiKhoanKhuVucActivity.class);
                         return true;
                     case R.id.thong_bao:
                         recreate();
@@ -117,16 +118,16 @@ public class ChooseChatActivity extends AppCompatActivity {
 
     }
     private void setOnClick(){
-        btnChatRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ChooseChatActivity.this, NotificationActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("chat_type", "room");
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+//        btnChatRoom.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(ChooseChatActivity.this, NotificationActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("chat_type", "room");
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//            }
+//        });
         lvOwner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -146,7 +147,7 @@ public class ChooseChatActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navDrawerMenu);
         btnMnu = findViewById(R.id.btnMnu);
         txtTitleActivity = findViewById(R.id.idtoolbar);
-        btnChatRoom = findViewById(R.id.btnChatRoom);
+//        btnChatRoom = findViewById(R.id.btnChatRoom);
         lvOwner = findViewById(R.id.lvOwner);
     }
 

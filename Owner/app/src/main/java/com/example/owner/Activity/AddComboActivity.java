@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -60,6 +61,7 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
     private StorageReference storageReference;
     private int total_price_combo = 0;
     private ArrayList<Combo> lstCombo = new ArrayList<>();
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,8 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
         getSizeListStaff();
 
         txtTitleActivity.setText("Thêm combo");
+        btnTaoCombo.setEnabled(false);
+
         btnMnu.setImageResource(R.drawable.ic_back_24);
         backPressed();
         getDataForListMeal();
@@ -100,7 +104,6 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
                     }
                 } catch (Exception ex) {
                     Log.w("PROBLEM", "get data from url " + path + " have problem");
-                    System.out.println("PROBLEM: " + "get data from url " + path + " have problem");
                 }
                 adapter = new ListAddComboAdapter(AddComboActivity.this, list, path, AddComboActivity.this);
                 adapter.notifyDataSetChanged();
@@ -130,22 +133,19 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
         btnTaoCombo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //get data from user input:
-
-//                final String tenCombo = edtTenCombo.getText().toString();
-//                String uuDai = edtUuDai.getText().toString();
-//                final int price = tinhGiaCombo(arrayList,uuDai);
-//                Log.d("abc",price+"");
 
                 if (edtTenCombo.getText().toString() != "" && edtUuDai.getText().toString() != "" && bitmap != null) {
                     final String tenCombo = edtTenCombo.getText().toString();
                     final String uuDai = edtUuDai.getText().toString();
-//                    final int price = tinhGiaCombo(arrayList,uuDai);
                     if (arrayList.isEmpty()) {
                         Toast.makeText(AddComboActivity.this, "Vui lòng chọn món", Toast.LENGTH_SHORT).show();
                     } else {
                         if(!tenCombo.isEmpty() && !uuDai.isEmpty())
                         {
+                            dialog = new ProgressDialog(AddComboActivity.this);
+                            dialog.setMessage("Upload in progress");
+                            dialog.show();
+
                             final int price = tinhGiaCombo(arrayList, uuDai);
                             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                             final DatabaseReference databaseReference = firebaseDatabase.getReference()
@@ -165,8 +165,10 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
                                     databaseReference.setValue(combo).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Toast.makeText(AddComboActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(AddComboActivity.this, "Thêm Combo thành công!", Toast.LENGTH_SHORT).show();
                                             clearInputFromUser();
+                                            dialog.cancel();
+
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
@@ -179,7 +181,6 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Toast.makeText(AddComboActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    System.out.println(e.getMessage().toString());
                                 }
                             });
                         }
@@ -188,6 +189,9 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
                         }
                     }
 
+                }
+                else {
+                    Toast.makeText(AddComboActivity.this, "Vui lòng nhập đủ các trường!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -217,7 +221,6 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Combo combo = dataSnapshot.getValue(Combo.class);
                     lstCombo.add(combo);
-                    System.out.println("lstStaff " + lstCombo.size());
                 }
             }
 
@@ -268,12 +271,6 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
     }
 
     private int tinhGiaCombo(ArrayList<MealModel> arrayList, String uuDai) {
-//        int price = 0;
-//        for (int i = 0; i < arrayList.size(); i++) {
-//            price = Integer.parseInt(arrayList.get(i).toString()) + price;
-//        }
-//        int khuyenMai = price * Integer.parseInt(uuDai) / 100;
-//        return price - khuyenMai;
         int price = 0;
         int khuyenMai = 0;
         for (int i = 0; i < arrayList.size(); i++) {
@@ -306,8 +303,20 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
 
     @Override
     public void saveArr(ArrayList<MealModel> arrayList) {
-        Log.d("abc", arrayList.toString());
+//        Log.d("abc", arrayList.toString());
         this.arrayList = arrayList;
+        if(arrayList.size()>0)
+        {
+            btnTaoCombo.setEnabled(true);
+//            btnTaoCombo.setBackgroundResource(R.drawable.custom_button);
+
+        }
+        else {
+            btnTaoCombo.setEnabled(false);
+//            btnTaoCombo.setBackgroundResource(R.drawable.background_corner_grey);
+
+        }
+
     }
 
 
