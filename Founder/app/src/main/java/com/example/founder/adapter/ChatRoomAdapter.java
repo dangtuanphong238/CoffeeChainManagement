@@ -64,7 +64,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ViewHo
         Message message = listData.get(position);
 //        holder.imgUser.setImageResource(R.drawable.noimage);
         holder.txtMessage.setText(message.getMessageText());
-        holder.txtUsername.setText(message.getUserID());
+        holder.txtUsername.setText(message.getUserID() + " - " + message.getUsername());
         holder.txtDatetime.setText(message.getMessageTime());
     }
 

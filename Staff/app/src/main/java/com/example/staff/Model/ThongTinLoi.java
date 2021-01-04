@@ -1,7 +1,7 @@
 package com.example.staff.Model;
 
 public class ThongTinLoi {
-   public String noidungloi;
+    public String noidungloi;
     public String ngaybaoloi;
 
     public ThongTinLoi(String noidungloi, String ngaybaoloi) {

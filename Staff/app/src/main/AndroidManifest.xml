@@ -11,21 +11,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ThongTinDatTruocActivity"></activity>
-        <activity android:name=".InfDatBanTrc" />
-        <activity android:name=".Dialog.Dialog_BaoLoi" />
-        <activity android:name=".BillScreen" />
-        <activity android:name=".Chatwithowner" />
-        <activity android:name=".ChooseChat" />
-        <activity android:name=".CaiDatBill" />
-        <activity android:name=".ThongBaoScreen" />
-        <activity android:name=".DatMon" />
-        <activity android:name=".OderActivity" />
-        <activity android:name=".ChiTietBan" />
-        <activity android:name=".PhongScreen" />
-        <activity android:name=".KhuVuc" />
-        <activity android:name=".LoginScreen" />
-        <activity android:name=".SplashScreen">
+        <activity android:name=".Activity.InfDatBanTrcActivity" />
+        <activity android:name=".Activity.BillScreenActivity" />
+        <activity android:name=".Activity.ChatWithOwnerActivity" />
+        <activity android:name=".Activity.ChooseChatActivity" />
+        <activity android:name=".Activity.CaiDatBillActivity" />
+        <activity android:name=".Activity.ChatRoomActivity" />
+        <activity android:name=".Activity.DatMonActivity" />
+        <activity android:name=".Activity.OderActivityActivity" />
+        <activity android:name=".Activity.ChiTietBanActivity" />
+        <activity android:name=".Activity.PhongScreenActivity" />
+        <activity android:name=".Activity.ThongTinDatTruocActivity"/>
+        <activity android:name=".Activity.KhuVucActivity" />
+        <activity android:name=".Activity.LoginScreenActivity" />
+        <activity android:name=".Activity.SplashScreenActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

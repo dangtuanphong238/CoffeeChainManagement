@@ -6,7 +6,7 @@
     android:background="#FE9B53"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".InfDatBanTrc">
+    tools:context=".Activity.InfDatBanTrcActivity">
 
 
     <LinearLayout
