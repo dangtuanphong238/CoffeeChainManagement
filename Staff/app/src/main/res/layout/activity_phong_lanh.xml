@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:background="#FE9B58"
     android:orientation="vertical"
-    tools:context=".Activity.PhongScreenActivity"
+    tools:context=".PhongScreen"
     android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="0.5">
 
         <TextView
             android:id="@+id/txtTenPhong"
@@ -23,15 +23,15 @@
             android:textSize="20dp"></TextView>
     </LinearLayout>
 
-   <androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/gridviewPl"
-       android:layout_width="match_parent"
-       android:numColumns="auto_fit"
-       android:gravity="center"
-       android:layout_height="0dp"
-       android:columnWidth="100dp"
-       android:layout_weight="4 "
-       android:background="#DCDCDC"></androidx.recyclerview.widget.RecyclerView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/gridviewPl"
+        android:layout_width="match_parent"
+        android:numColumns="auto_fit"
+        android:gravity="center"
+        android:layout_height="0dp"
+        android:columnWidth="100dp"
+        android:layout_weight="3"
+        android:background="#DCDCDC"></androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -81,7 +81,6 @@
                     android:text="  Đang sữa chữa "></TextView>
             </LinearLayout>
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -124,7 +123,48 @@
                     android:text="  Đang trống "></TextView>
             </LinearLayout>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingEnd="20dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="#52E829"></ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Chờ đặt trước"></TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingEnd="20dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="#B6B1B6"></ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="    Chờ sữa chữa "></TextView>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
 

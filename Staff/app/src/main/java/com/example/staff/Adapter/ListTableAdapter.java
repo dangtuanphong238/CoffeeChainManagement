@@ -1,6 +1,7 @@
 package com.example.staff.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,16 @@ public class ListTableAdapter extends RecyclerView.Adapter<ListTableAdapter.MyVi
             holder.imgTable.setBackgroundColor(0xFFCA62E4);
         } else if (model.getTableStatus().equals(PhongScreenActivity.HAVING + "")) {
             holder.imgTable.setBackgroundColor(0xFFE82929);
-        } else {
+        } else if (model.getTableStatus().equals(PhongScreenActivity.LOADINGBOOK + ""))
+        {
+            holder.imgTable.setBackgroundColor(Color.GRAY);
+        }
+        else if (model.getTableStatus().equals(PhongScreenActivity.LOADINGERROR + ""))
+        {
+            holder.imgTable.setBackgroundColor(Color.GREEN);
+        }
+        else
+        {
             //CASE: BLANK
             holder.imgTable.setBackgroundColor(0xFFFFFFFF);
         }
