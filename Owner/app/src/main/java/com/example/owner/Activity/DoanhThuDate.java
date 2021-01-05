@@ -40,7 +40,7 @@ public class DoanhThuDate extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
     String sOwnerID;
-    TextView tvSoLuong, tvDoanhThu, tvNgay;
+    TextView tvSoLuong, tvDoanhThu, tvNgay,tvLayout;
     ListView lvDoanhThuMon;
     Spinner spinnerDoanhThu;
     PieChart pieChart;
@@ -63,6 +63,7 @@ public class DoanhThuDate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doanh_thu_date);
         setControl();
+        tvLayout.setText("Doanh Thu Ngày " + ngay);
         getOwnerIDFromLocalStorage();
         setEvent();
     }
@@ -152,26 +153,36 @@ public class DoanhThuDate extends AppCompatActivity {
     }
 
     private void setDuLieuTongTien() {
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference reference = firebaseDatabase.getReference();
-        reference.child("OwnerManager").child(sOwnerID).child("QuanLyHoaDon").child(year).child(month).child(_date)
-                .child("DoanhThuNgay").child("sumtotal").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                tvDoanhThu.setText(snapshot.getValue().toString());
-            }
+        try {
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            final DatabaseReference reference = firebaseDatabase.getReference();
+            reference.child("OwnerManager").child(sOwnerID).child("QuanLyHoaDon").child(year).child(month).child(_date)
+                    .child("DoanhThuNgay").child("sumtotal").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.getValue() != null)
+                    {
+                        if (snapshot.exists())
+                        {
+                            tvDoanhThu.setText(snapshot.getValue().toString());
+                        }
+                    }
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            ex.getMessage();
+        }
     }
 
     private void chartKitPieDate() {
         try {
-
-
             //custom
             //pieChart.setUsePercentValues(true);
             pieChart.getDescription().setEnabled(false);
@@ -219,6 +230,7 @@ public class DoanhThuDate extends AppCompatActivity {
         tvNgay = findViewById(R.id.ngayTV);
         spinnerDoanhThu = findViewById(R.id.spinnerDate);
         pieChart = findViewById(R.id.chartDate);
+        tvLayout = findViewById(R.id.txtTitle);
     }
 
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
