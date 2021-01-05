@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -38,6 +39,8 @@
             </LinearLayout>
 
             <LinearLayout
+                android:gravity="center"
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -47,39 +50,67 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1">
-
                     <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="@dimen/normal25dp"
-                            android:layout_height="@dimen/normal25dp"
-                            android:background="#E82929" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=" Đã có khách" />
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3">
+                            <ImageView
+                                android:layout_width="@dimen/normal25dp"
+                                android:layout_height="@dimen/normal25dp"
+                                android:background="#E82929" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+                            <TextView
+                                android:gravity="center|left"
+                                android:layout_gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Đã có khách" />
+                        </LinearLayout>
                     </LinearLayout>
-
                     <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="@dimen/normal25dp"
-                            android:layout_height="@dimen/normal25dp"
-                            android:background="#000" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=" Đang sửa chữa" />
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3">
+                            <ImageView
+                                android:layout_width="@dimen/normal25dp"
+                                android:layout_height="@dimen/normal25dp"
+                                android:background="#101010" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+                            <TextView
+                                android:gravity="center|left"
+                                android:layout_gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Đang Sửa Chữa" />
+                        </LinearLayout>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -89,86 +120,134 @@
                     android:layout_weight="1">
 
                     <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-                        <ImageView
-                            android:layout_width="@dimen/normal25dp"
-                            android:layout_height="@dimen/normal25dp"
-                            android:background="#CA62E4" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=" Có đặt trước" />
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3">
+                            <ImageView
+                                android:layout_width="@dimen/normal25dp"
+                                android:layout_height="@dimen/normal25dp"
+                                android:background="@color/color_button" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+                            <TextView
+                                android:gravity="center|left"
+                                android:layout_gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Bàn Đã Đặt Trước" />
+                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:paddingEnd="@dimen/normal20dp">
-
-                        <ImageView
-                            android:layout_width="@dimen/normal25dp"
-                            android:layout_height="@dimen/normal25dp"
-                            android:background="#fff" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=" Đang Trống" />
+                        android:gravity="center">
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3">
+                            <ImageView
+                                android:layout_width="@dimen/normal25dp"
+                                android:layout_height="@dimen/normal25dp"
+                                android:background="@color/white" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+                            <TextView
+                                android:gravity="center|left"
+                                android:layout_gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Bàn Trống" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1">
-
                     <LinearLayout
-
-                        android:layout_gravity="center"
+                        android:orientation="horizontal"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
-                        <ImageView
-                            android:layout_marginLeft="45dp"
-                            android:gravity="center"
-                            android:layout_gravity="center"
-                            android:layout_width="@dimen/normal25dp"
-                            android:layout_height="@dimen/normal25dp"
-                            android:background="#1EED29"/>
-
-                        <TextView
+                        <LinearLayout
                             android:gravity="center"
                             android:layout_gravity="center"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text=" Chờ xác nhận đặt trước" />
+                            android:layout_height="match_parent"
+                            android:layout_weight="3">
+                            <ImageView
+                                android:layout_width="@dimen/normal25dp"
+                                android:layout_height="@dimen/normal25dp"
+                                android:background="#52E829" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+                            <TextView
+                                android:gravity="center|left"
+                                android:layout_gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Đang chờ xác nhận đặt trước" />
+                        </LinearLayout>
                     </LinearLayout>
-
                     <LinearLayout
-                        android:layout_marginHorizontal="45dp"
-                        android:layout_gravity="center"
+                        android:orientation="horizontal"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
-                        <ImageView
-                            android:layout_marginLeft="35dp"
-                            android:layout_width="@dimen/normal25dp"
-                            android:layout_height="@dimen/normal25dp"
-                            android:background="#B5AEAE" />
-
-                        <TextView
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_gravity="center"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text=" Đang chờ xác nhận sửa chữa" />
+                            android:layout_height="match_parent"
+                            android:layout_weight="3">
+                            <ImageView
+                                android:layout_width="@dimen/normal25dp"
+                                android:layout_height="@dimen/normal25dp"
+                                android:background="#BAB7B7" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+                            <TextView
+                                android:gravity="center|left"
+                                android:layout_gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Đang chờ xác nhận sửa chữa" />
+                        </LinearLayout>
                     </LinearLayout>
 
                 </LinearLayout>

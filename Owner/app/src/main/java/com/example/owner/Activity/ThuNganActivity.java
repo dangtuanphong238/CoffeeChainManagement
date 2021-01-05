@@ -180,7 +180,7 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
     ArrayList<AreaActiveModel> listArea = new ArrayList<>();
     ArrayList<TableActiveModel> listTable = new ArrayList<>();
 
-    public void getDataFromBranchTableActive(String ownerID) {
+    public void getDataFromBranchTableActive(final String ownerID) {
         final String path = "OwnerManager/" + ownerID + "/TableActive";
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference(path);
@@ -216,7 +216,7 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
                     Log.w("PROBLEM","get data from branch table active have problem");
                 }
 
-                ThuNganAdapter adapter = new ThuNganAdapter( list, ThuNganActivity.this, ThuNganActivity.this,path);
+                ThuNganAdapter adapter = new ThuNganAdapter( list, ThuNganActivity.this, ThuNganActivity.this,path, ownerID);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 rvThuNgan.setLayoutManager(linearLayoutManager);

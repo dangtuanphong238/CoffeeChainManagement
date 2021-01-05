@@ -40,7 +40,7 @@ public class DoanhThuDate extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
     String sOwnerID;
-    TextView tvSoLuong, tvDoanhThu, tvNgay;
+    TextView tvSoLuong, tvDoanhThu, tvNgay,tvLayout;
     ListView lvDoanhThuMon;
     Spinner spinnerDoanhThu;
     PieChart pieChart;
@@ -63,6 +63,7 @@ public class DoanhThuDate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doanh_thu_date);
         setControl();
+        tvLayout.setText("Doanh Thu Ngày " + ngay);
         getOwnerIDFromLocalStorage();
         setEvent();
     }
@@ -82,6 +83,8 @@ public class DoanhThuDate extends AppCompatActivity {
                 {
                    tvNgay.setText(ngay+"/"+thang+"/"+year);
                     listViewDoanhThu();
+                    setDuLieuTongTien();
+                    setDuLieuTotal();
                     chartKitPieDate();
                 }
                 if (a.equals("Theo Tháng"))
@@ -105,7 +108,81 @@ public class DoanhThuDate extends AppCompatActivity {
         });
     }
 
+    private void setDuLieuTotal() {
+        try {
+            final ArrayList<Integer> array = new ArrayList<>();
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            final DatabaseReference reference = firebaseDatabase.getReference();
+            reference.child("OwnerManager").child(sOwnerID).child("QuanLyHoaDon").child(year).child(month).child(_date)
+                    .child("Bills").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot local : snapshot.getChildren())
+                    {
+                        if (local.getValue() != null)
+                        {
+                            for (DataSnapshot item : local.child("Meal").getChildren())
+                            {
+                                if (item.exists())
+                                {
+                                    array.add(Integer.parseInt(item.child("amount").getValue().toString()));
+                                }
+                            }
+                        }
+                    }
+                    //tinh tong so luong
+                    int sum = 0;
+                    for( int num : array)
+                    {
+                        sum = sum+num;
+                    }
+                    tvSoLuong.setText(String.valueOf(sum));
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }catch (Exception ex)
+        {
+            ex.getMessage();
+        }
+
+
+
+    }
+
+    private void setDuLieuTongTien() {
+        try {
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            final DatabaseReference reference = firebaseDatabase.getReference();
+            reference.child("OwnerManager").child(sOwnerID).child("QuanLyHoaDon").child(year).child(month).child(_date)
+                    .child("DoanhThuNgay").child("sumtotal").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.getValue() != null)
+                    {
+                        if (snapshot.exists())
+                        {
+                            tvDoanhThu.setText(snapshot.getValue().toString());
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            ex.getMessage();
+        }
+    }
+
     private void chartKitPieDate() {
+        try {
             //custom
             //pieChart.setUsePercentValues(true);
             pieChart.getDescription().setEnabled(false);
@@ -121,24 +198,29 @@ public class DoanhThuDate extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getValue() != null)
                     {
-                          {
-                              visitors.add(new PieEntry(Integer.parseInt(snapshot.getValue().toString())));
-                              pieChart.animateY(1000, Easing.EaseInOutCubic);
-                              PieDataSet pieDataSet = new PieDataSet(visitors, "Doanh Thu Ngày");
-                              pieDataSet.setSliceSpace(3f);
-                              pieDataSet.setSelectionShift(5f);
-                              pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
-                              PieData data = new PieData(pieDataSet);
-                              data.setValueTextSize(12f);
-                              data.setValueTextColor(Color.WHITE);
-                              pieChart.setData(data);
-                          }
-                      }
+                        {
+                            visitors.add(new PieEntry(Integer.parseInt(snapshot.getValue().toString())));
+                            pieChart.animateY(1000, Easing.EaseInOutCubic);
+                            PieDataSet pieDataSet = new PieDataSet(visitors, "Doanh Thu Ngày");
+                            pieDataSet.setSliceSpace(3f);
+                            pieDataSet.setSelectionShift(5f);
+                            pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+                            PieData data = new PieData(pieDataSet);
+                            data.setValueTextSize(12f);
+                            data.setValueTextColor(Color.WHITE);
+                            pieChart.setData(data);
+                        }
                     }
+                }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
             });
+        }
+        catch (Exception exception)
+        {
+            exception.getMessage();
+        }
     }
 
     private void setControl() {
@@ -148,6 +230,7 @@ public class DoanhThuDate extends AppCompatActivity {
         tvNgay = findViewById(R.id.ngayTV);
         spinnerDoanhThu = findViewById(R.id.spinnerDate);
         pieChart = findViewById(R.id.chartDate);
+        tvLayout = findViewById(R.id.txtTitle);
     }
 
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
@@ -159,8 +242,6 @@ public class DoanhThuDate extends AppCompatActivity {
     {
         try {
             doanhThuDateModels = new ArrayList<>();
-            final ArrayList<Integer> array = new ArrayList<>();
-            final ArrayList<Integer> arrayTien = new ArrayList<>();
             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
             final DatabaseReference reference = firebaseDatabase.getReference();
             reference.child("OwnerManager").child(sOwnerID).child("QuanLyHoaDon").child(year).child(month).child(_date)
@@ -176,36 +257,17 @@ public class DoanhThuDate extends AppCompatActivity {
                             {
                                 if (item.exists())
                                 {
-                                     doanhThuDateModel = item.getValue(DoanhThuDateModel.class);
-                                     name = doanhThuDateModel.name;
-                                     amount = doanhThuDateModel.amount;
-                                     price = doanhThuDateModel.price;
+                                    doanhThuDateModel = item.getValue(DoanhThuDateModel.class);
                                     doanhThuDateModel.setId(item.getKey());
                                     doanhThuDateApdater.add(doanhThuDateModel);
                                 }
+
                             }
                             lvDoanhThuMon.setAdapter(doanhThuDateApdater);
-                            //tinh tong so luong
-                            int sum = 0;
-                            array.add(Integer.parseInt(amount));
-                            for( int num : array)
-                            {
-                                sum = sum+num;
-                            }
-                            tvSoLuong.setText(String.valueOf(sum));
-                            //tinh tong tien doanh thu tong
-                            arrayTien.add(Integer.parseInt(price));
-                            int tien = 0;
-                            for( int num : arrayTien)
-                            {
-                                tien = tien+num;
-                            }
-                            tvDoanhThu.setText(String.valueOf(tien));
                         }
                         else
                         {
                             Toast.makeText(DoanhThuDate.this, "Hôm nay chưa có dữ liệu", Toast.LENGTH_SHORT).show();
-
                         }
                     }
 

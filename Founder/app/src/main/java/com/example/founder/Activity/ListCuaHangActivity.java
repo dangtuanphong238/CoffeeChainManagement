@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -42,13 +43,26 @@ public class ListCuaHangActivity extends AppCompatActivity implements ItemClickL
     RecyclerViewAdapter recyclerViewAdapter;
     DatabaseReference databaseReference;
     private ArrayList<InforStore> lstStore = new ArrayList<>();
+
+    public void Demo(){
+        findViewById(R.id.btnDemo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListCuaHangActivity.this,ManagerLocationOwnerActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liststore);
         anhXa();
 
-
+        //TODO: DEMO xong nhớ xóa!!!!
+        Demo();
 
         getData(lstStore);
         txtstorelist.setText("List Store");

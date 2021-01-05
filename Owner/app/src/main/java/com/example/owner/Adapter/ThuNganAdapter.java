@@ -28,11 +28,12 @@ public class ThuNganAdapter extends RecyclerView.Adapter<ThuNganAdapter.ViewHold
     String ownerID;
 
 
-    public ThuNganAdapter(ArrayList<AreaActiveModel> list, Context context, RecyclerviewClick recyclerviewClick, String path) {
+    public ThuNganAdapter(ArrayList<AreaActiveModel> list, Context context, RecyclerviewClick recyclerviewClick, String path,String ownerID) {
         this.list = list;
         this.context = context;
         this.recyclerviewClick = recyclerviewClick;
         this.path = path;
+        this.ownerID = ownerID;
     }
 
     @NonNull
