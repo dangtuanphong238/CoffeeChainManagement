@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.owner.Global.ParseTime;
@@ -43,6 +44,7 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
     public static final String OWNERID = "ownerID";
     public String sOwnerID;
     LineChart lineChart;
+    TextView tvLayout;
     private LineDataSet lineDataSet = new LineDataSet(null, null);
     ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
     LineData lineData;
@@ -53,6 +55,7 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
         getAnhXa();
         getOwnerIDFromLocalStorage();
         setDuLieu();
+        tvLayout.setText("Doanh Thu Tháng " + thang);
     }
     private void setDuLieu() {
         try {
@@ -125,6 +128,7 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
     }
 
     private void getAnhXa() {
+        tvLayout = findViewById(R.id.txtTitle);
         lineChart = findViewById(R.id.chartThang);
     }
 
