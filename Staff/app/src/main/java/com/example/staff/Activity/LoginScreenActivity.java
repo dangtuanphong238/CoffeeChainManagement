@@ -152,7 +152,6 @@ public class LoginScreenActivity extends AppCompatActivity {
                     keyOwner = key;
                     dataStaff();
                 }
-                Toast.makeText(LoginScreenActivity.this, keyOwner, Toast.LENGTH_SHORT).show();
             }
 
             @Override
