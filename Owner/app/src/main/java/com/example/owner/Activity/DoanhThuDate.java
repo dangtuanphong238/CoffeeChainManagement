@@ -9,20 +9,18 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.owner.Global.ParseTime;
-import com.example.owner.Model.DoanhThu;
-import com.example.owner.Model.DoanhThuDateApdater;
+import com.example.owner.Adapter.DoanhThuDateApdater;
 import com.example.owner.Model.DoanhThuDateModel;
-import com.example.owner.Model.DoanhThuMonth;
 import com.example.owner.R;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -54,7 +52,7 @@ public class DoanhThuDate extends AppCompatActivity {
     String getThang, getTotal;
     ArrayList<DoanhThuDateModel> doanhThuDateModels;
     DoanhThuDateApdater doanhThuDateApdater;
-    String name,amount,price;
+    ImageButton btnMenu;
     DoanhThuDateModel doanhThuDateModel;
     private PieDataSet pieDataSet;
 
@@ -106,6 +104,14 @@ public class DoanhThuDate extends AppCompatActivity {
 
             }
         });
+           btnMenu.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   Intent intent = new Intent(DoanhThuDate.this,AreaManageActivity.class);
+                   startActivity(intent);
+                   finish();
+               }
+           });
     }
 
     private void setDuLieuTotal() {
@@ -231,6 +237,8 @@ public class DoanhThuDate extends AppCompatActivity {
         spinnerDoanhThu = findViewById(R.id.spinnerDate);
         pieChart = findViewById(R.id.chartDate);
         tvLayout = findViewById(R.id.txtTitle);
+        btnMenu = findViewById(R.id.btnMnu);
+        btnMenu.setImageResource(R.drawable.ic_back_24);
     }
 
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
