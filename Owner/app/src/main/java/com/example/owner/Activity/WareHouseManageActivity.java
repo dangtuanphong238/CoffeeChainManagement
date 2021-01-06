@@ -130,16 +130,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.owner.Adapter.ListMealAdapter;
 import com.example.owner.Global.Public_func;
-import com.example.owner.Model.CountryAdapter;
 import com.example.owner.Model.HangHoa;
-import com.example.owner.Model.HangHoaAdapter;
-import com.example.owner.Model.ListSpinner;
-import com.example.owner.Adapter.NhanVienAdapter;
-import com.example.owner.Model.MealModel;
+import com.example.owner.Adapter.HangHoaAdapter;
 import com.example.owner.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -226,6 +220,10 @@ public class WareHouseManageActivity extends AppCompatActivity {
     }
 
     private void setEnvent() {
+        danhSachHH = new ArrayList<>();
+        GetData();
+        hangHoaAdapter = new HangHoaAdapter(this,R.layout.custom_danh_sach_sp_kho,danhSachHH);
+        listViewKho.setAdapter(hangHoaAdapter);
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -233,17 +231,25 @@ public class WareHouseManageActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+       listViewKho.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           @Override
+           public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+               Intent intent = new Intent(WareHouseManageActivity.this, UpdateHangHoaKho.class);
+               intent.putExtra("HANGHOA", danhSachHH.get(i));
+               intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+               startActivity(intent);
+               finish();
+           }
+       });
     }
     @Override
     protected void onStart() {
         super.onStart();
-        danhSachHH = new ArrayList<>();
-        GetData();
-        hangHoaAdapter = new HangHoaAdapter(this,R.layout.custom_danh_sach_sp_kho,danhSachHH);
-        listViewKho.setAdapter(hangHoaAdapter);
+
     }
     private void GetData() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources().getStringArray(R.array.lstQuanLyMon));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources()
+                .getStringArray(R.array.lstQuanLyMon));
         adapter.setDropDownViewResource(R.layout.cus_spinner_dropdown);
         spSort.setAdapter(adapter);
         spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

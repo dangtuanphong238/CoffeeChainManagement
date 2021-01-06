@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,7 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
     private LineDataSet lineDataSet = new LineDataSet(null, null);
     ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
     LineData lineData;
+    ImageButton btnMenu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,6 +132,16 @@ public class DoanhThuTheoMonth extends AppCompatActivity {
     private void getAnhXa() {
         tvLayout = findViewById(R.id.txtTitle);
         lineChart = findViewById(R.id.chartThang);
+        btnMenu = findViewById(R.id.btnMnu);
+        btnMenu.setImageResource(R.drawable.ic_back_24);
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DoanhThuTheoMonth.this,DoanhThuDate.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login

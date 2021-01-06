@@ -1,4 +1,4 @@
-package com.example.owner.Model;
+package com.example.owner.Adapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.owner.Activity.UpdateHangHoaKho;
+import com.example.owner.Model.DoanhThuDateModel;
 import com.example.owner.R;
 
 import java.lang.reflect.Field;
