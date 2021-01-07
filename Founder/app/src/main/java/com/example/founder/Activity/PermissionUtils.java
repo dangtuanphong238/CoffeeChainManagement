@@ -25,6 +25,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
+
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -33,6 +35,7 @@ import android.widget.Toast;
  * Utility class for access to runtime permissions.
  */
 public abstract class PermissionUtils {
+    private TextView txtmaps;
 
     /**
      * Requests the fine location permission. If a rationale with an additional explanation should
