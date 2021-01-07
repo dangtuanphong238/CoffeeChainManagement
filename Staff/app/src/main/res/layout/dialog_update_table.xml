@@ -4,7 +4,7 @@
     style="@style/dialog_info_table"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#EA9547"
+    android:background="#F8F8FF"
     android:layout_gravity="center"
     android:orientation="vertical" >
 

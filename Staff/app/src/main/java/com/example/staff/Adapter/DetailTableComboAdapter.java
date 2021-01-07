@@ -44,16 +44,16 @@ public class DetailTableComboAdapter extends RecyclerView.Adapter<DetailTableCom
         holder.tvMeal_amount.setText(model.getAmount()+"");
         holder.tvMeal_name.setText(model.getMealName());
         holder.tvMeal_price.setText(model.getMealPrice());
-        String path = "OwnerManager/"+ownerID+"/QuanLyMonAn";
-        setImage(holder,path,model.getMealImage());
+        String pathCombo = "OwnerManager/"+ownerID+"/QuanLyCombo";
+        setImage(holder,pathCombo,model.getMealImage());
     }
-    public void setImage(final DetailTableComboAdapter.MyViewHolder holder, String path, String id_image) {
+    public void setImage(final DetailTableComboAdapter.MyViewHolder holder, String pathCombo, String id_image) {
         try {
             final File localFile = File.createTempFile("images", "png");
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
             //TODO: return value path image
-            StorageReference riversRef = mStorageRef.child("/"+path+"/"+id_image);
-
+            StorageReference riversRef = mStorageRef.child("/"+pathCombo+"/"+id_image);
+            System.out.println("data"+ riversRef);
             riversRef.getFile(localFile)
                     .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override

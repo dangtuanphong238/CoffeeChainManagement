@@ -200,7 +200,7 @@ public class LoginScreenActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     lstOwnerList.add(dataSnapshot.getKey());
-                    System.out.println("" + lstOwnerList.toString());
+                    System.out.println("123" + lstOwnerList.toString());
                 }
             }
 

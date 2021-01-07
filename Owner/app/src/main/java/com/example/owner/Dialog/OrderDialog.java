@@ -23,12 +23,16 @@ import com.example.owner.Activity.MealManageActivity;
 import com.example.owner.Activity.RoomActivity;
 import com.example.owner.Adapter.ListMealAdapter;
 import com.example.owner.Adapter.MenuOrderAdapter;
+import com.example.owner.Adapter.MenuOrderComboAdapter;
 import com.example.owner.Interface.RecyclerviewClick;
 import com.example.owner.Interface.SendAmountsOrder;
+import com.example.owner.Model.MealComboUsed;
 import com.example.owner.Model.MealModel;
 import com.example.owner.Model.MealUsed;
+import com.example.owner.Model.ModelCombo;
 import com.example.owner.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,7 +48,7 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
     int sumPrice = 0;
     int amountsProducts = 0;
     ArrayList<MealUsed> listOrder = new ArrayList<>();
-
+    ArrayList<MealComboUsed> listComboUser = new ArrayList<>();
     Context context;
     String ownerID;
     String areaID;
@@ -88,7 +92,7 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         btnCancel.setOnClickListener(this);
         //layoutChooseAmount.setVisibility(View.VISIBLE);
         checkTableAndOrder();
-       // getMenu();
+        // getMenu();
         setDataForSpinnerCategory();
         spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -96,10 +100,11 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
                 String key = spnCategory.getSelectedItem().toString();
                 if (key.equals("Tất cả")) {
                     getMenu();
+                } else if (key.equals("Combo")) {
+                    getCombo();
                 } else {
                     filterCategory(key);
                 }
-
             }
 
             @Override
@@ -109,8 +114,42 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         });
     }
 
+    public void getCombo() {
+        //Read list meal used in dialog from branch TableActive
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final String path = "OwnerManager/" + ownerID + "/QuanLyCombo";
+        final DatabaseReference myRef = database.getReference(path);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<ModelCombo> list = new ArrayList<>();
+                try {
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        ModelCombo model = data.getValue(ModelCombo.class);
+                        list.add(model);
+                        System.out.println("list1" + list.toString());
+                    }
+                } catch (Exception ex) {
+                    Log.w("PROBLEM", "get data from branch table active have problem " + ex.getMessage());
+                    System.out.println("get data from branch table active have problem in url: " + myRef.toString());
+                }
+//                final String path = "/OwnerManager/" + ownerID + "/QuanLyMonAn";
+                MenuOrderComboAdapter adapter = new MenuOrderComboAdapter(context, list, OrderDialog.this, path, OrderDialog.this);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                rvMenuOrder.setLayoutManager(linearLayoutManager);
+                rvMenuOrder.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("Error", error.getMessage());
+            }
+        });
+    }
+
     public void setDataForSpinnerCategory() {
-        ArrayAdapter<String> adapter = new ArrayAdapter(context,android.R.layout.simple_spinner_item,context.getResources().getStringArray(R.array.spinner_category_manager));
+        ArrayAdapter<String> adapter = new ArrayAdapter(context, android.R.layout.simple_spinner_item, context.getResources().getStringArray(R.array.spinner_category_manager));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnCategory.setAdapter(adapter);
     }
@@ -154,7 +193,9 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         });
 
     }
+
     ArrayList<MealModel> listMenu = new ArrayList<>();
+
     public void getMenu() {
         //Read list meal used in dialog from branch TableActive
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -202,10 +243,13 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
                 dismiss();
                 break;
             case R.id.btnOrder:
-                if (listOrder.size() > 0) {
+                if (listOrder.size() > 0 || listComboUser.size() > 0) {
                     if (usedArrayList.size() > 0)
                         writeListOrderInDB(checkData(listOrder, usedArrayList));
-                    else writeListOrderInDB(listOrder);
+                    else {
+                        writeListOrderInDB(listOrder);
+                        orderMealCombo();
+                    }
                     listOrder.clear();
                     usedArrayList.clear();
                 } else {
@@ -347,5 +391,78 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
             if (flag == false) arrUsed.add(mealOrder);
         }
         return arrUsed;
+    }
+
+    public void orderMealCombo() {
+        if (listComboUser.size() > 0) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            String path = "OwnerManager/" + ownerID + "/TableActive/" + areaID + "/" + tableID + "/Meal";
+            String manageTable = "OwnerManager/" + ownerID + "/QuanLyBan/" + areaID + "/" + tableID;
+            DatabaseReference myRef = database.getReference(path);
+            for (int i = 0; i < listComboUser.size(); i++) {
+                DatabaseReference root = myRef.child(listComboUser.get(i).getMealID());
+                root.child("amount").setValue(listComboUser.get(i).getAmount());
+                root.child("category").setValue(listComboUser.get(i).getMealCategory());
+                root.child("id").setValue(listComboUser.get(i).getMealID());
+                root.child("image").setValue(listComboUser.get(i).getMealImage());
+                root.child("name").setValue(listComboUser.get(i).getMealName());
+                root.child("price").setValue(listComboUser.get(i).getMealPrice());
+                root.child("timeInput").setValue(listComboUser.get(i).getTimeInput());
+            }
+            DatabaseReference status = database.getReference(manageTable);
+            status.child("tableStatus").setValue("2").addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(context, "Order thành công", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void sendAmount(int times, ModelCombo modelCombo, int last_amounts) {
+        int sum_tempt = Integer.parseInt(modelCombo.getMeal_price());
+        if (times == 1) {
+            amountsProducts++;
+            sumPrice = sumPrice + sum_tempt;
+        } else if (times == -1) {
+            if (amountsProducts <= 0) {
+                amountsProducts = 0;
+            } else {
+                amountsProducts--;
+            }
+            if (sumPrice <= 0) {
+                sumPrice = 0;
+            } else {
+                sumPrice = sumPrice - sum_tempt;
+            }
+        } else if (times == 0) {
+            amountsProducts += 0;
+        }
+        tvSumPrice.setText(sumPrice + "");
+        tvCart.setText(amountsProducts + "");
+        checkAndUpdateForAddTable(modelCombo, last_amounts);
+    }
+
+    private void checkAndUpdateForAddTable(ModelCombo modelCombo, int last_amounts) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        MealComboUsed mealComboUsed = new MealComboUsed(last_amounts, modelCombo, timestamp.getTime() + "");
+        boolean flag = false;
+        if (listComboUser.size() == 0) {
+            listComboUser.add(mealComboUsed);
+        } else {
+            for (int i = 0; i < listComboUser.size(); i++) {
+                if (listComboUser.get(i).getMealID().equalsIgnoreCase(mealComboUsed.getMealID())) {
+                    listComboUser.remove(listComboUser.get(i));
+                    listComboUser.add(mealComboUsed);
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag == false) {
+                listComboUser.add(mealComboUsed);
+            }
+        }
     }
 }

@@ -44,26 +44,11 @@ public class ListCuaHangActivity extends AppCompatActivity implements ItemClickL
     DatabaseReference databaseReference;
     private ArrayList<InforStore> lstStore = new ArrayList<>();
 
-    public void Demo(){
-        findViewById(R.id.btnDemo).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ListCuaHangActivity.this,ManagerLocationOwnerActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent);
-            }
-        });
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liststore);
         anhXa();
-
-        //TODO: DEMO xong nhớ xóa!!!!
-        Demo();
-
         getData(lstStore);
         txtstorelist.setText("List Store");
         openMenu();
@@ -77,6 +62,9 @@ public class ListCuaHangActivity extends AppCompatActivity implements ItemClickL
                         return true;
                     case R.id.danh_sach_cua_hang:
                         recreate();
+                        return true;
+                    case R.id.map:
+                        Public_func.clickItemMenu(ListCuaHangActivity.this, ManagerLocationOwnerActivity.class);
                         return true;
                     case R.id.tao_tai_khoan_owner:
                         Public_func.clickItemMenu(ListCuaHangActivity.this, ThemTaiKhoanKhuVucActivity.class);

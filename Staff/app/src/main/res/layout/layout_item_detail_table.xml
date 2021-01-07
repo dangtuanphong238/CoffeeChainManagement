@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:minWidth="290dp"
+        android:minHeight="150dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp">
 

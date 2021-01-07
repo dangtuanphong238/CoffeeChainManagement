@@ -68,7 +68,7 @@ public class UpdateHangHoaKho extends AppCompatActivity  {
         Intent intent = getIntent();
         final HangHoa hangHoa = (HangHoa) intent.getSerializableExtra("HANGHOA");
         txtTenHangHoa.setText(hangHoa.getTenhanghoa());
-       txtsoluong.setText(hangHoa.getSoluong());
+        txtsoluong.setText(hangHoa.getSoluong());
         if ( txtTenHangHoa.getText().toString().equals("") || txtsoluong.getText().toString().equals(""))
         {
             txtTenHangHoa.setError("Không được để trống!");
@@ -151,7 +151,9 @@ public class UpdateHangHoaKho extends AppCompatActivity  {
         btnMnu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+              Intent intent = new Intent(UpdateHangHoaKho.this, WareHouseManageActivity.class);
+              startActivity(intent);
+              finish();
             }
         });
     }

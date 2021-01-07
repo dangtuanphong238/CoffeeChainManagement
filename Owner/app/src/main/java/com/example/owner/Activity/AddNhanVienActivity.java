@@ -68,7 +68,6 @@ public class AddNhanVienActivity extends AppCompatActivity {
     private Bitmap bitmap;
     private ProgressDialog dialog;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

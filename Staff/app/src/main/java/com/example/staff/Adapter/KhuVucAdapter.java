@@ -44,6 +44,21 @@ public class KhuVucAdapter extends RecyclerView.Adapter<KhuVucAdapter.MyViewHold
     public void onBindViewHolder(@NonNull KhuVucAdapter.MyViewHolder holder, int position) {
         KhuVucMD khuVucMD = list.get(position);
         holder.txtTenKhuVUc.setText(khuVucMD.getName());
+        if (khuVucMD.getId().equals("Area1")) {
+            holder.imgKhuVuc.setImageResource(R.drawable.ic_air_conditioner);
+        }
+        else if (khuVucMD.getId().equals("Area2")) {
+            holder.imgKhuVuc.setImageResource(R.drawable.ic_sofa);
+        }
+        else if (khuVucMD.getId().equals("Area3")) {
+            holder.imgKhuVuc.setImageResource(R.drawable.ic_meeting);
+        }
+        else if (khuVucMD.getId().equals("Area4")) {
+            holder.imgKhuVuc.setImageResource(R.drawable.ic_table);
+        }
+        else{
+            holder.imgKhuVuc.setImageResource(R.drawable.ic_table);
+        }
     }
 
     @Override

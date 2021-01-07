@@ -2,8 +2,8 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="oval">
-            <size android:width="64dp" android:height="64dp"/>
-            <gradient android:startColor="@color/white" android:endColor="@color/color_blueT"/>
+            <size android:width="40dp" android:height="40dp"/>
+            <gradient android:startColor="@color/white" android:endColor="@color/color_purple"/>
         </shape>
     </item>
 </selector>

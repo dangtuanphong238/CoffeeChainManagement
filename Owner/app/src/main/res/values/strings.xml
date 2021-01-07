@@ -28,6 +28,7 @@
     </string-array>
     <string-array name="spinner_category_manager">
         <item>Tất cả</item>
+        <item>Combo</item>
         <item>Bánh Ngọt</item>
         <item>Cafe</item>
         <item>Trà Sữa</item>

@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -16,8 +18,15 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.example.founder.Interfaces.RecyclerViewClick;
 import com.example.founder.R;
+import com.example.founder.adapter.AdapterListStore;
+import com.example.founder.adapter.MyInfoWindowAdapter;
+import com.example.founder.animation.Animation;
+import com.example.founder.model.InforStore;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -27,25 +36,33 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class ManagerLocationOwnerActivity extends AppCompatActivity
         implements
         OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback,
-        GoogleMap.OnInfoWindowClickListener,
         GoogleMap.OnMarkerClickListener,
-        GoogleMap.OnCameraIdleListener {
+        RecyclerViewClick {
 
     String TAG = "MapsActivity";
 
@@ -63,6 +80,9 @@ public class ManagerLocationOwnerActivity extends AppCompatActivity
     private boolean permissionDenied = false;
     GoogleMap map;
     FusedLocationProviderClient fusedLocationProviderClient;
+    RecyclerView rvListStore;
+    ImageButton btnOpenListStore;
+    Boolean flag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,74 +91,59 @@ public class ManagerLocationOwnerActivity extends AppCompatActivity
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-    }
 
-    public void requestNowLocation() {
-        FusedLocationProviderClient fusedLocationProviderClient;
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        LocationRequest locationRequest;
-        LocationCallback locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                super.onLocationResult(locationResult);
-                if (locationResult == null) {
-                    return;
-                }
-                for (Location location : locationResult.getLocations()) {
-                    getCurrentLocation();
-                }
-            }
-        };
-        locationRequest = LocationRequest.create();
-        locationRequest.setInterval(3000);
-        locationRequest.setFastestInterval(3000);
-    }
+        rvListStore = findViewById(R.id.rvListStore);
+        getInfoStore();
 
-    private void getCurrentLocation() {
-        @SuppressLint("MissingPermission")
-        Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+        btnOpenListStore = findViewById(R.id.btnOpenListStore);
+        btnOpenListStore.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    Log.d("TAG", "location: " + location.toString());
+            public void onClick(View v) {
+                flag = !flag;
+                if (flag) {
+                    Animation.turnOnConsoleSuggest(rvListStore, btnOpenListStore);
                 } else {
-                    Log.d("TAG", "location was null");
+                    Animation.turnOffConsoleSuggest(rvListStore, btnOpenListStore);
                 }
             }
         });
-        task.addOnFailureListener(new OnFailureListener() {
+    }
+
+    ArrayList<InforStore> listStore = new ArrayList<>();
+
+    public void getInfoStore() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("FounderManager/ThongTinCuaHang");
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("TAG", e.getMessage());
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listStore.clear();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    InforStore store = data.getValue(InforStore.class);
+                    listStore.add(store);
+                }
+                AdapterListStore adapter = new AdapterListStore(ManagerLocationOwnerActivity.this, listStore, ManagerLocationOwnerActivity.this);
+                rvListStore.setLayoutManager(new LinearLayoutManager(ManagerLocationOwnerActivity.this, LinearLayoutManager.VERTICAL, false));
+                rvListStore.setAdapter(adapter);
+                showMarker(listStore);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onCameraIdle() {
-
-    }
-
-    @Override
-    public void onInfoWindowClick(Marker marker) {
-
-    }
-
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        return false;
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        enableMyLocation();
+        if (map != null) {
+            enableMyLocation();
+            map.setInfoWindowAdapter(new MyInfoWindowAdapter(this,listStore));
+            map.setOnMarkerClickListener(this);
+            map.setInfoWindowAdapter(new MyInfoWindowAdapter(this, listStore));
+        }
     }
 
     Task<Location> taskLPC;
@@ -154,25 +159,19 @@ public class ManagerLocationOwnerActivity extends AppCompatActivity
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
+
+            Toast.makeText(this, "You must accept app use your location", Toast.LENGTH_SHORT).show();
             return;
-        }else{
+        } else {
             taskLPC = fusedLocationProviderClient.getLastLocation();
             taskLPC.addOnSuccessListener(new OnSuccessListener<Location>() {
+                @SuppressLint("MissingPermission")
                 @Override
                 public void onSuccess(Location location) {
                     if (location != null) {
                         LatLng point = new LatLng(location.getLatitude(), location.getLongitude());
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(point, 17));
-                        Circle myCircle = map.addCircle(new CircleOptions()
-                                .center(point)
-                                .radius(100)
-                                .strokeColor(Color.parseColor("#21B8F3"))
-                                .fillColor(Color.parseColor("#4847C4F4")));
-
-                        Marker myMarker = map.addMarker(new MarkerOptions()
-                                .position(point)
-                                .title(getAddress(point)));
-
+                        googleMap.setMyLocationEnabled(true);
                     } else {
                         Log.d("TAG", "location was null");
                     }
@@ -185,18 +184,6 @@ public class ManagerLocationOwnerActivity extends AppCompatActivity
                 }
             });
         }
-    }
-
-    public String getAddress(LatLng point) {
-        String address = null;
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        try {
-            List<Address> addresses = geocoder.getFromLocation(point.latitude, point.longitude, 1);
-            address = addresses.get(0).getAddressLine(0);
-        } catch (Exception e) {
-            e.getMessage();
-        }
-        return address;
     }
 
     public LatLng getLocation(String namePlace) {
@@ -220,7 +207,6 @@ public class ManagerLocationOwnerActivity extends AppCompatActivity
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             if (map != null) {
-                // map.setMyLocationEnabled(true);
                 getMyLocation(map);
             }
         } else {
@@ -264,5 +250,76 @@ public class ManagerLocationOwnerActivity extends AppCompatActivity
     private void showMissingPermissionError() {
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
+    }
+
+    ArrayList<Marker> listMarker = new ArrayList<>();
+    ArrayList<Circle> listCircle = new ArrayList<>();
+
+    public void showMarker(ArrayList<InforStore> listStore) {
+        if (map != null && listStore.size() > 0) {
+            for (int i = 0; i < listStore.size(); i++) {
+                InforStore store = listStore.get(i);
+                LatLng latLng = getLocation(store.diachi);
+                if (latLng != null) {
+                    Marker marker = map.addMarker(new MarkerOptions().position(latLng)
+                            .title(store.tencuahang)
+                            .snippet(store.diachi + "-" + store.giayphepkinhdoanh + "-" + store.sdt));
+                    //  .icon(BitmapDescriptorFactory.fromResource(R.drawable.background_circle_active)).draggable(false));
+                    Circle myCircle = map.addCircle(new CircleOptions()
+                            .center(latLng)
+                            .radius(50)
+                            .strokeWidth(1)
+                            .strokeColor(Color.parseColor("#21B8F3"))
+                            .fillColor(Color.parseColor("#4847C4F4")));
+                    listMarker.add(marker);
+                    listCircle.add(myCircle);
+                } else {
+                    Toast.makeText(this, store.tencuahang + " địa chỉ sai yêu cầu cập nhật lại", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        InforStore store = listStore.get(position);
+        LatLng point = getLocation(listStore.get(position).diachi);
+        map.clear();
+        if (listMarker.size() > 0) {
+            for (int i = 0; i < listMarker.size(); i++) {
+                LatLng latLng = listMarker.get(i).getPosition();
+                if (point != null) {
+                    if (latLng.latitude == point.latitude && latLng.longitude == point.longitude) {
+                        map.addMarker(new MarkerOptions()
+                                .position(point)
+                                .snippet(store.diachi)
+                                .title(store.tencuahang)
+                        );
+                        Circle myCircle = map.addCircle(new CircleOptions()
+                                .center(point)
+                                .radius(50)
+                                .strokeWidth(1)
+                                .strokeColor(Color.parseColor("#21B8F3"))
+                                .fillColor(Color.parseColor("#4847C4F4")));
+                        map.animateCamera(CameraUpdateFactory.newLatLngZoom(point, 17));
+                        break;
+                    }
+                } else {
+                    Toast.makeText(this, "Địa chỉ của " + listStore.get(position).tencuahang + " không đúng vui lòng cập nhật lại!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onLongClick(int position) {
+
+    }
+
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        marker.showInfoWindow();
+        return true;
     }
 }
