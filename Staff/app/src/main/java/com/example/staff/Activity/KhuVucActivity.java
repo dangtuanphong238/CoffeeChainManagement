@@ -153,6 +153,7 @@ public class KhuVucActivity extends AppCompatActivity implements RecyclerviewCli
                     lstKhuVuc.add(khuVucMD);
                     listKeyKV.add(dataSnapshot.getKey());
                     listNameKV.add(dataSnapshot.child("name").getValue().toString());
+                    System.out.println("nameKey"+ listNameKV);
                 }
 
                 adapter = new KhuVucAdapter(KhuVucActivity.this,lstKhuVuc, KhuVucActivity.this);

@@ -84,6 +84,7 @@ public class DetailTableAdapter extends RecyclerView.Adapter<DetailTableAdapter.
         }
     }
 
+
     @Override
     public int getItemCount() {
         return list.size();

@@ -62,7 +62,7 @@ public class InfDatBanTrcActivity extends AppCompatActivity {
                        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                        String path = "OwnerManager/" + sOwnerID + "/QuanLyBan" + "/"+ areaID + "/" +tableID + "/tableStatus";
                        DatabaseReference myRef = firebaseDatabase.getReference(path);
-                       myRef.setValue("1").addOnCompleteListener(new OnCompleteListener<Void>() {
+                       myRef.setValue("4").addOnCompleteListener(new OnCompleteListener<Void>() {
                            @Override
                            public void onComplete(@NonNull Task<Void> task) {
                                InforDatTruoc infDatBanTrc = new InforDatTruoc(edtTenKH.getText().toString(),edtSdtKH.getText().toString()

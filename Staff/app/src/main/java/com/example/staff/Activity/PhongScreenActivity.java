@@ -1,8 +1,11 @@
 package com.example.staff.Activity;
 
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,11 +31,11 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class PhongScreenActivity extends AppCompatActivity implements RecyclerviewClick {
-    Button btnBan1;
-    RecyclerView recyclerView;
-
-//    Ban ban = new Ban();
-public final static int BLANK = 0;
+    private Button btnBan1;
+    private RecyclerView recyclerView;
+    private ImageButton btnMenu;
+    //    Ban ban = new Ban();
+    public final static int BLANK = 0;
     public final static int BOOK = 1;
     public final static int HAVING = 2;
     public final static int ERROR = 3;
@@ -46,22 +49,28 @@ public final static int BLANK = 0;
     public static final String OWNERID = "ownerID";
     private String sOwnerID;
     private ListTableAdapter adapter;
-    String title,name;
+    String title, name;
     String tableID;
     String url = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phong_lanh);
-
-
+        anhXa();
+        btnMenu.setImageResource(R.drawable.ic_back_24);
         getOwnerIDFromLocalStorage();
 //        setData();
 
-        recyclerView = findViewById(R.id.gridviewPl);
-        txtTenPhong = findViewById(R.id.txtTenPhong);
+        onBackMnu();
         setData();
         getData();
+    }
+
+    private void anhXa() {
+        recyclerView = findViewById(R.id.gridviewPl);
+        txtTenPhong = findViewById(R.id.txtTitle);
+        btnMenu = findViewById(R.id.btnMnu);
     }
 
 
@@ -75,6 +84,7 @@ public final static int BLANK = 0;
         });
         return array;
     }
+
     private void setData() {
         Bundle bundle = getIntent().getExtras();
         title = bundle.getString("values");
@@ -83,6 +93,14 @@ public final static int BLANK = 0;
         databaseReference = database.getReference().child("OwnerManager").child(sOwnerID).child("QuanLyBan").child(title);
         name = bundle.getString("tenPhong");
         txtTenPhong.setText(name.toString());
+    }
+    private void onBackMnu(){
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
     private void getData() {
         database = FirebaseDatabase.getInstance();
@@ -95,7 +113,7 @@ public final static int BLANK = 0;
                     TableModel tableModel = dataSnapshot.getValue(TableModel.class);
                     lstPhong.add(tableModel);
                 }
-                adapter = new ListTableAdapter(PhongScreenActivity.this,sortListAsASC(lstPhong), PhongScreenActivity.this);
+                adapter = new ListTableAdapter(PhongScreenActivity.this, sortListAsASC(lstPhong), PhongScreenActivity.this);
                 adapter.notifyDataSetChanged();
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -110,6 +128,7 @@ public final static int BLANK = 0;
             }
         });
     }
+
     private void getOwnerIDFromLocalStorage() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         System.out.println(sharedPreferences.getString(OWNERID, "null"));
@@ -124,7 +143,7 @@ public final static int BLANK = 0;
 //        OrderDialog dialog = new OrderDialog(this,sOwnerID,title,"Table"+lstPhong.get(position).getID());
 //        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 //        dialog.show();
-        checkTable(position,sOwnerID);
+        checkTable(position, sOwnerID);
     }
 
     @Override
@@ -135,6 +154,7 @@ public final static int BLANK = 0;
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.show();
     }
+
     void checkTable(int position, String ownerID) {
 
 
@@ -160,14 +180,14 @@ public final static int BLANK = 0;
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
         }
-        if(lstPhong.get(position).getTableStatus().equals("3")){
+        if (lstPhong.get(position).getTableStatus().equals("3")) {
             //When be error
             //Toast notification
-            UpdateTableDialog dialog = new UpdateTableDialog(this, url, sOwnerID, title, "Table"+lstPhong.get(position).getID(), lstPhong.get(position).getTableStatus());
+            UpdateTableDialog dialog = new UpdateTableDialog(this, url, sOwnerID, title, "Table" + lstPhong.get(position).getID(), lstPhong.get(position).getTableStatus());
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
         }
-        if(lstPhong.get(position).getTableStatus().equals("4")){
+        if (lstPhong.get(position).getTableStatus().equals("4")) {
             OrderDialog dialog = new OrderDialog(this, sOwnerID, title, "Table" + lstPhong.get(position).getID());
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();

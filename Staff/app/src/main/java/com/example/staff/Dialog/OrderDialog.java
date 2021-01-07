@@ -127,7 +127,6 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
                         MealModel model = data.getValue(MealModel.class);
                         if(model.getMeal_category().equals(key)){
                             list.add(model);
-                            Toast.makeText(context, key, Toast.LENGTH_SHORT).show();
                         }
 
                         System.out.println(list);

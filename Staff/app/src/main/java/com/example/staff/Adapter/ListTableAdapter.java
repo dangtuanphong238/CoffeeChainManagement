@@ -50,11 +50,11 @@ public class ListTableAdapter extends RecyclerView.Adapter<ListTableAdapter.MyVi
             holder.imgTable.setBackgroundColor(0xFFE82929);
         } else if (model.getTableStatus().equals(PhongScreenActivity.LOADINGBOOK + ""))
         {
-            holder.imgTable.setBackgroundColor(Color.GRAY);
+            holder.imgTable.setBackgroundColor(Color.GREEN);
         }
         else if (model.getTableStatus().equals(PhongScreenActivity.LOADINGERROR + ""))
         {
-            holder.imgTable.setBackgroundColor(Color.GREEN);
+            holder.imgTable.setBackgroundColor(Color.GRAY);
         }
         else
         {

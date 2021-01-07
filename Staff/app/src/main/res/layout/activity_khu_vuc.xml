@@ -4,26 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main_drawer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FE9B58"
-            android:orientation="vertical"
-            tools:context=".KhuVucScreen">
-            <include layout="@layout/toolbar" />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycleviewKhuVuc"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="4"
-                android:columnWidth="150dp"
-                android:numColumns="auto_fit"
-                tools:listitem="@layout/item_khuvuc"></androidx.recyclerview.widget.RecyclerView>
-        </LinearLayout>
+        <include layout="@layout/layout_background_view" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".KhuVucScreen">
 
+        <include layout="@layout/toolbar" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycleviewKhuVuc"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="15dp"
+                    android:layout_weight="4"
+                    android:columnWidth="150dp"
+                    android:numColumns="auto_fit"
+                    tools:listitem="@layout/item_khuvuc"></androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+    </RelativeLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navDrawerMenu"
         android:layout_width="wrap_content"

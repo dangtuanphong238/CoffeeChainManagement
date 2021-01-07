@@ -2,15 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FE9B58"
+    android:orientation="vertical">
+   <RelativeLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content">
+       <include layout="@layout/layout_background_view" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -108,4 +113,6 @@
 
         </LinearLayout>
     </LinearLayout>
+</LinearLayout>
+   </RelativeLayout>
 </LinearLayout>

@@ -53,6 +53,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
     String month = "Thang" + parseTime.getMonth();
     String _date = "Ngay" + parseTime.getDate();
     String ngay = parseTime.getDate();
+    String thang = parseTime.getMonth();
 
     public DetailTableDialog(@NonNull Context context, String url, String ownerID, String areaID, String tableID) {
         super(context);
@@ -152,6 +153,38 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
     }
 
     ArrayList<MealUsed> listMealUsed = new ArrayList<>();
+
+    public void getDataMonth() {
+        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        final DatabaseReference reference = firebaseDatabase.getReference("/FounderManager/" +
+                "/QuanLyDoanhThu/" + ownerID + "/" + year + "/" + month + "/DoanhThuNgay/");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Integer> arrayList = new ArrayList<>();
+                int total = 0;
+                if (snapshot.getValue() != null) {
+                    for (DataSnapshot item : snapshot.getChildren()) {
+                        int mangTien = Integer.parseInt(item.child("sumtotal").getValue().toString());
+                        arrayList.add(mangTien);
+                    }
+                    for (int num : arrayList) {
+                        total = total + num;
+                    }
+                    FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
+                    DatabaseReference reference1 = firebaseDatabase1.getReference("/FounderManager/" +
+                            "/QuanLyDoanhThu/" + ownerID + "/" + year + "/" + month);
+                    reference1.child("total").setValue(String.valueOf(total));
+                    reference1.child("month").setValue(thang);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     public void createBill() {
         //Read data from branch Table_Active
@@ -352,8 +385,8 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
         }
         dismiss();
     }
-    public void getTien()
-    {
+
+    public void getTien() {
         final Sum sumtotal = new Sum(tvSumPrice.getText().toString());
         final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = firebaseDatabase.getReference("/OwnerManager/" + ownerID
@@ -361,42 +394,39 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue() == null)
-                {
+                if (snapshot.getValue() == null) {
                     myRef.child("DoanhThuNgay").child("sumtotal").setValue(sumtotal.getSum())
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
-                                public void onSuccess(Void aVoid)
-                                {
+                                public void onSuccess(Void aVoid) {
                                     FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
                                     final DatabaseReference myRef1 = firebaseDatabase1.getReference("/FounderManager/" +
-                                            "/QuanLyDoanhThu/"  + ownerID + "/" + year + "/" + month + "/DoanhThuNgay/" + _date);
-                                    DoanhThuMonth doanhThuMonth = new DoanhThuMonth(ngay,sumtotal.getSum());
+                                            "/QuanLyDoanhThu/" + ownerID + "/" + year + "/" + month + "/DoanhThuNgay/" + _date);
+                                    DoanhThuMonth doanhThuMonth = new DoanhThuMonth(ngay, sumtotal.getSum());
                                     myRef1.setValue(doanhThuMonth);
                                 }
                             });
-                }
-                else
-                {
+                } else {
                     kiemtraDulieu();
+                    getDataMonth();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
     }
-    public void kiemtraDulieu()
-    {
+
+    public void kiemtraDulieu() {
         final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = firebaseDatabase.getReference("/OwnerManager/" + ownerID
                 + "/QuanLyHoaDon/" + year + "/" + month + "/" + _date + "/DoanhThuNgay");
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists())
-                {
+                if (snapshot.exists()) {
                     String tien = snapshot.child("sumtotal").getValue().toString();
                     tongtien = Integer.parseInt(tien) + Integer.parseInt(tvSumPrice.getText().toString());
                 }
@@ -405,8 +435,8 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
                     public void onSuccess(Void aVoid) {
                         FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
                         final DatabaseReference myRef1 = firebaseDatabase1.getReference("/FounderManager/" +
-                                "/QuanLyDoanhThu/"  + ownerID + "/" + year + "/" + month + "/DoanhThuNgay/" + _date);
-                        DoanhThuMonth doanhThuMonth = new DoanhThuMonth(ngay,String.valueOf(tongtien));
+                                "/QuanLyDoanhThu/" + ownerID + "/" + year + "/" + month + "/DoanhThuNgay/" + _date);
+                        DoanhThuMonth doanhThuMonth = new DoanhThuMonth(ngay, String.valueOf(tongtien));
                         myRef1.setValue(doanhThuMonth);
                     }
                 });
