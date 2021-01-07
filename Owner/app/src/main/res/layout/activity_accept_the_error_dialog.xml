@@ -73,7 +73,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="Ngày Lỗi"
+                        android:text="DD/MM/YYYY"
                         android:textColor="#EC1440"
                         android:textSize="20dp">
                     </TextView>
@@ -87,8 +87,7 @@
                         android:textColor="@color/black"
                         android:id="@+id/noidung"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Nhập lỗi"></TextView>
+                        android:layout_height="wrap_content"></TextView>
                 </LinearLayout>
 
                 <LinearLayout

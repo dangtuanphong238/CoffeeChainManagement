@@ -2,15 +2,15 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="100sp"
+    android:layout_height="150sp"
     android:layout_gravity="center"
     android:layout_margin="5dp"
-    android:background="@drawable/edit_text_main"
     android:elevation="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/custom_item"
         android:gravity="center"
         android:minWidth="290dp"
         android:orientation="vertical"
@@ -27,53 +27,84 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.7"
                 android:gravity="center">
 
                 <ImageView
                     android:id="@+id/imgMeal_image"
-                    android:layout_width="60sp"
-                    android:layout_height="60sp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_margin="10dp"
-                    android:background="@drawable/noimage" />
+                    android:background="@drawable/ic_image" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:orientation="vertical"
                 android:paddingLeft="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1.5"
+                    android:layout_weight="2"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="2sp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:gravity="center|left"
-                        android:text="Tên:"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tvMeal_name"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="2sp"
-                        android:layout_weight="3"
-                        android:gravity="center|left"
-                        android:maxLines="2"
-                        android:text="Trà sữa thái xanh"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="Tên:"
+                            android:textColor="@color/black"
+                            android:textSize="20sp" />
+
+
+                        <TextView
+                            android:id="@+id/tvMeal_name"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            android:maxLines="2"
+                            android:text="Trà sữa thái xanh"
+                            android:textColor="@color/black"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="Gồm:"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+
+
+                        <TextView
+                            android:id="@+id/tvMeal_description"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            android:maxLines="2"
+                            android:text="Trà sữa thái xanh"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+                    </LinearLayout>
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -85,22 +116,35 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight="0.3"
                         android:gravity="center_vertical"
                         android:text="Giá:"
                         android:textColor="@color/black"
-                        android:textSize="13sp" />
-
+                        android:textSize="14dp" />
                     <TextView
                         android:id="@+id/tvMeal_price"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="3"
+                        android:layout_weight="0.7"
                         android:gravity="center_vertical"
                         android:text="50000"
                         android:textColor="@color/black"
-                        android:textSize="13sp" />
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tvMeal_price_total"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:gravity="center_vertical"
+                        android:text="50000"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:typeface="sans"
+                        />
+
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -112,21 +156,39 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight="0.5"
                         android:gravity="center_vertical"
                         android:text="TL:"
                         android:textColor="@color/black"
-                        android:textSize="13sp" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/tvMeal_Category"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="3"
+                        android:layout_weight="2"
                         android:gravity="center_vertical"
                         android:text="Trà sữa"
                         android:textColor="@color/black"
-                        android:textSize="13sp" />
+                        android:textSize="15sp" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.9"
+                        android:gravity="center_vertical"
+                        android:text="Giảm:"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvMeal_uudai"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:gravity="center_vertical"
+                        android:text="5%"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -167,7 +229,6 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:orientation="horizontal">
-
                 <ImageButton
                     android:id="@+id/btnMinus"
                     android:layout_width="wrap_content"
@@ -175,6 +236,7 @@
                     android:background="@drawable/ic_minus"
                     android:gravity="center"
                     android:text="-" />
+
 
                 <TextView
                     android:id="@+id/tvAmounts"
@@ -186,7 +248,6 @@
                     android:text="0"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
-
                 <ImageButton
                     android:id="@+id/btnPlus"
                     android:layout_width="wrap_content"
@@ -194,6 +255,7 @@
                     android:background="@drawable/ic_plus__1_"
                     android:gravity="center"
                     android:text="+" />
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

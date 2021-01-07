@@ -26,6 +26,7 @@
                 android:layout_height="60dp"
                 android:background="@drawable/noimage"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -34,10 +35,10 @@
             android:paddingLeft="20dp">
 
             <LinearLayout
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
@@ -46,24 +47,24 @@
                     android:layout_weight="1"
                     android:text="Tên:"
                     android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tvMeal_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:maxLines="2"
                     android:layout_weight="3"
+                    android:maxLines="2"
                     android:text="Trà sữa thái xanh"
                     android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
@@ -72,7 +73,7 @@
                     android:layout_weight="1"
                     android:text="Giá:"
                     android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tvMeal_price"
@@ -81,7 +82,7 @@
                     android:layout_weight="3"
                     android:text="50000"
                     android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -97,7 +98,7 @@
                     android:layout_weight="1"
                     android:text="TL:"
                     android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tvMeal_Category"
@@ -106,7 +107,7 @@
                     android:layout_weight="3"
                     android:text="Trà sữa"
                     android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

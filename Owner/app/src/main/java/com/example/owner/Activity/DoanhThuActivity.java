@@ -11,7 +11,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.owner.Global.ParseTime;
@@ -28,6 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -35,7 +39,9 @@ public class DoanhThuActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
     private String sOwnerID;
+    ImageButton btnMenu;
     private LineChart lineChart;
+    TextView textView;
     private LineDataSet lineDataSet = new LineDataSet(null, null);
     ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
     LineData lineData;
@@ -49,6 +55,7 @@ public class DoanhThuActivity extends AppCompatActivity {
         getOwnerIDFromLocalStorage();
         getAnhXa();
         setDuLieu();
+        textView.setText("Doanh Thu Năm " + year);
     }
      private void setDuLieu() {
         try {
@@ -126,10 +133,18 @@ public class DoanhThuActivity extends AppCompatActivity {
 
     private void getAnhXa() {
         lineChart = findViewById(R.id.chartDate);
+        textView = findViewById(R.id.txtTitle);
+        btnMenu = findViewById(R.id.btnMnu);
+        btnMenu.setImageResource(R.drawable.ic_back_24);
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DoanhThuActivity.this,DoanhThuDate.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
-
-
-
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);

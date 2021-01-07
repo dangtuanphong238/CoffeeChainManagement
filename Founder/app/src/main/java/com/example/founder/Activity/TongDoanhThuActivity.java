@@ -159,32 +159,36 @@ public class TongDoanhThuActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     ArrayList<Entry> entries = new ArrayList<Entry>();
-                                    if (snapshot.exists())
-                                    {
-                                        if (snapshot.hasChildren())
+                                    if(snapshot.getValue() != null){
+                                        if (snapshot.exists())
                                         {
-                                            entries.clear();
-                                            for (DataSnapshot item : snapshot.getChildren())
+                                            if (snapshot.hasChildren())
                                             {
-                                                if (snapshot.exists())
+                                                entries.clear();
+                                                for (DataSnapshot item : snapshot.getChildren())
                                                 {
-                                                    DoanhThu doanhThu = item.getValue(DoanhThu.class);
-                                                    entries.add(new Entry(Integer.parseInt(doanhThu.month)
-                                                            ,Float.valueOf(doanhThu.total)));
+                                                    if(item.getValue() != null) {
+                                                        if (snapshot.exists())
+                                                        {
+                                                            DoanhThu doanhThu = item.getValue(DoanhThu.class);
+                                                            entries.add(new Entry(Integer.parseInt(doanhThu.month)
+                                                                    ,Float.valueOf(doanhThu.total)));
+                                                        }
+                                                    }
                                                 }
-
+                                                showCharrt(entries);
                                             }
-                                            showCharrt(entries);
+                                            else
+                                            {
+                                                lineChart.clear();
+                                                lineChart.invalidate();
+                                            }
                                         }
                                         else
                                         {
-                                            lineChart.clear();
-                                            lineChart.invalidate();
+                                            Toast.makeText(TongDoanhThuActivity.this, "Chưa có dữ liệu", Toast.LENGTH_SHORT).show();
                                         }
-                                    }
-                                    else
-                                    {
-                                        Toast.makeText(TongDoanhThuActivity.this, "Chưa có dữ liệu", Toast.LENGTH_SHORT).show();
+
                                     }
 
                                 }

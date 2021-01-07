@@ -22,34 +22,41 @@
 
                 <include layout="@layout/layout_background_view" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerCombo"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerCombo"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="5"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+                        <Button
+                            android:layout_margin="@dimen/normal10dp"
+                            android:background="@drawable/background_corner_grey"
+                            android:id="@+id/btnTaoCombo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tạo combo"/>
+
+                        <Button
+                            android:layout_margin="@dimen/normal10dp"
+                            android:background="@drawable/background_corner_grey"
+                            android:id="@+id/btnXoaCombo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Xóa combo"/>
+                    </LinearLayout>
+                </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:gravity="center">
-            <Button
-                android:layout_margin="@dimen/normal10dp"
-                android:background="@drawable/background_corner_grey"
-                android:id="@+id/btnTaoCombo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tạo combo"/>
 
-            <Button
-                android:layout_margin="@dimen/normal10dp"
-                android:background="@drawable/background_corner_grey"
-                android:id="@+id/btnXoaCombo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Xóa combo"/>
-        </LinearLayout>
     </LinearLayout>
     <!--    leftmenu-->
     <com.google.android.material.navigation.NavigationView
