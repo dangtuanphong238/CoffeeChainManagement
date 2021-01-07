@@ -62,6 +62,9 @@ public class ThemTaiKhoanKhuVucActivity extends AppCompatActivity {
                     case R.id.it1:
                         Public_func.clickItemMenu(ThemTaiKhoanKhuVucActivity.this, TongDoanhThuActivity.class);
                         return true;
+                    case R.id.map:
+                        Public_func.clickItemMenu(ThemTaiKhoanKhuVucActivity.this, ManagerLocationOwnerActivity.class);
+                        return true;
                     case R.id.danh_sach_cua_hang:
                         Public_func.clickItemMenu(ThemTaiKhoanKhuVucActivity.this, ListCuaHangActivity.class);
                         return true;

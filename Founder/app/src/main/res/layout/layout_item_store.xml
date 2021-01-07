@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:layout_marginBottom="@dimen/normal5dp"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imgStore"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp" />
+    </LinearLayout>
+
+<!--    this.giayphepkinhdoanh = giayphepkinhdoanh;-->
+<!--    this.sdt = sdt;-->
+
+
+
+    <LinearLayout
+        android:layout_weight="3"
+        android:layout_width="0dp"
+        android:orientation="horizontal"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_weight="9"
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:text="Name Store:"
+                    android:textColor="#000"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/tvNameStore"
+                    android:gravity="center_vertical"
+                    android:textColor="#000"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="match_parent"
+                    android:text="Highland Coffee"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:text="SĐT:"
+                    android:textColor="#000"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/tvSDT"
+                    android:gravity="center_vertical"
+                    android:textColor="#000"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="match_parent"
+                    android:text="0399855825"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:text="GPKD:"
+                    android:textColor="#000"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/tvGPKD"
+                    android:gravity="center_vertical"
+                    android:textColor="#000"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="match_parent"
+                    android:text="9034-KD357"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_margin="10dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tvStatusStore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_circle_active"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

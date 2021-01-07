@@ -9,20 +9,18 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.owner.Global.ParseTime;
-import com.example.owner.Model.DoanhThu;
-import com.example.owner.Model.DoanhThuDateApdater;
+import com.example.owner.Adapter.DoanhThuDateApdater;
 import com.example.owner.Model.DoanhThuDateModel;
-import com.example.owner.Model.DoanhThuMonth;
 import com.example.owner.R;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -40,7 +38,7 @@ public class DoanhThuDate extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String OWNERID = "ownerID";
     String sOwnerID;
-    TextView tvSoLuong, tvDoanhThu, tvNgay;
+    TextView tvSoLuong, tvDoanhThu, tvNgay,tvLayout;
     ListView lvDoanhThuMon;
     Spinner spinnerDoanhThu;
     PieChart pieChart;
@@ -54,7 +52,7 @@ public class DoanhThuDate extends AppCompatActivity {
     String getThang, getTotal;
     ArrayList<DoanhThuDateModel> doanhThuDateModels;
     DoanhThuDateApdater doanhThuDateApdater;
-    String name,amount,price;
+    ImageButton btnMenu;
     DoanhThuDateModel doanhThuDateModel;
     private PieDataSet pieDataSet;
 
@@ -63,6 +61,7 @@ public class DoanhThuDate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doanh_thu_date);
         setControl();
+        tvLayout.setText("Doanh Thu Ngày " + ngay);
         getOwnerIDFromLocalStorage();
         setEvent();
     }
@@ -105,6 +104,14 @@ public class DoanhThuDate extends AppCompatActivity {
 
             }
         });
+           btnMenu.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   Intent intent = new Intent(DoanhThuDate.this,AreaManageActivity.class);
+                   startActivity(intent);
+                   finish();
+               }
+           });
     }
 
     private void setDuLieuTotal() {
@@ -152,26 +159,36 @@ public class DoanhThuDate extends AppCompatActivity {
     }
 
     private void setDuLieuTongTien() {
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference reference = firebaseDatabase.getReference();
-        reference.child("OwnerManager").child(sOwnerID).child("QuanLyHoaDon").child(year).child(month).child(_date)
-                .child("DoanhThuNgay").child("sumtotal").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                tvDoanhThu.setText(snapshot.getValue().toString());
-            }
+        try {
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            final DatabaseReference reference = firebaseDatabase.getReference();
+            reference.child("OwnerManager").child(sOwnerID).child("QuanLyHoaDon").child(year).child(month).child(_date)
+                    .child("DoanhThuNgay").child("sumtotal").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.getValue() != null)
+                    {
+                        if (snapshot.exists())
+                        {
+                            tvDoanhThu.setText(snapshot.getValue().toString());
+                        }
+                    }
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            ex.getMessage();
+        }
     }
 
     private void chartKitPieDate() {
         try {
-
-
             //custom
             //pieChart.setUsePercentValues(true);
             pieChart.getDescription().setEnabled(false);
@@ -219,6 +236,9 @@ public class DoanhThuDate extends AppCompatActivity {
         tvNgay = findViewById(R.id.ngayTV);
         spinnerDoanhThu = findViewById(R.id.spinnerDate);
         pieChart = findViewById(R.id.chartDate);
+        tvLayout = findViewById(R.id.txtTitle);
+        btnMenu = findViewById(R.id.btnMnu);
+        btnMenu.setImageResource(R.drawable.ic_back_24);
     }
 
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
