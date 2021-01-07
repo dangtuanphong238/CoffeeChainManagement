@@ -17,6 +17,11 @@
         android:icon="@drawable/ic_store_24"
         app:showAsAction="never" />
     <item
+        android:id="@+id/map"
+        android:title="Quản lý địa điểm (Map)"
+        android:icon="@drawable/ic_store_24"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/tao_tai_khoan_owner"
         android:title="Tạo tài khoản"
         android:icon="@drawable/ic_create_24"

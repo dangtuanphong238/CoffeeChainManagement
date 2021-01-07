@@ -17,12 +17,6 @@
 
         <include layout="@layout/toolbar" />
 
-        <Button
-            android:id="@+id/btnDemo"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Demo" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
