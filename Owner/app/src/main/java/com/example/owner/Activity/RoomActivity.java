@@ -220,14 +220,6 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
         }
-        if(listTable.get(position).getTableStatus().equals("4")){
-            //When Having
-            //Show detail dialog(- payment dialog)
-            //Show list meal already and amounts.
-            OrderDialog dialog = new OrderDialog(this,ownerID,areaID,"Table"+listTable.get(position).getID());
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            dialog.show();
-        }
     }
 
     public void backPressed() {

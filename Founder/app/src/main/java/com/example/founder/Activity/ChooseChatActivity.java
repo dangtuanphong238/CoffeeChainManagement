@@ -78,7 +78,7 @@ public class ChooseChatActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(ChooseChatActivity.this, ThemTaiKhoanKhuVucActivity.class);
                         return true;
                     case R.id.thong_bao:
-                        recreate();
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
                     case R.id.log_out:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);

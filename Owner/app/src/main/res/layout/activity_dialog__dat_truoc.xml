@@ -21,7 +21,7 @@
         android:minWidth="300dp"
         android:layout_marginVertical="20dp"
         android:orientation="vertical"
-       >
+        >
         <TextView
             android:layout_marginVertical="10dp"
             android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:text="Tên KH:"
-            android:textColor="#767B97"
+            android:textColor="@color/colorPrimary"
             android:textSize="20dp"></TextView>
         <EditText
             android:layout_marginHorizontal="20dp"
@@ -47,7 +47,7 @@
             android:layout_height="48dp"
             android:gravity="center"
             android:paddingHorizontal="10dp"
-            android:background="@drawable/custom_edittext"
+            android:background="@drawable/edit_text_main"
             android:paddingRight="20px"></EditText>
         <TextView
             android:layout_marginHorizontal="20dp"
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:text="Số Điện Thoại KH:"
-            android:textColor="#767B97"
+            android:textColor="@color/colorPrimary"
             android:textSize="20dp"></TextView>
         <EditText
             android:layout_marginHorizontal="20dp"
@@ -64,7 +64,7 @@
             android:layout_height="48dp"
             android:gravity="center"
             android:paddingHorizontal="10dp"
-            android:background="@drawable/custom_edittext"
+            android:background="@drawable/edit_text_main"
             android:paddingRight="20px"></EditText>
         <TextView
             android:layout_marginHorizontal="20dp"
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:text="Thời Gian Đặt Bàn:"
-            android:textColor="#767B97"
+            android:textColor="@color/colorPrimary"
             android:textSize="20dp"></TextView>
 
         <EditText
@@ -80,7 +80,7 @@
             android:id="@+id/edtrsTimeDatBan"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@drawable/custom_edittext"
+            android:background="@drawable/edit_text_main"
             android:gravity="center"
             android:paddingHorizontal="10dp"
             android:paddingRight="20px"></EditText>

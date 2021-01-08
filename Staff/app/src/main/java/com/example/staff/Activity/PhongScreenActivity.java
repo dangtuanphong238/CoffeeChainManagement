@@ -187,11 +187,6 @@ public class PhongScreenActivity extends AppCompatActivity implements Recyclervi
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
         }
-        if (lstPhong.get(position).getTableStatus().equals("4")) {
-            OrderDialog dialog = new OrderDialog(this, sOwnerID, title, "Table" + lstPhong.get(position).getID());
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            dialog.show();
-        }
 //        {
 //            //Toast exception
 //            UpdateTableDialog dialog = new UpdateTableDialog(this, url, ownerID, areaID, tableID);

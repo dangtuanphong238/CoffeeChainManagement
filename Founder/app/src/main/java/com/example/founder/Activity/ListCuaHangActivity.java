@@ -61,7 +61,7 @@ public class ListCuaHangActivity extends AppCompatActivity implements ItemClickL
                         Public_func.clickItemMenu(ListCuaHangActivity.this, TongDoanhThuActivity.class);
                         return true;
                     case R.id.danh_sach_cua_hang:
-                        recreate();
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
                     case R.id.map:
                         Public_func.clickItemMenu(ListCuaHangActivity.this, ManagerLocationOwnerActivity.class);
