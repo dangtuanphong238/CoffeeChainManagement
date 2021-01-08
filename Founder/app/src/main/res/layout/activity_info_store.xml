@@ -2,159 +2,206 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#FE9B53"
     android:layout_height="match_parent"
+    android:background="#FE9B53"
     android:orientation="vertical"
     tools:context=".Activity.InfoStoreActivity">
-    <include layout="@layout/toolbar"/>
+
+    <include layout="@layout/toolbar" />
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <include layout="@layout/layout_background_view"/>
+
+        <include layout="@layout/layout_background_view" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_margin="@dimen/normal5dp">
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
+            android:layout_margin="@dimen/normal5dp"
+            android:orientation="vertical">
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:text="Tên Cửa Hàng:"
-                    android:textColor="#767B97"
-                    android:textSize="20dp"></TextView>
-                <EditText
-                    android:id="@+id/edtrsTencuahang"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:gravity="center"
-                    android:hint="Enter the store name"
-                    android:paddingHorizontal="10dp"
-                    android:background="@drawable/custom_edittext"
-                    android:paddingRight="20px"></EditText>
-                <TextView
-                    android:id="@+id/txtrsDiachi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:text="Địa Chỉ:"
-                    android:textColor="#767B97"
-                    android:textSize="20dp"></TextView>
-                <EditText
-                    android:id="@+id/edtrsdiachi"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:gravity="center"
-                    android:hint="Enter the address"
-                    android:paddingHorizontal="10dp"
-                    android:background="@drawable/custom_edittext"
-                    android:paddingRight="20px"></EditText>
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/txtrsGiayphepkinhdoanh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:text="Giấy Phép Kinh Doanh:"
-                    android:textColor="#767B97"
-                    android:textSize="20dp"></TextView>
-                <EditText
-                    android:id="@+id/edtrsgiayphepkinhdoanh"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:gravity="center"
-                    android:hint="Enter the business license"
-                    android:paddingHorizontal="10dp"
-                    android:background="@drawable/custom_edittext"
-                    android:paddingRight="20px"></EditText>
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/txtrsSodienthoai"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:text="Số Điện Thoại:"
-                    android:textColor="#767B97"
-                    android:textSize="20dp"></TextView>
-                <EditText
-                    android:id="@+id/edtrsSodienthoai"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:gravity="center"
-                    android:hint="Enter your phone number"
-                    android:paddingHorizontal="10dp"
-                    android:background="@drawable/custom_edittext"
-                    android:paddingRight="20px"></EditText>
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/txtrsTrangthai"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:text="Trạng Thái:"
-                    android:textColor="#767B97"
-                    android:textSize="20dp"></TextView>
-                <Spinner
-                    android:entries="@array/lstDanhSachTrangThai"
-                    android:id="@+id/edtrstrangthai"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:paddingHorizontal="10dp"
-                    android:background="@drawable/custom_edittext"
-                    android:paddingRight="20px"></Spinner>
-            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <Button
-                    android:layout_marginHorizontal="5dp"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:id="@+id/btnrsCapnhat"
-                    android:padding="20px"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:background="@drawable/custom_button"
-                    android:text="Cập Nhật " />
+                    android:layout_marginTop="@dimen/normal10dp">
 
-                <Button
-                    android:layout_marginHorizontal="5dp"
-                    android:padding="20px"
-                    android:id="@+id/btnrsXoa"
-                    android:layout_gravity="center"
-                    android:gravity="center"
+                    <EditText
+                        android:id="@+id/edtrsTencuahang"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="@dimen/normal10dp"
+                        android:background="@drawable/edit_text_main"
+                        android:gravity="center"
+                        android:hint="Enter the store name"
+                        android:paddingHorizontal="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="@dimen/normal30dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/background_tv_spn"
+                        android:text="Tên Cửa Hàng:"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16dp" />
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/custom_button"
-                    android:text="XÓA " />
+                    android:layout_marginTop="@dimen/normal10dp">
 
+                    <EditText
+                        android:id="@+id/edtrsdiachi"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="@dimen/normal10dp"
+                        android:background="@drawable/edit_text_main"
+                        android:gravity="center"
+                        android:hint="Enter the address"
+                        android:paddingHorizontal="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="@dimen/normal30dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/background_tv_spn"
+                        android:text="Địa Chỉ:"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16dp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/normal10dp">
+
+                    <EditText
+                        android:id="@+id/edtrsgiayphepkinhdoanh"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="@dimen/normal10dp"
+                        android:background="@drawable/edit_text_main"
+                        android:gravity="center"
+                        android:hint="Enter the business license"
+                        android:paddingHorizontal="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="@dimen/normal30dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/background_tv_spn"
+                        android:text="Giấy Phép Kinh Doanh:"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16dp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/normal10dp">
+
+                    <EditText
+                        android:id="@+id/edtrsSodienthoai"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="@dimen/normal10dp"
+                        android:background="@drawable/edit_text_main"
+                        android:gravity="center"
+                        android:hint="Enter your phone number"
+                        android:paddingHorizontal="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="@dimen/normal30dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/background_tv_spn"
+                        android:text="Số Điện Thoại:"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16dp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Spinner
+                        android:id="@+id/edtrstrangthai"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/normal50dp"
+                        android:layout_marginHorizontal="@dimen/normal10dp"
+                        android:layout_marginTop="@dimen/normal20dp"
+                        android:background="@drawable/edit_text_main"
+                        android:entries="@array/lstDanhSachTrangThai"
+                        android:padding="@dimen/normal10dp"
+                        android:spinnerMode="dropdown"
+                        android:textAlignment="center"></Spinner>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="@dimen/normal30dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/background_tv_spn"
+                        android:text="Trạng Thái:"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16dp"></TextView>
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnrsCapnhat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_button"
+                        android:gravity="center"
+                        android:padding="20px"
+                        android:text="Cập Nhật " />
+
+                    <Button
+                        android:id="@+id/btnrsXoa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_button"
+                        android:gravity="center"
+                        android:padding="20px"
+                        android:text="XÓA " />
+
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
-
-
 </LinearLayout>

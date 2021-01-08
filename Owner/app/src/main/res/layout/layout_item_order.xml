@@ -2,10 +2,10 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="100sp"
+    android:layout_height="150sp"
     android:layout_gravity="center"
-    android:layout_margin="5dp"
-    android:background="@drawable/edit_text_main"
+    android:layout_marginTop="5dp"
+    app:cardCornerRadius="@dimen/normal10dp"
     android:elevation="10dp">
 
     <LinearLayout
@@ -13,14 +13,14 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:minWidth="290dp"
-        android:orientation="vertical"
-        android:paddingLeft="10dp">
+        android:layout_margin="@dimen/normal5dp"
+        android:orientation="vertical">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_weight="4"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -135,8 +135,8 @@
             android:id="@+id/layoutChooseAmount"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="10dp"
             android:layout_weight="2"
+            android:layout_marginTop="@dimen/normal5dp"
             android:background="#A69299"
             android:gravity="center"
             android:orientation="horizontal"

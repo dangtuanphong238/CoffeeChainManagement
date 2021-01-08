@@ -83,7 +83,6 @@ public class NotificationActivity extends AppCompatActivity {
 
     private void setOnClick() {
         if (chatType.equals("room")) {
-            Toast.makeText(this, sOwnerID, Toast.LENGTH_SHORT).show();
             btnSend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

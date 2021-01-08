@@ -1,15 +1,20 @@
 package com.example.founder.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -17,11 +22,13 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.founder.Interfaces.RecyclerViewClick;
+import com.example.founder.Public.Public_func;
 import com.example.founder.R;
 import com.example.founder.adapter.AdapterListStore;
 import com.example.founder.adapter.MyInfoWindowAdapter;
@@ -46,6 +53,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -83,6 +91,10 @@ public class ManagerLocationOwnerActivity extends AppCompatActivity
     RecyclerView rvListStore;
     ImageButton btnOpenListStore;
     Boolean flag = true;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle drawerToggle;
+    private NavigationView navigationView;
+    private ImageButton imgMnu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,10 +103,43 @@ public class ManagerLocationOwnerActivity extends AppCompatActivity
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
+        drawerLayout = findViewById(R.id.activity_main_drawer);
         rvListStore = findViewById(R.id.rvListStore);
-        getInfoStore();
+        imgMnu = findViewById(R.id.btnMnu);
+        navigationView = findViewById(R.id.navDrawerMenu);
+        openMenu();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
 
+                    case R.id.it1:
+                        Public_func.clickItemMenu(ManagerLocationOwnerActivity.this, TongDoanhThuActivity.class);
+                        return true;
+                    case R.id.danh_sach_cua_hang:
+                        Public_func.clickItemMenu(ManagerLocationOwnerActivity.this, ListCuaHangActivity.class);
+                        return true;
+                    case R.id.map:
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        return true;
+                    case R.id.tao_tai_khoan_owner:
+                        Public_func.clickItemMenu(ManagerLocationOwnerActivity.this, ThemTaiKhoanKhuVucActivity.class);
+                        return true;
+                    case R.id.thong_bao:
+                        Public_func.clickItemMenu(ManagerLocationOwnerActivity.this, ChooseChatActivity.class);
+                        return true;
+                    case R.id.log_out:
+                        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.apply();
+                        Public_func.clickLogout(ManagerLocationOwnerActivity.this, LoginActivity.class);
+                        return true;
+                }
+                return true;
+            }
+        });
+        getInfoStore();
         btnOpenListStore = findViewById(R.id.btnOpenListStore);
         btnOpenListStore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +150,15 @@ public class ManagerLocationOwnerActivity extends AppCompatActivity
                 } else {
                     Animation.turnOffConsoleSuggest(rvListStore, btnOpenListStore);
                 }
+            }
+        });
+    }
+
+    private void openMenu() {
+        imgMnu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
             }
         });
     }
@@ -302,6 +356,22 @@ public class ManagerLocationOwnerActivity extends AppCompatActivity
                                 .strokeColor(Color.parseColor("#21B8F3"))
                                 .fillColor(Color.parseColor("#4847C4F4")));
                         map.animateCamera(CameraUpdateFactory.newLatLngZoom(point, 17));
+
+                        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                            @Override
+                            public void onInfoWindowClick(Marker marker) {
+                                Bundle bundle = new Bundle();
+                                bundle.putString("tench",store.getTencuahang());
+                                bundle.putString("diachi",store.getDiachi());
+                                bundle.putString("giayphepkinhdoanh",store.getGiayphepkinhdoanh());
+                                bundle.putString("sodienthoai",store.getSdt());
+                                bundle.putString("id",store.getId());
+
+                                Intent intent = new Intent(ManagerLocationOwnerActivity.this, InfoStoreActivity.class);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        });
                         break;
                     }
                 } else {
