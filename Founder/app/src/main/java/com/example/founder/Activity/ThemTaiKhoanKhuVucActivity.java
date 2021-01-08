@@ -69,7 +69,7 @@ public class ThemTaiKhoanKhuVucActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(ThemTaiKhoanKhuVucActivity.this, ListCuaHangActivity.class);
                         return true;
                     case R.id.tao_tai_khoan_owner:
-                        recreate();
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
                     case R.id.thong_bao:
                         Public_func.clickItemMenu(ThemTaiKhoanKhuVucActivity.this, ChooseChatActivity.class);

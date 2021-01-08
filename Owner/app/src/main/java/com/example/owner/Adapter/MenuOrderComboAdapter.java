@@ -60,7 +60,7 @@ public class MenuOrderComboAdapter extends RecyclerView.Adapter<MenuOrderComboAd
         final ModelCombo modelCombo = list.get(position);
         holder.tvMealName.setText(modelCombo.getMeal_name());
         holder.tvMealPrice.setText(modelCombo.getMeal_price());
-        holder.tvMealCategory.setText(modelCombo.getMeal_category());
+       // holder.tvMealCategory.setText(modelCombo.getMeal_category());
         holder.tvDescription.setText(modelCombo.getMeal_description());
         holder.tvMealPriceTotal.setText(modelCombo.getMeal_price_total());
         holder.tvMealUuDai.setText(modelCombo.getMeal_uu_dai());
@@ -148,7 +148,7 @@ public class MenuOrderComboAdapter extends RecyclerView.Adapter<MenuOrderComboAd
             super(itemView);
             tvMealName = itemView.findViewById(R.id.tvMeal_name);
             tvMealPrice = itemView.findViewById(R.id.tvMeal_price);
-            tvMealCategory = itemView.findViewById(R.id.tvMeal_Category);
+           // tvMealCategory = itemView.findViewById(R.id.tvMeal_Category);
             tvMealPriceTotal = itemView.findViewById(R.id.tvMeal_price_total);
             tvMealPriceTotal.setPaintFlags(tvMealPriceTotal.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             tvMealUuDai = itemView.findViewById(R.id.tvMeal_uudai);
