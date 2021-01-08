@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -75,24 +76,57 @@ public class UpdateTableDialog extends Dialog implements View.OnClickListener {
         btnBook.setOnClickListener(this);
         btnPayment.setOnClickListener(this);
         if (status.equals("3") || status.equals("5")) {
+            //thong tin ban lỗi
             btnUnReport.setVisibility(View.VISIBLE);
-            btnReport.setVisibility(View.GONE);
-            btnBook.setVisibility(View.GONE);
-            btnPayment.setVisibility(View.GONE);
+            btnUnReport.setEnabled(true);
+            //ban lõi, chức năng đặt trước khóa, chức năng thanh toán khóa
+            btnReport.setVisibility(View.VISIBLE);
+            btnReport.setEnabled(false);
+            btnReport.setBackgroundColor(Color.GRAY);
+            //tiep
+            btnBook.setVisibility(View.VISIBLE);
+            btnBook.setEnabled(false);
+            btnBook.setBackgroundColor(Color.GRAY);
+            //tiep
+            btnPayment.setVisibility(View.VISIBLE);
+            btnPayment.setEnabled(false);
+            btnPayment.setBackgroundColor(Color.GRAY);
         }
         else if (status.equals("1") || status.equals("4")) {
             btnUnBook.setVisibility(View.VISIBLE);
+            btnUnBook.setEnabled(true);
+            //khóa đặt trước
             btnBook.setVisibility(View.GONE);
-            btnPayment.setVisibility(View.GONE);
-            btnReport.setVisibility(View.GONE);
+            btnBook.setEnabled(false);
+            btnBook.setBackgroundColor(Color.GRAY);
+            //khoa bao lỗi
+            btnReport.setVisibility(View.VISIBLE);
+            btnReport.setEnabled(false);
+            btnReport.setBackgroundColor(Color.GRAY);
+            //thanh toán
+            btnPayment.setVisibility(View.VISIBLE);
+            btnPayment.setEnabled(false);
+            btnPayment.setBackgroundColor(Color.GRAY);
+        } else if (status.equals("0")) {
+            //chan chuc năng thanh toán vì là bàn trống
+            btnPayment.setVisibility(View.VISIBLE);
+            btnPayment.setEnabled(false);
+            btnPayment.setBackgroundColor(Color.GRAY);
+            btnBook.setVisibility(View.VISIBLE);
+            btnReport.setVisibility(View.VISIBLE);
+
         }
-        else if (status.equals("0"))
+        else if (status.equals("2"))
         {
-            btnPayment.setVisibility(View.GONE);
-        }
-        else {
-            btnUnReport.setVisibility(View.GONE);
-            btnUnBook.setVisibility(View.GONE);
+            btnPayment.setVisibility(View.VISIBLE);
+            //khóa đặt trước
+            btnBook.setVisibility(View.VISIBLE);
+            btnBook.setEnabled(false);
+            btnBook.setBackgroundColor(Color.GRAY);
+            //khoa bao lỗi
+            btnReport.setVisibility(View.VISIBLE);
+            btnReport.setEnabled(false);
+            btnReport.setBackgroundColor(Color.GRAY);
         }
     }
 
