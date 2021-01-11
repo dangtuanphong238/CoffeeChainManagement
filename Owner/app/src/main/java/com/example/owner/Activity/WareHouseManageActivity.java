@@ -131,9 +131,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.owner.Adapter.NhanVienAdapter;
 import com.example.owner.Global.Public_func;
 import com.example.owner.Model.HangHoa;
 import com.example.owner.Adapter.HangHoaAdapter;
+import com.example.owner.Models.Staff;
 import com.example.owner.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -158,12 +160,11 @@ public class WareHouseManageActivity extends AppCompatActivity {
     private TextView txtTitleActivity;
     //spineer android
     private ListView listViewKho;
-    private ArrayList<HangHoa> danhSachHH;
     private HangHoaAdapter hangHoaAdapter;
     private String clickedCountryName;
     private Spinner spSort;
     private Button btnThem;
-
+    private ArrayList<HangHoa> arrHangHoa;
     //header nav:
     //drawer header:
     Bitmap bitmapDecoded;
@@ -191,9 +192,9 @@ public class WareHouseManageActivity extends AppCompatActivity {
         String bitmap = ref.getString("imagePreferance", "");
         decodeBase64(bitmap);
         //getInfo:
-        SharedPreferences refInfoStore = getSharedPreferences("datafile",MODE_PRIVATE);
-        String nameStore = refInfoStore.getString("name_store","");
-        String addressStore = refInfoStore.getString("address_store","");
+        SharedPreferences refInfoStore = getSharedPreferences("datafile", MODE_PRIVATE);
+        String nameStore = refInfoStore.getString("name_store", "");
+        String addressStore = refInfoStore.getString("address_store", "");
 
         //anhxa:
         View headerView = navigationView.getHeaderView(0);
@@ -211,85 +212,88 @@ public class WareHouseManageActivity extends AppCompatActivity {
 //            System.out.println("bitmapp null");
         }
     }
-
     // method for base64 to bitmap
     public void decodeBase64(String input) {
         byte[] decodedByte = Base64.decode(input, 0);
         bitmapDecoded = BitmapFactory
                 .decodeByteArray(decodedByte, 0, decodedByte.length);
     }
-
     private void setEnvent() {
-        danhSachHH = new ArrayList<>();
-        GetData();
-        hangHoaAdapter = new HangHoaAdapter(this,R.layout.custom_danh_sach_sp_kho,danhSachHH);
-        listViewKho.setAdapter(hangHoaAdapter);
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent  = new Intent(WareHouseManageActivity.this,AddHangHoaActivity.class);
+                Intent intent = new Intent(WareHouseManageActivity.this, AddHangHoaActivity.class);
                 startActivity(intent);
             }
         });
-       listViewKho.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-           @Override
-           public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-               Intent intent = new Intent(WareHouseManageActivity.this, UpdateHangHoaKho.class);
-               intent.putExtra("HANGHOA", danhSachHH.get(i));
-               intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-               startActivity(intent);
-               finish();
-           }
-       });
+        spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String key = spSort.getSelectedItem().toString();
+                if (key.equals("Tất Cả")) {
+                    GetData();
+                    hangHoaAdapter = new HangHoaAdapter(WareHouseManageActivity.this,
+                            R.layout.custom_danh_sach_sp_kho, arrHangHoa);
+                    listViewKho.setAdapter(hangHoaAdapter);
+                }
+                else
+                {
+                    filterCategory(key);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        listViewKho.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int postion, long l) {
+                Intent intent = new Intent(WareHouseManageActivity.this, UpdateHangHoaKho.class);
+                intent.putExtra("HANGHOA", arrHangHoa.get(postion));
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
     @Override
     protected void onStart() {
         super.onStart();
-
+        arrHangHoa = new ArrayList<>();
+        GetData();
+        hangHoaAdapter = new HangHoaAdapter(this, R.layout.custom_danh_sach_sp_kho, arrHangHoa);
+        listViewKho.setAdapter(hangHoaAdapter);
     }
     private void GetData() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources()
-                .getStringArray(R.array.lstQuanLyMon));
-        adapter.setDropDownViewResource(R.layout.cus_spinner_dropdown);
-        spSort.setAdapter(adapter);
-        spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                clickedCountryName = spSort.getSelectedItem().toString();;
-                Toast.makeText(WareHouseManageActivity.this, "Bạn chọn " + clickedCountryName ,
-                        Toast.LENGTH_SHORT).show();
-                saveOwnerIDToLocalStorage(clickedCountryName);
-                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
-                myRef.child(sOwnerID).child("QuanLyKho").child(clickedCountryName).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        try {
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = firebaseDatabase.getReference("OwnerManager");
+            myRef.child(sOwnerID).child("QuanLyKho").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        //xoa du lieu tren listview
                         hangHoaAdapter.clear();
-                        if (dataSnapshot.exists())
-                        {
-                            for (DataSnapshot data : dataSnapshot.getChildren())
-                            {
-                                HangHoa danhSachHH = data.getValue(HangHoa.class);
-                                danhSachHH.setId(data.getKey());
-                                hangHoaAdapter.add(danhSachHH);
-                            }
+                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                            HangHoa hangHoa = data.getValue(HangHoa.class);
+                            hangHoa.setId(data.getKey());
+                            hangHoaAdapter.add(hangHoa);
+                            hangHoaAdapter.notifyDataSetChanged();
                         }
                     }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(WareHouseManageActivity.this, "Load Data Failed!", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
+                }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(WareHouseManageActivity.this, "Load Data Failed!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }catch (Exception ex){
+            ex.getMessage();
+        }
     }
-
     private void anhXa() {
         spSort = findViewById(R.id.spnSort);
         btnThem = findViewById(R.id.themhanghoa);
@@ -299,8 +303,8 @@ public class WareHouseManageActivity extends AppCompatActivity {
         btnMnu = findViewById(R.id.btnMnu);
         txtTitleActivity = findViewById(R.id.txtTitle);
     }
-    public void getMenu()
-    {
+
+    public void getMenu() {
         //call function onClickItem
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -336,7 +340,7 @@ public class WareHouseManageActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(WareHouseManageActivity.this, ComboManagerActivity.class);
                         return true;
                     case R.id.itemLogOut:
-                        SharedPreferences sharedPreferences = getSharedPreferences("datafile",MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
@@ -347,6 +351,7 @@ public class WareHouseManageActivity extends AppCompatActivity {
             }
         });
     }
+
     public void openMenu() {
         btnMnu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -361,15 +366,43 @@ public class WareHouseManageActivity extends AppCompatActivity {
         super.onRestart();
         drawerLayout.closeDrawer(GravityCompat.START);
     }
+
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        sOwnerID = sharedPreferences.getString(OWNERID,"null");
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        sOwnerID = sharedPreferences.getString(OWNERID, "null");
     }
-    private void saveOwnerIDToLocalStorage(String ownerKey){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(SPINNERID,ownerKey);
-        editor.apply();
+    public void filterCategory(final String key) {
+        try {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("/OwnerManager/" + sOwnerID + "/QuanLyKho");
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    arrHangHoa.clear();
+                        for (DataSnapshot item : dataSnapshot.getChildren()) {
+                            if (item.getValue() != null) {
+                               HangHoa  hangHoa = new HangHoa(item.child("tenhanghoa").getValue() +""
+                                       ,item.child("soluong").getValue() +""
+                                       ,item.child("theloai").getValue() + "");
+                                    if (hangHoa.getTheloai().equals(key))
+                                    {
+                                        arrHangHoa.add(hangHoa);
+                                    }
+                                hangHoaAdapter = new HangHoaAdapter(WareHouseManageActivity.this,
+                                        R.layout.custom_danh_sach_sp_kho, arrHangHoa);
+                                listViewKho.setAdapter(hangHoaAdapter);
+                            }
+                        }
+                    }
+                @Override
+                public void onCancelled(DatabaseError error) {
+                }
+            });
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
+
     }
+
 }

@@ -47,7 +47,7 @@
                         android:layout_marginHorizontal="@dimen/normal10dp"
                         android:layout_marginTop="@dimen/normal20dp"
                         android:background="@drawable/edit_text_main"
-                        android:entries="@array/lstChucvu"
+                        android:entries="@array/lstQuanLyKho"
                         android:padding="@dimen/normal10dp"
                         android:spinnerMode="dropdown"
                         android:textAlignment="center"></Spinner>

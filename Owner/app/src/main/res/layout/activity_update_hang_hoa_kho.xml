@@ -29,17 +29,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Phân Loại :" />
-                    <TextView
+                    <Spinner
                         android:id="@+id/phanloai"
+                        android:entries="@array/lstQuanLyKho"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginVertical="@dimen/normal10dp"
-                        android:gravity="center"
-                        android:paddingHorizontal="@dimen/normal10dp"
-                        android:text="Phân Loại"
-                        android:textColor="#0E0E0E"
-                        android:textSize="@dimen/normal20dp"></TextView>
+                        android:layout_height="@dimen/normal50dp"
+                        android:layout_marginHorizontal="@dimen/normal10dp"
+                        android:background="@drawable/custom_edittext"
+                        android:padding="@dimen/normal10dp"
+                        android:textAlignment="center"></Spinner>
 
                     <TextView
                         android:layout_width="match_parent"
