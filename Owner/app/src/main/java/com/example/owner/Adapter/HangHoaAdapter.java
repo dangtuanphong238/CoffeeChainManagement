@@ -44,16 +44,21 @@ public class HangHoaAdapter extends ArrayAdapter<HangHoa> {
         this.resource = resource;
         this.objects = objects;
     }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = this.activity.getLayoutInflater();
         View view = inflater.inflate(this.resource, null);
-        TextView txtTenHangHoa = view.findViewById(R.id.tvtenhanghoa);
-        TextView txtSoLuong = view.findViewById(R.id.tvSoLuong);
-       final HangHoa hangHoa = this.objects.get(position);
-        txtTenHangHoa.setText(hangHoa.getTenhanghoa());
-        txtSoLuong.setText(hangHoa.getSoluong());
+        try {
+            TextView txtTenHangHoa = view.findViewById(R.id.tvtenhanghoa);
+            TextView txtSoLuong = view.findViewById(R.id.tvSoLuong);
+            final HangHoa hangHoa = this.objects.get(position);
+            txtTenHangHoa.setText(hangHoa.getTenhanghoa());
+            txtSoLuong.setText(hangHoa.getSoluong());
+        } catch (Exception e) {
+            e.getMessage();
+        }
         return view;
     }
 }
