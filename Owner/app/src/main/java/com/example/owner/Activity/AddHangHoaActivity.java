@@ -18,11 +18,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.owner.Model.HangHoa;
+import com.example.owner.Models.Staff;
 import com.example.owner.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class AddHangHoaActivity extends AppCompatActivity {
     private Spinner spinnerPL;
@@ -36,6 +42,7 @@ public class AddHangHoaActivity extends AppCompatActivity {
     private String tenHangHoa;
     private String soLuong;
     private String getValueSpinner;
+    private ArrayList<HangHoa> danhSachHH = new ArrayList<>();
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,12 +52,13 @@ public class AddHangHoaActivity extends AppCompatActivity {
         btnMnu.setImageResource(R.drawable.ic_back_24);
         backPressed();
         getOwnerIDFromLocalStorage();
+        getSizeListStaff();
         initSpinner();
         setEvent();
     }
     private void initSpinner()
     {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources().getStringArray(R.array.lstQuanLyMon));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources().getStringArray(R.array.lstQuanLyKho));
         adapter.setDropDownViewResource(R.layout.cus_spinner_dropdown);
         spinnerPL.setAdapter(adapter);
         spinnerPL.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -83,11 +91,11 @@ public class AddHangHoaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getData();
-                HangHoa hangHoa = new HangHoa(tenHangHoa,soLuong);
+                HangHoa hangHoa = new HangHoa(tenHangHoa,soLuong,getValueSpinner);
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = firebaseDatabase.getReference();
-                databaseReference.child("OwnerManager").child(sOwnerID).child("QuanLyKho").child(getValueSpinner)
-                        .child(tenHangHoa).setValue(hangHoa).addOnSuccessListener(new OnSuccessListener<Void>() {
+                databaseReference.child("OwnerManager").child(sOwnerID).child("QuanLyKho")
+                        .child("Product" + danhSachHH.size()).setValue(hangHoa).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(AddHangHoaActivity.this, "Thêm Thành Công!", Toast.LENGTH_SHORT).show();
@@ -126,6 +134,26 @@ public class AddHangHoaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+
+            }
+        });
+    }
+    private void getSizeListStaff() //hàm này để lấy size của list nhânvieen để tự động sinh id theo list.size()
+    {
+       FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+         DatabaseReference  databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID);
+        databaseReference.child("QuanLyKho").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                danhSachHH.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    HangHoa hangHoa = dataSnapshot.getValue(HangHoa.class);
+                    danhSachHH.add(hangHoa);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });

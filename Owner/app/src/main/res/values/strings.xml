@@ -61,10 +61,16 @@
         <item>Thu Ngân</item>
         <item>Phục Vụ</item>
     </string-array>
-    <string-array name="lstQuanLyMon">
+    <string-array name="filterKho">
+        <item>Tất Cả</item>
         <item>Nguyên Liệu</item>
-        <item>Trà Sữa</item>
         <item>Bánh Ngọt</item>
+        <item>Trà Sữa</item>
+    </string-array>
+    <string-array name="lstQuanLyKho">
+        <item>Nguyên Liệu</item>
+        <item>Bánh Ngọt</item>
+        <item>Trà Sữa</item>
     </string-array>
     <string name="title_activity_doanh_thu_date">DoanhThuDate</string>
     <!-- Strings used for fragments for navigation -->
