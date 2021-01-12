@@ -63,6 +63,17 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
     TextView tvCart;
     private Spinner spnCategory;
 
+    ArrayList<MealModel> list = new ArrayList<>();
+
+    public OrderDialog(Context context, String ownerID, String areaID, String tableID, ArrayList<MealModel> list) {
+        super(context);
+        this.context = context;
+        this.ownerID = ownerID;
+        this.areaID = areaID;
+        this.tableID = tableID;
+        this.list = list;
+    }
+
     public OrderDialog(@NonNull Context context, String ownerID, String areaID, String tableID) {
         super(context);
         this.context = context;
@@ -78,154 +89,73 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setCancelable(false);
         setContentView(R.layout.dialog_order);
+        layoutChooseAmount = findViewById(R.id.layoutChooseAmount);
         spnCategory = findViewById(R.id.spnCategory);
         tvTableName = findViewById(R.id.tvTableName);
         rvMenuOrder = findViewById(R.id.rvMenuOrder);
         tvSumPrice = findViewById(R.id.tvSumPrice);
-        btnOrder = findViewById(R.id.btnOrder);
         btnCancel = findViewById(R.id.btnCancel);
-        layoutChooseAmount = findViewById(R.id.layoutChooseAmount);
+        btnOrder = findViewById(R.id.btnOrder);
         tvCart = findViewById(R.id.tvCart);
-        tvSumPrice = findViewById(R.id.tvSumPrice);
+
+        clearList();
+
         String name = tableID.replace("Table", "Bàn ");
         tvTableName.setText(name);
         btnCancel.setOnClickListener(this);
         //layoutChooseAmount.setVisibility(View.VISIBLE);
         checkTableAndOrder();
-        // getMenu();
         setDataForSpinnerCategory();
-        spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String key = spnCategory.getSelectedItem().toString();
-                if (key.equals("Tất cả")) {
-                    getMenu();
-                } else if (key.equals("Combo")) {
-                    getCombo();
-                } else {
-                    filterCategory(key);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        setAdapterForMenu(list);
     }
 
-    public void getCombo() {
-        //Read list meal used in dialog from branch TableActive
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final String path = "OwnerManager/" + ownerID + "/QuanLyCombo";
-        final DatabaseReference myRef = database.getReference(path);
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<ModelCombo> list = new ArrayList<>();
-                try {
-                    for (DataSnapshot data : snapshot.getChildren()) {
-                        ModelCombo model = data.getValue(ModelCombo.class);
-                        list.add(model);
-                        System.out.println("list1" + list.toString());
-                    }
-                } catch (Exception ex) {
-                    Log.w("PROBLEM", "get data from branch table active have problem " + ex.getMessage());
-                    System.out.println("get data from branch table active have problem in url: " + myRef.toString());
-                }
-//                final String path = "/OwnerManager/" + ownerID + "/QuanLyMonAn";
-                MenuOrderComboAdapter adapter = new MenuOrderComboAdapter(context, list, OrderDialog.this, path, OrderDialog.this);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                rvMenuOrder.setLayoutManager(linearLayoutManager);
-                rvMenuOrder.setAdapter(adapter);
-            }
+    //Clear list
+    public void clearList(){
+        for (MealModel mealModel: list){
+            mealModel.setFlag(false);
+            mealModel.setPrice(0);
+            mealModel.setAmounts(0);
+        }
+    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w("Error", error.getMessage());
+    public ArrayList<MealModel> filterListByCategory(ArrayList<MealModel> list, String key) {
+        ArrayList<MealModel> arrayList = new ArrayList<>();
+        for (MealModel mealModel : list) {
+            if (mealModel.getMeal_category().equals(key)) {
+                arrayList.add(mealModel);
             }
-        });
+        }
+        return arrayList;
     }
 
     public void setDataForSpinnerCategory() {
         ArrayAdapter<String> adapter = new ArrayAdapter(context, android.R.layout.simple_spinner_item, context.getResources().getStringArray(R.array.spinner_category_manager));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnCategory.setAdapter(adapter);
-    }
-
-    public void filterCategory(final String key) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final String path = "/OwnerManager/" + ownerID + "/QuanLyMonAn";
-        DatabaseReference myRef = database.getReference(path);
-        myRef.addValueEventListener(new ValueEventListener() {
+        spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                listMenu.clear();
-                try {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
-                                snapshot.child("meal_id").getValue() + "",
-                                snapshot.child("meal_price").getValue() + "",
-                                snapshot.child("meal_name").getValue() + "",
-                                snapshot.child("meal_image").getValue() + "");
-                        if (mealModel.getMeal_category().equals(key)) {
-                            listMenu.add(mealModel);
-                        }
-                    }
-                } catch (Exception ex) {
-                    Log.w("PROBLEM", "get data from url " + path + " have problem");
-                    System.out.println("PROBLEM: " + "get data from url " + path + " have problem");
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String key = spnCategory.getSelectedItem().toString();
+                if (key.equals("Combo")) {
+                    ArrayList<MealModel> listTempt = filterListByCategory(list, "combo");
+                    setAdapterForMenu(listTempt);
+                } else if (key.equals("Cafe")) {
+                    ArrayList<MealModel> listTempt = filterListByCategory(list, key);
+                    setAdapterForMenu(listTempt);
+                } else if (key.equals("Bánh Ngọt")) {
+                    ArrayList<MealModel> listTempt = filterListByCategory(list, key);
+                    setAdapterForMenu(listTempt);
+                } else if (key.equals("Trà Sữa")) {
+                    ArrayList<MealModel> listTempt = filterListByCategory(list, key);
+                    setAdapterForMenu(listTempt);
+                } else {
+                    setAdapterForMenu(list);
                 }
-                MenuOrderAdapter adapter = new MenuOrderAdapter(context, listMenu, OrderDialog.this, path, OrderDialog.this);
-                adapter.notifyDataSetChanged();
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                rvMenuOrder.setLayoutManager(linearLayoutManager);
-                rvMenuOrder.setAdapter(adapter);
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("TAG", "Failed to read value.", error.toException());
-            }
-        });
+            public void onNothingSelected(AdapterView<?> parent) {
 
-    }
-
-    ArrayList<MealModel> listMenu = new ArrayList<>();
-
-    public void getMenu() {
-        //Read list meal used in dialog from branch TableActive
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        String path = "OwnerManager/" + ownerID + "/QuanLyMonAn";
-        final DatabaseReference myRef = database.getReference(path);
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listMenu.clear();
-                try {
-                    for (DataSnapshot data : snapshot.getChildren()) {
-                        MealModel model = data.getValue(MealModel.class);
-                        listMenu.add(model);
-                    }
-                } catch (Exception ex) {
-                    Log.w("PROBLEM", "get data from branch table active have problem " + ex.getMessage());
-                    System.out.println("get data from branch table active have problem in url: " + myRef.toString());
-                }
-                final String path = "/OwnerManager/" + ownerID + "/QuanLyMonAn";
-                MenuOrderAdapter adapter = new MenuOrderAdapter(context, listMenu, OrderDialog.this, path, OrderDialog.this);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                rvMenuOrder.setLayoutManager(linearLayoutManager);
-                rvMenuOrder.setAdapter(adapter);
-            }
-
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w("Read list meal in dialog Error", error.getMessage());
             }
         });
     }
@@ -338,7 +268,10 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
                             snapshot.child("id").getValue() + "",
                             snapshot.child("price").getValue() + "",
                             snapshot.child("name").getValue() + "",
-                            snapshot.child("image").getValue() + "");
+                            snapshot.child("image").getValue() + "",
+                            snapshot.child("meal_description").getValue() + "",
+                            snapshot.child("meal_price_total").getValue() + "",
+                            snapshot.child("meal_uu_dai").getValue() + "");
                     MealUsed mealUsed = new MealUsed(Integer.parseInt(snapshot.child("amount").getValue() + ""), mealModel, snapshot.child("timeInput").getValue() + "");
                     usedArrayList.add(mealUsed);
                 }
@@ -464,5 +397,16 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
                 listComboUser.add(mealComboUsed);
             }
         }
+    }
+
+    MenuOrderAdapter adapter;
+
+    public void setAdapterForMenu(ArrayList<MealModel> list) {
+        adapter = new MenuOrderAdapter(context, list, OrderDialog.this, ownerID, OrderDialog.this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rvMenuOrder.setLayoutManager(linearLayoutManager);
+        rvMenuOrder.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 }

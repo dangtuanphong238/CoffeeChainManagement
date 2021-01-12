@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/dialog_info_table"
     android:layout_width="match_parent"
     android:layout_height="500dp"
@@ -117,7 +118,10 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="0"
-                    android:textSize="25sp"
+                    app:autoSizeMaxTextSize="25sp"
+                    app:autoSizeTextType="uniform"
+                    android:lines="1"
+                    android:textSize="20sp"
                     android:textColor="@color/black"/>
             </LinearLayout>
             <Button

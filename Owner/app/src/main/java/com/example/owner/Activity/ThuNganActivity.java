@@ -202,7 +202,7 @@ public class ThuNganActivity extends AppCompatActivity implements RecyclerviewCl
                                 String name = dataSnapshot.child("name").getValue() + "";
                                 String price = dataSnapshot.child("price").getValue() + "";
                                 String timeInput = dataSnapshot.child("timeInput").getValue() + "";
-                                mealModel = new MealModel(category, id, price, name, image);
+                                mealModel = new MealModel(category, id, price, name, image,null,null,null);
                                 mealUsed = new MealUsed(amount, mealModel, timeInput);
                                 listUsed.add(mealUsed);
                             }
