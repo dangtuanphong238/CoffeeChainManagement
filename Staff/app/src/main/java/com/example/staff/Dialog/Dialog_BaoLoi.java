@@ -80,7 +80,7 @@ public class Dialog_BaoLoi extends Dialog {
     }
 
     private void getData() {
-        String path = "OwnerManager/" + "QuanLyBanLoi/"+ownerID +"/"+ areaID +"/" + tableID + "/ThongTinLoi";
+        String path = "OwnerManager/" + "QuanLyBanLoi/"+ownerID +"/Area"+ areaID +"/" + tableID + "/ThongTinLoi";
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference(path);
         myRef.addValueEventListener(new ValueEventListener() {
@@ -122,12 +122,12 @@ public class Dialog_BaoLoi extends Dialog {
                 SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
                 final String datetime = dateformat.format(c.getTime());
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                String path = "OwnerManager/" + ownerID + "/QuanLyBan" + "/"+ areaID + "/" +tableID + "/tableStatus";
+                String path = "OwnerManager/" + ownerID + "/QuanLyBan" + "/Area"+ areaID + "/" +tableID + "/tableStatus";
                 DatabaseReference myRef = firebaseDatabase.getReference(path);
                 myRef.setValue("5").addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        String path = "OwnerManager/" +ownerID +"/QuanLyBanLoi/" + areaID +"/" + tableID + "/ThongTinLoi";
+                        String path = "OwnerManager/" +ownerID +"/QuanLyBanLoi/Area" + areaID +"/" + tableID + "/ThongTinLoi";
                         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = firebaseDatabase.getReference(path);
                         ThongTinLoi thongTinLoi = new ThongTinLoi(txtLoi.getText().toString(),datetime);

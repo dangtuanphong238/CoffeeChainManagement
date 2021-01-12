@@ -72,7 +72,7 @@ public class KhuVucActivity extends AppCompatActivity implements RecyclerviewCli
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
-                        Public_func.clickLogout(KhuVucActivity.this, LoginScreenActivity.class);
+                        Public_func.clickLogout(KhuVucActivity.this, LoginActivity.class);
                         return true;
                 }
                 return true;
@@ -226,7 +226,7 @@ public class KhuVucActivity extends AppCompatActivity implements RecyclerviewCli
         String loaiPhong = listKeyKV.get(position).toString();
         String tenPhong = listNameKV.get(position).toString();
                     if (!loaiPhong.isEmpty()) {
-                        Intent intent = new Intent(KhuVucActivity.this, PhongScreenActivity.class);
+                        Intent intent = new Intent(KhuVucActivity.this, RoomActivity.class);
 //                    intent.putExtra("values", lstKhuVuc.toString());
                         Bundle bundle = new Bundle();
                         bundle.putString("values", loaiPhong);

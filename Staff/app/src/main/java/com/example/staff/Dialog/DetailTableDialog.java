@@ -33,7 +33,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.sql.SQLOutput;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -101,7 +100,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
         //Read list meal used in dialog from branch TableActive
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         String path = url + "/" + tableID + "/Meal";
-        final DatabaseReference myRef = database.getReference().child("OwnerManager").child(ownerID).child("TableActive").child(areaID).child(tableID).child("Meal");
+        final DatabaseReference myRef = database.getReference(path);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -156,43 +155,11 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
 
     ArrayList<MealUsed> listMealUsed = new ArrayList<>();
 
-    public void getDataMonth() {
-        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference reference = firebaseDatabase.getReference("/FounderManager/" +
-                "/QuanLyDoanhThu/" + ownerID + "/" + year + "/" + month + "/DoanhThuNgay/");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Integer> arrayList = new ArrayList<>();
-                int total = 0;
-                if (snapshot.getValue() != null) {
-                    for (DataSnapshot item : snapshot.getChildren()) {
-                        int mangTien = Integer.parseInt(item.child("sumtotal").getValue().toString());
-                        arrayList.add(mangTien);
-                    }
-                    for (int num : arrayList) {
-                        total = total + num;
-                    }
-                    FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
-                    DatabaseReference reference1 = firebaseDatabase1.getReference("/FounderManager/" +
-                            "/QuanLyDoanhThu/" + ownerID + "/" + year + "/" + month);
-                    reference1.child("total").setValue(String.valueOf(total));
-                    reference1.child("month").setValue(thang);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
     public void createBill() {
         //Read data from branch Table_Active
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         String path = url + "/" + tableID + "/Meal";
-        final DatabaseReference myRef = database.getReference().child("OwnerManager").child(ownerID).child("TableActive").child(areaID).child(tableID).child("Meal");
+        final DatabaseReference myRef = database.getReference(path);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -233,6 +200,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
         //Read data from branch QuanLyHoaDon to check how much bill?
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/QuanLyHoaDon/" + year + "/" + month + "/" + _date + "/Bills");
+        System.out.println("Link: "+myRef.toString());
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -351,10 +319,9 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
 
     public void setUpTableAfterPayment() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference status = database.getReference("/OwnerManager/" + ownerID + "/QuanLyBan/" + areaID + "/" + tableID);
+        DatabaseReference status = database.getReference("/OwnerManager/" + ownerID + "/QuanLyBan/Area" + areaID + "/" + tableID);
         status.child("tableStatus").setValue("0");
-        System.out.println("status" + status);
-        final DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/TableActive/" + areaID + "/" + tableID);
+        final DatabaseReference myRef = database.getReference("/OwnerManager/" + ownerID + "/TableActive/Area" + areaID + "/" + tableID);
         myRef.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -389,7 +356,8 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
         dismiss();
     }
 
-    public void getTien() {
+    public void getTien()
+    {
         final Sum sumtotal = new Sum(tvSumPrice.getText().toString());
         final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = firebaseDatabase.getReference("/OwnerManager/" + ownerID
@@ -397,39 +365,43 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue() == null) {
+                if (snapshot.getValue() == null)
+                {
                     myRef.child("DoanhThuNgay").child("sumtotal").setValue(sumtotal.getSum())
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
-                                public void onSuccess(Void aVoid) {
+                                public void onSuccess(Void aVoid)
+                                {
                                     FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
                                     final DatabaseReference myRef1 = firebaseDatabase1.getReference("/FounderManager/" +
-                                            "/QuanLyDoanhThu/" + ownerID + "/" + year + "/" + month + "/DoanhThuNgay/" + _date);
-                                    DoanhThuMonth doanhThuMonth = new DoanhThuMonth(ngay, sumtotal.getSum());
+                                            "/QuanLyDoanhThu/"  + ownerID + "/" + year + "/" + month + "/DoanhThuNgay/" + _date);
+                                    DoanhThuMonth doanhThuMonth = new DoanhThuMonth(ngay,sumtotal.getSum());
                                     myRef1.setValue(doanhThuMonth);
                                 }
                             });
-                } else {
+                }
+                else
+                {
                     kiemtraDulieu();
                     getDataMonth();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
     }
-
-    public void kiemtraDulieu() {
+    public void kiemtraDulieu()
+    {
         final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = firebaseDatabase.getReference("/OwnerManager/" + ownerID
                 + "/QuanLyHoaDon/" + year + "/" + month + "/" + _date + "/DoanhThuNgay");
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
+                if (snapshot.exists())
+                {
                     String tien = snapshot.child("sumtotal").getValue().toString();
                     tongtien = Integer.parseInt(tien) + Integer.parseInt(tvSumPrice.getText().toString());
                 }
@@ -438,12 +410,43 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
                     public void onSuccess(Void aVoid) {
                         FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
                         final DatabaseReference myRef1 = firebaseDatabase1.getReference("/FounderManager/" +
-                                "/QuanLyDoanhThu/" + ownerID + "/" + year + "/" + month + "/DoanhThuNgay/" + _date);
-                        DoanhThuMonth doanhThuMonth = new DoanhThuMonth(ngay, String.valueOf(tongtien));
+                                "/QuanLyDoanhThu/"  + ownerID + "/" + year + "/" + month + "/DoanhThuNgay/" + _date);
+                        DoanhThuMonth doanhThuMonth = new DoanhThuMonth(ngay,String.valueOf(tongtien));
                         myRef1.setValue(doanhThuMonth);
                     }
                 });
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    public void getDataMonth() {
+        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        final DatabaseReference reference = firebaseDatabase.getReference("/FounderManager/" +
+                "/QuanLyDoanhThu/" + ownerID + "/" + year + "/" + month + "/DoanhThuNgay/");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Integer> arrayList = new ArrayList<>();
+                int total = 0;
+                if (snapshot.getValue() != null) {
+                    for (DataSnapshot item : snapshot.getChildren()) {
+                        int mangTien = Integer.parseInt(item.child("sumtotal").getValue().toString());
+                        arrayList.add(mangTien);
+                    }
+                    for (int num : arrayList) {
+                        total = total + num;
+                    }
+                    FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
+                    DatabaseReference reference1 = firebaseDatabase1.getReference("/FounderManager/" +
+                            "/QuanLyDoanhThu/" + ownerID + "/" + year + "/" + month);
+                    reference1.child("total").setValue(String.valueOf(total));
+                    reference1.child("month").setValue(thang);
+                }
             }
 
             @Override

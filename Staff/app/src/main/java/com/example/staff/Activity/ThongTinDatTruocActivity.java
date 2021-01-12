@@ -49,7 +49,7 @@ public class ThongTinDatTruocActivity extends AppCompatActivity {
     private void getData() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         String path = "OwnerManager/" + sOwnerID + "/QuanLyBanDatTruoc" +
-                "/"+ areaID + "/" + tableID + "/ThongTinDatTruoc";
+                "/Area"+ areaID + "/" + tableID + "/ThongTinDatTruoc";
         DatabaseReference myRef = firebaseDatabase.getReference(path);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -85,7 +85,7 @@ public class ThongTinDatTruocActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                String path = "OwnerManager/" + sOwnerID + "/QuanLyBan/" + areaID + "/" + tableID + "/tableStatus";
+                String path = "OwnerManager/" + sOwnerID + "/QuanLyBan/Area" + areaID + "/" + tableID + "/tableStatus";
                 DatabaseReference myRef = firebaseDatabase.getReference(path);
                 myRef.setValue("0").addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -96,7 +96,7 @@ public class ThongTinDatTruocActivity extends AppCompatActivity {
                         edtTimeDB.setText("");
                         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                         String path = "OwnerManager/" + sOwnerID + "/QuanLyBanDatTruoc" +
-                                "/"+ areaID + "/" + tableID + "/ThongTinDatTruoc";
+                                "/Area"+ areaID + "/" + tableID + "/ThongTinDatTruoc";
                         DatabaseReference myRef = firebaseDatabase.getReference(path);
                         myRef.removeValue();
                     }
@@ -110,7 +110,7 @@ public class ThongTinDatTruocActivity extends AppCompatActivity {
                         ,edtTimeDB.getText().toString());
                 FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
                 String path = "OwnerManager/" + sOwnerID + "/QuanLyBanDatTruoc" +
-                        "/"+ areaID + "/" +tableID + "/ThongTinDatTruoc";
+                        "/Area"+ areaID + "/" +tableID + "/ThongTinDatTruoc";
                 DatabaseReference myRef1 = firebaseDatabase1.getReference(path);
                 myRef1.child("sdtKH").setValue(edtSdtKH.getText().toString());
                 myRef1.child("tenKH").setValue(edtTenKH.getText().toString());
