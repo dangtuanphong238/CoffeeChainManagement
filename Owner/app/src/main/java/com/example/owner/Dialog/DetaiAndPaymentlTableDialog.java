@@ -112,7 +112,10 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
                                 data.child("id").getValue() + "",
                                 data.child("price").getValue() + "",
                                 data.child("name").getValue() + "",
-                                data.child("image").getValue() + "");
+                                data.child("image").getValue() + "",
+                                snapshot.child("meal_description").getValue() + "",
+                                snapshot.child("meal_price_total").getValue() + "",
+                                snapshot.child("meal_uu_dai").getValue() + "");
                         String amount_tempt = (data.child("amount").getValue() + "");
                         String timeInput = (data.child("timeInput").getValue() + "");
                         int amount = 0;
@@ -168,7 +171,9 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
                                     data.child("id").getValue() + "",
                                     data.child("price").getValue() + "",
                                     data.child("name").getValue() + "",
-                                    data.child("image").getValue() + "");
+                                    data.child("image").getValue() + "", snapshot.child("meal_description").getValue() + "",
+                                    snapshot.child("meal_price_total").getValue() + "",
+                                    snapshot.child("meal_uu_dai").getValue() + "");
                             String amount_tempt = (data.child("amount").getValue() + "");
                             String timeInput = (data.child("timeInput").getValue() + "");
                             int amount = 0;
@@ -266,7 +271,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
             String meal_name = dataSnapshot.child("name").getValue() + "";
             String meal_price = dataSnapshot.child("price").getValue() + "";
             String meal_timeInput = dataSnapshot.child("timeInput").getValue() + "";
-            MealModel mealModel = new MealModel(meal_category, meal_id, meal_price, meal_name, meal_image);
+            MealModel mealModel = new MealModel(meal_category, meal_id, meal_price, meal_name, meal_image,null,null,null);
             MealUsed mealUsed = new MealUsed(amount, mealModel, meal_timeInput);
             listMealUsed.add(mealUsed);
         }
@@ -351,6 +356,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
         }
         dismiss();
     }
+
     public void getTien()
     {
         final Sum sumtotal = new Sum(tvSumPrice.getText().toString());

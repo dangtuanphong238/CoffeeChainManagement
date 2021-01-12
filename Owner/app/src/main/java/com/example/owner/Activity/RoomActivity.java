@@ -1,5 +1,6 @@
 package com.example.owner.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +21,8 @@ import com.example.owner.Dialog.OrderDialog;
 import com.example.owner.Dialog.UpdateTableDialog;
 import com.example.owner.Interface.RecyclerviewClick;
 import com.example.owner.Adapter.ListTableAdapter;
+import com.example.owner.Model.MealModel;
+import com.example.owner.Model.ModelCombo;
 import com.example.owner.Model.TableModel;
 import com.example.owner.R;
 import com.google.firebase.database.DataSnapshot;
@@ -56,6 +60,8 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
     private final int PHONG_THUONG = 3;
     private final int PHONG_KHAC = 4;
 
+    ArrayList<MealModel> listMeal = new ArrayList<>();
+
     LinearLayout layoutButton;
     RecyclerView recyclerView;
     ArrayList<TableModel> listTable = new ArrayList<>();
@@ -77,7 +83,6 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
         txtTitle = findViewById(R.id.txtTitle);
         btnMnu.setImageResource(R.drawable.ic_back_24);
         backPressed();
-
 
 //        layoutButton = findViewById(R.id.layoutButton);
         recyclerView = findViewById(R.id.rvListTable);
@@ -104,6 +109,8 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
         String path = "OwnerManager/" + ownerID + "/QuanLyBan/Area" + areaID;
         String path_tempt = "OwnerManager/" + ownerID + "/TableActive/Area" + areaID;
         url = path_tempt;
+        getMenuCombo(ownerID);
+        getMenuMeal(ownerID);
         getListTable(path);
     }
 
@@ -183,6 +190,68 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
         dialog.show();
     }
 
+    public ArrayList<MealModel> getMenuMeal(String ownerID){
+        final ArrayList<MealModel> listMenu = new ArrayList<>();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String path = "OwnerManager/" + ownerID + "/QuanLyMonAn";
+        final DatabaseReference myRef = database.getReference(path);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try {
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        MealModel model = data.getValue(MealModel.class);
+                        listMenu.add(model);
+                    }
+                    listMeal.addAll(listMenu);
+                } catch (Exception ex) {
+                    Log.w("PROBLEM", "get data from branch table active have problem " + ex.getMessage());
+                    System.out.println("get data from branch table active have problem in url: " + myRef.toString());
+                }
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("Read list meal in dialog Error", error.getMessage());
+            }
+        });
+        return listMenu;
+    }
+
+    public ArrayList<MealModel> getMenuCombo(String ownerID){
+        final ArrayList<MealModel> listMenuCombo = new ArrayList<>();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final String path = "OwnerManager/" + ownerID + "/QuanLyCombo";
+        final DatabaseReference myRef = database.getReference(path);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<ModelCombo> list = new ArrayList<>();
+                try {
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        ModelCombo model = data.getValue(ModelCombo.class);
+                        list.add(model);
+                        listMenuCombo.add(data.getValue(MealModel.class));
+                        System.out.println("list1" + list.toString());
+                    }
+                    listMeal.addAll(listMenuCombo);
+                    System.out.println("LIST COMBO: "+listMenuCombo.toString());
+                } catch (Exception ex) {
+                    Log.w("PROBLEM", "get data from branch table active have problem " + ex.getMessage());
+                    System.out.println("get data from branch table active have problem in url: " + myRef.toString());
+                }
+//                final String path = "/OwnerManager/" + ownerID + "/QuanLyMonAn";
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("Error", error.getMessage());
+            }
+        });
+        return listMenuCombo;
+    }
+
     void checkTable(int position, String ownerID){
 
 //        private final int PHONG_LANH = 0;
@@ -194,37 +263,45 @@ public class RoomActivity extends AppCompatActivity implements RecyclerviewClick
         if (listTable.get(position).getTableStatus().equals("0")) {
             //When table blank
             //Show menu
-            OrderDialog dialog = new OrderDialog(this,ownerID,areaID,tableID);
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            dialog.show();
+            if (listMeal.size()>0){
+                OrderDialog dialog = new OrderDialog(this,ownerID,areaID,tableID,listMeal);
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                dialog.show();
+            }else {
+                Toast.makeText(this,"Không có món - hoặc lỗi mạng vùi lòng kiểm tra lại",Toast.LENGTH_SHORT).show();
+            }
+
         }
         if(listTable.get(position).getTableStatus().equals("1")){
             //When booked
             //Show menu
-            OrderDialog dialog = new OrderDialog(this,ownerID,areaID,"Table"+listTable.get(position).getID());
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            dialog.show();
+            if (listMeal.size()>0){
+//                OrderDialog dialog = new OrderDialog(this,ownerID,areaID,tableID,listMeal);
+                OrderDialog dialog = new OrderDialog(this,ownerID,areaID,"Table"+listTable.get(position).getID(),listMeal);
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                dialog.show();
+            }else {
+                Toast.makeText(this,"Không có món - hoặc lỗi mạng vùi lòng kiểm tra lại",Toast.LENGTH_SHORT).show();
+            }
         }
         if(listTable.get(position).getTableStatus().equals("2")){
             //When Having
             //Show detail dialog(- payment dialog)
             //Show list meal already and amounts.
-            OrderDialog dialog = new OrderDialog(this,ownerID,areaID,"Table"+listTable.get(position).getID());
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            dialog.show();
+
+            if (listMeal.size()>0){
+//                OrderDialog dialog = new OrderDialog(this,ownerID,areaID,tableID,listMeal);
+                OrderDialog dialog = new OrderDialog(this,ownerID,areaID,"Table"+listTable.get(position).getID(),listMeal);
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                dialog.show();
+            }else {
+                Toast.makeText(this,"Không có món - hoặc lỗi mạng vùi lòng kiểm tra lại",Toast.LENGTH_SHORT).show();
+            }
         }
         if(listTable.get(position).getTableStatus().equals("3")){
             //When be error
             //Toast notification
             UpdateTableDialog dialog = new UpdateTableDialog(this, url, ownerID, areaID, tableID, listTable.get(position).getTableStatus());
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            dialog.show();
-        }
-        if(listTable.get(position).getTableStatus().equals("4")){
-            //When Having
-            //Show detail dialog(- payment dialog)
-            //Show list meal already and amounts.
-            OrderDialog dialog = new OrderDialog(this,ownerID,areaID,"Table"+listTable.get(position).getID());
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.show();
         }

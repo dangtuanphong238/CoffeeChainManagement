@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import com.example.owner.Activity.AddHangHoaActivity;
 import com.example.owner.Activity.UpdateHangHoaKho;
 import com.example.owner.Activity.UpdateStaff;
+import com.example.owner.Activity.WareHouseManageActivity;
 import com.example.owner.Model.HangHoa;
 import com.example.owner.Model.ListSpinner;
 import com.example.owner.Models.Staff;

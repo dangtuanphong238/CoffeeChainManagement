@@ -4,22 +4,27 @@ import java.io.Serializable;
 
 public class HangHoa implements Serializable {
     public String id;
+    public String theloai;
     public String tenhanghoa;
     public String soluong;
 
-
-    public HangHoa(String id, String tenhanghoa, String soluong) {
-        this.id = id;
-        this.tenhanghoa = tenhanghoa;
-        this.soluong = soluong;
+    public String getTheloai() {
+        return theloai;
     }
 
     public HangHoa() {
     }
 
-    public HangHoa(String tenhanghoa, String soluong) {
+    public HangHoa(String id, String tenhanghoa, String soluong, String theloai) {
+    }
+
+    public void setTheloai(String theloai) {
+        this.theloai = theloai;
+    }
+    public HangHoa(String tenhanghoa, String soluong, String theloai) {
         this.tenhanghoa = tenhanghoa;
         this.soluong = soluong;
+        this.theloai = theloai;
     }
 
     public HangHoa(String id) {
