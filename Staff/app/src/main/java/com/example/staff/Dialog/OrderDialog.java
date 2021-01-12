@@ -180,7 +180,39 @@ public class OrderDialog extends Dialog implements View.OnClickListener, Recycle
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.w("Error", error.getMessage());
             }
+            public void combo(){
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                String path2 = "OwnerManager/" + ownerID + "/QuanLyCombo";
+                final DatabaseReference myRef1 = database.getReference(path2);
+                myRef1.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ArrayList<MealModel> list = new ArrayList<>();
+                        try {
+                            for (DataSnapshot data : snapshot.getChildren()) {
+                                MealModel model1 = data.getValue(MealModel.class);
+                                list.add(model1);
+                            }
+                        } catch (Exception ex) {
+                            Log.w("PROBLEM", "get data from branch table active have problem " + ex.getMessage());
+                            System.out.println("get data from branch table active have problem in url: " + myRef1.toString());
+                        }
+                        final String path = "/OwnerManager/" + ownerID + "/QuanLyCombo";
+                        MenuOrderAdapter adapter = new MenuOrderAdapter(context, list, OrderDialog.this, path, OrderDialog.this);
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+                        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                        rvMenuOrder.setLayoutManager(linearLayoutManager);
+                        rvMenuOrder.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.w("Error", error.getMessage());
+                    }
+                });
+            }
         });
+
     }
     public void getCombo() {
         //Read list meal used in dialog from branch TableActive

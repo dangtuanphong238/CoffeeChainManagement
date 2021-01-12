@@ -5,7 +5,7 @@ public class MealUsed {
     MealModel model;
     String timeInput;
 
-    public MealUsed(int last_amounts, ModelCombo modelCombo, String timeInput) {
+    public MealUsed() {
     }
 
     public MealUsed(int amount, MealModel model, String timeInput) {

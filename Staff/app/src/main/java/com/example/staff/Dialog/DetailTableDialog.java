@@ -100,9 +100,8 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
     public void getDataOfTable() {
         //Read list meal used in dialog from branch TableActive
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference().child("OwnerManager").child(ownerID).child("TableActive").child(areaID).child(tableID).child("Meal");
-//        String path = url + "/" + tableID + "/Meal";
-//        final DatabaseReference myRef = database.getReference();
+        String path = url + "/" + tableID + "/Meal";
+        final DatabaseReference myRef = database.getReference().child("OwnerManager").child(ownerID).child("TableActive").child(areaID).child(tableID).child("Meal");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -113,7 +112,10 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
                                 data.child("id").getValue() + "",
                                 data.child("price").getValue() + "",
                                 data.child("name").getValue() + "",
-                                data.child("image").getValue() + "");
+                                data.child("image").getValue() + "",
+                                snapshot.child("meal_description").getValue() + "",
+                                snapshot.child("meal_price_total").getValue() + "",
+                                snapshot.child("meal_uu_dai").getValue() + "");
                         String amount_tempt = (data.child("amount").getValue() + "");
                         String timeInput = (data.child("timeInput").getValue() + "");
                         int amount = 0;
@@ -130,8 +132,8 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
                     rvMealUsed.setAdapter(adapter);
                     tvSumPrice.setText(sumMoney(list) + "");
                 } catch (Exception ex) {
-//                    Log.w("PROBLEM", "get data from url " + myRef.toString() + " have problem");
-//                    System.out.println("PROBLEM: " + "get data from url " + myRef.toString() + " have problem");
+                    Log.w("PROBLEM", "get data from url " + myRef.toString() + " have problem");
+                    System.out.println("PROBLEM: " + "get data from url " + myRef.toString() + " have problem");
                 }
             }
 
@@ -189,9 +191,8 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
     public void createBill() {
         //Read data from branch Table_Active
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference().child("OwnerManager").child(ownerID).child("TableActive").child(areaID).child(tableID).child("Meal");
-//        String path = url + "/" + tableID + "/Meal";
-//        final DatabaseReference myRef = database.getReference(path);
+        String path = url + "/" + tableID + "/Meal";
+        final DatabaseReference myRef = database.getReference().child("OwnerManager").child(ownerID).child("TableActive").child(areaID).child(tableID).child("Meal");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -202,7 +203,9 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
                                     data.child("id").getValue() + "",
                                     data.child("price").getValue() + "",
                                     data.child("name").getValue() + "",
-                                    data.child("image").getValue() + "");
+                                    data.child("image").getValue() + "", snapshot.child("meal_description").getValue() + "",
+                                    snapshot.child("meal_price_total").getValue() + "",
+                                    snapshot.child("meal_uu_dai").getValue() + "");
                             String amount_tempt = (data.child("amount").getValue() + "");
                             String timeInput = (data.child("timeInput").getValue() + "");
                             int amount = 0;
@@ -214,8 +217,8 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
                         }
                     }
                 } catch (Exception ex) {
-//                    Log.w("PROBLEM", "get data from url " + myRef.toString() + " have problem");
-//                    System.out.println("PROBLEM: " + "get data from url " + myRef.toString() + " have problem");
+                    Log.w("PROBLEM", "get data from url " + myRef.toString() + " have problem");
+                    System.out.println("PROBLEM: " + "get data from url " + myRef.toString() + " have problem");
                 }
             }
 
@@ -299,7 +302,7 @@ public class DetailTableDialog extends Dialog implements View.OnClickListener {
             String meal_name = dataSnapshot.child("name").getValue() + "";
             String meal_price = dataSnapshot.child("price").getValue() + "";
             String meal_timeInput = dataSnapshot.child("timeInput").getValue() + "";
-            MealModel mealModel = new MealModel(meal_category, meal_id, meal_price, meal_name, meal_image);
+            MealModel mealModel = new MealModel(meal_category, meal_id, meal_price, meal_name, meal_image,null,null,null);
             MealUsed mealUsed = new MealUsed(amount, mealModel, meal_timeInput);
             listMealUsed.add(mealUsed);
         }
