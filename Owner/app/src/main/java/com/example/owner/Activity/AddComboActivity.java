@@ -42,6 +42,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class AddComboActivity extends AppCompatActivity implements ReturnValueArrayCombo {
     ArrayList<MealModel> list = new ArrayList<>();
@@ -63,13 +64,16 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
     private ArrayList<Combo> lstCombo = new ArrayList<>();
     private ProgressDialog dialog;
 
+    int lastPosArrCombo = 0;
+    ArrayList lstIDCombo = new ArrayList();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_combo);
         anhXa();
         getOwnerID();
-        getSizeListStaff();
+        getSizeListCombo();
 
         txtTitleActivity.setText("Thêm combo");
         btnTaoCombo.setEnabled(false);
@@ -78,6 +82,19 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
         backPressed();
         getDataForListMeal();
         setOnClick();
+    }
+
+    private void checkComboID(ArrayList<Combo> arrayList) {
+        if(arrayList.size() != 0)
+        {
+            for (Combo combo:arrayList) {
+                int combo_id = Integer.parseInt(combo.getMeal_id().replace("combo", ""));
+                lstIDCombo.add(combo_id);
+            }
+            Collections.sort(lstIDCombo);
+            lastPosArrCombo = (int) lstIDCombo.get(lstIDCombo.size()-1);
+            System.out.println("pos " + lastPosArrCombo);
+        }
     }
 
     private void getOwnerID() {
@@ -137,66 +154,133 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
         btnTaoCombo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final String tenCombo = edtTenCombo.getText().toString();
+                final String uuDai = edtUuDai.getText().toString();
+                if(lstCombo.size() == 0){ //case: chưa có combo
+                    if (edtTenCombo.getText().toString() != "" && edtUuDai.getText().toString() != "" && bitmap != null) {
 
-                if (edtTenCombo.getText().toString() != "" && edtUuDai.getText().toString() != "" && bitmap != null) {
-                    final String tenCombo = edtTenCombo.getText().toString();
-                    final String uuDai = edtUuDai.getText().toString();
-                    if (arrayList.isEmpty()) {
-                        Toast.makeText(AddComboActivity.this, "Vui lòng chọn món", Toast.LENGTH_SHORT).show();
-                    } else {
-                        if(!tenCombo.isEmpty() && !uuDai.isEmpty())
-                        {
-                            dialog = new ProgressDialog(AddComboActivity.this);
-                            dialog.setMessage("Upload in progress");
-                            dialog.show();
+                        if (arrayList.isEmpty()) {
+                            Toast.makeText(AddComboActivity.this, "Vui lòng chọn món", Toast.LENGTH_SHORT).show();
+                        } else {
+                            if(!tenCombo.isEmpty() && !uuDai.isEmpty())
+                            {
+                                dialog = new ProgressDialog(AddComboActivity.this);
+                                dialog.setMessage("Upload in progress");
+                                dialog.show();
 
-                            final int price = tinhGiaCombo(arrayList, uuDai);
-                            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                            final DatabaseReference databaseReference = firebaseDatabase.getReference()
-                                    .child("OwnerManager").child(ownerID).child("QuanLyCombo").child("combo" + lstCombo.size());
-                            storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(ownerID).child("QuanLyCombo").child("combo"+ lstCombo.size() + ".png");
-                            //Chuyen duoi file
-                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                            byte[] data = baos.toByteArray();
-                            storageReference.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    final Combo combo = new Combo("combo", "combo" + lstCombo.size(),price + "",
-                                            tenCombo,"combo" + lstCombo.size() + ".png",
-                                            meal_description, uuDai + "%", total_price_combo+"");
+                                final int price = tinhGiaCombo(arrayList, uuDai);
+                                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                                final DatabaseReference databaseReference = firebaseDatabase.getReference()
+                                        .child("OwnerManager").child(ownerID).child("QuanLyCombo").child("combo0");
+                                storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(ownerID).child("QuanLyCombo").child("combo"+ lstCombo.size() + ".png");
+                                //Chuyen duoi file
+                                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                                byte[] data = baos.toByteArray();
+                                storageReference.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        final Combo combo = new Combo("combo", "combo0",price + "",
+                                                tenCombo,"combo0.png",
+                                                meal_description, uuDai + "%", total_price_combo+"");
 
-                                    databaseReference.setValue(combo).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Toast.makeText(AddComboActivity.this, "Thêm Combo thành công!", Toast.LENGTH_SHORT).show();
-                                            clearInputFromUser();
-                                            dialog.cancel();
+                                        databaseReference.setValue(combo).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(AddComboActivity.this, "Thêm Combo thành công!", Toast.LENGTH_SHORT).show();
+                                                clearInputFromUser();
+                                                dialog.cancel();
 
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(AddComboActivity.this, "Failure", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(AddComboActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(AddComboActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(AddComboActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            else {
+                                Toast.makeText(AddComboActivity.this, "Vui lòng nhập đủ!", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        else {
-                            Toast.makeText(AddComboActivity.this, "Vui lòng nhập đủ!", Toast.LENGTH_SHORT).show();
-                        }
+
                     }
+                    else {
+                        Toast.makeText(AddComboActivity.this, "Vui lòng nhập đủ các trường!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else { // Case: đã có combo
+                    lastPosArrCombo += 1;
+                    System.out.println("poss" + lastPosArrCombo);
 
+
+                    if (edtTenCombo.getText().toString() != "" && edtUuDai.getText().toString() != "" && bitmap != null) {
+
+                        if (arrayList.isEmpty()) {
+                            Toast.makeText(AddComboActivity.this, "Vui lòng chọn món", Toast.LENGTH_SHORT).show();
+                        } else {
+                            if(!tenCombo.isEmpty() && !uuDai.isEmpty())
+                            {
+                                dialog = new ProgressDialog(AddComboActivity.this);
+                                dialog.setMessage("Upload in progress");
+                                dialog.show();
+
+                                final int price = tinhGiaCombo(arrayList, uuDai);
+                                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                                final DatabaseReference databaseReference = firebaseDatabase.getReference()
+                                        .child("OwnerManager").child(ownerID).child("QuanLyCombo").child("combo" + lastPosArrCombo);
+                                storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(ownerID).child("QuanLyCombo").child("combo"+ lastPosArrCombo + ".png");
+                                //Chuyen duoi file
+                                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                                byte[] data = baos.toByteArray();
+                                storageReference.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        final Combo combo = new Combo("combo", "combo" + lastPosArrCombo,price + "",
+                                                tenCombo,"combo" + lastPosArrCombo + ".png",
+                                                meal_description, uuDai + "%", total_price_combo+"");
+
+                                        databaseReference.setValue(combo).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(AddComboActivity.this, "Thêm Combo thành công!", Toast.LENGTH_SHORT).show();
+                                                clearInputFromUser();
+                                                dialog.cancel();
+
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(AddComboActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(AddComboActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            else {
+                                Toast.makeText(AddComboActivity.this, "Vui lòng nhập đủ!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    }
+                    else {
+                        Toast.makeText(AddComboActivity.this, "Vui lòng nhập đủ các trường!", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else {
-                    Toast.makeText(AddComboActivity.this, "Vui lòng nhập đủ các trường!", Toast.LENGTH_SHORT).show();
-                }
+
             }
         });
 
@@ -214,7 +298,7 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
         });
     }
 
-    private void getSizeListStaff() //hàm này để lấy size của list nhânvieen để tự động sinh id theo list.size()
+    private void getSizeListCombo() //hàm này để lấy size của list nhânvieen để tự động sinh id theo list.size()
     {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(ownerID);
@@ -226,6 +310,7 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
                     Combo combo = dataSnapshot.getValue(Combo.class);
                     lstCombo.add(combo);
                 }
+                checkComboID(lstCombo);
             }
 
             @Override
