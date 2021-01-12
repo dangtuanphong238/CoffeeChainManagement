@@ -73,7 +73,7 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
         setContentView(R.layout.activity_add_combo);
         anhXa();
         getOwnerID();
-        getSizeListStaff();
+        getSizeListCombo();
 
         txtTitleActivity.setText("Thêm combo");
         btnTaoCombo.setEnabled(false);
@@ -85,14 +85,6 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
     }
 
     private void checkComboID(ArrayList<Combo> arrayList) {
-//        for (Staff staff:arrayList) {
-//            int staff_id = Integer.parseInt(staff.getId().replace("Staff", ""));
-//            lstIDStaff.add(staff_id);
-//        }
-//        Collections.sort(lstIDStaff);
-//        lastPosArrStaff = (int) lstIDStaff.get(lstIDStaff.size()-1);
-//        System.out.println("pos " + lastPosArrStaff);
-
         if(arrayList.size() != 0)
         {
             for (Combo combo:arrayList) {
@@ -306,7 +298,7 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
         });
     }
 
-    private void getSizeListStaff() //hàm này để lấy size của list nhânvieen để tự động sinh id theo list.size()
+    private void getSizeListCombo() //hàm này để lấy size của list nhânvieen để tự động sinh id theo list.size()
     {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(ownerID);
