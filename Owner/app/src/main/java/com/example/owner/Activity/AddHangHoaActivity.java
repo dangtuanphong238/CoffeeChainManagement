@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class AddHangHoaActivity extends AppCompatActivity {
     private Spinner spinnerPL;
@@ -43,6 +44,9 @@ public class AddHangHoaActivity extends AppCompatActivity {
     private String soLuong;
     private String getValueSpinner;
     private ArrayList<HangHoa> danhSachHH = new ArrayList<>();
+    int lastPosArrProduct = 0;
+    ArrayList lstIDProduct = new ArrayList();
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,35 +56,33 @@ public class AddHangHoaActivity extends AppCompatActivity {
         btnMnu.setImageResource(R.drawable.ic_back_24);
         backPressed();
         getOwnerIDFromLocalStorage();
-        getSizeListStaff();
+        getSizeListProduct();
         initSpinner();
         setEvent();
     }
-    private void initSpinner()
-    {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.cus_spinner,getResources().getStringArray(R.array.lstQuanLyKho));
+
+    private void initSpinner() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.cus_spinner, getResources().getStringArray(R.array.lstQuanLyKho));
         adapter.setDropDownViewResource(R.layout.cus_spinner_dropdown);
         spinnerPL.setAdapter(adapter);
         spinnerPL.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int potision, long l) {
-              getValueSpinner = spinnerPL.getSelectedItem().toString();
+                getValueSpinner = spinnerPL.getSelectedItem().toString();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
     }
-    private void getData()
-    {
-        if ( txtTenHangHoa.getText().toString().equals("") || txtsoluong.getText().toString().equals(""))
-        {
+
+    private void getData() {
+        if (txtTenHangHoa.getText().toString().equals("") || txtsoluong.getText().toString().equals("")) {
             txtTenHangHoa.setError("Không được để trống!");
             txtsoluong.setError("Không được để trống!");
-        }
-        else
-        {
+        } else {
             tenHangHoa = txtTenHangHoa.getText().toString();
             soLuong = txtsoluong.getText().toString();
         }
@@ -91,15 +93,17 @@ public class AddHangHoaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getData();
-                HangHoa hangHoa = new HangHoa(tenHangHoa,soLuong,getValueSpinner);
+              //  lastPosArrProduct += 1;
+                HangHoa hangHoa = new HangHoa(tenHangHoa, soLuong, getValueSpinner);
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = firebaseDatabase.getReference();
                 databaseReference.child("OwnerManager").child(sOwnerID).child("QuanLyKho")
-                        .child("Product" + danhSachHH.size()).setValue(hangHoa).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        .child("Product" + lastPosArrProduct).setValue(hangHoa)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(AddHangHoaActivity.this, "Thêm Thành Công!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(AddHangHoaActivity.this,WareHouseManageActivity.class);
+                        Intent intent = new Intent(AddHangHoaActivity.this, WareHouseManageActivity.class);
                         startActivity(intent);
                         finish();
                     }
@@ -124,9 +128,9 @@ public class AddHangHoaActivity extends AppCompatActivity {
 
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login
     {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        System.out.println(sharedPreferences.getString(OWNERID,"null"));
-        sOwnerID = sharedPreferences.getString(OWNERID,"null");
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        System.out.println(sharedPreferences.getString(OWNERID, "null"));
+        sOwnerID = sharedPreferences.getString(OWNERID, "null");
     }
 
     public void backPressed() {
@@ -138,10 +142,11 @@ public class AddHangHoaActivity extends AppCompatActivity {
             }
         });
     }
-    private void getSizeListStaff() //hàm này để lấy size của list nhânvieen để tự động sinh id theo list.size()
+
+    private void getSizeListProduct() //hàm này để lấy size của list nhânvieen để tự động sinh id theo list.size()
     {
-       FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-         DatabaseReference  databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID);
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID);
         databaseReference.child("QuanLyKho").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -150,6 +155,7 @@ public class AddHangHoaActivity extends AppCompatActivity {
                     HangHoa hangHoa = dataSnapshot.getValue(HangHoa.class);
                     danhSachHH.add(hangHoa);
                 }
+                    checkStaffID(danhSachHH);
             }
 
             @Override
@@ -158,4 +164,26 @@ public class AddHangHoaActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void checkStaffID(ArrayList<HangHoa> arrayList) {
+        try {
+            if (arrayList.size() == 0) {
+                int staff_id = 0;
+                lstIDProduct.add(staff_id);
+            } else {
+                for (HangHoa hangHoa : arrayList) {
+                    int staff_id = Integer.parseInt(hangHoa.getId().replace("Product", ""));
+                    lstIDProduct.add(staff_id);
+                }
+                if (lstIDProduct.size() != 0) {
+                    Collections.sort(lstIDProduct);
+//        System.out.println(lstIDStaff.get(lstIDStaff.size()-1));
+                    lastPosArrProduct = (int) lstIDProduct.get(lstIDProduct.size() - 1);
+                }
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
 }
+
