@@ -104,8 +104,8 @@ public class MenuOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (meal.getFlag()) holder.layoutChooseAmount.setVisibility(View.VISIBLE);
-                    else holder.layoutChooseAmount.setVisibility(View.GONE);
+                    if (meal.getFlag()) holder.layoutChooseAmount.setVisibility(View.GONE);
+                    else holder.layoutChooseAmount.setVisibility(View.VISIBLE);
                     meal.setFlag(!meal.getFlag());
                     recyclerviewClick.onItemClick(position);
                 }
@@ -156,7 +156,7 @@ public class MenuOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder.tvMealUuDai.setText(modelCombo.getMeal_uu_dai());
             holder.tvAmounts.setText(modelCombo.getAmounts()+"");
             holder.tvPrice.setText(modelCombo.getPrice()+"");
-            if (modelCombo.getFlag()) holder.layoutChooseAmount.setVisibility(View.VISIBLE);
+            if (meal.getFlag()) holder.layoutChooseAmount.setVisibility(View.VISIBLE);
             else holder.layoutChooseAmount.setVisibility(View.GONE);
             String path = "";
             if (modelCombo.getMeal_category().equals("combo")){
@@ -169,8 +169,8 @@ public class MenuOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (modelCombo.getFlag()) holder.layoutChooseAmount.setVisibility(View.VISIBLE);
-                    else holder.layoutChooseAmount.setVisibility(View.GONE);
+                    if (modelCombo.getFlag()) holder.layoutChooseAmount.setVisibility(View.GONE);
+                    else holder.layoutChooseAmount.setVisibility(View.VISIBLE);
                     modelCombo.setFlag(!modelCombo.getFlag());
                     recyclerviewClick.onItemClick(position);
                 }
