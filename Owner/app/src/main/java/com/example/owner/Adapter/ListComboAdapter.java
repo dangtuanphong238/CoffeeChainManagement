@@ -123,14 +123,14 @@ public class ListComboAdapter extends RecyclerView.Adapter<ListComboAdapter.MyVi
             public void onClick(View view) {
                 if(holder.chkChoose.isChecked())
                 {
-                    list.get(position).setCheck(true);
+                   // list.get(position).setCheck(true);
 //                    arrCombo.add(list.get(position).getMeal_price());
                     arrCombo.add(combo);
                     Log.d("A", "A"+ arrCombo.toString());
 
                 }
                 else {
-                    list.get(position).setCheck(false);
+                   // list.get(position).setCheck(false);
 //                    arrCombo.remove(list.get(position).getMeal_price());
                     arrCombo.remove(combo);
                     Log.d("A", "A"+ arrCombo.toString());

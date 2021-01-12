@@ -10,10 +10,22 @@ public class ModelCombo {
     String meal_price_total;
     String meal_uu_dai;
 
+
     public ModelCombo() {
     }
 
-        public ModelCombo(String meal_category, String meal_id, String meal_price, String meal_name, String meal_image, String meal_description, String meal_price_total, String meal_uu_dai) {
+    public ModelCombo(MealModel mealModel) {
+        meal_category = mealModel.meal_category;
+        meal_id = mealModel.meal_id;
+        meal_price = mealModel.meal_price;
+        meal_name = mealModel.meal_name;
+        meal_image = mealModel.meal_image ;
+        meal_description = mealModel.meal_description;
+        meal_price_total = mealModel.meal_price_total;
+        meal_uu_dai = mealModel.meal_uu_dai;
+    }
+
+    public ModelCombo(String meal_category, String meal_id, String meal_price, String meal_name, String meal_image, String meal_description, String meal_price_total, String meal_uu_dai) {
         this.meal_category = meal_category;
         this.meal_id = meal_id;
         this.meal_price = meal_price;
@@ -23,10 +35,12 @@ public class ModelCombo {
         this.meal_price_total = meal_price_total;
         this.meal_uu_dai = meal_uu_dai;
     }
+
     public int getID() {
-        String meal_id = this.meal_id.replace("Meal","");
+        String meal_id = this.meal_id.replace("Meal", "");
         return Integer.parseInt(meal_id);
     }
+
     public String getMeal_category() {
         return meal_category;
     }

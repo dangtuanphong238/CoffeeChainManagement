@@ -95,11 +95,15 @@ public class AddComboActivity extends AppCompatActivity implements ReturnValueAr
                 list.clear();
                 try {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        MealModel mealModel = new MealModel(snapshot.child("meal_category").getValue() + "",
+                        MealModel mealModel = new MealModel(
+                                snapshot.child("meal_category").getValue() + "",
                                 snapshot.child("meal_id").getValue() + "",
                                 snapshot.child("meal_price").getValue() + "",
                                 snapshot.child("meal_name").getValue() + "",
-                                snapshot.child("meal_image").getValue() + "");
+                                snapshot.child("meal_image").getValue() + "",
+                                snapshot.child("meal_description").getValue() + "",
+                                snapshot.child("meal_price_total").getValue() + "",
+                                snapshot.child("meal_uu_dai").getValue() + "");
                         list.add(mealModel);
                     }
                 } catch (Exception ex) {

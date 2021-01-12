@@ -257,7 +257,10 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                                 snapshot.child("meal_id").getValue() + "",
                                 snapshot.child("meal_price").getValue() + "",
                                 snapshot.child("meal_name").getValue() + "",
-                                snapshot.child("meal_image").getValue() + "");
+                                snapshot.child("meal_image").getValue() + "",
+                                snapshot.child("meal_description").getValue() + "",
+                                snapshot.child("meal_price_total").getValue() + "",
+                                snapshot.child("meal_uu_dai").getValue() + "");
                         list.add(mealModel);
                     }
                 } catch (Exception ex) {
@@ -296,7 +299,10 @@ public class MealManageActivity extends AppCompatActivity implements Recyclervie
                                 snapshot.child("meal_id").getValue() + "",
                                 snapshot.child("meal_price").getValue() + "",
                                 snapshot.child("meal_name").getValue() + "",
-                                snapshot.child("meal_image").getValue() + "");
+                                snapshot.child("meal_image").getValue() + "",
+                                snapshot.child("meal_description").getValue() + "",
+                                snapshot.child("meal_price_total").getValue() + "",
+                                snapshot.child("meal_uu_dai").getValue() + "");
                         if (mealModel.getMeal_category().equals(key)) {
                             list.add(mealModel);
                         }

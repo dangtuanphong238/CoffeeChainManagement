@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/dialog_info_table"
     android:layout_width="match_parent"
     android:layout_height="500dp"
@@ -58,6 +59,9 @@
                 android:textSize="20dp"
                 android:textColor="@color/black"
                 android:text="2000000"
+                app:autoSizeMaxTextSize="25sp"
+                app:autoSizeTextType="uniform"
+                android:maxLines="1"
                 android:background="@drawable/border_black_textview"
                 android:layout_height="match_parent"/>
             <Button

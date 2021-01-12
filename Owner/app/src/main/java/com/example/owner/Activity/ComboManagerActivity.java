@@ -144,7 +144,10 @@ public class ComboManagerActivity extends AppCompatActivity implements ReturnVal
                                 dataSnapshot.child("meal_id").getValue() + "",
                                 dataSnapshot.child("meal_price").getValue() + "",
                                 dataSnapshot.child("meal_name").getValue() + "",
-                                dataSnapshot.child("meal_image").getValue() + "");
+                                dataSnapshot.child("meal_image").getValue() + "",
+                                snapshot.child("meal_description").getValue() + "",
+                                snapshot.child("meal_price_total").getValue() + "",
+                                snapshot.child("meal_uu_dai").getValue() + "");
                         retrieverList.add(mealModel);
                         getDataForListMeal();
 
