@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -168,6 +169,8 @@ public class ThemTaiKhoanKhuVucActivity extends AppCompatActivity {
                 public void onSuccess(Void aVoid) {
                     AddArea(arrayList);
                     Toast.makeText(ThemTaiKhoanKhuVucActivity.this, "Thêm Thành Công", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ThemTaiKhoanKhuVucActivity.this, ListCuaHangActivity.class);
+                    startActivity(intent);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
