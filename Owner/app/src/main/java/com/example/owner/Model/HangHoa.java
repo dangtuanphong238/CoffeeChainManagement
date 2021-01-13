@@ -16,6 +16,10 @@ public class HangHoa implements Serializable {
     }
 
     public HangHoa(String id, String tenhanghoa, String soluong, String theloai) {
+       this.id = id;
+        this.tenhanghoa = tenhanghoa;
+        this.soluong = soluong;
+        this.theloai = theloai;
     }
 
     public void setTheloai(String theloai) {

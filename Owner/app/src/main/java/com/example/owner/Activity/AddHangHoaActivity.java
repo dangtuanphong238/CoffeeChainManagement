@@ -56,8 +56,8 @@ public class AddHangHoaActivity extends AppCompatActivity {
         btnMnu.setImageResource(R.drawable.ic_back_24);
         backPressed();
         getOwnerIDFromLocalStorage();
-        getSizeListProduct();
         initSpinner();
+        getSizeListProduct();
         setEvent();
     }
 
@@ -93,26 +93,52 @@ public class AddHangHoaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getData();
-              //  lastPosArrProduct += 1;
-                HangHoa hangHoa = new HangHoa(tenHangHoa, soLuong, getValueSpinner);
-                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                DatabaseReference databaseReference = firebaseDatabase.getReference();
-                databaseReference.child("OwnerManager").child(sOwnerID).child("QuanLyKho")
-                        .child("Product" + lastPosArrProduct).setValue(hangHoa)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(AddHangHoaActivity.this, "Thêm Thành Công!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(AddHangHoaActivity.this, WareHouseManageActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AddHangHoaActivity.this, "Thêm Thất Bại", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if (danhSachHH.size() == 0)
+                {
+                    HangHoa hangHoa = new HangHoa("Product0",tenHangHoa, soLuong, getValueSpinner);
+                    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                    DatabaseReference databaseReference = firebaseDatabase.getReference();
+                    databaseReference.child("OwnerManager").child(sOwnerID).child("QuanLyKho")
+                            .child("Product0").setValue(hangHoa)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(AddHangHoaActivity.this, "Thêm Thành Công!", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(AddHangHoaActivity.this, WareHouseManageActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(AddHangHoaActivity.this, "Thêm Thất Bại", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                else
+                {
+                    lastPosArrProduct +=1;
+                    HangHoa hangHoa = new HangHoa("Product" + lastPosArrProduct,tenHangHoa, soLuong, getValueSpinner);
+                    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                    DatabaseReference databaseReference = firebaseDatabase.getReference();
+                    databaseReference.child("OwnerManager").child(sOwnerID).child("QuanLyKho")
+                            .child("Product" + lastPosArrProduct).setValue(hangHoa)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(AddHangHoaActivity.this, "Thêm Thành Công!", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(AddHangHoaActivity.this, WareHouseManageActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(AddHangHoaActivity.this, "Thêm Thất Bại", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
             }
         });
     }
@@ -143,7 +169,7 @@ public class AddHangHoaActivity extends AppCompatActivity {
         });
     }
 
-    private void getSizeListProduct() //hàm này để lấy size của list nhânvieen để tự động sinh id theo list.size()
+    private void getSizeListProduct()
     {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference().child("OwnerManager").child(sOwnerID);
@@ -151,11 +177,14 @@ public class AddHangHoaActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 danhSachHH.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    HangHoa hangHoa = dataSnapshot.getValue(HangHoa.class);
-                    danhSachHH.add(hangHoa);
+                if (snapshot.getValue() != null)
+                {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        HangHoa hangHoa = dataSnapshot.getValue(HangHoa.class);
+                        danhSachHH.add(hangHoa);
+                    }
+                    checkProductID(danhSachHH);
                 }
-                    checkStaffID(danhSachHH);
             }
 
             @Override
@@ -165,24 +194,15 @@ public class AddHangHoaActivity extends AppCompatActivity {
         });
     }
 
-    private void checkStaffID(ArrayList<HangHoa> arrayList) {
-        try {
-            if (arrayList.size() == 0) {
-                int staff_id = 0;
-                lstIDProduct.add(staff_id);
-            } else {
-                for (HangHoa hangHoa : arrayList) {
-                    int staff_id = Integer.parseInt(hangHoa.getId().replace("Product", ""));
-                    lstIDProduct.add(staff_id);
-                }
-                if (lstIDProduct.size() != 0) {
-                    Collections.sort(lstIDProduct);
-//        System.out.println(lstIDStaff.get(lstIDStaff.size()-1));
-                    lastPosArrProduct = (int) lstIDProduct.get(lstIDProduct.size() - 1);
-                }
+    private void checkProductID(ArrayList<HangHoa> arrayList) {
+        if(arrayList.size() != 0)
+        {
+            for (HangHoa hangHoa:arrayList) {
+               int hanghoa_id = Integer.parseInt(hangHoa.getId().replace("Product",""));
+               lstIDProduct.add(hanghoa_id);
             }
-        } catch (Exception e) {
-            e.getMessage();
+            Collections.sort(lstIDProduct);
+           lastPosArrProduct = (int) lstIDProduct.get(lstIDProduct.size()-1);
         }
     }
 }

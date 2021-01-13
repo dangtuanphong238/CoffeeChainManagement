@@ -262,7 +262,9 @@ public class AddNhanVienActivity extends AppCompatActivity {
                                 Toast.makeText(AddNhanVienActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
-                    } else {
+                    }
+                    else
+                        {
                         Toast.makeText(AddNhanVienActivity.this, "Vui lòng nhập đủ các trường!", Toast.LENGTH_SHORT).show();
                     }
 
