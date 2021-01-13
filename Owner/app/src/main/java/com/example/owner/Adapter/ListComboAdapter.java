@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.owner.Interface.RecyclerviewClick;
 import com.example.owner.Interface.ReturnValueArrayCombo;
 import com.example.owner.Model.MealModel;
 import com.example.owner.Models.Combo;
@@ -35,23 +36,18 @@ public class ListComboAdapter extends RecyclerView.Adapter<ListComboAdapter.MyVi
     ArrayList<MealModel> list;
     Context context;
     String path;
-    //    ArrayList arrCombo = new ArrayList();
     ArrayList<MealModel> arrCombo = new ArrayList<>();
     ReturnValueArrayCombo returnValueArrayCombo;
+    RecyclerviewClick recyclerviewClick;
 
-    public ListComboAdapter(Context context, ArrayList<MealModel> list, String path , ReturnValueArrayCombo returnValueArrayCombo) {
+    public ListComboAdapter(Context context, ArrayList<MealModel> list, String path ,
+                            ReturnValueArrayCombo returnValueArrayCombo,RecyclerviewClick recyclerviewClick) {
         this.context = context;
         this.list = list;
         this.path = path;
         this.returnValueArrayCombo = returnValueArrayCombo;
+        this.recyclerviewClick = recyclerviewClick;
     }
-
-
-//    public ListAddComboAdapter(Context context, ArrayList<Combo> list, String path ) {
-//        this.context = context;
-//        this.list = list;
-//        this.path = path;
-//    }
 
     public ListComboAdapter() {
     }
@@ -68,8 +64,20 @@ public class ListComboAdapter extends RecyclerView.Adapter<ListComboAdapter.MyVi
             imgProduct = itemView.findViewById(R.id.imgProduct_Cb);
             chkChoose = itemView.findViewById(R.id.chkbCheck_Cb);
             this.setIsRecyclable(true);
-//            lưu state của item không bị biến mất khi scroll //Cách 1
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    recyclerviewClick.onItemClick(getAdapterPosition());
+                }
+            });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    recyclerviewClick.onItemLongClick(getAdapterPosition());
+                    return true;
+                }
+            });
         }
     }
 
