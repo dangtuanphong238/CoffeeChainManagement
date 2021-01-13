@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class LoginScreenActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     Spinner spinner;
     Button btnLogin;
     EditText username, password;
@@ -81,7 +81,7 @@ public class LoginScreenActivity extends AppCompatActivity {
             password.setText(sharedPreferences.getString("password", ""));
             UserActivity userActivity = new UserActivity();
             userActivity.setUser(username.getText().toString());
-            Intent intent = new Intent(LoginScreenActivity.this, KhuVucActivity.class);
+            Intent intent = new Intent(LoginActivity.this, AreaManageActivity.class);
             startActivity(intent);
             Toast.makeText(this, "Đăng nhập thành công !", Toast.LENGTH_SHORT).show();
             finish();
@@ -130,7 +130,7 @@ public class LoginScreenActivity extends AppCompatActivity {
                     maCh = item.getKey();
                     System.out.println("1234" + listOwner);
                 }
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(LoginScreenActivity.this, R.layout.style_spinner, listOwner);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(LoginActivity.this, R.layout.style_spinner, listOwner);
                 spinner.setAdapter(arrayAdapter);
             }
 
@@ -179,14 +179,14 @@ public class LoginScreenActivity extends AppCompatActivity {
                         editor.putString("idkey", idOwner);
                         editor.putString("myId", userActivity.getId());
                         editor.commit();
-                        Intent intent = new Intent(LoginScreenActivity.this, KhuVucActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, AreaManageActivity.class);
                         startActivity(intent);
                         finish();
-                        Toast.makeText(LoginScreenActivity.this, "Đăng Nhập Thành Công!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Đăng Nhập Thành Công!", Toast.LENGTH_SHORT).show();
                     }
                 }
                 if (isSuccess == false) {
-                    Toast.makeText(LoginScreenActivity.this, "Đăng Nhập Thất Bại!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Đăng Nhập Thất Bại!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

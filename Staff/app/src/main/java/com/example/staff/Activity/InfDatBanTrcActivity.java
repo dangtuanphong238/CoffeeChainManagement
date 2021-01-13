@@ -60,7 +60,7 @@ public class InfDatBanTrcActivity extends AppCompatActivity {
                else
                    {
                        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                       String path = "OwnerManager/" + sOwnerID + "/QuanLyBan" + "/"+ areaID + "/" +tableID + "/tableStatus";
+                       String path = "OwnerManager/" + sOwnerID + "/QuanLyBan" + "/Area"+ areaID + "/" +tableID + "/tableStatus";
                        DatabaseReference myRef = firebaseDatabase.getReference(path);
                        myRef.setValue("4").addOnCompleteListener(new OnCompleteListener<Void>() {
                            @Override
@@ -69,7 +69,7 @@ public class InfDatBanTrcActivity extends AppCompatActivity {
                                        ,edtTimeDB.getText().toString());
                             FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
                             String path = "OwnerManager/" + sOwnerID + "/QuanLyBanDatTruoc" +
-                                    "/"+ areaID + "/" +tableID + "/ThongTinDatTruoc";
+                                    "/Area"+ areaID + "/" +tableID + "/ThongTinDatTruoc";
                             DatabaseReference myRef1 = firebaseDatabase1.getReference(path);
                             myRef1.setValue(infDatBanTrc).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

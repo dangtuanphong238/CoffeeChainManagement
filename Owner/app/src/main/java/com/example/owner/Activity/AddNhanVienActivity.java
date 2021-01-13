@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,6 +27,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.owner.Global.Public_func;
+import com.example.owner.Model.MealModel;
 import com.example.owner.Models.Store;
 import com.example.owner.R;
 import com.example.owner.Models.Staff;
@@ -44,6 +46,9 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class AddNhanVienActivity extends AppCompatActivity {
 
@@ -68,6 +73,8 @@ public class AddNhanVienActivity extends AppCompatActivity {
     private Bitmap bitmap;
     private ProgressDialog dialog;
 
+    int lastPosArrStaff = 0;
+    ArrayList lstIDStaff = new ArrayList();
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,9 +85,30 @@ public class AddNhanVienActivity extends AppCompatActivity {
         backPressed();
         getOwnerIDFromLocalStorage();
         getSizeListStaff(); //getSizeList
-
         //call function onClickItem
         setOnClick();
+    }
+
+
+    private void checkStaffID(ArrayList<Staff> arrayList) {
+//        for (Staff staff:arrayList) {
+//            int staff_id = Integer.parseInt(staff.getId().replace("Staff", ""));
+//            lstIDStaff.add(staff_id);
+//        }
+//        Collections.sort(lstIDStaff);
+//        lastPosArrStaff = (int) lstIDStaff.get(lstIDStaff.size()-1);
+//        System.out.println("pos " + lastPosArrStaff);
+
+        if(arrayList.size() != 0)
+        {
+            for (Staff staff:arrayList) {
+                int staff_id = Integer.parseInt(staff.getId().replace("Staff", ""));
+                lstIDStaff.add(staff_id);
+            }
+            Collections.sort(lstIDStaff);
+            lastPosArrStaff = (int) lstIDStaff.get(lstIDStaff.size()-1);
+            System.out.println("pos " + lastPosArrStaff);
+        }
     }
 
     private void initSpinner() {
@@ -124,33 +152,91 @@ public class AddNhanVienActivity extends AppCompatActivity {
     }
 
     private void setOnClick() {
+
+//        btnThemNV.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                lastPosArrStaff += 1;
+//                System.out.println("poss" + lastPosArrStaff);
+//                firebaseDatabase = FirebaseDatabase.getInstance();
+//                databaseReference = firebaseDatabase.getReference().child("OwnerManager")
+//                        .child(sOwnerID).child("QuanLyNhanVien").child("Staff" + lastPosArrStaff);
+//                final String tenNV = edtTenNV.getText().toString();
+//                final String tenDangNhap = edtTenDangNhap.getText().toString();
+//                final String matKhau = edtMatKhau.getText().toString();
+//                final String sdt = edtSDT.getText().toString();
+//                final String soCMND = edtSoCMND.getText().toString();
+//                boolean isExist = false;
+//                final String caLam = spnLamTheoCa.getSelectedItem().toString();
+//                final String chucVu = spnChucVu.getSelectedItem().toString();
+//                for (Staff staff : lstStaff) {
+//                    if (staff.user.equals(tenDangNhap)) {
+//                        Toast.makeText(AddNhanVienActivity.this, "Tài khoản đã tồn tại!", Toast.LENGTH_SHORT).show();
+//                        isExist = true;
+//                    }
+//                }
+//
+//                if (isExist == false) {
+//                    if (bitmap != null && !tenNV.isEmpty() && !tenDangNhap.isEmpty() && !matKhau.isEmpty() && !sdt.isEmpty() && !soCMND.isEmpty()) {
+//                        dialog = new ProgressDialog(AddNhanVienActivity.this);
+//                        dialog.setMessage("Upload in progress");
+//                        dialog.show();
+//                        storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(sOwnerID).child("QuanLyNhanVien").child("Staff" + lastPosArrStaff);
+//                        //Chuyen duoi file
+//                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+//                        byte[] data = baos.toByteArray();
+//
+//                        storageReference.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                            @Override
+//                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                                Staff staff1 = new Staff("Staff" + lastPosArrStaff, tenDangNhap, matKhau, tenNV, sdt, soCMND, chucVu, caLam, "Staff" + lastPosArrStaff);
+//
+//                                databaseReference.setValue(staff1);
+//                                Toast.makeText(AddNhanVienActivity.this, "Cập nhật thông tin nhân viên thành công!", Toast.LENGTH_SHORT).show();
+//                                clearEditText();
+//                                dialog.cancel();
+//                                finish();
+////                                Intent intent = new Intent(AddNhanVienActivity.this, StaffManageActivity.class);
+////                                startActivity(intent);
+//
+//                            }
+//                        }).addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//                                Toast.makeText(AddNhanVienActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//                    } else {
+//                        Toast.makeText(AddNhanVienActivity.this, "Vui lòng nhập đủ các trường!", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                }
+//
+//            }
+//        });
+
         btnThemNV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firebaseDatabase = FirebaseDatabase.getInstance();
-                databaseReference = firebaseDatabase.getReference().child("OwnerManager")
-                        .child(sOwnerID).child("QuanLyNhanVien").child("Staff" + lstStaff.size());
                 final String tenNV = edtTenNV.getText().toString();
                 final String tenDangNhap = edtTenDangNhap.getText().toString();
                 final String matKhau = edtMatKhau.getText().toString();
                 final String sdt = edtSDT.getText().toString();
                 final String soCMND = edtSoCMND.getText().toString();
-                boolean isExist = false;
                 final String caLam = spnLamTheoCa.getSelectedItem().toString();
                 final String chucVu = spnChucVu.getSelectedItem().toString();
-                for (Staff staff : lstStaff) {
-                    if (staff.user.equals(tenDangNhap)) {
-                        Toast.makeText(AddNhanVienActivity.this, "Tài khoản đã tồn tại!", Toast.LENGTH_SHORT).show();
-                        isExist = true;
-                    }
-                }
-
-                if (isExist == false) {
+                if(lstStaff.size() == 0)
+                {
+//                    Toast.makeText(AddNhanVienActivity.this, "null", Toast.LENGTH_SHORT).show();
+                    firebaseDatabase = FirebaseDatabase.getInstance();
+                    databaseReference = firebaseDatabase.getReference().child("OwnerManager")
+                            .child(sOwnerID).child("QuanLyNhanVien").child("Staff0");
                     if (bitmap != null && !tenNV.isEmpty() && !tenDangNhap.isEmpty() && !matKhau.isEmpty() && !sdt.isEmpty() && !soCMND.isEmpty()) {
                         dialog = new ProgressDialog(AddNhanVienActivity.this);
                         dialog.setMessage("Upload in progress");
                         dialog.show();
-                        storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(sOwnerID).child("QuanLyNhanVien").child("Staff" + lstStaff.size());
+                        storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(sOwnerID).child("QuanLyNhanVien").child("Staff0");
                         //Chuyen duoi file
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -159,12 +245,16 @@ public class AddNhanVienActivity extends AppCompatActivity {
                         storageReference.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Staff staff1 = new Staff("Staff" + lstStaff.size(), tenDangNhap, matKhau, tenNV, sdt, soCMND, chucVu, caLam, "Staff" + lstStaff.size());
+                                Staff staff1 = new Staff("Staff0", tenDangNhap, matKhau, tenNV, sdt, soCMND, chucVu, caLam, "Staff0");
 
                                 databaseReference.setValue(staff1);
                                 Toast.makeText(AddNhanVienActivity.this, "Cập nhật thông tin nhân viên thành công!", Toast.LENGTH_SHORT).show();
                                 clearEditText();
                                 dialog.cancel();
+                                finish();
+//                                Intent intent = new Intent(AddNhanVienActivity.this, StaffManageActivity.class);
+//                                startActivity(intent);
+
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -172,12 +262,66 @@ public class AddNhanVienActivity extends AppCompatActivity {
                                 Toast.makeText(AddNhanVienActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
-                    } else {
+                    }
+                    else
+                        {
                         Toast.makeText(AddNhanVienActivity.this, "Vui lòng nhập đủ các trường!", Toast.LENGTH_SHORT).show();
                     }
 
-                }
+                }else {
+                    lastPosArrStaff += 1;
+                    System.out.println("poss" + lastPosArrStaff);
+                    firebaseDatabase = FirebaseDatabase.getInstance();
+                    databaseReference = firebaseDatabase.getReference().child("OwnerManager")
+                            .child(sOwnerID).child("QuanLyNhanVien").child("Staff" + lastPosArrStaff);
 
+                    boolean isExist = false;
+
+                    for (Staff staff : lstStaff) {
+                        if (staff.user.equals(tenDangNhap)) {
+                            Toast.makeText(AddNhanVienActivity.this, "Tài khoản đã tồn tại!", Toast.LENGTH_SHORT).show();
+                            isExist = true;
+                        }
+                    }
+
+                    if (isExist == false) {
+                        if (bitmap != null && !tenNV.isEmpty() && !tenDangNhap.isEmpty() && !matKhau.isEmpty() && !sdt.isEmpty() && !soCMND.isEmpty()) {
+                            dialog = new ProgressDialog(AddNhanVienActivity.this);
+                            dialog.setMessage("Upload in progress");
+                            dialog.show();
+                            storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(sOwnerID).child("QuanLyNhanVien").child("Staff" + lastPosArrStaff);
+                            //Chuyen duoi file
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                            byte[] data = baos.toByteArray();
+
+                            storageReference.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    Staff staff1 = new Staff("Staff" + lastPosArrStaff, tenDangNhap, matKhau, tenNV, sdt, soCMND, chucVu, caLam, "Staff" + lastPosArrStaff);
+
+                                    databaseReference.setValue(staff1);
+                                    Toast.makeText(AddNhanVienActivity.this, "Cập nhật thông tin nhân viên thành công!", Toast.LENGTH_SHORT).show();
+                                    clearEditText();
+                                    dialog.cancel();
+                                    finish();
+//                                Intent intent = new Intent(AddNhanVienActivity.this, StaffManageActivity.class);
+//                                startActivity(intent);
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(AddNhanVienActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            Toast.makeText(AddNhanVienActivity.this, "Vui lòng nhập đủ các trường!", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                }
             }
         });
 
@@ -216,7 +360,11 @@ public class AddNhanVienActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Staff staff1 = dataSnapshot.getValue(Staff.class);
                     lstStaff.add(staff1);
+//                    checkStaffID(staff1);
+
                 }
+                checkStaffID(lstStaff);
+
             }
 
             @Override

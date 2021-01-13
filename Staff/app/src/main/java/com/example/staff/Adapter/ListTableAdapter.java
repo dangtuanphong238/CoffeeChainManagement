@@ -12,9 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.staff.Activity.RoomActivity;
 import com.example.staff.Interface.RecyclerviewClick;
 import com.example.staff.Model.TableModel;
-import com.example.staff.Activity.PhongScreenActivity;
 import com.example.staff.R;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class ListTableAdapter extends RecyclerView.Adapter<ListTableAdapter.MyVi
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        CardView cardView = (CardView) inflater.inflate(R.layout.item_ban, parent, false);
+        CardView cardView = (CardView) inflater.inflate(R.layout.layout_item_table, parent, false);
         return new MyViewHolder(cardView);
     }
 
@@ -42,17 +42,17 @@ public class ListTableAdapter extends RecyclerView.Adapter<ListTableAdapter.MyVi
     public void onBindViewHolder(@NonNull ListTableAdapter.MyViewHolder holder, int position) {
         TableModel model = list.get(position);
         holder.tvTableName.setText("Bàn " + (position + 1));
-        if (model.getTableStatus().equals((PhongScreenActivity.ERROR + ""))) {
+        if (model.getTableStatus().equals((RoomActivity.ERROR + ""))) {
             holder.imgTable.setBackgroundColor(0xFF000000);
-        } else if (model.getTableStatus().equals(PhongScreenActivity.BOOK + "")) {
+        } else if (model.getTableStatus().equals(RoomActivity.BOOK + "")) {
             holder.imgTable.setBackgroundColor(0xFFCA62E4);
-        } else if (model.getTableStatus().equals(PhongScreenActivity.HAVING + "")) {
+        } else if (model.getTableStatus().equals(RoomActivity.HAVING + "")) {
             holder.imgTable.setBackgroundColor(0xFFE82929);
-        } else if (model.getTableStatus().equals(PhongScreenActivity.LOADINGBOOK + ""))
+        } else if (model.getTableStatus().equals(RoomActivity.LOADINGBOOK + ""))
         {
             holder.imgTable.setBackgroundColor(Color.GREEN);
         }
-        else if (model.getTableStatus().equals(PhongScreenActivity.LOADINGERROR + ""))
+        else if (model.getTableStatus().equals(RoomActivity.LOADINGERROR + ""))
         {
             holder.imgTable.setBackgroundColor(Color.GRAY);
         }
@@ -62,6 +62,7 @@ public class ListTableAdapter extends RecyclerView.Adapter<ListTableAdapter.MyVi
             holder.imgTable.setBackgroundColor(0xFFFFFFFF);
         }
     }
+
 
     @Override
     public int getItemCount() {
@@ -77,13 +78,14 @@ public class ListTableAdapter extends RecyclerView.Adapter<ListTableAdapter.MyVi
             super(itemView);
             imgTable = itemView.findViewById(R.id.imgTable);
             tvTableName = itemView.findViewById(R.id.tvTableName);
-            imgTable.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     recyclerviewClick.onItemClick(getAdapterPosition());
                 }
             });
-            imgTable.setOnLongClickListener(new View.OnLongClickListener() {
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     recyclerviewClick.onItemLongClick(getAdapterPosition());
@@ -92,4 +94,5 @@ public class ListTableAdapter extends RecyclerView.Adapter<ListTableAdapter.MyVi
             });
         }
     }
+
 }

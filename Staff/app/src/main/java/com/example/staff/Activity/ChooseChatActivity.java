@@ -36,14 +36,14 @@ public class ChooseChatActivity extends AppCompatActivity {
                         recreate();
                         return true;
                     case R.id.itemKhuVuc:
-                        Public_func.clickItemMenu(ChooseChatActivity.this, KhuVucActivity.class);
+                        Public_func.clickItemMenu(ChooseChatActivity.this, AreaManageActivity.class);
                         return true;
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
-                        Public_func.clickLogout(ChooseChatActivity.this, LoginScreenActivity.class);
+                        Public_func.clickLogout(ChooseChatActivity.this, LoginActivity.class);
                         return true;
                 }
                 return true;
