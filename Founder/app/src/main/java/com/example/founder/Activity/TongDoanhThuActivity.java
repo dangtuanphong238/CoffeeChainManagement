@@ -9,7 +9,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,7 +41,6 @@ public class TongDoanhThuActivity extends AppCompatActivity {
     Spinner spinner, spinnerCuaHang;
     private String spinnerLocNam, spinnerLocCuaHang;
     private String getSpinner, getSpinnerCuaHang;
-    private ImageButton imgMnu;
     private DrawerLayout drawerLayout;
     private ArrayList<String> arrayListNam = new ArrayList<String>();
     private ArrayAdapter mArrayAdapter;
@@ -49,7 +50,8 @@ public class TongDoanhThuActivity extends AppCompatActivity {
     private LineDataSet lineDataSet = new LineDataSet(null, null);
     ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
     LineData lineData;
-    Button button;
+    private ImageButton btnMnu;
+    private TextView txtTitleActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +61,9 @@ public class TongDoanhThuActivity extends AppCompatActivity {
         getAnhXa();
         spinner.setEnabled(false);
         setDuLieu();
-
-
+        txtTitleActivity.setText("Tổng Doanh Thu");
+        btnMnu.setImageResource(R.drawable.ic_back_24);
+        onBackPress();
 
     }
 
@@ -235,14 +238,24 @@ public class TongDoanhThuActivity extends AppCompatActivity {
     }
 
     private void getAnhXa() {
+        btnMnu = findViewById(R.id.btnMnu);
+        txtTitleActivity = findViewById(R.id.idtoolbar);
         spinnerCuaHang = findViewById(R.id.locCuaHang);
         lineChart = findViewById(R.id.chartNam);
         spinner = findViewById(R.id.locNam);
         drawerLayout = findViewById(R.id.activity_main_drawer);
-        imgMnu = findViewById(R.id.btnMnu);
 
     }
 
+    private void onBackPress()
+    {
+        btnMnu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
 
 
     public void getOwnerIDFromLocalStorage() // Hàm này để lấy ownerID khi đã đăng nhập thành công đc lưu trên localStorage ở màn hình Login

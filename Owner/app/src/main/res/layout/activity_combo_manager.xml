@@ -45,13 +45,13 @@
                             android:layout_height="wrap_content"
                             android:text="Tạo combo"/>
 
-                        <Button
-                            android:layout_margin="@dimen/normal10dp"
-                            android:background="@drawable/background_corner_grey"
-                            android:id="@+id/btnXoaCombo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Xóa combo"/>
+<!--                        <Button-->
+<!--                            android:layout_margin="@dimen/normal10dp"-->
+<!--                            android:background="@drawable/background_corner_grey"-->
+<!--                            android:id="@+id/btnXoaCombo"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Xóa combo"/>-->
                     </LinearLayout>
                 </LinearLayout>
             </RelativeLayout>

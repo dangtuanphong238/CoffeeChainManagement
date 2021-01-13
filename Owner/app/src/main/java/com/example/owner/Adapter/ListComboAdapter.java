@@ -56,13 +56,13 @@ public class ListComboAdapter extends RecyclerView.Adapter<ListComboAdapter.MyVi
         TextView txtNameProduct;
         TextView txtPriceProduct;
         ImageView imgProduct;
-        CheckBox chkChoose;
+//        CheckBox chkChoose;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             txtNameProduct = itemView.findViewById(R.id.txtNameProduct_Cb);
             txtPriceProduct = itemView.findViewById(R.id.txtPriceProduct_Cb);
             imgProduct = itemView.findViewById(R.id.imgProduct_Cb);
-            chkChoose = itemView.findViewById(R.id.chkbCheck_Cb);
+//            chkChoose = itemView.findViewById(R.id.chkbCheck_Cb);
             this.setIsRecyclable(true);
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +112,7 @@ public class ListComboAdapter extends RecyclerView.Adapter<ListComboAdapter.MyVi
     @Override
     public ListComboAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        CardView cardView = (CardView) inflater.inflate(R.layout.cus_recyclerview_combo, parent, false);
+        CardView cardView = (CardView) inflater.inflate(R.layout.cus_combo_item, parent, false);
         return new ListComboAdapter.MyViewHolder(cardView);
     }
 
@@ -122,33 +122,33 @@ public class ListComboAdapter extends RecyclerView.Adapter<ListComboAdapter.MyVi
         holder.txtNameProduct.setText(combo.getMeal_name());
         holder.txtPriceProduct.setText(combo.getMeal_price());
 
-        //checkbox:
-        //in some cases, it will prevent unwanted situations
-        holder.chkChoose.setOnCheckedChangeListener(null);
-        //if true, your checkbox will be selected, else unselected
-        holder.chkChoose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(holder.chkChoose.isChecked())
-                {
-                   // list.get(position).setCheck(true);
-//                    arrCombo.add(list.get(position).getMeal_price());
-                    arrCombo.add(combo);
-                    Log.d("A", "A"+ arrCombo.toString());
-
-                }
-                else {
-                   // list.get(position).setCheck(false);
-//                    arrCombo.remove(list.get(position).getMeal_price());
-                    arrCombo.remove(combo);
-                    Log.d("A", "A"+ arrCombo.toString());
-
-                }
-                returnValueArrayCombo.saveArr(arrCombo);
-
-            }
-
-        });
+//        //checkbox:
+//        //in some cases, it will prevent unwanted situations
+//        holder.chkChoose.setOnCheckedChangeListener(null);
+//        //if true, your checkbox will be selected, else unselected
+//        holder.chkChoose.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(holder.chkChoose.isChecked())
+//                {
+//                   // list.get(position).setCheck(true);
+////                    arrCombo.add(list.get(position).getMeal_price());
+//                    arrCombo.add(combo);
+//                    Log.d("A", "A"+ arrCombo.toString());
+//
+//                }
+//                else {
+//                   // list.get(position).setCheck(false);
+////                    arrCombo.remove(list.get(position).getMeal_price());
+//                    arrCombo.remove(combo);
+//                    Log.d("A", "A"+ arrCombo.toString());
+//
+//                }
+//                returnValueArrayCombo.saveArr(arrCombo);
+//
+//            }
+//
+//        });
 
 
         setImage(holder,path,combo.getMeal_id());

@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         anhXa();
+
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference().child("FounderManager").child("OwnerAccount");
         myRef.addValueEventListener(new ValueEventListener() {
@@ -99,6 +100,7 @@ public class LoginActivity extends AppCompatActivity {
         setOnClick();
 
     }
+
     public boolean togglePass()
     {
         if(isShow){
@@ -136,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
             //getImage
-            StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlychuoicoffee.appspot.com/FounderManager/ThongTinCuaHang/" + sOwnerID);
+            StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://coffeechainmanagement.appspot.com/FounderManager/ThongTinCuaHang/" + sOwnerID);
             final File localFile = File.createTempFile("images","png");
             mStorageRef.getFile(localFile)
                     .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {

@@ -233,35 +233,42 @@ public class AddNhanVienActivity extends AppCompatActivity {
                     databaseReference = firebaseDatabase.getReference().child("OwnerManager")
                             .child(sOwnerID).child("QuanLyNhanVien").child("Staff0");
                     if (bitmap != null && !tenNV.isEmpty() && !tenDangNhap.isEmpty() && !matKhau.isEmpty() && !sdt.isEmpty() && !soCMND.isEmpty()) {
-                        dialog = new ProgressDialog(AddNhanVienActivity.this);
-                        dialog.setMessage("Upload in progress");
-                        dialog.show();
-                        storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(sOwnerID).child("QuanLyNhanVien").child("Staff0");
-                        //Chuyen duoi file
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                        byte[] data = baos.toByteArray();
+                        if (edtSDT.length() >= 9)
+                        {
+                            dialog = new ProgressDialog(AddNhanVienActivity.this);
+                            dialog.setMessage("Upload in progress");
+                            dialog.show();
+                            storageReference = FirebaseStorage.getInstance().getReference().child("OwnerManager").child(sOwnerID).child("QuanLyNhanVien").child("Staff0");
+                            //Chuyen duoi file
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                            byte[] data = baos.toByteArray();
 
-                        storageReference.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Staff staff1 = new Staff("Staff0", tenDangNhap, matKhau, tenNV, sdt, soCMND, chucVu, caLam, "Staff0");
+                            storageReference.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    Staff staff1 = new Staff("Staff0", tenDangNhap, matKhau, tenNV, sdt, soCMND, chucVu, caLam, "Staff0");
 
-                                databaseReference.setValue(staff1);
-                                Toast.makeText(AddNhanVienActivity.this, "Cập nhật thông tin nhân viên thành công!", Toast.LENGTH_SHORT).show();
-                                clearEditText();
-                                dialog.cancel();
-                                finish();
-//                                Intent intent = new Intent(AddNhanVienActivity.this, StaffManageActivity.class);
-//                                startActivity(intent);
+                                    databaseReference.setValue(staff1);
+                                    Toast.makeText(AddNhanVienActivity.this, "Thêm nhân viên thành công!", Toast.LENGTH_SHORT).show();
+                                    clearEditText();
+                                    dialog.cancel();
+                                    Intent intent = new Intent(AddNhanVienActivity.this, StaffManageActivity.class);
+                                    startActivity(intent);
+                                    finish();
 
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(AddNhanVienActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(AddNhanVienActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                       else
+                        {
+                            edtSDT.setError("Số điện thoại có 9 số");
+                        }
                     }
                     else
                         {

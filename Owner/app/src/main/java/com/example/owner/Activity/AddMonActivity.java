@@ -402,7 +402,7 @@ public class AddMonActivity extends AppCompatActivity {
         String ownerID = pref.getString(LoginActivity.OWNERID, null);
         String meal_category = spnPhanLoai.getSelectedItem().toString().trim();
         String meal_name = edtTenMonAn.getText().toString().trim();
-        mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlychuoicoffee.appspot.com/OwnerManager").child(ownerID).child("QuanLyMonAn").child(meal_image);
+        mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://coffeechainmanagement.appspot.com/OwnerManager").child(ownerID).child("QuanLyMonAn").child(meal_image);
         imgPictureMeal.setDrawingCacheEnabled(true);
         imgPictureMeal.buildDrawingCache();
         Bitmap bitmap = imgPictureMeal.getDrawingCache();
