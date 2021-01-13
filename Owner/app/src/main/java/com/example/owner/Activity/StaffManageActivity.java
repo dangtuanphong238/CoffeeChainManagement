@@ -177,6 +177,16 @@ public class StaffManageActivity extends AppCompatActivity {
     }
 
     private void setOnClick() {
+        lvNhanVien.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int postion, long l) {
+                Intent intent = new Intent(StaffManageActivity.this, UpdateStaff.class);
+                intent.putExtra("STAFF", arrStaff.get(postion));
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+                finish();
+            }
+        });
         btnThemNV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,7 +201,7 @@ public class StaffManageActivity extends AppCompatActivity {
                 if (key.equals("Tất Cả")) {
                     GetData();
                     nhanVienAdapter = new NhanVienAdapter(StaffManageActivity.this,
-                            R.layout.custom_listview_quanly_nhanvien, arrStaff);
+                            R.layout.custom_listview_quanly_nhanvien, arrStaff, sOwnerID);
                     lvNhanVien.setAdapter(nhanVienAdapter);
                 } else
                     {
@@ -212,7 +222,7 @@ public class StaffManageActivity extends AppCompatActivity {
                 if (key.equals("Tất Cả")) {
                     GetData();
                     nhanVienAdapter = new NhanVienAdapter(StaffManageActivity.this,
-                            R.layout.custom_listview_quanly_nhanvien, arrStaff);
+                            R.layout.custom_listview_quanly_nhanvien, arrStaff,sOwnerID);
                     lvNhanVien.setAdapter(nhanVienAdapter);
                 } else {
                     filterCategory(key);
@@ -252,7 +262,7 @@ public class StaffManageActivity extends AppCompatActivity {
                         }
                     }
                     nhanVienAdapter = new NhanVienAdapter(StaffManageActivity.this,
-                            R.layout.custom_listview_quanly_nhanvien, arrStaff);
+                            R.layout.custom_listview_quanly_nhanvien, arrStaff,sOwnerID);
                     lvNhanVien.setAdapter(nhanVienAdapter);
                 }
 
@@ -297,7 +307,7 @@ public class StaffManageActivity extends AppCompatActivity {
         super.onStart();
         arrStaff = new ArrayList<>();
         GetData();
-        nhanVienAdapter = new NhanVienAdapter(this, R.layout.custom_listview_quanly_nhanvien, arrStaff);
+        nhanVienAdapter = new NhanVienAdapter(this, R.layout.custom_listview_quanly_nhanvien, arrStaff,sOwnerID);
         lvNhanVien.setAdapter(nhanVienAdapter);
     }
 

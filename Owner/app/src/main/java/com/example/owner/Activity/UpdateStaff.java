@@ -82,18 +82,27 @@ public class UpdateStaff extends AppCompatActivity {
         setOnClick();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent1 = new Intent(UpdateStaff.this,StaffManageActivity.class);
+        startActivity(intent1);
+        finish();
+    }
 
     public void backPressed() {
         btnMnu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent1 = new Intent(UpdateStaff.this,StaffManageActivity.class);
+                startActivity(intent1);
                 finish();
             }
         });
     }
     private void setOnClick() {
-        Intent intent = getIntent();
-        final Staff staff = (Staff) intent.getSerializableExtra("NHANVIEN");
+        final Intent intent = getIntent();
+        final Staff staff = (Staff) intent.getSerializableExtra("STAFF");
         //get Edittext
         edtTenNV.setText(staff.getTennv());
         edtTenDangNhap.setText(staff.getUser());
@@ -183,10 +192,12 @@ public class UpdateStaff extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                     Staff staff1 = new Staff(staff.getId(), tenDangNhap, matKhau, tenNV, sdt, soCMND, chucVu, caLam,staff.getImgName());
-
                                     databaseReference.setValue(staff1);
                                     Toast.makeText(UpdateStaff.this, "Cập nhật thông tin nhân viên thành công!", Toast.LENGTH_SHORT).show();
                                     dialog.cancel();
+                                    Intent intent1 = new Intent(UpdateStaff.this,StaffManageActivity.class);
+                                    startActivity(intent1);
+                                    finish();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
