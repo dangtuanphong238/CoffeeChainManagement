@@ -216,7 +216,7 @@ public class InfoStoreActivity extends AppCompatActivity {
 
         try {
             storageReference = FirebaseStorage.getInstance().getReferenceFromUrl
-                    ("gs://quanlychuoicoffee.appspot.com/FounderManager/ThongTinCuaHang/" + sOwnerID);
+                    ("gs://coffeechainmanagement.appspot.com/FounderManager/ThongTinCuaHang/" + sOwnerID);
             final File localFile = File.createTempFile("images","png");
             storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override

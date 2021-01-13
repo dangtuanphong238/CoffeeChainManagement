@@ -138,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
             //getImage
-            StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlychuoicoffee.appspot.com/FounderManager/ThongTinCuaHang/" + sOwnerID);
+            StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://coffeechainmanagement.appspot.com/FounderManager/ThongTinCuaHang/" + sOwnerID);
             final File localFile = File.createTempFile("images","png");
             mStorageRef.getFile(localFile)
                     .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {

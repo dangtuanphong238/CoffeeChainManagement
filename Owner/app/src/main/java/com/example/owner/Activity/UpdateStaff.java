@@ -133,7 +133,7 @@ public class UpdateStaff extends AppCompatActivity {
         }
         //get Image
         try {
-            StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quanlychuoicoffee.appspot.com/OwnerManager/"
+            StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://coffeechainmanagement.appspot.com/OwnerManager/"
                     + sOwnerID + "/QuanLyNhanVien/" + staff.getImgName());
             final File localFile = File.createTempFile("images","png");
             mStorageRef.getFile(localFile)

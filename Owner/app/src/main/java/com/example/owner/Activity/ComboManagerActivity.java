@@ -44,7 +44,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 
 public class ComboManagerActivity extends AppCompatActivity implements ReturnValueArrayCombo, RecyclerviewClick {
-    private Button btnCreateCombo, btnDeleteCombo;
+    private Button btnCreateCombo;
     private RecyclerView recyclerCombo;
     private String ownerID;
     private ImageButton btnToolbar;
@@ -73,7 +73,7 @@ public class ComboManagerActivity extends AppCompatActivity implements ReturnVal
 //        btnToolbar.setImageResource(R.drawable.ic_back_24);
         txtToolbar.setText("Quản Lý Combo");
 
-        btnDeleteCombo.setEnabled(false);
+//        btnDeleteCombo.setEnabled(false);
 
         getOwnerID();
         setOnClick();
@@ -204,36 +204,36 @@ public class ComboManagerActivity extends AppCompatActivity implements ReturnVal
             }
         });
 
-        btnDeleteCombo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case DialogInterface.BUTTON_POSITIVE:
-                                //Yes button clicked
-                                for(MealModel mealModel:list)
-                                {
-                                    //func delete combo here:
-                                    deleteCombo(mealModel.getMeal_id());
-                                    Toast.makeText(ComboManagerActivity.this, "Xóa Thành Công!", Toast.LENGTH_SHORT).show();
-                                }
-                                break;
-
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                //No button clicked
-//                                Toast.makeText(ComboManagerActivity.this, "No", Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                    }
-                };
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(ComboManagerActivity.this);
-                builder.setMessage("Bạn có chắc chắn muốn xóa?").setPositiveButton("Yes", dialogClickListener)
-                        .setNegativeButton("No", dialogClickListener).show();
-            }
-        });
+//        btnDeleteCombo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        switch (which){
+//                            case DialogInterface.BUTTON_POSITIVE:
+//                                //Yes button clicked
+//                                for(MealModel mealModel:list)
+//                                {
+//                                    //func delete combo here:
+//                                    deleteCombo(mealModel.getMeal_id());
+//                                    Toast.makeText(ComboManagerActivity.this, "Xóa Thành Công!", Toast.LENGTH_SHORT).show();
+//                                }
+//                                break;
+//
+//                            case DialogInterface.BUTTON_NEGATIVE:
+//                                //No button clicked
+////                                Toast.makeText(ComboManagerActivity.this, "No", Toast.LENGTH_SHORT).show();
+//                                break;
+//                        }
+//                    }
+//                };
+//
+//                AlertDialog.Builder builder = new AlertDialog.Builder(ComboManagerActivity.this);
+//                builder.setMessage("Bạn có chắc chắn muốn xóa?").setPositiveButton("Yes", dialogClickListener)
+//                        .setNegativeButton("No", dialogClickListener).show();
+//            }
+//        });
     }
     //header drawer:
     private void headerNav() {
@@ -271,7 +271,7 @@ public class ComboManagerActivity extends AppCompatActivity implements ReturnVal
     }
     private void anhXa() {
         btnCreateCombo = findViewById(R.id.btnTaoCombo);
-        btnDeleteCombo = findViewById(R.id.btnXoaCombo);
+//        btnDeleteCombo = findViewById(R.id.btnXoaCombo);
         recyclerCombo = findViewById(R.id.recyclerCombo);
         btnToolbar = findViewById(R.id.btnMnu);
         txtToolbar = findViewById(R.id.txtTitle);
@@ -284,13 +284,13 @@ public class ComboManagerActivity extends AppCompatActivity implements ReturnVal
     public void saveArr(ArrayList<MealModel> arrayList) {
         this.list = arrayList;
 //        Log.d("ABCD", arrayList.size()+"");
-        if(arrayList.size()>0)
-        {
-            btnDeleteCombo.setEnabled(true);
-        }
-        else {
-            btnDeleteCombo.setEnabled(false);
-        }
+//        if(arrayList.size()>0)
+//        {
+//            btnDeleteCombo.setEnabled(true);
+//        }
+//        else {
+//            btnDeleteCombo.setEnabled(false);
+//        }
 
     }
     public void openMenu() {

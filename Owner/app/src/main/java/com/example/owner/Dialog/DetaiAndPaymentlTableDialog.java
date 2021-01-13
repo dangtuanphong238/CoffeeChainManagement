@@ -368,7 +368,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue() == null)
                 {
-                    myRef.child("DoanhThuNgay").child("sumtotal").setValue(sumtotal.getSum())
+                    myRef.child("DoanhThuNgay").child("sumtotal").setValue(tvSumPrice.getText().toString())
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid)
@@ -376,7 +376,7 @@ public class DetaiAndPaymentlTableDialog extends Dialog implements View.OnClickL
                                     FirebaseDatabase firebaseDatabase1 = FirebaseDatabase.getInstance();
                                     final DatabaseReference myRef1 = firebaseDatabase1.getReference("/FounderManager/" +
                                             "/QuanLyDoanhThu/"  + ownerID + "/" + year + "/" + month + "/DoanhThuNgay/" + _date);
-                                    DoanhThuMonth doanhThuMonth = new DoanhThuMonth(ngay,sumtotal.getSum());
+                                    DoanhThuMonth doanhThuMonth = new DoanhThuMonth(ngay,tvSumPrice.getText().toString());
                                     myRef1.setValue(doanhThuMonth);
                                 }
                             });
