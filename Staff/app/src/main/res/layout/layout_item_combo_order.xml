@@ -54,7 +54,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_weight="0.4"
                         android:orientation="horizontal">
 
                         <TextView
@@ -86,21 +86,20 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
+                            android:layout_weight="0.5"
                             android:text="Gồm:"
                             android:textColor="@color/black"
-                            android:textSize="14sp" />
+                            android:textSize="10sp" />
 
 
                         <TextView
                             android:id="@+id/tvMeal_description"
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="3"
-                            android:maxLines="2"
                             android:text="Trà sữa thái xanh"
                             android:textColor="@color/black"
-                            android:textSize="15sp" />
+                            android:textSize="10sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -108,7 +107,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:gravity="center"
                     android:orientation="horizontal">
 
