@@ -95,9 +95,9 @@ public class MenuOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             else holder.layoutChooseAmount.setVisibility(View.GONE);
             String path = "";
             if (meal.getMeal_category().equals("combo")){
-                path = "/" + ownerID + "/";
+                path = "OwnerManager/" + ownerID + "/QuanLyCombo";
             }else{
-                path = "/" + ownerID + "/";
+                path = "OwnerManager/" + ownerID + "/QuanLyMonAn";
             }
             setImage(holder, path, meal.getMeal_id());
 
@@ -160,9 +160,9 @@ public class MenuOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             else holder.layoutChooseAmount.setVisibility(View.GONE);
             String path = "";
             if (modelCombo.getMeal_category().equals("combo")){
-                path = "/" + ownerID + "/";
+                path = "OwnerManager/" + ownerID + "/QuanLyCombo";
             }else{
-                path = "/" + ownerID + "/";
+                path = "OwnerManager/" + ownerID + "/QuanLyMonAn";
             }
             setImage(holder, path, modelCombo.getMeal_id());
 
@@ -348,5 +348,4 @@ public class MenuOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
     }
-
 }

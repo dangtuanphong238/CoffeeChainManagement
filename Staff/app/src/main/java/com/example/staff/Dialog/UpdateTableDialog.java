@@ -192,7 +192,7 @@ public class UpdateTableDialog extends Dialog implements View.OnClickListener {
     }
     public void HuyBaoLoi() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        String path = "OwnerManager/" + ownerID + "/QuanLyBan/" + areaID + "/" + tableID + "/tableStatus";
+        String path = "OwnerManager/" + ownerID + "/QuanLyBan/Area" + areaID + "/" + tableID + "/tableStatus";
         DatabaseReference myRef = firebaseDatabase.getReference(path);
         myRef.setValue("0").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -200,7 +200,7 @@ public class UpdateTableDialog extends Dialog implements View.OnClickListener {
                 Toast.makeText(context, "Xóa trạng thái thành công", Toast.LENGTH_SHORT).show();
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 String path = "OwnerManager/" + ownerID + "/QuanLyBanLoi" +
-                        "/"+ areaID + "/" + tableID + "/ThongTinLoi";
+                        "/Area"+ areaID + "/" + tableID + "/ThongTinLoi";
                 DatabaseReference myRef = firebaseDatabase.getReference(path);
                 myRef.removeValue();
             }

@@ -74,14 +74,14 @@ public class ChatRoomActivity extends AppCompatActivity {
                         Public_func.clickItemMenu(ChatRoomActivity.this, ChooseChatActivity.class);
                         return true;
                     case R.id.itemKhuVuc:
-                        Public_func.clickItemMenu(ChatRoomActivity.this, KhuVucActivity.class);
+                        Public_func.clickItemMenu(ChatRoomActivity.this, AreaManageActivity.class);
                         return true;
                     case R.id.itemLogOut:
                         SharedPreferences sharedPreferences = getSharedPreferences("datafile", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.apply();
-                        Public_func.clickLogout(ChatRoomActivity.this, LoginScreenActivity.class);
+                        Public_func.clickLogout(ChatRoomActivity.this, LoginActivity.class);
                         return true;
                 }
                 return true;

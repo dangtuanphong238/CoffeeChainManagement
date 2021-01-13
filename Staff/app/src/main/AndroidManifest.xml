@@ -18,12 +18,12 @@
         <activity android:name=".Activity.CaiDatBillActivity" />
         <activity android:name=".Activity.ChatRoomActivity" />
         <activity android:name=".Activity.DatMonActivity" />
-        <activity android:name=".Activity.OderActivityActivity" />
+        <activity android:name=".Activity.AreaManageActivity" />
         <activity android:name=".Activity.ChiTietBanActivity" />
-        <activity android:name=".Activity.PhongScreenActivity" />
+        <activity android:name=".Activity.RoomActivity" />
         <activity android:name=".Activity.ThongTinDatTruocActivity"/>
         <activity android:name=".Activity.KhuVucActivity" />
-        <activity android:name=".Activity.LoginScreenActivity" />
+        <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.SplashScreenActivity">
 
             <intent-filter>
