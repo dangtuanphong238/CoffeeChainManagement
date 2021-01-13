@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.example.owner.Adapter.ListComboAdapter;
 import com.example.owner.Global.Public_func;
+import com.example.owner.Interface.RecyclerviewClick;
 import com.example.owner.Interface.ReturnValueArrayCombo;
 import com.example.owner.Model.MealModel;
 import com.example.owner.R;
@@ -42,7 +43,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class ComboManagerActivity extends AppCompatActivity implements ReturnValueArrayCombo {
+public class ComboManagerActivity extends AppCompatActivity implements ReturnValueArrayCombo, RecyclerviewClick {
     private Button btnCreateCombo, btnDeleteCombo;
     private RecyclerView recyclerCombo;
     private String ownerID;
@@ -145,9 +146,9 @@ public class ComboManagerActivity extends AppCompatActivity implements ReturnVal
                                 dataSnapshot.child("meal_price").getValue() + "",
                                 dataSnapshot.child("meal_name").getValue() + "",
                                 dataSnapshot.child("meal_image").getValue() + "",
-                                snapshot.child("meal_description").getValue() + "",
-                                snapshot.child("meal_price_total").getValue() + "",
-                                snapshot.child("meal_uu_dai").getValue() + "");
+                                dataSnapshot.child("meal_description").getValue() + "",
+                                dataSnapshot.child("meal_price_total").getValue() + "",
+                                dataSnapshot.child("meal_uu_dai").getValue() + "");
                         retrieverList.add(mealModel);
                         getDataForListMeal();
 
@@ -167,7 +168,7 @@ public class ComboManagerActivity extends AppCompatActivity implements ReturnVal
     public void getDataForListMeal() {
         String path = "/OwnerManager/" + ownerID + "/QuanLyCombo";
         ListComboAdapter adapter = new ListComboAdapter(ComboManagerActivity.this, retrieverList,
-                path, ComboManagerActivity.this);
+                path, ComboManagerActivity.this, ComboManagerActivity.this);
         adapter.notifyDataSetChanged();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -307,4 +308,20 @@ public class ComboManagerActivity extends AppCompatActivity implements ReturnVal
         drawerLayout.closeDrawer(GravityCompat.START);
     }
 
+    @Override
+    public void onItemClick(int position) {
+        System.out.println("Phong" + retrieverList.get(position));
+        Intent intent = new Intent(ComboManagerActivity.this, DetailComboActivity.class);
+        Bundle bundle = new Bundle();
+        intent.putExtra("combo", retrieverList.get(position));
+        intent.putExtras(bundle);
+
+        startActivity(intent);
+//        Toast.makeText(this, retrieverList.get(position).toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
+
+    }
 }

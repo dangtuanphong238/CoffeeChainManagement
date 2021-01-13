@@ -1,6 +1,8 @@
 package com.example.owner.Model;
 
-public class MealModel {
+import java.io.Serializable;
+
+public class MealModel implements Serializable {
     String meal_category;
     String meal_id;
     String meal_price;
